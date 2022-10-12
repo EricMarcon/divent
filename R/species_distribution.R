@@ -269,7 +269,7 @@ as_probabilities.numeric <- function(
   
   if (estimator == "naive") {
     # Just normalize so that x sums to 1
-    x <- x / sum(x)
+    probabilities <- x / sum(x)
   } else {
     # Integer abundances are required by all non-naive estimators
     if (!is_integer_values(x)) {
@@ -334,7 +334,7 @@ as_probabilities.numeric <- function(
         theta <- tryCatch(
           stats::optimize(
             theta_solve, 
-            interval=c(0,1), 
+            interval = c(0, 1), 
             probabilities, 
             abundances, 
             sample_size, 
@@ -347,37 +347,65 @@ as_probabilities.numeric <- function(
         probabilities_tuned <- probabilities * (1 - lambda * exp(-theta * abundances))
       }
     }
-    names(PsTuned) <- names(spD[spD > 0])
-    
+
     # Estimate the number of unobserved species
-    if (RCorrection == "Rarefy") {
-      if (Unveiling == "none")
-        stop("Arguments RCorrection='Rarefy' and Unveiling='None' are not compatible")
+    if (richness_estimator == "rarefy") {
+      if (unveiling == "none")
+        stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       # Estimation of the number of unobserved species to initialize optimization
-      S0 <- bcRichness(Ns, Correction="Jackknife") - S
+      species_0 <- div_richness(abundances, estimator = "jackknife") - species_number
       # Estimate the number of unobserved species by iterations
-      Target <- Tsallis(Ns, q=q, Correction="None", check_arguments = FALSE)
-      S0 <- round(tryCatch(stats::optimize(rarefaction_bias, interval=c(0, 2*S0), Ns, PsTuned, C, CD2, q, Unveiling, Target)$minimum,
-                           error = function(e) {S0}))
+      ent_target <- ent_tsallis(abundances, q = q, estimator = "naive", check_arguments = FALSE)
+      species_0 <- round(
+        tryCatch(
+          stats::optimize(
+            rarefaction_bias, 
+            interval = c(0, 2 * species_0), 
+            abundances, 
+            probabilities_tuned, 
+            sample_coverage, 
+            coverage_deficit_2, 
+            q, 
+            unveiling, 
+            target
+          )$minimum,
+          error = function(e) {species_0}
+        )
+      )
     } else {
-      Sestimate <- ceiling(bcRichness(Ns, Correction=RCorrection, JackOver=JackOver, JackMax=JackMax))
-      S0 <- Sestimate - S
+      species_estimate <- ceiling(
+        div_richness(
+          abundances, 
+          estimator = richness_estimator, 
+          jack_max = jack_max
+        )
+      )
+      species_0 <- species_estimate - S
     }
     
     # Distribution of unobserved species
-    if (S0) {
-      if (Unveiling == "None") {
-        spD <- PsTuned
+    if (species_0) {
+      if (unveiling == "None") {
+        probabilities <- probabilities_tuned
       } else {
-        spD <- c(PsTuned, estimate_Ps0(Unveiling, PsTuned, S0, C, CD2))
+        probabilities <- c(
+          probabilities_tuned, 
+          estimate_species_0(
+            unveiling, 
+            probabilities_tuned, 
+            species_0, 
+            coverage, 
+            coverage_deficit_2
+          )
+        )
       }
     } else {
-      spD <- PsTuned
+      probabilities <- probabilities_tuned
     }
-    spD <- as_species_distribution(spD, ...)
+    probabilities <- as_species_distribution(probabilities, ...)
   }
-  class(spD) <- c("probabilities", class(spD))
-  return(spD)
+  class(probabilities) <- c("probabilities", class(probabilities))
+  return(probabilities)
 }
 
 
@@ -507,65 +535,191 @@ is_abundances <- function(x) {
 }
 
 
-# Utilities for as_probabilities.numeric. Not exported. ####
-# Solve the theta parameter of Chao et al. (2015)
-theta_solve <- function(theta, Ps, Ns, N, C, CD2){
-  # Code inspired from JADE function DetAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
-  lambda <- (1-C) / sum(Ps * exp(-theta*Ns))
-  return(abs(sum((Ps * (1 - lambda * exp(-theta*Ns)))^2) - sum(choose(Ns,2)/choose(N,2)) + CD2))
+#' Solve the theta parameter of Chao et al. (2015)
+#' 
+#' Utilities for [as_probabilities.numeric].
+#' 
+#' Code inspired from JADE function DetAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
+#' 
+#' @noRd
+#'
+#' @param theta 
+#' @param probabilities 
+#' @param abundances 
+#' @param sample_size 
+#' @param sample_coverage 
+#' @param sample_coverage_2 
+#'
+#' @return
+theta_solve <- function(
+    theta, 
+    probabilities, 
+    abundances, 
+    sample_size, 
+    sample_coverage, 
+    coverage_deficit_2
+    ){
+  lambda <- (1 - sample_coverage) / sum(probabilities * exp(-theta * abundances))
+  return(
+    abs(
+      sum((probabilities * (1 - lambda * exp(-theta * abundances)))^2) - 
+        sum(choose(abundances, 2) / choose(sample_size, 2)) + coverage_deficit_2
+    )
+  )
 }
-# Solve the beta parameter of Chao et al. (2015)
-beta_solve <- function(beta, r, i){
-  # Code inspired from JADE function UndAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
+
+
+#' Solve the beta parameter of Chao et al. (2015)
+#'
+#' Utilities for [as_probabilities.numeric].
+#' 
+#' Code inspired from JADE function UndAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
+#' 
+#' @noRd
+#' 
+#' @param beta 
+#' @param r 
+#' @param i 
+#'
+#' @return
+beta_solve <- function(beta, r, i) {
   return(abs(sum(beta^i)^2 / sum((beta^i)^2) - r))
 }
-# Unobserved species distribution
-estimate_Ps0 <- function(Unveiling, PsTuned, S0, C, CD2){
-  Ps0 <- NA
-  if (Unveiling == "geom") {
-    if (S0 == 1) {
+
+
+#' Unobserved Species Distribution
+#'
+#' Utilities for [as_probabilities.numeric].
+#' 
+#' @noRd
+#' 
+#' @param unveiling 
+#' @param probabilities_tuned 
+#' @param species_0 
+#' @param sample_coverage 
+#' @param coverage_deficit_2 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+estimate_probabilities_s_0 <- function(
+    unveiling, 
+    probabilities_tuned, 
+    species_0, 
+    sample_coverage, 
+    coverage_deficit_2) {
+
+  probabilities_s_0 <- NA
+  if (unveiling == "geom") {
+    if (species_n == 1) {
       # A single unobserved species
-      Ps0 <- 1-C
+      probabilities_s_0 <- 1 - sample_coverage
     } else {
-      r <- (1-C)^2/CD2
-      i <- seq_len(S0)
-      beta <-  tryCatch(stats::optimize(beta_solve, lower=(r-1)/(r+1), upper=1, tol=.Machine$double.eps, r, i)$min, 
-                        error = function(e) {(r-1)/(r+1)})
-      alpha <- (1-C) / sum(beta^i)
-      Ps0 <- alpha * beta^i
+      r <- (1 - sample_coverage)^2 / coverage_deficit_2
+      i <- seq_len(species_n)
+      beta <-  tryCatch(
+        stats::optimize(
+          beta_solve, 
+          lower = (r - 1) / (r + 1), 
+          upper = 1, 
+          tol = .Machine$double.eps, 
+          r, 
+          i
+        )$min, 
+        error = function(e) {(r - 1) / (r + 1)}
+      )
+      alpha <- (1 - sample_coverage) / sum(beta^i)
+      probabilities_s_0 <- alpha * beta^i
       # Sometimes fails when the distribution is very uneven (sometimes r < 1) 
       # Then, go back to the uniform distribution
-      if (any(is_na(Ps0)) | any(Ps0 <= 0)) Unveiling <- "unif"
+      if (any(is_na(probabilities_s_0)) | any(probabilities_s_0 <= 0)) {
+        unveiling <- "unif"
+      }
     }
   }      
-  if (Unveiling == "unif") {
-    # Add S0 unobserved species with equal probabilities
-    Ps0 <- rep((1-sum(PsTuned))/S0, S0)
+  if (unveiling == "unif") {
+    # Add s_0 unobserved species with equal probabilities
+    probabilities_s_0 <- rep((1 - sum(probabilities_tuned)) / species_0, species_0)
   }
-  if (any(is_na(Ps0))) {
+  if (any(is_na(probabilities_s_0))) {
     warning("Unveiling method was not recognized")
     return(NA)
   } else {
-    names(Ps0) <- paste("UnobsSp", seq_along(length(Ps0)), sep="")
-    return(Ps0)
+    names(probabilities_s_0) <- paste("UnobsSp", seq_along(length(probabilities_s_0)), sep = "")
+    return(probabilities_s_0)
   }         
 }
-# Rarefaction bias
-rarefaction_bias <- function(S0, Ns, PsTuned, C, CD2, q, Unveiling, Target) {
-  Ns <- Ns[Ns>0]
-  N <- sum(Ns)
+
+
+#' Rarefaction Bias
+#' 
+#' Departure of the rarefied entropy from the target entropy
+#'
+#' Utilities for [as_probabilities.numeric].
+#'
+#' @noRd
+#'
+#' @param species_0 
+#' @param abundances 
+#' @param probabilities_tuned 
+#' @param sample_coverage 
+#' @param coverage_deficit_2 
+#' @param q 
+#' @param unveiling 
+#' @param target Target entropy.
+#'
+#' @return
+rarefaction_bias <- function(
+    species_0,
+    abundances, 
+    probabilities_tuned, 
+    sample_coverage, 
+    coverage_deficit_2, 
+    q, 
+    unveiling, 
+    target) {
+  
+  abundances <- abundances[abundances > 0]
+  sample_size <- sum(abundances)
   # Unobserved species
-  Ps0 <- estimate_Ps0(Unveiling, PsTuned, S0, C, CD2)
+  probabilities_species_0 <- estimate_probabilities_s_0(
+    unveiling, 
+    probabilities_tuned, 
+    species_0, 
+    sample_coverage, 
+    coverage_deficit_2
+  )
   # Full distribution of probabilities
-  Ps <- c(PsTuned, Ps0)
-  # AbdFreqCount at Level = N
-  Sn <- vapply(seq_len(N), function(nu) sum(exp(lchoose(N, nu) + nu*log(Ps) + (N-nu)*log(1-Ps))), FUN.VALUE=0.0)
-  # Get Entropy at Level=N and calculate the bias
+  probabilities <- c(probabilities_tuned, probabilities_s_0)
+  # abundances_freq_count at level = sample_size
+  species_n <- vapply(
+    seq_len(sample_size), 
+    function(nu) {
+      sum(
+        exp(
+          lchoose(sample_size, nu) + nu * log(probabilities) + 
+            (sample_size - nu) * log(1 - probabilities)
+        )
+      )
+    }, 
+    FUN.VALUE=0.0
+  )
+  # Get entropy at level=sample_size and calculate the bias
   if (q == 1) {
-    Bias <- abs(sum(-seq_len(N)/N * log(seq_len(N)/N) * Sn) - Target)
+    ent_bias <- abs(
+      sum(
+        -seq_len(sample_size) / sample_size * 
+          log(seq_len(sample_size) / sample_size) * species_n
+      ) 
+      - target
+    )
   } else {
-    Bias <- abs((sum((seq_len(N)/N)^q * Sn) - 1) / (1-q) - Target)
+    ent_bias <- abs
+      (
+        (sum((seq_len(sample_size)/sample_size)^q * Sn) - 1) / (1 - q) 
+      - target
+    )
   }
-  return(Bias)
+  return(ent_bias)
 }
-# end of utilities ####

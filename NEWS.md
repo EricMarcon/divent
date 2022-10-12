@@ -4,4 +4,5 @@
 
 ## Features
 
-- Entropy measures.
+- Data formats.
+- Sample coverage.

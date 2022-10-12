@@ -81,7 +81,7 @@ the normal distribution of unnormalized log-abundances), log-series ("lseries")
 or broken stick ("bstick") \insertCite{MacArthur1957}{divent}.
 The number of simulated species is fixed by \code{species_number}, except for
 "lseries" where it is obtained from \code{alpha_lseries} and \code{size}:
-$S=\alpha \ln(1 + \frac{size}{\alpha})$.
+\eqn{S=\alpha \ln(1 + size / \alpha)}.
 
 Log-normal, log-series and broken-stick distributions are stochastic.
 The geometric distribution is completely determined by its parameters.
