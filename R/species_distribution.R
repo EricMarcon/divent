@@ -10,7 +10,7 @@
 #' If the `estimator` is not "naive", the observed abundance distribution is used 
 #' to estimate the actual species distribution. The list of species will be changed:
 #' zero-abundance species will be cleared, and some unobserved species will be added. 
-#' First, observed species probabilities are estimated folllowing 
+#' First, observed species probabilities are estimated following 
 #' \insertCite{Chao2003;textual}{divent}, i.e. input probabilities are multiplied by 
 #' the sample coverage, or according to more sophisticated models: 
 #' \insertCite{Chao2013;textual}{divent}, a single-parameter model, or 
@@ -27,15 +27,16 @@
 #' `species_distribution` objects objects can be plotted by `plot` and `autoplot()`.
 #'
 #' @param x An object.
-#' @param name The name of the species distribution.
+#' @param names The names of the species distributions.
+#' @param weights The weights of the sites of the species distributions.
 #' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
 #' @param check_arguments If `TRUE`, check the arguments of the function. 
 #' 
 #' @examples
-#' # Paracou data TODO
-#' is_species_distribution(asm_paracou_6)
-#' # Whittaker plot fitted by a log-normal distribution
-#' autoplot(asm_paracou_6, distribution = "lognormal")
+#' # Paracou data
+#' is_species_distribution(paracou_6_abd)
+#' # Whittaker plot fitted by a log-normal distribution TODO
+#' # autoplot(asm_paracou_6, distribution = "lognormal")
 #' @references
 #' \insertAllCited{}
 #' 
@@ -43,6 +44,98 @@
 #' 
 #' @name species_distribution
 NULL
+
+
+#' @rdname species_distribution
+#'
+#' @export
+species_distribution <- function(
+    x, 
+    names = NULL, 
+    weights = NULL, 
+    check_arguments = TRUE) {
+
+  # Check the data ----
+  if (check_arguments) check_divent_args()
+  if (!is.numeric(x)) stop("'x' must be numeric")
+  if (length(dim(x)) > 2) stop("'x' may be a vector or a matrix")
+  if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
+  
+  # Build a tibble from the data ----
+  if (is.vector(x)) {
+    ## Single distribution ----
+    if (is.null(names(x))) {
+      ### Columns: add default species names such as sp_1 ----
+      names(x) <- paste(
+        "sp", 
+        formatC(1:length(x), width = ceiling(log10(length(x))), flag = "0"),
+        sep = "_"
+      )
+    }
+    if (length(names) != 1) {
+      ### Rows: Add a site name ----
+      names <- paste("site", round(stats::runif(1)*.Machine$integer.max), sep="_")
+    }
+    # Build a tibble
+    distribution <- tibble::as_tibble_row(c(site = names, x))
+    
+  } else {
+    ## Several distributions ----
+    if (is.null(colnames(x))) {
+      ### Columns: add default species names such as sp_1 ----
+      colnames(x) <- paste(
+        "sp", 
+        formatC(1:ncol(x), width = ceiling(log10(ncol(x))), flag = "0"),
+        sep = "_"
+      )
+    }
+    # Build a tibble
+    distribution <- tibble::as_tibble(x, rownames = "site")
+    ### Rows: site names = names or matrix row names or default ----
+    if (!is.null(names)) {
+      # site = names if the size matches
+      if (length(names) == nrow(x)) {
+        distribution$site <- names
+      } else {
+        stop("The length of 'names' must match the number of lines of the data matrix.")
+      }
+    } else {
+      # names is null...
+      if (is.null(row.names(x))) {
+        # ...and no row names: set default names such as site_1
+        distribution$site <- paste(
+          "site", 
+          formatC(1:nrow(x), width = ceiling(log10(nrow(x))), flag = "0"),
+          sep = "_"
+        )
+      }
+    }
+    ### Rows: site weights ----
+    if (!is.null(weights)) {
+      # site = weights if the size matches
+      if (length(weights) == nrow(x)) {
+        distribution <- tibble::add_column(
+          distribution, 
+          weight = rowSums(x),
+          .after = "site"
+        )
+      } else {
+        stop("The length of 'weights' must match the number of lines of the data matrix.")
+      }
+    } else {
+      # Weights are the number of individuals
+      distribution <- tibble::add_column(
+        distribution, 
+        weight = rowSums(x),
+        .after = "site"
+      )
+    }
+  }
+  
+  # Set the class and return ----
+  class(distribution) <- c("species_distribution", class(distribution))
+  return(distribution)
+}
 
 
 #' @rdname species_distribution
@@ -57,45 +150,13 @@ as_species_distribution <- function(x, ...) {
 #'
 #' @export
 as_species_distribution.numeric <- function(
-    x, 
-    name = "", 
+    x,
     ...,
     check_arguments = TRUE) {
-
-  if (check_arguments) check_divent_args()
-  # Check the data
-  if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
   
-  # Add default names such as sp_1
-  if (is.null(names(x))) {
-    names(x) <- paste(
-      "sp", 
-      formatC(1:length(x), width = ceiling(log10(length(x))), flag = "0"),
-      sep = "_"
-    )
-  }
-  
-  # Build a tibble
-  distribution <- tibble::as_tibble_row(c(site = name, x))
-  
-  # Set the class and return
-  class(distribution) <- c("species_distribution", class(distribution))
-  return(distribution)
-}
-
-
-#' @rdname species_distribution
-#'
-#' @export
-as_species_distribution.integer <- function(
-    x, 
-    name = "", 
-    ...,
-    check_arguments = TRUE) {
   return(
-    as_species_distribution.numeric(
+    species_distribution(
       x, 
-      name = name, 
       ..., 
       check_arguments = check_arguments
     )
@@ -108,55 +169,16 @@ as_species_distribution.integer <- function(
 #' @export
 as_species_distribution.matrix <- function(
     x, 
-    names = NULL, 
     ...,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
-  # Check the data
-  if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
-  
-  # Columns: add default names such as sp_1
-  if (is.null(colnames(x))) {
-    colnames(x) <- paste(
-      "sp", 
-      formatC(1:ncol(x), width = ceiling(log10(ncol(x))), flag = "0"),
-      sep = "_"
+  return(
+    species_distribution(
+      x, 
+      ..., 
+      check_arguments = check_arguments
     )
-  }
-  
-  # Build a tibble
-  distribution <- tibble::as_tibble(x, rownames = "site")
-  # Weights are the number of individuals
-  distribution <- tibble::add_column(
-    distribution, 
-    weight = rowSums(x),
-    .after = "site"
   )
-  
-  # Lines: add default names such as site_1
-  if (!is.null(names)) {
-    # site = names if the size matches
-    if (length(names) == nrow(x)) {
-      distribution$site <- names
-    } else {
-      stop("The length of names must match the number of lines of the data matrix.")
-    }
-  } else {
-    # names is null...
-    if (is.null(row.names(x))) {
-      # ...and no row names: set default names
-      distribution$site <- paste(
-        "site", 
-        formatC(1:nrow(x), width = ceiling(log10(nrow(x))), flag = "0"),
-        sep = "_"
-      )
-    }
-  }
-  
-  # Set the class and return
-  class(distribution) <- c("species_distribution", class(distribution))
-  return(distribution)
 }
 
 
@@ -217,15 +239,6 @@ is_species_distribution <- function(x) {
 
 #' @rdname species_distribution
 #'
-#' @export
-as_probabilities <- function(x, ...) {
-  UseMethod("as_probabilities")
-}
-
-
-#' @rdname species_distribution
-#'
-#' @param x 
 #' @param estimator One of the estimators of a probability distribution: 
 #' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 #' the probabilities of the observed species in the asymptotic distribution.
@@ -249,17 +262,16 @@ as_probabilities <- function(x, ...) {
 #' at the observed sample size equals the actual entropy of the data.
 #'
 #' @export
-as_probabilities.numeric <- function(
+probabilities <- function(
     x, 
     estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
     richness_estimator = c("jackknife", "rarefy"), 
     jack_max = 10, 
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    q = 0, 
-    ..., 
+    q = 0,
     check_arguments = TRUE) {
-
+  
   if (check_arguments) check_divent_args()
   estimator <- match.arg(estimator) 
   unveiling <- match.arg(unveiling) 
@@ -287,9 +299,9 @@ as_probabilities.numeric <- function(
     # Sample coverage
     sample_coverage <- coverage(abundances, estimator = coverage_estimator)
     if (
-        estimator == "Chao2015" | 
-        unveiling == "Chao2015" | 
-        richness_estimator == "Rarefy") {
+      estimator == "Chao2015" | 
+      unveiling == "Chao2015" | 
+      richness_estimator == "Rarefy") {
       # Sample coverage of order 2 required
       singletons <- sum(abundances == 1)
       doubletons <- sum(abundances == 2)
@@ -347,7 +359,7 @@ as_probabilities.numeric <- function(
         probabilities_tuned <- probabilities * (1 - lambda * exp(-theta * abundances))
       }
     }
-
+    
     # Estimate the number of unobserved species
     if (richness_estimator == "rarefy") {
       if (unveiling == "none")
@@ -410,32 +422,34 @@ as_probabilities.numeric <- function(
 
 
 #' @rdname species_distribution
-#' 
+#'
 #' @export
-as_probabilities.integer <- function(
-    x, 
-    estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-    unveiling = c("none", "uniform", "geometric"),
-    richness_estimator = c("jackknife", "rarefy"), 
-    jack_max = 10, 
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    q = 0, 
+as_probabilities <- function(x, ...) {
+  UseMethod("as_probabilities")
+}
+
+
+#' @rdname species_distribution
+#'
+#' @export
+as_probabilities.numeric <- function(
+    x,
     ..., 
     check_arguments = TRUE) {
-  
-  return(
-    as_probabilities.numeric(
-      x, 
-      estimator = estimator,
-      unveiling = unveiling,
-      richness_estimator = richness_estimator, 
-      jack_max = jack_max, 
-      coverage_estimator = coverage_estimator,
-      q = q, 
-      ..., 
-      check_arguments = check_arguments
-    )
+
+  if (!is.numeric(x)) stop("'x' must be numeric")
+  if (any(x < 0)) stop("Species probabilities must be positive.")
+
+  # Normalize to 1
+  probabilities <- x / sum(x)
+  probabilities <- as_species_distribution(
+    probabilities, 
+    ...,
+    check_arguments = check_arguments
   )
+
+  class(probabilities) <- c("probabilities", class(probabilities))
+  return(probabilities)
 }
 
 
@@ -446,6 +460,36 @@ is_probabilities <- function(x) {
   inherits(x, "probabilities")
 }
 
+
+#' @rdname species_distribution
+#'
+#' @export
+abundances <- function(
+    x,
+    round = TRUE,
+    names = NULL, 
+    weights = NULL, 
+    check_arguments = TRUE) {
+  
+  if (!is.numeric(x)) stop("'x' must be numeric")
+  if (any(x < 0)) stop("Species abundances must be positive.")
+  if (round) {
+    # Add 0.5 before changing mode to round rather than taking the floor
+    x <- x + 0.5
+    mode(x) <- "integer"
+  }
+  
+  abundances <- species_distribution(
+    x,     
+    names = names, 
+    weights = weights, 
+    check_arguments = check_arguments
+  )
+
+  class(abundances) <- c("abundances", class(abundances))
+  return(abundances)    
+
+}
 
 #' @rdname species_distribution
 #' 
@@ -460,7 +504,6 @@ as_abundances <- function(x, ...) {
 #' @export
 as_abundances.numeric <- function(
     x,
-    name = "",
     round = TRUE, 
     ...,
     check_arguments = TRUE) {
@@ -471,7 +514,7 @@ as_abundances.numeric <- function(
     x <- as.integer(round(x))
   }
 
-  abundances <- as_species_distribution(x, name = name, ..., check_arguments = FALSE)
+  abundances <- as_species_distribution(x, ..., check_arguments = FALSE)
 
   class(abundances) <- c("abundances", class(abundances))
   return(abundances)
@@ -482,15 +525,13 @@ as_abundances.numeric <- function(
 #' 
 #' @export
 as_abundances.integer <- function(
-    x, 
-    name = "", 
+    x,
     ..., 
     check_arguments = TRUE) {
 
   return(
     as_abundances.numeric(
-      x, 
-      name = name, 
+      x,
       round = FALSE, 
       ...,
       check_arguments = check_arguments
@@ -504,7 +545,6 @@ as_abundances.integer <- function(
 #' @export
 as_abundances.matrix <- function(
     x,
-    names = "",
     round = TRUE, 
     ...,
     check_arguments = TRUE) {
@@ -513,7 +553,7 @@ as_abundances.matrix <- function(
     # Add 0.5 before changing mode to round rather than taking the floor
     x <- x + 0.5
     mode(x) <- "integer"
-  x}
+  }
   
   abundances <- as_species_distribution.matrix(
     x, 
@@ -557,8 +597,8 @@ theta_solve <- function(
     abundances, 
     sample_size, 
     sample_coverage, 
-    coverage_deficit_2
-    ){
+    coverage_deficit_2) {
+  
   lambda <- (1 - sample_coverage) / sum(probabilities * exp(-theta * abundances))
   return(
     abs(
