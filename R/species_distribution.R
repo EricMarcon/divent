@@ -266,7 +266,7 @@ probabilities <- function(
     x, 
     estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
-    richness_estimator = c("jackknife", "rarefy"), 
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
     jack_max = 10, 
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     q = 0,
@@ -385,14 +385,14 @@ probabilities <- function(
         )
       )
     } else {
-      species_estimate <- ceiling(
+      richness_estimate <- ceiling(
         div_richness(
           abd, 
           estimator = richness_estimator, 
           jack_max = jack_max
         )
       )
-      species_0 <- species_estimate - S
+      species_0 <- richness_estimate - S
     }
     
     # Distribution of unobserved species
