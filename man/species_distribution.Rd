@@ -4,14 +4,14 @@
 \alias{species_distribution}
 \alias{as_species_distribution}
 \alias{as_species_distribution.numeric}
-\alias{as_species_distribution.integer}
 \alias{as_species_distribution.matrix}
 \alias{as_species_distribution.data.frame}
 \alias{is_species_distribution}
+\alias{probabilities}
 \alias{as_probabilities}
 \alias{as_probabilities.numeric}
-\alias{as_probabilities.integer}
 \alias{is_probabilities}
+\alias{abundances}
 \alias{as_abundances}
 \alias{as_abundances.numeric}
 \alias{as_abundances.integer}
@@ -19,64 +19,63 @@
 \alias{is_abundances}
 \title{Species Distributions}
 \usage{
+species_distribution(x, names = NULL, weights = NULL, check_arguments = TRUE)
+
 as_species_distribution(x, ...)
 
-\method{as_species_distribution}{numeric}(x, name = "", ..., check_arguments = TRUE)
+\method{as_species_distribution}{numeric}(x, ..., check_arguments = TRUE)
 
-\method{as_species_distribution}{integer}(x, name = "", ..., check_arguments = TRUE)
-
-\method{as_species_distribution}{matrix}(x, names = NULL, ..., check_arguments = TRUE)
+\method{as_species_distribution}{matrix}(x, ..., check_arguments = TRUE)
 
 \method{as_species_distribution}{data.frame}(x, ..., check_arguments = TRUE)
 
 is_species_distribution(x)
 
+probabilities(
+  x,
+  estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+  unveiling = c("none", "uniform", "geometric"),
+  richness_estimator = c("jackknife", "rarefy"),
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q = 0,
+  check_arguments = TRUE
+)
+
 as_probabilities(x, ...)
 
-\method{as_probabilities}{numeric}(
-  x,
-  estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
-  richness_estimator = c("jackknife", "rarefy"),
-  jack_max = 10,
-  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-  q = 0,
-  ...,
-  check_arguments = TRUE
-)
-
-\method{as_probabilities}{integer}(
-  x,
-  estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
-  richness_estimator = c("jackknife", "rarefy"),
-  jack_max = 10,
-  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-  q = 0,
-  ...,
-  check_arguments = TRUE
-)
+\method{as_probabilities}{numeric}(x, ..., check_arguments = TRUE)
 
 is_probabilities(x)
 
+abundances(
+  x,
+  round = TRUE,
+  names = NULL,
+  weights = NULL,
+  check_arguments = TRUE
+)
+
 as_abundances(x, ...)
 
-\method{as_abundances}{numeric}(x, name = "", round = TRUE, ..., check_arguments = TRUE)
+\method{as_abundances}{numeric}(x, round = TRUE, ..., check_arguments = TRUE)
 
-\method{as_abundances}{integer}(x, name = "", ..., check_arguments = TRUE)
+\method{as_abundances}{integer}(x, ..., check_arguments = TRUE)
 
-\method{as_abundances}{matrix}(x, names = "", round = TRUE, ..., check_arguments = TRUE)
+\method{as_abundances}{matrix}(x, round = TRUE, ..., check_arguments = TRUE)
 
 is_abundances(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{An object.}
 
-\item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
+\item{names}{The names of the species distributions.}
 
-\item{name}{The name of the species distribution.}
+\item{weights}{The weights of the sites of the species distributions.}
 
 \item{check_arguments}{If \code{TRUE}, check the arguments of the function.}
+
+\item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
 
 \item{estimator}{One of the estimators of a probability distribution:
 "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
@@ -117,7 +116,7 @@ A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing spec
 If the \code{estimator} is not "naive", the observed abundance distribution is used
 to estimate the actual species distribution. The list of species will be changed:
 zero-abundance species will be cleared, and some unobserved species will be added.
-First, observed species probabilities are estimated folllowing
+First, observed species probabilities are estimated following
 \insertCite{Chao2003;textual}{divent}, i.e. input probabilities are multiplied by
 the sample coverage, or according to more sophisticated models:
 \insertCite{Chao2013;textual}{divent}, a single-parameter model, or
@@ -134,10 +133,10 @@ TODO: These functions can be applied to data frames to calculate the joint diver
 \code{species_distribution} objects objects can be plotted by \code{plot} and \code{autoplot()}.
 }
 \examples{
-# Paracou data TODO
-is_species_distribution(asm_paracou_6)
-# Whittaker plot fitted by a log-normal distribution
-autoplot(asm_paracou_6, distribution = "lognormal")
+# Paracou data
+is_species_distribution(paracou_6_abd)
+# Whittaker plot fitted by a log-normal distribution TODO
+# autoplot(asm_paracou_6, distribution = "lognormal")
 }
 \references{
 \insertAllCited{}

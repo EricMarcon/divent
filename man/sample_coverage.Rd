@@ -6,6 +6,8 @@
 \alias{coverage.numeric}
 \alias{coverage.abundances}
 \alias{coverage_to_size}
+\alias{coverage_to_size.numeric}
+\alias{coverage_to_size.abundances}
 \title{Sample Coverage of a Community}
 \usage{
 coverage(x, ...)
@@ -26,7 +28,11 @@ coverage(x, ...)
   check_arguments = TRUE
 )
 
-coverage_to_size(abundances, sample_coverage, check_arguments = TRUE)
+coverage_to_size(x, ...)
+
+\method{coverage_to_size}{numeric}(x, sample_coverage, ..., check_arguments = TRUE)
+
+\method{coverage_to_size}{abundances}(x, sample_coverage, ..., check_arguments = TRUE)
 }
 \arguments{
 \item{x}{An object.}
@@ -40,9 +46,9 @@ coverage_to_size(abundances, sample_coverage, check_arguments = TRUE)
 
 \item{check_arguments}{If \code{TRUE}, check the arguments of the function.}
 
-\item{abundances}{An object of class \code{abundances}.}
-
 \item{sample_coverage}{The target sample coverage.}
+
+\item{abundances}{An object of class \code{abundances}.}
 }
 \value{
 \code{coverage()} returns a named number equal to the calculated sample coverage.
@@ -57,7 +63,8 @@ described by its abundance vector.
 sample coverage.
 }
 \examples{
-coverage(asm_paracou_6)
+coverage(paracou_6_abd)
+coverage_to_size(paracou_6_abd, sample_coverage = 0.9)
 
 }
 \references{

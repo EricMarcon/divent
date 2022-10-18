@@ -14,9 +14,9 @@ Permanent data census of Paracou: \url{https://paracou.cirad.fr/}
 paracou_6_abd
 }
 \description{
-A community assembly, which is a tibble (and a data.frame).
+A community assembly.
 It contains number of trees per species of the plot #6 of Paracou.
-The plot covers 6.25 ha of tropical rainforest, divided into 4 equal-size subplots.
+The plot covers 6.25 ha of tropical rainforest, divided into 4 equally-sized subplots.
 Each line of the tibble is a subplot.
 The "site" column contains the subplot number, "weight" contains its area and all others columns contain a species.
 Data are the number of trees above 10 cm diameter at breast height (DBH).

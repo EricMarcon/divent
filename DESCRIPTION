@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.1-0.9000
+Version: 0.1-0.9001
 Authors@R: c(
     person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X")),
     person("Bruno", "Herault", email="bruno.herault@cirad.fr", role="aut", comment=c(ORCID="0000-0002-6950-7286"))
@@ -12,12 +12,13 @@ Description: Measurement and partitioning of diversity, based on Tsallis entropy
 URL: https://github.com/EricMarcon/divent
 BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
-Imports: 
-  Rdpack,
+Imports:
+  EntropyEstimation,
   tibble
 Suggests: 
   knitr, 
   pkgdown, 
+  Rdpack,
   rmarkdown, 
   testthat
 LazyData: true
