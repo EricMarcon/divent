@@ -44,7 +44,8 @@ coverage_to_size(x, ...)
 
 \item{level}{The level of interpolation or extrapolation, i.e. an abundance.}
 
-\item{check_arguments}{If \code{TRUE}, check the arguments of the function.}
+\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
 \item{sample_coverage}{The target sample coverage.}
 

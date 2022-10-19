@@ -30,7 +30,8 @@
 #' @param names The names of the species distributions.
 #' @param weights The weights of the sites of the species distributions.
 #' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
-#' @param check_arguments If `TRUE`, check the arguments of the function. 
+#' @param check_arguments If `TRUE`, the function arguments are verified.
+#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' 
 #' @examples
 #' # Paracou data

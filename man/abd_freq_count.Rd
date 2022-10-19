@@ -32,7 +32,7 @@ Used only for extrapolation.}
 \link{div_richness} to evaluate the total number of species in \link{probabilities}.
 Used only for extrapolation.}
 
-\item{check_arguments}{Logical; if \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
@@ -53,5 +53,5 @@ distribution of the community by \link{probabilities} and eq. (5)
 of \insertCite{Chao2014}{divent}.
 }
 \examples{
-abd_freq_count(paracou_6_abd[1, ])
+abd_freq_count(paracou_6_abd[1, -(1:2)])
 }

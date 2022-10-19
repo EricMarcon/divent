@@ -8,7 +8,8 @@
 #' @param x An object.
 #' @param abundances An object of class `abundances`.
 #' @param ... Unused.
-#' @param check_arguments If `TRUE`, check the arguments of the function. 
+#' @param check_arguments If `TRUE`, the function arguments are verified.
+#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' 
 #' @return `coverage()` returns a named number equal to the calculated sample coverage.
 #' The name is that of the estimator used. 
