@@ -5,17 +5,17 @@
 #' 
 #' Bias correction requires the number of individuals. 
 #' Chao's correction techniques are from \insertCite{Chao2014;textual}{divent} 
-#' and \insertCite{Chiu2014;textual}{divent}. 
+#' and \insertCite{Chiu2014a;textual}{divent}. 
 #' The Jackknife estimator is calculated by a straight adaptation of the code 
 #' by Ji-Ping Wang (jackknife in package **SPECIES**). 
 #' The optimal order is selected according to 
-#' \insertCite{Burnham1978;Burnham1979;textual}{divent}. 
+#' \insertCite{Burnham1978,Burnham1979;textual}{divent}. 
 #' Many other estimators are available elsewhere, the ones implemented here are 
 #' necessary for other entropy estimations.
 #' 
 #' Richness can be estimated at a specified `level` of interpolation or 
 #' extrapolation, either a chosen sample size or sample coverage 
-#' \insertCite{Chiu2014}{divent}, rather than its asymptotic value. 
+#' \insertCite{Chiu2014a}{divent}, rather than its asymptotic value. 
 #' Extrapolation relies on the estimation of the asymptotic richness. 
 #' If `probability_estimator` is "naive", then the asymptotic estimation of 
 #' richness is made using the chosen `estimator`, else the asymptotic 
@@ -104,7 +104,7 @@ div_richness.numeric <- function(
   s_observed <- length(abd)
 
   # Diversity of a vector of abundances ----
-  if (is.null(Level)) {
+  if (is.null(level)) {
     ## Exit if x contains no or a single species ----
     if (length(abd) < 2) {
       if (length(abd) == 0) {
@@ -127,8 +127,8 @@ div_richness.numeric <- function(
     
     # Calculate basic statistics
     abd_freq <- abd_freq_count(abd)
-    s_1 <- abd_freq[abd_freq[, 1] == 1][2]
-    s_2 <- abd_freq[abd_freq[, 1] == 2][2]
+    s_1 <- as.integer(abd_freq[abd_freq[, 1] == 1, 2])
+    s_2 <- as.integer(abd_freq[abd_freq[, 1] == 2, 2])
     
     
     ## Chao1 ----
@@ -153,8 +153,8 @@ div_richness.numeric <- function(
     }
     ## iChao1 ----
     if (estimator == "iChao1") {
-      s_3 <- abd_freq[abd_freq[, 1] == 3][2]
-      s_4 <- abd_freq[abd_freq[, 1] == 4][2]
+      s_3 <- as.integer(abd_freq[abd_freq[, 1] == 3, 2])
+      s_4 <- as.integer(abd_freq[abd_freq[, 1] == 4, 2])
       if (is.na(s_3)) {
         s_3 <- 0
       }
