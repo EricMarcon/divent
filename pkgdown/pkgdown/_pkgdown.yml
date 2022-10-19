@@ -1,0 +1,33 @@
+url: https://ericmarcon.github.io/entropart
+
+development:
+  mode: auto
+
+reference:
+  - title: Package summary
+    contents:
+    - starts_with("divent")
+  - title: Datasets
+    contents:
+    - starts_with("paracou_")
+  - title: Generate data
+    contents:
+    - rcommunity
+  - title: Diversity
+    contents:
+    - starts_with("div_")
+  - title: Entropy
+    contents:
+    - starts_with("ent_")
+  - title: Other statistics from species distributions 
+    contents:
+    - sample_coverage
+  - title: Classes
+    contents:
+    - abundances
+    - species_distribution
+    - probabilities
+  - title: Utilities
+    contents:
+    - abd_freq_count
+ 

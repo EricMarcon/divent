@@ -73,17 +73,17 @@ Several estimators are available to deal with incomplete sampling.
 \details{
 Bias correction requires the number of individuals.
 Chao's correction techniques are from \insertCite{Chao2014;textual}{divent}
-and \insertCite{Chiu2014;textual}{divent}.
+and \insertCite{Chiu2014a;textual}{divent}.
 The Jackknife estimator is calculated by a straight adaptation of the code
 by Ji-Ping Wang (jackknife in package \strong{SPECIES}).
 The optimal order is selected according to
-\insertCite{Burnham1978;Burnham1979;textual}{divent}.
+\insertCite{Burnham1978,Burnham1979;textual}{divent}.
 Many other estimators are available elsewhere, the ones implemented here are
 necessary for other entropy estimations.
 
 Richness can be estimated at a specified \code{level} of interpolation or
 extrapolation, either a chosen sample size or sample coverage
-\insertCite{Chiu2014}{divent}, rather than its asymptotic value.
+\insertCite{Chiu2014a}{divent}, rather than its asymptotic value.
 Extrapolation relies on the estimation of the asymptotic richness.
 If \code{probability_estimator} is "naive", then the asymptotic estimation of
 richness is made using the chosen \code{estimator}, else the asymptotic

@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.1-0.9001
+Version: 0.1-0.9002
 Authors@R: c(
     person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X")),
     person("Bruno", "Herault", email="bruno.herault@cirad.fr", role="aut", comment=c(ORCID="0000-0002-6950-7286"))
@@ -16,11 +16,11 @@ Imports:
   EntropyEstimation,
   tibble
 Suggests: 
-  knitr, 
-  pkgdown, 
-  Rdpack,
-  rmarkdown, 
-  testthat
+    knitr,
+    pkgdown,
+    Rdpack,
+    rmarkdown,
+    testthat (>= 3.0.0)
 LazyData: true
 VignetteBuilder: knitr
 SystemRequirements: pandoc
@@ -30,3 +30,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Depends: 
     R (>= 3.5)
+Config/testthat/edition: 3
