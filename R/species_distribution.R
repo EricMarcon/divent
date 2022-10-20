@@ -394,7 +394,7 @@ probabilities <- function(
           jack_max = jack_max
         )
       )
-      species_0 <- richness_estimate - S
+      species_0 <- richness_estimate - species_number
     }
     
     # Distribution of unobserved species
@@ -784,7 +784,7 @@ rarefaction_bias <- function(
   } else {
     ent_bias <- abs
       (
-        (sum((seq_len(sample_size)/sample_size)^q * Sn) - 1) / (1 - q) 
+        (sum((seq_len(sample_size)/sample_size)^q * species_n) - 1) / (1 - q) 
       - ent_target
     )
   }
