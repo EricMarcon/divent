@@ -111,7 +111,7 @@ coverage.numeric <- function(
     ## Good's estimator ----
     if (estimator == "Good") {
       if (level >= sample_size) stop("Good's estimator only allows interpolation: level must be less than the observed community size.")
-      sample_coverage <- 1 - EntropyEstimation::Geabundancesimp.z(abd, level)
+      sample_coverage <- 1 - EntropyEstimation::GenSimp.z(abd, level)
       return(tibble::tibble_row(estimator, coverage = sample_coverage))
     }
     
