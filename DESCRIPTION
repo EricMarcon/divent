@@ -14,13 +14,13 @@ BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
 Imports:
   EntropyEstimation,
+  Rdpack,
   tibble
 Suggests: 
-    knitr,
-    pkgdown,
-    Rdpack,
-    rmarkdown,
-    testthat (>= 3.0.0)
+  knitr,
+  pkgdown,
+  rmarkdown,
+  testthat (>= 3.0.0)
 LazyData: true
 VignetteBuilder: knitr
 SystemRequirements: pandoc
