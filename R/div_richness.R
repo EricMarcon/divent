@@ -159,7 +159,7 @@ div_richness.numeric <- function(
       if (is.na(s_3)) {
         s_3 <- 0
       }
-      if (is.na(S4)) {
+      if (is.na(s_4)) {
         s_4 <- 1
       }
       s_0_iChao <- s_3 / 4 / s_4 * max(s_1 - s_2 * s_3 / 2 / s_4, 0)

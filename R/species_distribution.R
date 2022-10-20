@@ -404,7 +404,7 @@ probabilities <- function(
       } else {
         prob <- c(
           prob_tuned, 
-          estimate_species_0(
+          estimate_prob_s_0(
             unveiling, 
             prob_tuned, 
             species_0, 
@@ -416,7 +416,7 @@ probabilities <- function(
     } else {
       prob <- prob_tuned
     }
-    probabilities <- as_species_distribution(prob, ...)
+    probabilities <- as_species_distribution(prob)
   }
   class(probabilities) <- c("probabilities", class(probabilities))
   return(probabilities)
@@ -450,6 +450,29 @@ as_probabilities.numeric <- function(
     check_arguments = check_arguments
   )
 
+  class(probabilities) <- c("probabilities", class(probabilities))
+  return(probabilities)
+}
+
+
+#' @rdname species_distribution
+#' 
+#' @export
+as_probabilities.matrix <- function(
+    x,
+    names = NULL, 
+    weights = NULL, 
+    ...,
+    check_arguments = TRUE) {
+  
+  probabilities <- as_species_distribution.matrix(
+    x, 
+    names = names, 
+    weights = weights,
+    ..., 
+    check_arguments = check_arguments
+  )
+  
   class(probabilities) <- c("probabilities", class(probabilities))
   return(probabilities)
 }
@@ -549,7 +572,9 @@ as_abundances.integer <- function(
 #' @export
 as_abundances.matrix <- function(
     x,
-    round = TRUE, 
+    round = TRUE,
+    names = NULL, 
+    weights = NULL, 
     ...,
     check_arguments = TRUE) {
   
@@ -562,6 +587,7 @@ as_abundances.matrix <- function(
   abundances <- as_species_distribution.matrix(
     x, 
     names = names, 
+    weights = weights,
     ..., 
     check_arguments = check_arguments
   )
@@ -653,12 +679,12 @@ estimate_prob_s_0 <- function(
 
   prob_s_0 <- NA
   if (unveiling == "geom") {
-    if (species_n == 1) {
+    if (species_0 == 1) {
       # A single unobserved species
       prob_s_0 <- 1 - sample_coverage
     } else {
       r <- (1 - sample_coverage)^2 / coverage_deficit_2
-      i <- seq_len(species_n)
+      i <- seq_len(species_0)
       beta <-  tryCatch(
         stats::optimize(
           beta_solve, 
@@ -674,7 +700,7 @@ estimate_prob_s_0 <- function(
       prob_s_0 <- alpha * beta^i
       # Sometimes fails when the distribution is very uneven (sometimes r < 1) 
       # Then, go back to the uniform distribution
-      if (any(is_na(prob_s_0)) | any(prob_s_0 <= 0)) {
+      if (any(is.na(prob_s_0)) | any(prob_s_0 <= 0)) {
         unveiling <- "unif"
       }
     }
@@ -683,7 +709,7 @@ estimate_prob_s_0 <- function(
     # Add s_0 unobserved species with equal probabilities
     prob_s_0 <- rep((1 - sum(prob_tuned)) / species_0, species_0)
   }
-  if (any(is_na(prob_s_0))) {
+  if (any(is.na(prob_s_0))) {
     warning("Unveiling method was not recognized")
     return(NA)
   } else {
@@ -724,7 +750,7 @@ rarefaction_bias <- function(
   abd <- abd[abd > 0]
   sample_size <- sum(abd)
   # Unobserved species
-  prob_species_0 <- estimate_prob_s_0(
+  prob_s_0 <- estimate_prob_s_0(
     unveiling, 
     prob_tuned, 
     species_0, 
