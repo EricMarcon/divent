@@ -104,6 +104,8 @@ Used only to estimate asymptotic probability distributions when argument
 \code{richness_estimator} is "rarefy". Then, the number of unobserved species is
 fitted so that the entropy of order q of the asymptotic probability distribution
 at the observed sample size equals the actual entropy of the data.}
+
+\item{round}{If \code{TRUE}, the values of \code{x} are converted to integers.}
 }
 \description{
 A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing species abundances or probabilities.
