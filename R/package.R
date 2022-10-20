@@ -54,22 +54,14 @@ check_divent_args <- function() {
   parent_function_name <- parent_function_split[length(parent_function_split)]
   args <- formals(match.fun(parent_function_name))
   
-  error_function <- paste("Error in ", parent_function, ":")
-  
-  error_message <- function(message, argument) {
-    cat(deparse(substitute(argument)), "cannot be:\n")
-    print(utils::head(argument))
-    cat(paste(error_function, message, "\n"))
-    stop("Check the function arguments.", call. = FALSE)
-  }
-
   # q
   if (!is.na(names(args["q"]))) {
     q <- eval(expression(q), parent.frame())
     if (!is.numeric(q) | length(q) != 1)
-      ErrorMessage("q must be a number.", q)
+      error_message("q must be a number.", q, parent_function)
   }
 
+  # All tests passed.
   return (TRUE)
 }
 
@@ -83,12 +75,13 @@ check_divent_args <- function() {
 #'
 #' @param message The message to print.
 #' @param argument The function argument that did not pass the tests.
+#' @param parent_function The name of the function the argument was passed to.
 #'
 #' @return Nothing
-ErrorMessage <- function(message, argument) {
+error_message <- function(message, argument, parent_function) {
   cat(deparse(substitute(argument)), "cannot be:\n")
   print(utils::head(argument))
-  cat(paste(ErrorFunction, message, "\n"))
+  cat(paste(paste("Error in ", parent_function, ":"), message, "\n"))
   stop("Check the function arguments.", call. = FALSE)
 }
 
