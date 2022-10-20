@@ -74,6 +74,23 @@ check_divent_args <- function() {
 }
 
 
+
+#' Error message
+#' 
+#' Utility for [check_divent_args]]
+#'
+#' @param message The message to print.
+#' @param argument The function argument that did not pass the tests.
+#'
+#' @return Nothing
+ErrorMessage <- function(message, argument) {
+  cat(deparse(substitute(argument)), "cannot be:\n")
+  print(utils::head(argument))
+  cat(paste(ErrorFunction, message, "\n"))
+  stop("Check the function arguments.", call. = FALSE)
+}
+
+
 #' Check values of a vector are integers
 #' 
 #' Check that the values of a vector are integer, whatever their type.
