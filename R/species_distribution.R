@@ -27,8 +27,6 @@
 #' `species_distribution` objects objects can be plotted by `plot` and `autoplot()`.
 #'
 #' @param x An object.
-#' @param names The names of the species distributions.
-#' @param weights The weights of the sites of the species distributions.
 #' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
@@ -49,6 +47,9 @@ NULL
 
 #' @rdname species_distribution
 #'
+#' @param names The names of the species distributions.
+#' @param weights The weights of the sites of the species distributions.
+#' 
 #' @export
 species_distribution <- function(
     x, 
@@ -464,6 +465,8 @@ is_probabilities <- function(x) {
 
 #' @rdname species_distribution
 #'
+#' @param round If `TRUE`, the values of `x` are converted to integers.
+#' 
 #' @export
 abundances <- function(
     x,
