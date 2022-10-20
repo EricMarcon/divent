@@ -131,7 +131,7 @@ div_richness.numeric <- function(
     s_2 <- as.integer(abd_freq[abd_freq[, 1] == 2, 2])
     
     
-    ## Chao1 ----
+    ## Chao1 and iChao1 ----
     if ((estimator == "Chao1") | (estimator == "iChao1")) {
       if (is.na(s_1)) {
         s_1 <- 0
@@ -143,6 +143,7 @@ div_richness.numeric <- function(
         s_0 <- (sample_size - 1) / sample_size * s_1 * s_1 / 2 / s_2
       }
     }
+    ### Chao1 ----
     if (estimator == "Chao1") {
       return(
         tibble::tibble_row(
@@ -151,7 +152,7 @@ div_richness.numeric <- function(
         )
       )
     }
-    ## iChao1 ----
+    ### iChao1 ----
     if (estimator == "iChao1") {
       s_3 <- as.integer(abd_freq[abd_freq[, 1] == 3, 2])
       s_4 <- as.integer(abd_freq[abd_freq[, 1] == 4, 2])
@@ -184,7 +185,7 @@ div_richness.numeric <- function(
         m <- max(abd_freq[, 1])
         # Complete the abundance frequency count for all counts between 1 and m
         n_temp <- cbind(seq_len(m), rep(0, m))
-        n_temp[abd_freq[, 1], 2] <- abd_freq[, 2]
+        n_temp[abd_freq$abundance , 2] <- abd_freq$number_of_species
         abd_freq <- n_temp
         # Prepare a matrix with k+1 rows and 5 columns
         gene <- matrix(0, nrow = k + 1, ncol = 5)
@@ -225,8 +226,8 @@ div_richness.numeric <- function(
         # Threshold for Burnham and Overton's test
         coe <- stats::qnorm(1 - jack_alpha/2, 0, 1)
         # Which orders pass the test?
-        x <- (gene[2:(k + 1), 5] < coe)
-        if (sum(x, na.rm=TRUE) == 0) {
+        orders <- (gene[2:(k + 1), 5] < coe)
+        if (sum(orders, na.rm=TRUE) == 0) {
           # If none, keep the max value of k (+1 because jack1 is in line 2)
           k_smallest <- k + 1
           s_jack <- gene[k_smallest, 1]
@@ -235,7 +236,7 @@ div_richness.numeric <- function(
         }
         else {
           # Else, keep the smallest value (+1 because jack1 is in line 2)
-          k_smallest <- which(x)[1] + 1
+          k_smallest <- which(orders)[1] + 1
           # Estimated value
           s_jack <- gene[k_smallest, 1]
           # Estimated standard error
