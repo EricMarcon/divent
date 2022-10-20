@@ -10,6 +10,7 @@
 \alias{probabilities}
 \alias{as_probabilities}
 \alias{as_probabilities.numeric}
+\alias{as_probabilities.matrix}
 \alias{is_probabilities}
 \alias{abundances}
 \alias{as_abundances}
@@ -46,6 +47,8 @@ as_probabilities(x, ...)
 
 \method{as_probabilities}{numeric}(x, ..., check_arguments = TRUE)
 
+\method{as_probabilities}{matrix}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
+
 is_probabilities(x)
 
 abundances(
@@ -62,7 +65,14 @@ as_abundances(x, ...)
 
 \method{as_abundances}{integer}(x, ..., check_arguments = TRUE)
 
-\method{as_abundances}{matrix}(x, round = TRUE, ..., check_arguments = TRUE)
+\method{as_abundances}{matrix}(
+  x,
+  round = TRUE,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 is_abundances(x)
 }

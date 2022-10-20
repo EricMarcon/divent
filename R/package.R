@@ -78,6 +78,8 @@ check_divent_args <- function() {
 #' Error message
 #' 
 #' Utility for [check_divent_args]]
+#' 
+#' @noRd
 #'
 #' @param message The message to print.
 #' @param argument The function argument that did not pass the tests.

@@ -18,7 +18,8 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' ent_tsallis(paracou_6_abd, q = 2)
+#' # TODO
+#' # ent_tsallis(paracou_6_abd, q = 2)
 #' 
 #' @name ent_tsallis
 NULL
@@ -68,6 +69,69 @@ ent_tsallis.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  if (check_arguments) check_divent_args()
+  estimator <- match.arg(estimator) 
+  probability_estimator <- match.arg(probability_estimator) 
+  unveiling <- match.arg(unveiling) 
+  richness_estimator <- match.arg(richness_estimator) 
+  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  
   # Dummy code
   return(NA)
+}
+
+
+#' @rdname ent_tsallis
+#'
+#' @export
+ent_tsallis.abundances <- function(
+    x, 
+    q = 1, 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
+    level = NULL, 
+    probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+    unveiling = c("none", "uniform", "geometric"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10,
+    ...,
+    check_arguments = TRUE) {
+
+  if (check_arguments) check_divent_args()
+  estimator <- match.arg(estimator) 
+  probability_estimator <- match.arg(probability_estimator) 
+  unveiling <- match.arg(unveiling) 
+  richness_estimator <- match.arg(richness_estimator) 
+  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  
+  # Apply ent_tsallis.numeric() to each site
+  ent_tsallis_list <- apply(
+    # Eliminate site and weight columns
+    x[, !(colnames(x) %in% c("site", "weight"))], 
+    # Apply to each row
+    MARGIN = 1,
+    FUN = ent_tsallis.numeric,
+    # Arguments
+    q = q,
+    estimator = estimator,
+    level = level, 
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    richness_estimator = richness_estimator,
+    jack_alpha  = jack_alpha, 
+    jack_max = jack_max, 
+    check_arguments = FALSE
+  )
+  
+  return(
+    # Make a tibble with site, estimator and richness
+    tibble::tibble(
+      # Do not assume column site exists
+      x[colnames(x) == "site"],
+      # Coerce the list returned by apply into a dataframe
+      do.call(rbind.data.frame, ent_tsallis_list)
+    )
+  )
+  
 }
