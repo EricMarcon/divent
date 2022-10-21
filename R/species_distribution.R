@@ -274,16 +274,18 @@ probabilities <- function(
     q = 0,
     check_arguments = TRUE) {
   
+  # Check the data ----
   if (check_arguments) check_divent_args()
   estimator <- match.arg(estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator) 
   
-  
+  # Naive estimator ----
   if (estimator == "naive") {
     # Just normalize so that x sums to 1
     probabilities <- x / sum(x)
+  # Other estimators ----
   } else {
     # Integer abundances are required by all non-naive estimators
     if (!is_integer_values(x)) {
@@ -305,23 +307,20 @@ probabilities <- function(
       unveiling == "Chao2015" | 
       richness_estimator == "Rarefy") {
       # Sample coverage of order 2 required
-      singletons <- sum(abd == 1)
-      doubletons <- sum(abd == 2)
-      if (doubletons == 0) {
-        singletons <- max(singletons - 1, 0)
-        doubletons <- 1
+      s_1 <- sum(abd == 1)
+      s_2 <- sum(abd == 2)
+      if (s_2 == 0) {
+        s_1 <- max(s_1 - 1, 0)
+        s_2 <- 1
       }
-      tripletons <- max(sum(abd == 3), 1)
+      s_3 <- max(sum(abd == 3), 1)
       # 1 minus sample coverage (i.e. Coverage Deficit) of order 2
       coverage_deficit_2 <-
-        doubletons / choose(sample_size, 2) * 
-        (
-          (sample_size - 2) * doubletons / 
-            ((sample_size - 2) * doubletons + 3 * tripletons)
-        )^2
+        s_2 / choose(sample_size, 2) * 
+        ((sample_size - 2) * s_2 / ((sample_size - 2) * s_2 + 3 * s_3))^2
     }
     
-    # Tune the probabilities of observed species
+    ## Tune the probabilities of observed species ----
     if (sample_coverage == 0 | sample_coverage == 1) {
       # Sample coverage equal to 1, do not tune. If 0, unable to tune.
       prob_tuned <- prob
@@ -362,10 +361,11 @@ probabilities <- function(
       }
     }
     
-    # Estimate the number of unobserved species
+    ## Estimate the number of unobserved species ----
     if (richness_estimator == "rarefy") {
-      if (unveiling == "none")
+      if (unveiling == "none") {
         stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
+      }
       # Estimation of the number of unobserved species to initialize optimization
       species_0 <- div_richness(abd, estimator = "jackknife") - species_number
       # Estimate the number of unobserved species by iterations
@@ -397,7 +397,7 @@ probabilities <- function(
       species_0 <- richness_estimate - species_number
     }
     
-    # Distribution of unobserved species
+    ## Distribution of unobserved species ----
     if (species_0) {
       if (unveiling == "None") {
         prob <- prob_tuned
@@ -418,6 +418,8 @@ probabilities <- function(
     }
     probabilities <- as_species_distribution(prob)
   }
+  
+  # Set the class and return ----
   class(probabilities) <- c("probabilities", class(probabilities))
   return(probabilities)
 }
@@ -545,25 +547,6 @@ as_abundances.numeric <- function(
 
   class(abundances) <- c("abundances", class(abundances))
   return(abundances)
-}
-
-
-#' @rdname species_distribution
-#' 
-#' @export
-as_abundances.integer <- function(
-    x,
-    ..., 
-    check_arguments = TRUE) {
-
-  return(
-    as_abundances.numeric(
-      x,
-      round = FALSE, 
-      ...,
-      check_arguments = check_arguments
-    )
-  )
 }
 
 
