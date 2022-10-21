@@ -35,12 +35,14 @@
 #' Richness extrapolation require its asymptotic estimation depending on the 
 #' choice of the `estimator`.
 #' @param probability_estimator One of the estimators of a probability distribution: 
-#' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
+#' "Chao2015", "Chao2013" or "ChaoShen" to estimate
 #' the probabilities of the observed species in the asymptotic distribution.
+#' Used only by the estimator of richness "rarefy".
 #' @param unveiling One of the possible unveiling methods to estimate the probabilities 
-#' of the unobserved species: "none" (default, no species is added), "uniform" 
-#' (all unobserved species have the same probability) or "geometric" (the 
-#' unobserved species distribution is geometric).
+#' of the unobserved species: "geometric" (default, the 
+#' unobserved species distribution is geometric) or  "uniform" 
+#' (all unobserved species have the same probability).
+#' Used only by the estimator of richness "rarefy".
 #' @param ... Unused.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
@@ -75,8 +77,8 @@ div_richness.numeric <- function(
     jack_alpha  = 0.05, 
     jack_max = 10, 
     level = NULL, 
-    probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-    unveiling = c("none", "uniform", "geometric"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
+    unveiling = c("geometric", "uniform"),
     ..., 
     check_arguments = TRUE) {
   
@@ -123,6 +125,25 @@ div_richness.numeric <- function(
     ## Naive estimator ----
     if (estimator == "naive") {
       return(tibble::tibble_row(estimator = "naive", richness = s_obs))
+    }
+    
+    ## Rarefaction estimator ----
+    if (estimator == "rarefy") {
+      return(
+        tibble::tibble_row(
+          estimator = "rarefy", 
+          richness = length(
+            probabilities.numeric(
+              abd, 
+              estimator = probability_estimator, 
+              unveiling = unveiling, 
+              richness_estimator = "rarefy", 
+              q = 0, 
+              check_arguments = FALSE
+            )
+          )
+        )
+      )
     }
     
     # Calculate basic statistics
@@ -321,7 +342,7 @@ div_richness.numeric <- function(
 #' @export
 div_richness.abundances <- function(
     x, 
-    estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
     jack_alpha  = 0.05, 
     jack_max = 10, 
     level = NULL, 
