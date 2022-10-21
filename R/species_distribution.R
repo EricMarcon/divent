@@ -45,6 +45,8 @@
 NULL
 
 
+#  Species Distribution ----
+
 #' @rdname species_distribution
 #'
 #' @param names The names of the species distributions.
@@ -171,12 +173,16 @@ as_species_distribution.numeric <- function(
 #' @export
 as_species_distribution.matrix <- function(
     x, 
+    names = NULL, 
+    weights = NULL, 
     ...,
     check_arguments = TRUE) {
   
   return(
     species_distribution(
       x, 
+      names = names, 
+      weights = weights, 
       ..., 
       check_arguments = check_arguments
     )
@@ -238,6 +244,7 @@ is_species_distribution <- function(x) {
   inherits(x, "species_distribution")
 }
 
+#  Probabilities ----
 
 #' @rdname species_distribution
 #'
@@ -367,14 +374,14 @@ probabilities <- function(
         stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
-      species_0 <- div_richness(abd, estimator = "jackknife") - species_number
+      s_0 <- div_richness(abd, estimator = "jackknife") - species_number
       # Estimate the number of unobserved species by iterations
       ent_target <- ent_tsallis(abd, q = q, estimator = "naive", check_arguments = FALSE)
-      species_0 <- round(
+      s_0 <- round(
         tryCatch(
           stats::optimize(
             rarefaction_bias, 
-            interval = c(0, 2 * species_0), 
+            interval = c(0, 2 * s_0), 
             abd, 
             prob_tuned, 
             sample_coverage, 
@@ -383,7 +390,7 @@ probabilities <- function(
             unveiling, 
             ent_target
           )$minimum,
-          error = function(e) {species_0}
+          error = function(e) {s_0}
         )
       )
     } else {
@@ -394,11 +401,11 @@ probabilities <- function(
           jack_max = jack_max
         )
       )
-      species_0 <- richness_estimate - species_number
+      s_0 <- richness_estimate - species_number
     }
     
     ## Distribution of unobserved species ----
-    if (species_0) {
+    if (s_0) {
       if (unveiling == "None") {
         prob <- prob_tuned
       } else {
@@ -407,7 +414,7 @@ probabilities <- function(
           estimate_prob_s_0(
             unveiling, 
             prob_tuned, 
-            species_0, 
+            s_0, 
             coverage, 
             coverage_deficit_2
           )
@@ -481,12 +488,33 @@ as_probabilities.matrix <- function(
 
 
 #' @rdname species_distribution
+#'
+#' @export
+as_probabilities.data.frame <- function(
+    x, 
+    ...,
+    check_arguments = TRUE) {
+  
+  probabilities <- as_species_distribution.data.frame(
+    x, 
+    ..., 
+    check_arguments = check_arguments
+  )
+  
+  class(probabilities) <- c("probabilities", class(probabilities))
+  return(probabilities)
+}
+
+
+#' @rdname species_distribution
 #' 
 #' @export
 is_probabilities <- function(x) {
   inherits(x, "probabilities")
 }
 
+
+#  Abundances ----
 
 #' @rdname species_distribution
 #'
@@ -581,12 +609,33 @@ as_abundances.matrix <- function(
 
 
 #' @rdname species_distribution
+#'
+#' @export
+as_abundances.data.frame <- function(
+    x, 
+    ...,
+    check_arguments = TRUE) {
+  
+  abundances <- as_species_distribution.data.frame(
+    x, 
+    ..., 
+    check_arguments = check_arguments
+  )
+  
+  class(abundances) <- c("abundances", class(abundances))
+  return(abundances)
+}
+
+
+#' @rdname species_distribution
 #' 
 #' @export
 is_abundances <- function(x) {
   inherits(x, "abundances")
 }
 
+
+#  Utilities ----
 
 #' Solve the theta parameter of Chao et al. (2015)
 #' 
@@ -648,7 +697,7 @@ beta_solve <- function(beta, r, i) {
 #' 
 #' @param unveiling 
 #' @param prob_tuned 
-#' @param species_0 
+#' @param s_0 
 #' @param sample_coverage 
 #' @param coverage_deficit_2 
 #'
@@ -656,18 +705,18 @@ beta_solve <- function(beta, r, i) {
 estimate_prob_s_0 <- function(
     unveiling, 
     prob_tuned, 
-    species_0, 
+    s_0, 
     sample_coverage, 
     coverage_deficit_2) {
 
   prob_s_0 <- NA
   if (unveiling == "geom") {
-    if (species_0 == 1) {
+    if (s_0 == 1) {
       # A single unobserved species
       prob_s_0 <- 1 - sample_coverage
     } else {
       r <- (1 - sample_coverage)^2 / coverage_deficit_2
-      i <- seq_len(species_0)
+      i <- seq_len(s_0)
       beta <-  tryCatch(
         stats::optimize(
           beta_solve, 
@@ -690,7 +739,7 @@ estimate_prob_s_0 <- function(
   }      
   if (unveiling == "unif") {
     # Add s_0 unobserved species with equal probabilities
-    prob_s_0 <- rep((1 - sum(prob_tuned)) / species_0, species_0)
+    prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
   }
   if (any(is.na(prob_s_0))) {
     warning("Unveiling method was not recognized")
@@ -710,7 +759,7 @@ estimate_prob_s_0 <- function(
 #'
 #' @noRd
 #'
-#' @param species_0 
+#' @param s_0 
 #' @param abd 
 #' @param prob_tuned 
 #' @param sample_coverage 
@@ -721,7 +770,7 @@ estimate_prob_s_0 <- function(
 #'
 #' @return The departure of the rarefied entropy from the target entropy.
 rarefaction_bias <- function(
-    species_0,
+    s_0,
     abd, 
     prob_tuned, 
     sample_coverage, 
@@ -736,7 +785,7 @@ rarefaction_bias <- function(
   prob_s_0 <- estimate_prob_s_0(
     unveiling, 
     prob_tuned, 
-    species_0, 
+    s_0, 
     sample_coverage, 
     coverage_deficit_2
   )
