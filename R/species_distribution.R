@@ -792,7 +792,7 @@ rarefaction_bias <- function(
   # Full distribution of probabilities
   prob <- c(prob_tuned, prob_s_0)
   # abundances_freq_count at level = sample_size
-  species_n <- vapply(
+  species_nu <- vapply(
     seq_len(sample_size), 
     function(nu) {
       sum(
@@ -809,14 +809,14 @@ rarefaction_bias <- function(
     ent_bias <- abs(
       sum(
         -seq_len(sample_size) / sample_size * 
-          log(seq_len(sample_size) / sample_size) * species_n
+          log(seq_len(sample_size) / sample_size) * species_nu
       ) 
       - ent_target
     )
   } else {
     ent_bias <- abs
       (
-        (sum((seq_len(sample_size)/sample_size)^q * species_n) - 1) / (1 - q) 
+        (sum((seq_len(sample_size)/sample_size)^q * species_nu) - 1) / (1 - q) 
       - ent_target
     )
   }
