@@ -382,7 +382,7 @@ probabilities <- function(
         stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
-      s_0 <- div_richness(abd, estimator = "jackknife") - s_obs
+      s_0 <- div_richness.numeric(abd, estimator = "jackknife") - s_obs
       # Estimate the number of unobserved species by iterations
       ent_target <- ent_tsallis(abd, q = q, estimator = "naive", check_arguments = FALSE)
       s_0 <- round(
