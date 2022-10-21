@@ -11,12 +11,13 @@
 \alias{as_probabilities}
 \alias{as_probabilities.numeric}
 \alias{as_probabilities.matrix}
+\alias{as_probabilities.data.frame}
 \alias{is_probabilities}
 \alias{abundances}
 \alias{as_abundances}
 \alias{as_abundances.numeric}
-\alias{as_abundances.integer}
 \alias{as_abundances.matrix}
+\alias{as_abundances.data.frame}
 \alias{is_abundances}
 \title{Species Distributions}
 \usage{
@@ -26,7 +27,13 @@ as_species_distribution(x, ...)
 
 \method{as_species_distribution}{numeric}(x, ..., check_arguments = TRUE)
 
-\method{as_species_distribution}{matrix}(x, ..., check_arguments = TRUE)
+\method{as_species_distribution}{matrix}(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 \method{as_species_distribution}{data.frame}(x, ..., check_arguments = TRUE)
 
@@ -49,6 +56,8 @@ as_probabilities(x, ...)
 
 \method{as_probabilities}{matrix}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
+\method{as_probabilities}{data.frame}(x, ..., check_arguments = TRUE)
+
 is_probabilities(x)
 
 abundances(
@@ -63,8 +72,6 @@ as_abundances(x, ...)
 
 \method{as_abundances}{numeric}(x, round = TRUE, ..., check_arguments = TRUE)
 
-\method{as_abundances}{integer}(x, ..., check_arguments = TRUE)
-
 \method{as_abundances}{matrix}(
   x,
   round = TRUE,
@@ -73,6 +80,8 @@ as_abundances(x, ...)
   ...,
   check_arguments = TRUE
 )
+
+\method{as_abundances}{data.frame}(x, ..., check_arguments = TRUE)
 
 is_abundances(x)
 }
