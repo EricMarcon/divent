@@ -71,7 +71,7 @@ div_richness <- function(x, ...) {
 #' @export
 div_richness.numeric <- function(
     x, 
-    estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10, 
     level = NULL, 
@@ -101,7 +101,7 @@ div_richness.numeric <- function(
   # Sample size
   sample_size <- sum(abd)
   # Number of observed species
-  s_observed <- length(abd)
+  s_obs <- length(abd)
 
   # Diversity of a vector of abundances ----
   if (is.null(level)) {
@@ -122,7 +122,7 @@ div_richness.numeric <- function(
     
     ## Naive estimator ----
     if (estimator == "naive") {
-      return(tibble::tibble_row(estimator = "naive", richness = s_observed))
+      return(tibble::tibble_row(estimator = "naive", richness = s_obs))
     }
     
     # Calculate basic statistics
@@ -148,7 +148,7 @@ div_richness.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "Chao1", 
-          richness = s_observed + s_0
+          richness = s_obs + s_0
         )
       )
     }
@@ -166,7 +166,7 @@ div_richness.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "iChao1", 
-          richness = s_observed + s_0 + s_0_iChao
+          richness = s_obs + s_0 + s_0_iChao
         )
       )
     }
@@ -179,7 +179,7 @@ div_richness.numeric <- function(
       if (k == 0) {
         # No optimisation possible. Return "jackknife of order 0".
         k_smallest <- 1
-        s_jack <- s_observed
+        s_jack <- s_obs
       } else {
         # Max number of individuals
         m <- max(abd_freq[, 1])
@@ -189,10 +189,10 @@ div_richness.numeric <- function(
         abd_freq <- n_temp
         # Prepare a matrix with k+1 rows and 5 columns
         gene <- matrix(0, nrow = k + 1, ncol = 5)
-        gene[1, 1] <- s_observed
+        gene[1, 1] <- s_obs
         for (i in seq_len(k)) {
-          gene[i + 1, 1] <- s_observed
-          gene[i + 1, 4] <- s_observed
+          gene[i + 1, 1] <- s_obs
+          gene[i + 1, 4] <- s_obs
           for (j in seq_len(i)) {
             gene[i + 1, 1] <- gene[i + 1, 1] + (-1)^(j + 1) * 
               2^i * stats::dbinom(j, i, 0.5) * abd_freq[j, 2]
@@ -209,16 +209,16 @@ div_richness.numeric <- function(
         }
         if (k > 1) {
           for (i in 2:k) {
-            gene[i, 3] <- -(gene[i + 1, 1] - gene[i, 1])^2/(s_observed - 1)
+            gene[i, 3] <- -(gene[i + 1, 1] - gene[i, 1])^2/(s_obs - 1)
             for (j in seq_len(i - 1)) {
               gene[i, 3] <- gene[i, 3] + 
                 (
                   (-1)^(j + 1) * 2^(i) * stats::dbinom(j, i, 0.5) - 
                   (-1)^(j + 1) * 2^(i - 1) * stats::dbinom(j, i - 1, 0.5)
                 )^2 * 
-                abd_freq[j, 2] * s_observed/(s_observed - 1)
+                abd_freq[j, 2] * s_obs/(s_obs - 1)
             }
-            gene[i, 3] <- gene[i, 3] + abd_freq[i, 2] * s_observed/(s_observed - 1)
+            gene[i, 3] <- gene[i, 3] + abd_freq[i, 2] * s_obs/(s_obs - 1)
             gene[i, 3] <- sqrt(gene[i, 3])
             gene[i, 5] <- (gene[i + 1, 1] - gene[i, 1])/gene[i, 3]
           }
@@ -270,7 +270,7 @@ div_richness.numeric <- function(
     return(
       tibble::tibble_row(
         estimator = "SAC", 
-        richness = s_observed - 
+        richness = s_obs - 
           sum(
             exp(lchoose(sample_size - abd, level) -
             lchoose(sample_size, level))
@@ -290,7 +290,7 @@ div_richness.numeric <- function(
           jack_alpha = jack_alpha, 
           jack_max = jack_max, 
           check_arguments = FALSE
-        ) - s_observed
+        ) - s_obs
       } else {
         # Unveil so that the estimation of richness is similar to that of non-integer entropy
         prob_s_0 <- probabilities(
@@ -301,14 +301,14 @@ div_richness.numeric <- function(
           q = 0,
           check_arguments = FALSE
         )
-        s_0 <- length(prob_s_0) - s_observed
+        s_0 <- length(prob_s_0) - s_obs
       }
-      richness <- s_observed + s_0 * (
+      richness <- s_obs + s_0 * (
         1 - (1 - s_1 / (sample_size * s_0 + s_1))^(level - sample_size)
       )
     } else {
       # No singleton
-      richness <- s_observed
+      richness <- s_obs
     }
     names(richness) <- estimator
     return (richness)  

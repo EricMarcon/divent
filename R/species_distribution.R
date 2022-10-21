@@ -312,7 +312,7 @@ probabilities <- function(
     
     # Eliminate 0 and calculate elementary statistics
     abd <- x_int[x_int > 0]
-    species_number <- length(abd)
+    s_obs <- length(abd)
     sample_size <- sum(abd)
     prob <- abd / sample_size
     # Sample coverage
@@ -382,7 +382,7 @@ probabilities <- function(
         stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
-      s_0 <- div_richness(abd, estimator = "jackknife") - species_number
+      s_0 <- div_richness(abd, estimator = "jackknife") - s_obs
       # Estimate the number of unobserved species by iterations
       ent_target <- ent_tsallis(abd, q = q, estimator = "naive", check_arguments = FALSE)
       s_0 <- round(
@@ -402,14 +402,14 @@ probabilities <- function(
         )
       )
     } else {
-      richness_estimate <- ceiling(
+      s_est <- ceiling(
         div_richness(
           abd, 
           estimator = richness_estimator, 
           jack_max = jack_max
         )
       )
-      s_0 <- richness_estimate - species_number
+      s_0 <- s_est - s_obs
     }
     
     ## Distribution of unobserved species ----

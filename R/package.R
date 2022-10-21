@@ -17,10 +17,11 @@ NULL
 # prob: a numeric vector of probabilities
 # abundances / probabilities: an object of class abundances / probabilities
 # s_0, s_1,  ...: species observed 0, 1, ... times
+# s_obs: number of observed species
+# s_est: estimated number of species
 # sample_size: number of observed individuals
-# species_number: number of observed species
-# coverage_deficit_2: coverage deficit of order 2 of the sample
 # sample_coverage: coverage of order 1
+# coverage_deficit_2: coverage deficit of order 2 of the sample
 
 
 #  Utilities ----
