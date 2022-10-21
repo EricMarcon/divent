@@ -84,6 +84,7 @@ div_richness.numeric <- function(
   
   if (check_arguments) check_divent_args()
   estimator <- match.arg(estimator) 
+  probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
@@ -133,7 +134,7 @@ div_richness.numeric <- function(
         tibble::tibble_row(
           estimator = "rarefy", 
           richness = length(
-            probabilities.numeric(
+            probabilities(
               abd, 
               estimator = probability_estimator, 
               unveiling = unveiling, 
@@ -342,17 +343,18 @@ div_richness.numeric <- function(
 #' @export
 div_richness.abundances <- function(
     x, 
-    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
+    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10, 
     level = NULL, 
-    probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-    unveiling = c("none", "uniform", "geometric"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
+    unveiling = c("geometric", "uniform"),
     ..., 
     check_arguments = TRUE) {
   
   if (check_arguments) check_divent_args()
   estimator <- match.arg(estimator) 
+  probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
