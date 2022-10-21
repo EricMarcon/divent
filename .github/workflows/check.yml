@@ -22,6 +22,10 @@ jobs:
           install.packages(c("remotes", "rcmdcheck", "covr", "pkgdown"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+      - name: Roxygenize
+        run: roxygen2::roxygenize()
+        shell: Rscript {0}
+      - uses: EndBug/add-and-commit@v9
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
         shell: Rscript {0}
