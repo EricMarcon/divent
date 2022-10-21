@@ -4,12 +4,20 @@
 #' 
 #' `species_distribution` objects include `abundances` and `probabilities` objects.
 #' 
-#' `as_abundances()` formats the numeric or integer `x` so that appropriate versions of community functions (generic methods such as Diversity) are applied. Abundance values are rounded (by default) to the nearest integer.
+#' `as_species_distribution()`, `as_abundances()`  and `as_probabilities` format 
+#' the numeric, matrix or dataframe `x` so that appropriate 
+#' versions of community functions (generic methods such as [autoplot] or 
+#' [div_richness]) are applied. 
+#' Abundance values are rounded (by default) to the nearest integer.
 #' 
-#' `as_probabilities()` normalizes the vector `x` so that it sums to 1. 
+#' `as_probabilities()` normalizes the vector `x` so that it sums to 1. It gives
+#' the same output as `probabilities()` with `estimator = "naive"`.
+#' 
+#' `probabilities()` estimates a probability distribution from a sample.
 #' If the `estimator` is not "naive", the observed abundance distribution is used 
-#' to estimate the actual species distribution. The list of species will be changed:
-#' zero-abundance species will be cleared, and some unobserved species will be added. 
+#' to estimate the actual probability distribution. 
+#' The list of species is changed:
+#' zero-abundance species are cleared, and some unobserved species are added. 
 #' First, observed species probabilities are estimated following 
 #' \insertCite{Chao2003;textual}{divent}, i.e. input probabilities are multiplied by 
 #' the sample coverage, or according to more sophisticated models: 
@@ -24,7 +32,7 @@
 #'  
 #' TODO: These functions can be applied to data frames to calculate the joint diversity \insertCite{Gregorius2010}{divent}.
 #'  
-#' `species_distribution` objects objects can be plotted by `plot` and `autoplot()`.
+#' TODO: `species_distribution` objects objects can be plotted by `plot` and `autoplot()`.
 #'
 #' @param x An object.
 #' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
