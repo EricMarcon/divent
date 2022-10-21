@@ -72,7 +72,7 @@ species_distribution <- function(
       ### Columns: add default species names such as sp_1 ----
       names(x) <- paste(
         "sp", 
-        formatC(1:length(x), width = ceiling(log10(length(x))), flag = "0"),
+        formatC(seq_along(x), width = ceiling(log10(length(x))), flag = "0"),
         sep = "_"
       )
     }
@@ -89,7 +89,7 @@ species_distribution <- function(
       ### Columns: add default species names such as sp_1 ----
       colnames(x) <- paste(
         "sp", 
-        formatC(1:ncol(x), width = ceiling(log10(ncol(x))), flag = "0"),
+        formatC(seq_len(ncol(x)), width = ceiling(log10(ncol(x))), flag = "0"),
         sep = "_"
       )
     }
@@ -109,7 +109,7 @@ species_distribution <- function(
         # ...and no row names: set default names such as site_1
         distribution$site <- paste(
           "site", 
-          formatC(1:nrow(x), width = ceiling(log10(nrow(x))), flag = "0"),
+          formatC(seq_len(nrow(x)), width = ceiling(log10(nrow(x))), flag = "0"),
           sep = "_"
         )
       }
@@ -212,7 +212,7 @@ as_species_distribution.data.frame <- function(
       site = paste(
         "site", 
         formatC(
-          1:nrow(distribution), 
+          seq_len(nrow(distribution)), 
           width = ceiling(log10(nrow(distribution))), 
           flag = "0"
         ),
