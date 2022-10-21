@@ -1,19 +1,13 @@
-^Meta$
-^doc$
+# Rstudio Rproj working files
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\_sgbak$
-^\.hg$
-\.synctex\.gz$
-\.tex$
-\.log$
-\.blg$
-\.bbl$
-^\.travis\.yml$
-docs/
-^_gh-pages$
+# Github actions workflows
+^\.github$
+# pkgdown folder
 ^pkgdown$
-vignettes/articles/
-vignettes/entropart_cache/
-vignettes/entropart_files/
-.github/
+# docs folder for local pkgdown
+^docs$
+# Vignette cache and articles for pkgdown
+^vignettes\/articles$
+^vignettes\/[^\/]+_cache$
+^vignettes\/[^\/]+_files$
