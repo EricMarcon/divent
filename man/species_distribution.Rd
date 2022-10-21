@@ -40,7 +40,7 @@ as_species_distribution(x, ...)
 is_species_distribution(x)
 
 probabilities(
-  x,
+  abd,
   estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
   unveiling = c("none", "uniform", "geometric"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
@@ -97,6 +97,9 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 
 \item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
 
+\item{abd}{A numeric vector containing abundances. It may be named to track
+species names.}
+
 \item{estimator}{One of the estimators of a probability distribution:
 "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 the probabilities of the observed species in the asymptotic distribution.}
@@ -132,12 +135,20 @@ A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing spec
 \details{
 \code{species_distribution} objects include \code{abundances} and \code{probabilities} objects.
 
-\code{as_abundances()} formats the numeric or integer \code{x} so that appropriate versions of community functions (generic methods such as Diversity) are applied. Abundance values are rounded (by default) to the nearest integer.
+\code{as_species_distribution()}, \code{as_abundances()}  and \code{as_probabilities} format
+the numeric, matrix or dataframe \code{x} so that appropriate
+versions of community functions (generic methods such as \link{plot} or
+\link{div_richness}) are applied.
+Abundance values are rounded (by default) to the nearest integer.
 
-\code{as_probabilities()} normalizes the vector \code{x} so that it sums to 1.
+\code{as_probabilities()} normalizes the vector \code{x} so that it sums to 1. It gives
+the same output as \code{probabilities()} with \code{estimator = "naive"}.
+
+\code{probabilities()} estimates a probability distribution from a sample.
 If the \code{estimator} is not "naive", the observed abundance distribution is used
-to estimate the actual species distribution. The list of species will be changed:
-zero-abundance species will be cleared, and some unobserved species will be added.
+to estimate the actual probability distribution.
+The list of species is changed:
+zero-abundance species are cleared, and some unobserved species are added.
 First, observed species probabilities are estimated following
 \insertCite{Chao2003;textual}{divent}, i.e. input probabilities are multiplied by
 the sample coverage, or according to more sophisticated models:
@@ -152,7 +163,7 @@ according to a geometric distribution (\code{unveiling} = "geometric", \insertCi
 
 TODO: These functions can be applied to data frames to calculate the joint diversity \insertCite{Gregorius2010}{divent}.
 
-\code{species_distribution} objects objects can be plotted by \code{plot} and \code{autoplot()}.
+TODO: \code{species_distribution} objects objects can be plotted by \code{plot} and \code{autoplot()}.
 }
 \examples{
 # Paracou data

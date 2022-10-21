@@ -6,7 +6,7 @@
 #' 
 #' `as_species_distribution()`, `as_abundances()`  and `as_probabilities` format 
 #' the numeric, matrix or dataframe `x` so that appropriate 
-#' versions of community functions (generic methods such as [autoplot] or 
+#' versions of community functions (generic methods such as [plot] or 
 #' [div_richness]) are applied. 
 #' Abundance values are rounded (by default) to the nearest integer.
 #' 
@@ -256,6 +256,8 @@ is_species_distribution <- function(x) {
 
 #' @rdname species_distribution
 #'
+#' @param abd A numeric vector containing abundances. It may be named to track
+#' species names.
 #' @param estimator One of the estimators of a probability distribution: 
 #' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 #' the probabilities of the observed species in the asymptotic distribution.
@@ -280,7 +282,7 @@ is_species_distribution <- function(x) {
 #'
 #' @export
 probabilities <- function(
-    x, 
+    abd, 
     estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
@@ -294,29 +296,32 @@ probabilities <- function(
   estimator <- match.arg(estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
-  coverage_estimator <- match.arg(coverage_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   
+  # Save or generate the species names
+  species_names <- names(abd)
+
   # Naive estimator ----
   if (estimator == "naive") {
-    # Just normalize so that x sums to 1
-    probabilities <- x / sum(x)
+    # Just normalize so that abd sums to 1
+    probabilities <- abd / sum(abd)
   # Other estimators ----
   } else {
     # Integer abundances are required by all non-naive estimators
-    if (!is_integer_values(x)) {
+    if (!is_integer_values(abd)) {
       warning(
         "Integer abundance values are required to estimate community probabilities. Abundances have been rounded."
       )
     }
-    x_int <- round(x)
+    abd_int <- round(abd)
     
     # Eliminate 0 and calculate elementary statistics
-    abd <- x_int[x_int > 0]
+    abd <- abd_int[abd_int > 0]
     s_obs <- length(abd)
     sample_size <- sum(abd)
     prob <- abd / sample_size
     # Sample coverage
-    sample_coverage <- coverage(abd, estimator = coverage_estimator)
+    sample_coverage <- coverage(abd, estimator = coverage_estimator)$coverage
     if (
       estimator == "Chao2015" | 
       unveiling == "Chao2015" | 
@@ -375,6 +380,15 @@ probabilities <- function(
         prob_tuned <- prob * (1 - lambda * exp(-theta * abd))
       }
     }
+    # Restore the species names
+    if (is.null(species_names)) {
+      # No names: create them
+      names(prob_tuned) <- paste("sp", seq_along(prob_tuned), sep = "")
+    } else {
+      # Restore the names
+      names(prob_tuned) <- species_names[abd_int > 0]
+    }
+    
     
     ## Estimate the number of unobserved species ----
     if (richness_estimator == "rarefy") {
@@ -382,21 +396,23 @@ probabilities <- function(
         stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
-      s_0 <- div_richness.numeric(abd, estimator = "jackknife") - s_obs
+      s_0 <- div_richness.numeric(abd, estimator = "jackknife")$richness - s_obs
       # Estimate the number of unobserved species by iterations
-      ent_target <- ent_tsallis(abd, q = q, estimator = "naive", check_arguments = FALSE)
+# TODO : activate ent_tsallis
+#      ent_target <- ent_tsallis(abd, q = q, estimator = "naive", check_arguments = FALSE)$entropy
+      ent_target <- div_richness(abd, estimator = "naive", check_arguments = FALSE)$richness
       s_0 <- round(
         tryCatch(
           stats::optimize(
             rarefaction_bias, 
             interval = c(0, 2 * s_0), 
-            abd, 
-            prob_tuned, 
-            sample_coverage, 
-            coverage_deficit_2, 
-            q, 
-            unveiling, 
-            ent_target
+            abd = abd, 
+            prob_tuned = prob_tuned, 
+            sample_coverage = sample_coverage, 
+            coverage_deficit_2 = coverage_deficit_2, 
+            q = q, 
+            unveiling = unveiling, 
+            ent_target = ent_target
           )$minimum,
           error = function(e) {s_0}
         )
@@ -423,7 +439,7 @@ probabilities <- function(
             unveiling, 
             prob_tuned, 
             s_0, 
-            coverage, 
+            sample_coverage, 
             coverage_deficit_2
           )
         )
@@ -456,7 +472,6 @@ as_probabilities.numeric <- function(
     ..., 
     check_arguments = TRUE) {
 
-  if (!is.numeric(x)) stop("'x' must be numeric")
   if (any(x < 0)) stop("Species probabilities must be positive.")
 
   # Normalize to 1
@@ -574,7 +589,8 @@ as_abundances.numeric <- function(
     check_arguments = TRUE) {
 
   if (check_arguments) check_divent_args()
-
+  if (any(x < 0)) stop("Species abundances must be positive.")
+  
   if (round) {
     x <- as.integer(round(x))
   }
@@ -653,12 +669,12 @@ is_abundances <- function(x) {
 #' 
 #' @noRd
 #'
-#' @param theta 
-#' @param prob 
-#' @param abd 
-#' @param sample_size 
-#' @param sample_coverage 
-#' @param sample_coverage_2 
+#' @param theta The parameter to solve.
+#' @param prob A vector of probabilities (not checked).
+#' @param abd A vector of positive integers (not checked).
+#' @param sample_size The number of individuals in the sample.
+#' @param sample_coverage The sample coverage. 
+#' @param coverage_deficit_2 The coverage deficit of order 2.
 #'
 #' @return The value of the parameter theta to minimize.
 theta_solve <- function(
@@ -687,9 +703,9 @@ theta_solve <- function(
 #' 
 #' @noRd
 #' 
-#' @param beta 
-#' @param r 
-#' @param i 
+#' @param beta The parameter to solve.
+#' @param r The squared coverage deficit divided by the coverage deficit of order 2.
+#' @param i The sequence from 1 to the number of species.
 #'
 #' @return The value of the parameter beta to minimize.
 beta_solve <- function(beta, r, i) {
@@ -703,11 +719,11 @@ beta_solve <- function(beta, r, i) {
 #' 
 #' @noRd
 #' 
-#' @param unveiling 
-#' @param prob_tuned 
-#' @param s_0 
-#' @param sample_coverage 
-#' @param coverage_deficit_2 
+#' @param unveiling The unveiling method.
+#' @param prob_tuned The tuned distribution of probabilities.
+#' @param s_0 The number of unobserved species.
+#' @param sample_coverage The sample coverage. 
+#' @param coverage_deficit_2 The coverage deficit of order 2.
 #'
 #' @return The distribution of probabilities of unobserved species.
 estimate_prob_s_0 <- function(
@@ -718,7 +734,7 @@ estimate_prob_s_0 <- function(
     coverage_deficit_2) {
 
   prob_s_0 <- NA
-  if (unveiling == "geom") {
+  if (unveiling == "geometric") {
     if (s_0 == 1) {
       # A single unobserved species
       prob_s_0 <- 1 - sample_coverage
@@ -739,13 +755,13 @@ estimate_prob_s_0 <- function(
       alpha <- (1 - sample_coverage) / sum(beta^i)
       prob_s_0 <- alpha * beta^i
       # Sometimes fails when the distribution is very uneven (sometimes r < 1) 
-      # Then, go back to the uniform distribution
+      # Then, fall back to the uniform distribution
       if (any(is.na(prob_s_0)) | any(prob_s_0 <= 0)) {
-        unveiling <- "unif"
+        unveiling <- "uniform"
       }
     }
   }      
-  if (unveiling == "unif") {
+  if (unveiling == "uniform") {
     # Add s_0 unobserved species with equal probabilities
     prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
   }
@@ -753,7 +769,7 @@ estimate_prob_s_0 <- function(
     warning("Unveiling method was not recognized")
     return(NA)
   } else {
-    names(prob_s_0) <- paste("UnobsSp", seq_along(length(prob_s_0)), sep = "")
+    names(prob_s_0) <- paste("UnobsSp", seq_along(prob_s_0), sep = "")
     return(prob_s_0)
   }         
 }
@@ -767,13 +783,13 @@ estimate_prob_s_0 <- function(
 #'
 #' @noRd
 #'
-#' @param s_0 
-#' @param abd 
-#' @param prob_tuned 
-#' @param sample_coverage 
-#' @param coverage_deficit_2 
-#' @param q 
-#' @param unveiling 
+#' @param s_0 The number of unobserved species.
+#' @param abd The abundances of species.
+#' @param prob_tuned The tuned distribution of probabilities.
+#' @param sample_coverage The sample coverage.
+#' @param coverage_deficit_2 The coverage deficit of order 2.
+#' @param q The order of entropy to fit.
+#' @param unveiling The unveiling method.
 #' @param ent_target Target entropy.
 #'
 #' @return The departure of the rarefied entropy from the target entropy.
@@ -800,7 +816,7 @@ rarefaction_bias <- function(
   # Full distribution of probabilities
   prob <- c(prob_tuned, prob_s_0)
   # abundances_freq_count at level = sample_size
-  species_nu <- vapply(
+  s_nu <- vapply(
     seq_len(sample_size), 
     function(nu) {
       sum(
@@ -817,14 +833,13 @@ rarefaction_bias <- function(
     ent_bias <- abs(
       sum(
         -seq_len(sample_size) / sample_size * 
-          log(seq_len(sample_size) / sample_size) * species_nu
+          log(seq_len(sample_size) / sample_size) * s_nu
       ) 
       - ent_target
     )
   } else {
-    ent_bias <- abs
-      (
-        (sum((seq_len(sample_size)/sample_size)^q * species_nu) - 1) / (1 - q) 
+    ent_bias <- abs(
+      (sum((seq_len(sample_size)/sample_size)^q * s_nu) - 1) / (1 - q) 
       - ent_target
     )
   }

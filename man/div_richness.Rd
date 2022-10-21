@@ -10,24 +10,24 @@ div_richness(x, ...)
 
 \method{div_richness}{numeric}(
   x,
-  estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+  estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
+  unveiling = c("geometric", "uniform"),
   ...,
   check_arguments = TRUE
 )
 
 \method{div_richness}{abundances}(
   x,
-  estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+  estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
+  unveiling = c("geometric", "uniform"),
   ...,
   check_arguments = TRUE
 )
@@ -52,13 +52,15 @@ Richness extrapolation require its asymptotic estimation depending on the
 choice of the \code{estimator}.}
 
 \item{probability_estimator}{One of the estimators of a probability distribution:
-"naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-the probabilities of the observed species in the asymptotic distribution.}
+"Chao2015", "Chao2013" or "ChaoShen" to estimate
+the probabilities of the observed species in the asymptotic distribution.
+Used only by the estimator of richness "rarefy".}
 
 \item{unveiling}{One of the possible unveiling methods to estimate the probabilities
-of the unobserved species: "none" (default, no species is added), "uniform"
-(all unobserved species have the same probability) or "geometric" (the
-unobserved species distribution is geometric).}
+of the unobserved species: "geometric" (default, the
+unobserved species distribution is geometric) or  "uniform"
+(all unobserved species have the same probability).
+Used only by the estimator of richness "rarefy".}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

@@ -1,14 +1,12 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.1-0.9004
+Version: 0.1-0.9005
 Authors@R: c(
-    person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X")),
-    person("Bruno", "Herault", email="bruno.herault@cirad.fr", role="aut", comment=c(ORCID="0000-0002-6950-7286"))
+    person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X"))
     )
 Description: Measurement and partitioning of diversity, based on Tsallis entropy, following Marcon and Herault (2015) <doi:10.18637/jss.v067.i08>.
-  'entropart' provides functions to calculate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
-  Estimation-bias corrections are available.
+  'divent' provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
 URL: https://github.com/EricMarcon/divent
 BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
@@ -20,6 +18,7 @@ Suggests:
   knitr,
   pkgdown,
   rmarkdown,
+  SPECIES,
   testthat (>= 3.0.0)
 LazyData: true
 VignetteBuilder: knitr
