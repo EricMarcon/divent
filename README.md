@@ -7,4 +7,4 @@
 
 **divent** is an R package that provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
 
-It is a reboot of the package **entropart** make it tidy, easier to use and optimize the code that has been added along years following a research program.
+It is a reboot of the package **entropart** to make it tidy, easier to use and optimize the code that has been added along years of research.

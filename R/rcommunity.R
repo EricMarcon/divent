@@ -1,6 +1,6 @@
 #' Random communities
 #' 
-#' Draws random communities according to a probability distribution.
+#' Draw random communities according to a probability distribution.
 #' 
 #' Communities of fixed `size` are drawn in a multinomial distribution according 
 #' to the distribution of probabilities provided by `prob`.
@@ -78,7 +78,7 @@ rcommunity <- function(
   distribution <- match.arg(distribution) 
 
   if (!is.null(prob) & !is.null(abd)) {
-    stop("prob and abd can't be both given.")
+    stop("'prob' and 'abd' can't be both given.")
   }
 
   probabilities <- abundances <- NULL
@@ -163,7 +163,7 @@ rcommunity <- function(
 #' @param size The number of individuals in the community.
 #' @param alpha_lseries The value of Fisher's alpha.
 #'
-#' @return A number.
+#' @return The number of individuals of the species.
 #' 
 abd_lseries <- function(size, alpha_lseries) {
   # adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
