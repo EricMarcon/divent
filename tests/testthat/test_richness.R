@@ -50,14 +50,14 @@ testthat::test_that(
 )
 
 # rarefy
-rarefy <- div_richness(abd, estimator = "rarefy")
+rarefy <- div_richness(paracou_6_abd, estimator = "rarefy")
 testthat::test_that(
   "The rarefy estimator is reported correctly", 
   {
     testthat::skip_on_cran()
     testthat::expect_equal(
       rarefy$estimator,
-      "rarefy"
+      rep("rarefy", 4)
     )
   }
 )
