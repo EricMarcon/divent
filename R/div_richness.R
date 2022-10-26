@@ -384,5 +384,4 @@ div_richness.abundances <- function(
       do.call(rbind.data.frame, div_richness_list)
     )
   )
-  
 }

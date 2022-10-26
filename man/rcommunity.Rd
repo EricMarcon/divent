@@ -56,7 +56,7 @@ Should be set to FALSE to save time when the arguments have been checked elsewhe
 An object of class "abundances".
 }
 \description{
-Draws random communities according to a probability distribution.
+Draw random communities according to a probability distribution.
 }
 \details{
 Communities of fixed \code{size} are drawn in a multinomial distribution according
