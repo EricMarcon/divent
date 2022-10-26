@@ -8,6 +8,8 @@
 \alias{as_species_distribution.data.frame}
 \alias{is_species_distribution}
 \alias{probabilities}
+\alias{probabilities.numeric}
+\alias{probabilities.abundances}
 \alias{as_probabilities}
 \alias{as_probabilities.numeric}
 \alias{as_probabilities.matrix}
@@ -39,14 +41,29 @@ as_species_distribution(x, ...)
 
 is_species_distribution(x)
 
-probabilities(
-  abd,
+probabilities(x, ...)
+
+\method{probabilities}{numeric}(
+  x,
   estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
   unveiling = c("none", "uniform", "geometric"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   q = 0,
+  ...,
+  check_arguments = TRUE
+)
+
+\method{probabilities}{abundances}(
+  x,
+  estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+  unveiling = c("none", "uniform", "geometric"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q = 0,
+  ...,
   check_arguments = TRUE
 )
 
@@ -97,9 +114,6 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 
 \item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
 
-\item{abd}{A numeric vector containing abundances. It may be named to track
-species names.}
-
 \item{estimator}{One of the estimators of a probability distribution:
 "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 the probabilities of the observed species in the asymptotic distribution.}
@@ -128,6 +142,9 @@ fitted so that the entropy of order q of the asymptotic probability distribution
 at the observed sample size equals the actual entropy of the data.}
 
 \item{round}{If \code{TRUE}, the values of \code{x} are converted to integers.}
+
+\item{abd}{A numeric vector containing abundances. It may be named to track
+species names.}
 }
 \description{
 A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing species abundances or probabilities.

@@ -256,6 +256,14 @@ is_species_distribution <- function(x) {
 
 #' @rdname species_distribution
 #'
+#' @export
+probabilities <- function(x, ...) {
+  UseMethod("probabilities")
+}
+
+
+#' @rdname species_distribution
+#'
 #' @param abd A numeric vector containing abundances. It may be named to track
 #' species names.
 #' @param estimator One of the estimators of a probability distribution: 
@@ -281,14 +289,15 @@ is_species_distribution <- function(x) {
 #' at the observed sample size equals the actual entropy of the data.
 #'
 #' @export
-probabilities <- function(
-    abd, 
+probabilities.numeric <- function(
+    x, 
     estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
     jack_max = 10, 
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     q = 0,
+    ...,
     check_arguments = TRUE) {
   
   # Check the data ----
@@ -297,23 +306,25 @@ probabilities <- function(
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
+  
   
   # Save or generate the species names
-  species_names <- names(abd)
+  species_names <- names(x)
 
   # Naive estimator ----
   if (estimator == "naive") {
-    # Just normalize so that abd sums to 1
-    probabilities <- abd / sum(abd)
+    # Just normalize so that x sums to 1
+    prob <- x / sum(x)
   # Other estimators ----
   } else {
     # Integer abundances are required by all non-naive estimators
-    if (!is_integer_values(abd)) {
+    if (!is_integer_values(x)) {
       warning(
         "Integer abundance values are required to estimate community probabilities. Abundances have been rounded."
       )
     }
-    abd_int <- round(abd)
+    abd_int <- round(x)
     
     # Eliminate 0 and calculate elementary statistics
     abd <- abd_int[abd_int > 0]
@@ -353,7 +364,8 @@ probabilities <- function(
         # Single parameter estimation, Chao et al. (2013)
         denominator <- sum(prob * (1 - prob)^sample_size)
         if (denominator == 0) {
-          # N is too big so denominator equals 0. Just multiply by C.
+          # sample_size is too big so denominator equals 0. 
+          # Just multiply by coverage.
           prob_tuned <- sample_coverage * prob
         } else {
           # General case
@@ -363,16 +375,16 @@ probabilities <- function(
       } 
       if (estimator == "Chao2015")  {
         # Two parameters, Chao et al. (2015). 
-        # Estimate theta. Set it to 1 if impossible
+        # Estimate theta. Set it to 1 if impossible.
         theta <- tryCatch(
           stats::optimize(
             theta_solve, 
             interval = c(0, 1), 
-            prob, 
-            abd, 
-            sample_size, 
-            sample_coverage, 
-            coverage_deficit_2
+            prob = prob, 
+            abd = abd, 
+            sample_size = sample_size, 
+            sample_coverage = sample_coverage, 
+            coverage_deficit_2 = coverage_deficit_2
           )$min, 
           error = function(e) {1}
         )
@@ -396,7 +408,7 @@ probabilities <- function(
         stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
-      s_0 <- div_richness.numeric(abd, estimator = "jackknife")$richness - s_obs
+      s_0 <- div_richness.numeric(abd, estimator = "jackknife", check_arguments = FALSE)$richness - s_obs
       # Estimate the number of unobserved species by iterations
 # TODO : activate ent_tsallis
 #      ent_target <- ent_tsallis(abd, q = q, estimator = "naive", check_arguments = FALSE)$entropy
@@ -422,36 +434,85 @@ probabilities <- function(
         div_richness(
           abd, 
           estimator = richness_estimator, 
-          jack_max = jack_max
-        )
+          jack_max = jack_max,
+          check_arguments = FALSE
+        )$richness
       )
       s_0 <- s_est - s_obs
     }
     
     ## Distribution of unobserved species ----
     if (s_0) {
-      if (unveiling == "None") {
+      if (unveiling == "none") {
         prob <- prob_tuned
       } else {
         prob <- c(
           prob_tuned, 
           estimate_prob_s_0(
-            unveiling, 
-            prob_tuned, 
-            s_0, 
-            sample_coverage, 
-            coverage_deficit_2
+            unveiling = unveiling, 
+            prob_tuned = prob_tuned, 
+            s_0 = s_0, 
+            sample_coverage = sample_coverage, 
+            coverage_deficit_2 = coverage_deficit_2
           )
         )
       }
     } else {
       prob <- prob_tuned
     }
-    probabilities <- as_species_distribution(prob)
   }
   
   # Set the class and return ----
+  probabilities <- as_species_distribution(prob)
   class(probabilities) <- c("probabilities", class(probabilities))
+  return(probabilities)
+}
+
+
+#' @rdname species_distribution
+#'
+#' @export
+probabilities.abundances <- function(
+    x, 
+    estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+    unveiling = c("none", "uniform", "geometric"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
+    jack_max = 10, 
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    q = 0,
+    ...,
+    check_arguments = TRUE) {
+
+  if (check_arguments) check_divent_args()
+  estimator <- match.arg(estimator) 
+  unveiling <- match.arg(unveiling) 
+  richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
+  if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
+
+  # Apply probabilities.numeric() to each site
+  probabilities_list <- apply(
+    # Eliminate site and weight columns
+    x[, !(colnames(x) %in% c("site", "weight"))], 
+    # Apply to each row
+    MARGIN = 1,
+    FUN = probabilities.numeric,
+    # Arguments
+    estimator = estimator,
+    unveiling = unveiling,
+    richness_estimator = richness_estimator,
+    jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
+    q = q,
+    check_arguments = FALSE
+  )
+  
+  # Bind the rows
+  probabilities <- dplyr::bind_rows(probabilities_list)
+  # Restore the site names
+  if (!is.null(x$site)) probabilities$site <- x$site
+  # Replace NA's due to binding by zeros
+  probabilities <- dplyr::mutate_all(probabilities,  ~replace(., is.na(.), 0))
   return(probabilities)
 }
 
@@ -663,7 +724,7 @@ is_abundances <- function(x) {
 
 #' Solve the theta parameter of Chao et al. (2015)
 #' 
-#' Utilities for [as_probabilities.numeric].
+#' Utilities for [probabilities.numeric].
 #' 
 #' Code inspired from JADE function DetAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
 #' 
@@ -697,7 +758,7 @@ theta_solve <- function(
 
 #' Solve the beta parameter of Chao et al. (2015)
 #'
-#' Utilities for [as_probabilities.numeric].
+#' Utilities for [probabilities.numeric].
 #' 
 #' Code inspired from JADE function UndAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
 #' 
@@ -715,7 +776,7 @@ beta_solve <- function(beta, r, i) {
 
 #' Unobserved Species Distribution
 #'
-#' Utilities for [as_probabilities.numeric].
+#' Utilities for [probabilities.numeric].
 #' 
 #' @noRd
 #' 
@@ -779,7 +840,7 @@ estimate_prob_s_0 <- function(
 #' 
 #' Departure of the rarefied entropy from the target entropy
 #'
-#' Utilities for [as_probabilities.numeric].
+#' Utilities for [probabilities.numeric].
 #'
 #' @noRd
 #'
