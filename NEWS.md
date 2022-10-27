@@ -6,3 +6,5 @@
 
 - Data formats.
 - Sample coverage.
+- Species distributions.
+- Richness.

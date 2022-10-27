@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.1-0.9005
+Version: 0.1-0.9006
 Authors@R: c(
     person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X"))
     )
@@ -11,9 +11,16 @@ URL: https://github.com/EricMarcon/divent
 BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
 Imports:
+  dplyr,
+  ggplot2,
+  graphics,
   EntropyEstimation,
+  RColorBrewer,
   Rdpack,
-  tibble
+  rlang,
+  stats,
+  tibble,
+  vegan
 Suggests: 
   knitr,
   pkgdown,

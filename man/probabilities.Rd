@@ -2,9 +2,35 @@
 % Please edit documentation in R/probabilities.R
 \name{probabilities}
 \alias{probabilities}
+\alias{probabilities.numeric}
+\alias{probabilities.abundances}
 \title{Probabilities of Species}
 \usage{
 probabilities(x, ...)
+
+\method{probabilities}{numeric}(
+  x,
+  estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+  unveiling = c("none", "uniform", "geometric"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q = 0,
+  ...,
+  check_arguments = TRUE
+)
+
+\method{probabilities}{abundances}(
+  x,
+  estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+  unveiling = c("none", "uniform", "geometric"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q = 0,
+  ...,
+  check_arguments = TRUE
+)
 }
 \arguments{
 \item{x}{An object. It may be:
@@ -14,6 +40,33 @@ probabilities(x, ...)
 }}
 
 \item{...}{Unused.}
+
+\item{estimator}{One of the estimators of a probability distribution:
+"naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
+the probabilities of the observed species in the asymptotic distribution.}
+
+\item{unveiling}{One of the possible unveiling methods to estimate the probabilities
+of the unobserved species: "none" (default, no species is added), "uniform"
+(all unobserved species have the same probability) or "geometric" (the
+unobserved species distribution is geometric).}
+
+\item{richness_estimator}{An estimator of richness to evaluate the total number
+of species. "jackknife" is the default value.
+An alternative is "rarefy" to estimate the number of species such that the
+entropy of the asymptotic distribution rarefied to the observed sample size equals
+the actual entropy of the data.}
+
+\item{jack_max}{The highest jackknife order allowed. Default is 10.
+Allowed values are between 1 and 10.}
+
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}:
+"ZhangHuang" (the default value), \code{"Chao"}, \code{"Turing"} or \code{"Good"}.}
+
+\item{q}{The order of diversity. Default is 0 for richness.
+Used only to estimate asymptotic probability distributions when argument
+\code{richness_estimator} is "rarefy". Then, the number of unobserved species is
+fitted so that the entropy of order q of the asymptotic probability distribution
+at the observed sample size equals the actual entropy of the data.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
