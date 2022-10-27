@@ -21,12 +21,13 @@ reference:
     - starts_with("ent_")
   - title: Other statistics from species distributions 
     contents:
+    - fit_rac
     - sample_coverage
   - title: Classes
     contents:
     - abundances
-    - species_distribution
     - probabilities
+    - species_distribution
   - title: Utilities
     contents:
     - abd_freq_count
