@@ -48,7 +48,7 @@ probabilities <- function(x, ...) {
 }
 
 
-#' @rdname species_distribution
+#' @rdname probabilities
 #'
 #' @param estimator One of the estimators of a probability distribution: 
 #' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
@@ -253,7 +253,7 @@ probabilities.numeric <- function(
 }
 
 
-#' @rdname species_distribution
+#' @rdname probabilities
 #'
 #' @export
 probabilities.abundances <- function(

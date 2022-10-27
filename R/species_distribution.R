@@ -26,7 +26,7 @@
 #' # Paracou data
 #' is_species_distribution(paracou_6_abd)
 #' # Whittaker plot fitted by a log-normal distribution
-#' autoplot(paracou_6_abd[1,], distribution = "lognormal")
+#' autoplot(paracou_6_abd[1,], distribution = "lnorm")
 #' @references
 #' \insertAllCited{}
 #' 
@@ -237,15 +237,26 @@ is_species_distribution <- function(x) {
 
 #' @rdname species_distribution
 #'
+#' @param distribution The distribution of species abundances.
+#' May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or 
+#' "bstick" (broken stick).
+#' @param ylog If `TRUE`, the Y-axis is in log-scale.
+#' @param main The title of the plot.
+#' @param xlab The label of the X-axis.
+#' @param ylab The  label of the Y-axis.
+#' @param palette The name of a color palette, recognized by [RColorBrewer::brewer.pal].
+#'
+#' @importFrom graphics plot
 #' @export
 plot.species_distribution <- function(
     x, 
     ..., 
     distribution = c("lnorm", "lseries", "geom", "bstick"),
-    log = "y", 
+    ylog = "y", 
     main = NULL, 
     xlab = "Rank", 
-    ylab = NULL) {
+    ylab = NULL,
+    palette = "Set1") {
   
   # Prepare ylab
   if (is.null(ylab)) {
@@ -265,7 +276,7 @@ plot.species_distribution <- function(
     x = 1:s_obs_max,
     y = seq(from = 1, to = max(abundances), length.out = s_obs_max),
     type = "n",
-    log = log, 
+    log = ylog, 
     main = main, 
     xlab = xlab, 
     ylab = ylab, 
@@ -278,7 +289,7 @@ plot.species_distribution <- function(
   graphics::box()
   
   # Color palette
-  cols <- RColorBrewer::brewer.pal(nrow(x), "Set2")
+  cols <- RColorBrewer::brewer.pal(nrow(x), name = palette)
   
   # Loop in communities to build the plot
   for (community in seq_len(nrow(x))) {
@@ -313,7 +324,7 @@ plot.species_distribution <- function(
   
   # Legend if several communities
   if (nrow(x) > 1) {
-    legend(
+    graphics::legend(
       "topright",
       inset = .02,
       legend = x$site,
@@ -323,8 +334,19 @@ plot.species_distribution <- function(
     )
   }
 }
+#' @export
+graphics::plot
 
 
+#' @rdname species_distribution
+#'
+#' @param object An object of class [species_distribution].
+#' @param pch The plotting characters. See [graphics::points].
+#' @param cex The character expansion (size) of the points. See [graphics::points].
+#'
+#' @importFrom ggplot2 autoplot
+#' @importFrom rlang .data
+#' @export
 autoplot.species_distribution <- function(
     object, 
     ..., 
@@ -431,6 +453,8 @@ autoplot.species_distribution <- function(
   
   return(the_plot)
 }
+#' @export
+ggplot2::autoplot
 
 
 #  Probabilities ----
