@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/404.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/abd_freq_count.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/abd_freq_count.html</loc>
   </url>
   <url>
-    <loc>/reference/check_divent_args.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/check_divent_args.html</loc>
   </url>
   <url>
-    <loc>/reference/div_richness.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/div_richness.html</loc>
   </url>
   <url>
-    <loc>/reference/divent.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/divent.html</loc>
   </url>
   <url>
-    <loc>/reference/ent_tsallis.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/ent_tsallis.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/fit_rac.html</loc>
   </url>
   <url>
-    <loc>/reference/paracou_6_abd.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/rcommunity.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/paracou_6_abd.html</loc>
   </url>
   <url>
-    <loc>/reference/sample_coverage.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/probabilities.html</loc>
   </url>
   <url>
-    <loc>/reference/species_distribution.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/rcommunity.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/sample_coverage.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/species_distribution.html</loc>
   </url>
 </urlset>
