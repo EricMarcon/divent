@@ -19,6 +19,7 @@ ent_tsallis(x, q = 1, ...)
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  sample_coverage = NULL,
   ...,
   check_arguments = TRUE
 )

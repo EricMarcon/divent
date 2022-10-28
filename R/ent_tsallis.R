@@ -66,6 +66,7 @@ ent_tsallis.numeric <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    sample_coverage = NULL,
     ...,
     check_arguments = TRUE) {
 
@@ -76,8 +77,75 @@ ent_tsallis.numeric <- function(
   richness_estimator <- match.arg(richness_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
-  # Dummy code
-  return(NA)
+  # Entropy of a vector of probabilities ----
+  if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
+    # Probabilities sum to 1, allowing rounding error
+    prob <- x[x > 0]
+    ent_species <- prob * ln_q(1 / prob, q = q)
+    return (entropy)
+    return(
+      tibble::tibble_row(
+        estimator = "naive", 
+        richness = sum(ent_species)
+      )
+    )
+  }
+  
+  # Eliminate 0
+  abd <- x[x > 0]
+  # Sample size
+  sample_size <- sum(abd)
+  # Number of observed species
+  s_obs <- length(abd)
+  
+  # Entropy of a vector of abundances ----
+  if (is.null(level)) {
+    ## Exit if x contains no or a single species ----
+    if (length(abd) < 2) {
+      if (length(abd) == 0) {
+        return(tibble::tibble_row(estimator = "No Species", entropy = NA))
+      } else {
+        return(tibble::tibble_row(estimator = "Single Species", entropy = 1))
+      }
+    } else {
+      # Probabilities instead of abundances
+      if (sample_size < 2) {
+        warning("Entropy estimators can't apply to probability data. Estimator forced to 'naive'")
+        estimator <- "naive"
+      }
+    }
+    
+    ## Metacommunity estimation ----
+    # abd may not be integers, sample_coverage is given
+    # sample_coverage is between 0 and 1 (by check_arguments), sum(abd) must be an integer.
+    # estimator may be ChaoShen or Marcon (max(ChoShen, Grassberger))
+    if (
+        !is.null(sample_coverage) & 
+        is_integer_values(sample_size) & 
+        (estimator == "ChaoShen" | estimator == "Marcon")) {
+      
+      cp <- sample_coverage * abd / sample_size
+      chao_shen <- sum(cp^q * ln_q(1 / cp, q = q) /(1 - (1 - cp)^sample_size))
+      if (estimator == "Marcon") {
+        # Calculate Grassberger's correction
+        if (q == 1) {
+          grassberger <- sum(
+            abd / sample_size * (log(sample_size) - digamma(abd) - 
+            (1 - round(abd) %% 2 * 2) / (abd + 1))
+          )
+        } else {
+          grassberger <- (1 - sample_size^(-q) * sum(e_n_q(abd, q = q))) / (q - 1)
+        }
+      } else grassberger <- 0
+      # Take the max
+      if (chao_shen > grassberger) {
+        return(tibble::tibble_row(estimator = "ChaoShen", entropy = chao_shen))
+      } else {
+        return(tibble::tibble_row(estimator = "Grassberger", entropy = grassberger))
+      }
+    }
+  }  
+  
 }
 
 
