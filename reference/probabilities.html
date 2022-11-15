@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-2</span>
       </span>
     </div>
 
@@ -64,6 +64,7 @@
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_numeric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
@@ -131,6 +132,10 @@ Used only to estimate asymptotic probability distributions when argument
 <code>richness_estimator</code> is "rarefy". Then, the number of unobserved species is
 fitted so that the entropy of order q of the asymptotic probability distribution
 at the observed sample size equals the actual entropy of the data.</p></dd>
+
+
+<dt>as_numeric</dt>
+<dd><p>If <code>TRUE</code>, a numeric vector is returned rather than a tibble.</p></dd>
 
 
 <dt>check_arguments</dt>
