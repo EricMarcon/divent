@@ -71,6 +71,7 @@ probabilities <- function(x, ...) {
 #' `richness_estimator` is "rarefy". Then, the number of unobserved species is 
 #' fitted so that the entropy of order q of the asymptotic probability distribution 
 #' at the observed sample size equals the actual entropy of the data.
+#' @param as_numeric If `TRUE`, a numeric vector is returned rather than a tibble.
 #'
 #' @export
 probabilities.numeric <- function(
@@ -81,6 +82,7 @@ probabilities.numeric <- function(
     jack_max = 10, 
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     q = 0,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
   
@@ -192,11 +194,20 @@ probabilities.numeric <- function(
         stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
-      s_0 <- div_richness.numeric(abd, estimator = "jackknife", check_arguments = FALSE)$richness - s_obs
+      s_0 <- div_richness.numeric(
+        abd, 
+        estimator = "jackknife", 
+        as_numeric = TRUE, 
+        check_arguments = FALSE
+      ) - s_obs
       # Estimate the number of unobserved species by iterations
-# TODO : activate ent_tsallis
-#      ent_target <- ent_tsallis(abd, q = q, estimator = "naive", check_arguments = FALSE)$entropy
-      ent_target <- div_richness(abd, estimator = "naive", check_arguments = FALSE)$richness
+      ent_target <- ent_tsallis.numeric(
+        abd, 
+        q = q, 
+        estimator = "naive", 
+        as_numeric = TRUE, 
+        check_arguments = FALSE
+      )
       s_0 <- round(
         tryCatch(
           stats::optimize(
@@ -215,10 +226,11 @@ probabilities.numeric <- function(
       )
     } else {
       s_est <- ceiling(
-        div_richness(
+        div_richness.numeric(
           abd, 
           estimator = richness_estimator, 
           jack_max = jack_max,
+          as_numeric = TRUE, 
           check_arguments = FALSE
         )$richness
       )
@@ -247,9 +259,13 @@ probabilities.numeric <- function(
   }
   
   # Set the class and return ----
-  probabilities <- as_species_distribution(prob)
-  class(probabilities) <- c("probabilities", class(probabilities))
-  return(probabilities)
+  if (as_numeric) {
+    return(prob)
+  } else {
+    probabilities <- as_species_distribution(prob)
+    class(probabilities) <- c("probabilities", class(probabilities))
+    return(probabilities)
+  }
 }
 
 

@@ -16,6 +16,7 @@ coverage(x, ...)
   x,
   estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   level = NULL,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
@@ -43,6 +44,8 @@ coverage_to_size(x, ...)
 "ZhangHuang", "Chao", "Turing", "Good".}
 
 \item{level}{The level of interpolation or extrapolation, i.e. an abundance.}
+
+\item{as_numeric}{If \code{TRUE}, a number is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

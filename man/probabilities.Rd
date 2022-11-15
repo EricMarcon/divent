@@ -16,6 +16,7 @@ probabilities(x, ...)
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   q = 0,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
@@ -67,6 +68,8 @@ Used only to estimate asymptotic probability distributions when argument
 \code{richness_estimator} is "rarefy". Then, the number of unobserved species is
 fitted so that the entropy of order q of the asymptotic probability distribution
 at the observed sample size equals the actual entropy of the data.}
+
+\item{as_numeric}{If \code{TRUE}, a numeric vector is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

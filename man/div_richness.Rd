@@ -16,6 +16,7 @@ div_richness(x, ...)
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
   unveiling = c("geometric", "uniform"),
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
@@ -61,6 +62,8 @@ of the unobserved species: "geometric" (default, the
 unobserved species distribution is geometric) or  "uniform"
 (all unobserved species have the same probability).
 Used only by the estimator of richness "rarefy".}
+
+\item{as_numeric}{If \code{TRUE}, a number is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

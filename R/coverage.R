@@ -39,12 +39,14 @@ coverage <- function(x, ...) {
 #' @param estimator A string containing one of the possible estimators: 
 #' "ZhangHuang", "Chao", "Turing", "Good".
 #' @param level The level of interpolation or extrapolation, i.e. an abundance.
+#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
 #'
 #' @export
 coverage.numeric <- function(
     x, 
     estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     level = NULL, 
+    as_numeric  = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -56,9 +58,9 @@ coverage.numeric <- function(
   # Eliminate zeros
   abd <- abd[abd > 0]
   # Calculate abundance distribution
-  abundance_distribution <- tapply(abd, abd, length)
+  abd_distribution <- tapply(abd, abd, length)
   # singletons. Convert named number to number.
-  singletons <- as.numeric(abundance_distribution["1"])
+  s_1 <- as.numeric(abd_distribution["1"])
   sample_size <- sum(abd)
   
   # Coverage at the observed level ----
@@ -66,14 +68,32 @@ coverage.numeric <- function(
     # Estimate coverage at the observed level
     
     ##  No singletons: coverage=1 ----
-    if (is.na(singletons)) {
-      return(tibble::tibble_row(estimator = "No singleton", coverage = 1))
+    if (is.na(s_1)) {
+      if (as_numeric) {
+        return(1)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = "No singleton", 
+            coverage = 1
+          )
+        )  
+      }
     }
     
     ## Singletons only: coverage=0 ----
-    if (singletons == sample_size) {
+    if (s_1 == sample_size) {
       warning ("Sample coverage is 0, most bias corrections will return NaN.")
-      return(tibble::tibble_row(estimator = "Singletons only", coverage = 0))
+      if (as_numeric) {
+        return(0)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = "Singletons only", 
+            coverage = 0
+          )
+        )  
+      }
     }
   
     ## Zhang & Huang's estimator ----
@@ -83,23 +103,50 @@ coverage.numeric <- function(
         warning ("Zhang-Huang's sample coverage cannot be estimated because one probability is over 1/2. Chao's estimator is returned.")
         estimator <- "Chao"
       } else {
-        nu <- as.integer(names(abundance_distribution))
+        nu <- as.integer(names(abd_distribution))
         # Use nu %% 2 * 2 - 1 for (-1)^(Nu + 1)
-        sample_coverage <- 1 - sum((nu %% 2 * 2 - 1) / choose(sample_size, nu) * abundance_distribution)
-        return(tibble::tibble_row(estimator, coverage = sample_coverage))
+        sample_coverage <- 1 - sum((nu %% 2 * 2 - 1) / choose(sample_size, nu) * abd_distribution)
+        if (as_numeric) {
+          return(sample_coverage)
+        } else {
+          return(
+            tibble::tibble_row(
+              estimator = estimator, 
+              coverage = sample_coverage
+            )
+          )  
+        }
       }    
     }
     
     ## Chao's estimator ----
     if (estimator == "Chao") {
-      sample_coverage <- 1 - singletons / sample_size * (1-chao_A(abd))
-      return(tibble::tibble_row(estimator, coverage = sample_coverage))
+      sample_coverage <- 1 - s_1 / sample_size * (1-chao_A(abd))
+      if (as_numeric) {
+        return(sample_coverage)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = estimator, 
+            coverage = sample_coverage
+          )
+        )  
+      }
     }
     
     ## Turing's estimator ----
     if (estimator == "Turing") {
-      sample_coverage <- 1 - singletons / sample_size
-      return(tibble::tibble_row(estimator, coverage = sample_coverage))
+      sample_coverage <- 1 - s_1 / sample_size
+      if (as_numeric) {
+        return(sample_coverage)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = estimator, 
+            coverage = sample_coverage
+          )
+        )  
+      }
     }
   }
   
@@ -112,7 +159,16 @@ coverage.numeric <- function(
     if (estimator == "Good") {
       if (level >= sample_size) stop("Good's estimator only allows interpolation: level must be less than the observed community size.")
       sample_coverage <- 1 - EntropyEstimation::GenSimp.z(abd, level)
-      return(tibble::tibble_row(estimator, coverage = sample_coverage))
+      if (as_numeric) {
+        return(sample_coverage)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = estimator, 
+            coverage = sample_coverage
+          )
+        )  
+      }
     }
     
     ## Chao's estimator ----
@@ -128,16 +184,34 @@ coverage.numeric <- function(
         )
       } else {
         ### Extrapolation ----
-        if (is.na(singletons)) {
+        if (is.na(s_1)) {
           # No singletons, coverage=1
-          return(tibble::tibble_row(estimator = "No singleton", coverage = 1))
+          if (as_numeric) {
+            return(1)
+          } else {
+            return(
+              tibble::tibble_row(
+                estimator = "No singleton", 
+                coverage = 1
+              )
+            )  
+          }
         } else {
           sample_coverage <- 1 - 
-            singletons / sample_size * 
+            s_1 / sample_size * 
             (1 - chao_A(abd))^(level - sample_size + 1)
         }
       }
-      return(tibble::tibble_row(estimator, coverage = sample_coverage))
+      if (as_numeric) {
+        return(sample_coverage)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = estimator, 
+            coverage = sample_coverage
+          )
+        )  
+      }
     }
   }
 }
@@ -206,17 +280,17 @@ coverage_to_size.numeric <- function(
   # Eliminate zeros
   abd <- abd[abd > 0]
   # Calculate abundance distribution
-  abundance_distribution <- tapply(abd, abd, length)
+  abd_distribution <- tapply(abd, abd, length)
   # Singletons. Convert named number to number.
-  if (is.na(abundance_distribution["1"])) {
-    singletons <- 0 
+  if (is.na(abd_distribution["1"])) {
+    s_1 <- 0 
   } else {
-    singletons <- as.numeric(abundance_distribution["1"])
+    s_1 <- as.numeric(abd_distribution["1"])
   }
   sample_size <- sum(abd)
   
   # Singletons only
-  if (singletons == sample_size) {
+  if (s_1 == sample_size) {
     stop("Sample coverage is 0.")
   }
   
@@ -227,7 +301,7 @@ coverage_to_size.numeric <- function(
     # Extrapolation
     size <- round(
       sample_size + 
-        (log(sample_size / singletons) + log(1 - sample_coverage)) / 
+        (log(sample_size / s_1) + log(1 - sample_coverage)) / 
           log(1 - chao_A(abd)
       ) - 1
     )
@@ -287,7 +361,7 @@ coverage_to_size.abundances <- function(
 #' 
 #' Helper for Chao's estimators.
 #' 
-#' A's formula depends on the presence of singletons and doubletons.
+#' A's formula \insertCite{@Chao2015@, eq. 6b}{divent}) depends on the presence of singletons and doubletons.
 #' 
 #' @noRd
 #'
@@ -297,22 +371,22 @@ coverage_to_size.abundances <- function(
 chao_A <- function(abd) {
   
   # Calculate abundance distribution
-  abundance_distribution <- tapply(abd, abd, length)
-  singletons <- as.numeric(abundance_distribution["1"])
-  doubletons <- as.numeric(abundance_distribution["2"])
+  abd_distribution <- tapply(abd, abd, length)
+  s_1 <- as.numeric(abd_distribution["1"])
+  s_2 <- as.numeric(abd_distribution["2"])
   sample_size <- sum(abd)
   
   # Calculate A
-  if (is.na(singletons)) {
+  if (is.na(s_1)) {
     A <- 0
   } else {
     # Use Chao1 estimator to evaluate the number of unobserved species
-    if (is.na(doubletons)) {
-      species_unobserved <- (sample_size - 1) * singletons * (singletons - 1) / 2 / sample_size
+    if (is.na(s_2)) {
+      s_0 <- (sample_size - 1) * s_1 * (s_1 - 1) / 2 / sample_size
     } else {
-      species_unobserved <- (sample_size - 1) * singletons^2 / 2 / sample_size / doubletons
+      s_0 <- (sample_size - 1) * s_1^2 / 2 / sample_size / s_2
     }
-    A <- 1- sample_size * species_unobserved / (sample_size * species_unobserved + singletons)
+    A <- 1- sample_size * s_0 / (sample_size * s_0 + s_1)
   }
   
   return(A)
