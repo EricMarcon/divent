@@ -1,4 +1,4 @@
-# divent 0.1-0.9007
+# divent 0.1-2
 
 - First Version.
 
@@ -8,3 +8,4 @@
 - Sample coverage.
 - Species distributions.
 - Richness.
+- Shannon and Tsallis's entropies.
