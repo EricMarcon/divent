@@ -25,24 +25,6 @@
 #'
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances]  or [probabilities]
-#' @param estimator An estimator of richness to evaluate the total number of species. 
-#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
-#' @param jack_max The highest jackknife order allowed. Default is 10. 
-#' Allowed values are between 1 and 10.
-#' @param level The level of interpolation or extrapolation. 
-#' It may be a chosen sample size (an integer) or a sample coverage 
-#' (a number between 0 and 1). 
-#' Richness extrapolation require its asymptotic estimation depending on the 
-#' choice of the `estimator`.
-#' @param probability_estimator One of the estimators of a probability distribution: 
-#' "Chao2015", "Chao2013" or "ChaoShen" to estimate
-#' the probabilities of the observed species in the asymptotic distribution.
-#' Used only by the estimator of richness "rarefy".
-#' @param unveiling One of the possible unveiling methods to estimate the probabilities 
-#' of the unobserved species: "geometric" (default, the 
-#' unobserved species distribution is geometric) or  "uniform" 
-#' (all unobserved species have the same probability).
-#' Used only by the estimator of richness "rarefy".
 #' @param ... Unused.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
@@ -70,6 +52,26 @@ div_richness <- function(x, ...) {
 
 #' @rdname div_richness
 #'
+#' @param estimator An estimator of richness to evaluate the total number of species. 
+#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
+#' @param jack_max The highest jackknife order allowed. Default is 10. 
+#' Allowed values are between 1 and 10.
+#' @param level The level of interpolation or extrapolation. 
+#' It may be a chosen sample size (an integer) or a sample coverage 
+#' (a number between 0 and 1). 
+#' Richness extrapolation require its asymptotic estimation depending on the 
+#' choice of the `estimator`.
+#' @param probability_estimator One of the estimators of a probability distribution: 
+#' "Chao2015", "Chao2013" or "ChaoShen" to estimate
+#' the probabilities of the observed species in the asymptotic distribution.
+#' Used only by the estimator of richness "rarefy".
+#' @param unveiling One of the possible unveiling methods to estimate the probabilities 
+#' of the unobserved species: "geometric" (default, the 
+#' unobserved species distribution is geometric) or  "uniform" 
+#' (all unobserved species have the same probability).
+#' Used only by the estimator of richness "rarefy".
+#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
+#' 
 #' @export
 div_richness.numeric <- function(
     x, 
@@ -79,6 +81,7 @@ div_richness.numeric <- function(
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
     unveiling = c("geometric", "uniform"),
+    as_numeric  = FALSE,
     ..., 
     check_arguments = TRUE) {
   
@@ -111,9 +114,17 @@ div_richness.numeric <- function(
     ## Exit if x contains no or a single species ----
     if (length(abd) < 2) {
       if (length(abd) == 0) {
-        return(tibble::tibble_row(estimator = "No Species", richness = NA))
+        if (as_numeric) {
+          return(NA)
+        } else {
+          return(tibble::tibble_row(estimator = "No Species", richness = NA))
+        }
       } else {
-        return(tibble::tibble_row(estimator = "Single Species", richness = 1))
+        if (as_numeric) {
+          return(1)
+        } else {
+          return(tibble::tibble_row(estimator = "Single Species", richness = 1))
+        }
       }
     } else {
       # Probabilities instead of abundances
@@ -125,26 +136,35 @@ div_richness.numeric <- function(
     
     ## Naive estimator ----
     if (estimator == "naive") {
-      return(tibble::tibble_row(estimator = "naive", richness = s_obs))
+      if (as_numeric) {
+        return(s_obs)
+      } else {
+        return(tibble::tibble_row(estimator = "naive", richness = s_obs))
+      }
     }
     
     ## Rarefaction estimator ----
     if (estimator == "rarefy") {
-      return(
-        tibble::tibble_row(
-          estimator = "rarefy", 
-          richness = length(
-            probabilities(
-              abd, 
-              estimator = probability_estimator, 
-              unveiling = unveiling, 
-              richness_estimator = "rarefy", 
-              q = 0, 
-              check_arguments = FALSE
-            )
-          )
+      richness <- length(
+        probabilities.numeric(
+          abd, 
+          estimator = probability_estimator, 
+          unveiling = unveiling, 
+          richness_estimator = "rarefy", 
+          q = 0, 
+          check_arguments = FALSE
         )
       )
+      if (as_numeric) {
+        return(s_obs)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = "rarefy", 
+            richness = richness
+          )
+        )
+      }
     }
     
     # Calculate basic statistics
@@ -167,12 +187,17 @@ div_richness.numeric <- function(
     }
     ### Chao1 ----
     if (estimator == "Chao1") {
-      return(
-        tibble::tibble_row(
-          estimator = "Chao1", 
-          richness = s_obs + s_0
+      richness <- s_obs + s_0
+      if (as_numeric) {
+        return(richness)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = "Chao1", 
+            richness = richness
+          )
         )
-      )
+      }
     }
     ### iChao1 ----
     if (estimator == "iChao1") {
@@ -185,12 +210,17 @@ div_richness.numeric <- function(
         s_4 <- 1
       }
       s_0_iChao <- s_3 / 4 / s_4 * max(s_1 - s_2 * s_3 / 2 / s_4, 0)
-      return(
-        tibble::tibble_row(
-          estimator = "iChao1", 
-          richness = s_obs + s_0 + s_0_iChao
+      richness <- s_obs + s_0 + s_0_iChao
+      if (as_numeric) {
+        return(richness)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = "iChao1", 
+            richness = richness
+          )
         )
-      )
+      }
     }
     
     ## jackknife ----
@@ -265,12 +295,16 @@ div_richness.numeric <- function(
           sej <- gene[k_smallest, 2]
         }
       }
-      return(
-        tibble::tibble_row(
-          estimator = paste("Jackknife", k_smallest-1),
-          richness = s_jack
+      if (as_numeric) {
+        return(s_jack)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = paste("Jackknife", k_smallest - 1),
+            richness = s_jack
+          )
         )
-      )
+      }
     }
   }
 
@@ -284,21 +318,34 @@ div_richness.numeric <- function(
     )
   }
   if (level == sample_size) {
-    # No interpolation/extrapolation needed: estimate with no estimator
-    return(div_richness.numeric(abd / sample_size, check_arguments = FALSE))
+    # No interpolation/extrapolation needed: return the observed number of species
+    if (as_numeric) {
+      return(s_obs)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = "Sample", 
+          richness = s_obs
+        )
+      )
+    }
   }
   if (level <= sample_size) {
     ## Interpolation ----
-    return(
-      tibble::tibble_row(
-        estimator = "SAC", 
-        richness = s_obs - 
-          sum(
-            exp(lchoose(sample_size - abd, level) -
-            lchoose(sample_size, level))
-          )
+    richness <- s_obs - 
+      sum(
+        exp(lchoose(sample_size - abd, level) - lchoose(sample_size, level))
       )
-    )
+    if (as_numeric) {
+      return(richness)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = "SAC", 
+          richness = richness
+        )
+      )  
+    }
   } else {
     ## Extrapolation ----
     s_1 <-  sum(x == 1)
@@ -311,16 +358,18 @@ div_richness.numeric <- function(
           estimator=estimator, 
           jack_alpha = jack_alpha, 
           jack_max = jack_max, 
+          as_numeric = TRUE,
           check_arguments = FALSE
         ) - s_obs
       } else {
         # Unveil so that the estimation of richness is similar to that of non-integer entropy
-        prob_s_0 <- probabilities(
+        prob_s_0 <- probabilities.numeric(
           abd, 
           estimator = probability_estimator, 
           unveiling = unveiling, 
           richness_estimator = estimator, 
           q = 0,
+          as_numeric = TRUE,
           check_arguments = FALSE
         )
         s_0 <- length(prob_s_0) - s_obs
@@ -332,8 +381,16 @@ div_richness.numeric <- function(
       # No singleton
       richness <- s_obs
     }
-    names(richness) <- estimator
-    return (richness)  
+    if (as_numeric) {
+      return(richness)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = estimator, 
+          richness = richness
+        )
+      )  
+    }
   }
 }
 
