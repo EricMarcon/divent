@@ -15,10 +15,11 @@ NULL
 # Names of variables:
 # abd: a numeric vector of abundances
 # prob: a numeric vector of probabilities
+# prob_unv : unveiled probabilities
 # abundances / probabilities: an object of class abundances / probabilities
 # s_0, s_1,  ...: species observed 0, 1, ... times
 # s_obs: number of observed species
-# s_est: estimated number of species
+# s_est: estimated number of species (asymptotic)
 # sample_size: number of observed individuals
 # sample_coverage: coverage of order 1
 # coverage_deficit_2: coverage deficit of order 2 of the sample
