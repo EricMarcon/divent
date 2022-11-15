@@ -12,7 +12,7 @@ ent_tsallis(x, q = 1, ...)
   x,
   q = 1,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
   probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
   unveiling = c("none", "uniform", "geometric"),
@@ -20,6 +20,7 @@ ent_tsallis(x, q = 1, ...)
   jack_alpha = 0.05,
   jack_max = 10,
   sample_coverage = NULL,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
@@ -70,6 +71,11 @@ see \link{div_richness}.}
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
+\item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
+Used to calculate the gamma diversity of meta-communities, see details.}
+
+\item{as_numeric}{If \code{TRUE}, a number is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
