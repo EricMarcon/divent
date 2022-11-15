@@ -6,8 +6,9 @@
 #' The expectation of \eqn{n^q} when \eqn{n} follows a Poisson distribution 
 #' was derived by \insertCite{Grassberger1988;textual}{divent}.
 #' 
-#' The function is computed using the [beta] function.
-#' Its value is 0 for \eqn{n-q+1<0}.
+#' It is computed using the [beta] function.
+#' Its value is 0 for \eqn{n-q+1<0}, and close to 0 when \eqn{n=q}, 
+#' which is not a correct estimate: it should not be used when \eqn{q > n}. 
 #'
 #' @param n A positive integer vector.
 #' @param q A positive number.
@@ -17,15 +18,12 @@
 #'
 #' @examples
 #' # Compare
-#' n <- c(2, 3)
-#' e_n_q(n, q = 2)
-#' # with
-#' n^2
+#' e_n_q(5, q = 2)
+#' # with (empirical estimation)
+#' mean(rpois(1000, lambda = 5)^2)
+#' # and (naive estimation)
+#' 5^2
 #' 
-#' # Result is 1
-#' e_n_q(n, q = 0)
-#' # Result is 0
-#' e_n_q(n, q=5)
 #' @references
 #' \insertAllCited{}
 e_n_q <- function(n, q) {
