@@ -59,7 +59,7 @@
 #' # Generate a community made of 100000 individuals among 300 species and fit it
 #' abundances <- rcommunity(n = 1, size = 1E5, 
 #'   species_number = 300, distribution = "lnorm")
-#' # TODO autoplot(abundances)
+#' autoplot(abundances)
 rcommunity <- function(
     n,
     size = sum(abd),
