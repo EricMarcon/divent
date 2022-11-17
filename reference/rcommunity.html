@@ -172,7 +172,8 @@ The geometric distribution is completely determined by its parameters.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Generate a community made of 100000 individuals among 300 species and fit it</span></span></span>
 <span class="r-in"><span><span class="va">abundances</span> <span class="op">&lt;-</span> <span class="fu">rcommunity</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">1E5</span>, </span></span>
 <span class="r-in"><span>  species_number <span class="op">=</span> <span class="fl">300</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># TODO autoplot(abundances)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">abundances</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="rcommunity-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
