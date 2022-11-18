@@ -491,8 +491,153 @@ ent_tsallis.numeric <- function(
     
     warning("estimator was not recognized")
     return (NA)
-    
-  }  
+  }
+  
+  # Entropy at a level ----
+  # If Level is coverage, get size
+  if (level < 1) {
+    level <- coverage_to_size.numeric(
+      abd, 
+      sample_coverage = level,
+      check_arguments = FALSE
+    )
+  }
+  if (level == sample_size) {
+    # No interpolation/extrapolation needed: return the observed entropy
+    entropy <- -sum(prob^q * ln_q(prob, q))
+    if (as_numeric) {
+      return(entropy)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = "Sample", 
+          entropy = entropy
+        )
+      )  
+    }
+  }
+  
+  ## Integer q ----
+  if (q==0) {
+    # Richness-1. Same result as general formula but faster
+    return(
+      div_richness.numeric(
+        abd, 
+        # Unused
+        estimator = richness_estimator,
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max, 
+        level = level, 
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        as_numeric  = FALSE,
+        check_arguments = FALSE
+      ) -1
+    )
+  } 
+  if (q==1) {
+    # Shannon. General formula is not defined at q=1
+    return(
+      ent_shannon(
+        x, 
+        estimator = estimator,
+        level = level, 
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = richness_estimator,
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max,
+        as_numeric  = FALSE,
+        check_arguments = FALSE
+      )
+    )
+  } 
+  if (q==2) {
+    # Simpson.
+    return(
+      ent_simpson(
+        x, 
+        # No estimator needed. Avoid raising an error with an unknown one.
+        estimator = "naive",
+        level = level, 
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = richness_estimator,
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max,
+        as_numeric  = FALSE,
+        check_arguments = FALSE
+      )
+    )
+  }
+  
+  if (level <= sample_size) {
+    ## Interpolation ----
+    # Obtain Abundance Frequence Count
+    abd_freq <- abd_freq_count(abd, level = level, check_arguments = FALSE)
+    # Calculate entropy (Chao et al., 2014, eq. 6)
+    entropy <- (sum(((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1)/(1 - q)
+    if (as_numeric) {
+      return(entropy)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = "Interpolation", 
+          entropy = entropy
+        )
+      )  
+    }
+  } else {
+    ## Extrapolation ----
+    if (s_obs == 1) {
+      # Single species: general formula won't work: log(1-prob_unv)
+      if (as_numeric) {
+        return(0)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = "Single Species", 
+            entropy = 0
+          )
+        )  
+      }
+    }
+    # Unveil the full distribution that rarefies to the observed entropy
+    prob_unv <- probabilities.numeric(
+      abd,
+      estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator, 
+      jack_max = jack_max, 
+      q = q,
+      as_numeric = TRUE,
+      check_arguments = FALSE
+    )
+    # Obtain Abundance Frequence Count at level (Chao et al., 2014, eq. 5)
+    s_level <- vapply(
+      seq_len(level), 
+      function(nu) {
+        sum(
+          exp(
+            lchoose(level, nu) + nu * log(prob_unv) + (level - nu) * log(1 - prob_unv)
+          )
+        )
+      }, 
+      FUN.VALUE=0
+    )
+    # Estimate entropy (Chao et al., 2014, eq. 6)
+    entropy <- (sum((seq_len(level) / level)^q * s_level) - 1) / (1 - q)
+    if (as_numeric) {
+      return(entropy)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = richness_estimator, 
+          entropy = entropy
+        )
+      )  
+    }
+  }
 }
 
 
