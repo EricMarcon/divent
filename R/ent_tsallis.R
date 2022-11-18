@@ -1,6 +1,6 @@
 #' Tsallis Entropy of a Community
 #' 
-#' Estimate the entropy species from abundance or probability data.
+#' Estimate the entropy of species from abundance or probability data.
 #' Several estimators are available to deal with incomplete sampling.
 #' 
 #' Bias correction requires the number of individuals. 
@@ -18,8 +18,7 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' # TODO
-#' # ent_tsallis(paracou_6_abd, q = 2)
+#' ent_tsallis(paracou_6_abd, q = 2)
 #' 
 #' @name ent_tsallis
 NULL
@@ -494,7 +493,6 @@ ent_tsallis.numeric <- function(
     return (NA)
     
   }  
-  
 }
 
 
@@ -538,6 +536,7 @@ ent_tsallis.abundances <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max, 
+    as_numeric = FALSE,
     check_arguments = FALSE
   )
   
@@ -550,5 +549,4 @@ ent_tsallis.abundances <- function(
       do.call(rbind.data.frame, ent_tsallis_list)
     )
   )
-  
 }

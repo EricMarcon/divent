@@ -84,15 +84,14 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 A tibble with the site names, the estimators used and the estimated entropy.
 }
 \description{
-Estimate the entropy species from abundance or probability data.
+Estimate the entropy of species from abundance or probability data.
 Several estimators are available to deal with incomplete sampling.
 }
 \details{
 Bias correction requires the number of individuals.
 }
 \examples{
-# TODO
-# ent_tsallis(paracou_6_abd, q = 2)
+ent_tsallis(paracou_6_abd, q = 2)
 
 }
 \references{
