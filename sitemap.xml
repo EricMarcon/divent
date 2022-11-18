@@ -19,6 +19,9 @@
     <loc>https://ericmarcon.github.io/entropart/reference/check_divent_args.html</loc>
   </url>
   <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/div_hill.html</loc>
+  </url>
+  <url>
     <loc>https://ericmarcon.github.io/entropart/reference/div_richness.html</loc>
   </url>
   <url>
@@ -29,6 +32,9 @@
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/ent_shannon.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/ent_simpson.html</loc>
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/ent_tsallis.html</loc>
