@@ -107,8 +107,8 @@ ent_shannon.numeric <- function(
   # Entropy of a vector of abundances ----
   if (is.null(level)) {
     ## Exit if x contains no or a single species ----
-    if (length(abd) < 2) {
-      if (length(abd) == 0) {
+    if (s_obs < 2) {
+      if (s_obs == 0) {
         if (as_numeric) {
           return(NA)
         } else {
