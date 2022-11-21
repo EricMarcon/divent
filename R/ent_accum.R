@@ -251,33 +251,33 @@ ent_accum.numeric <- function(
 
   # Format the result ----
   if (n_simulations) {
-    accumulation <- tibble::tibble(
+    ent_accumulation <- tibble::tibble(
       level = levels,
       entropy = ent_level,
       inf = ent_sim[, 1],
       sup = ent_sim[, 2]
     )
   } else {
-    accumulation <- tibble::tibble(
+    ent_accumulation <- tibble::tibble(
       level = levels,
       entropy = ent_level
     )
   }
 
   # Return actual values as attributes
-  attr(accumulation, "sample_size") <- sample_size
+  attr(ent_accumulation, "sample_size") <- sample_size
   if (any(levels == sample_size)) {
-    attr(accumulation, "entropy") <- ent_level[which(levels == sample_size)]
+    attr(ent_accumulation, "value") <- ent_level[which(levels == sample_size)]
   } else {
-    attr(accumulation, "entropy") <- ent_tsallis.numeric(
+    attr(ent_accumulation, "value") <- ent_tsallis.numeric(
       prob, 
-      q=q,
+      q = q,
       check_arguments = FALSE
     )
   }
-  class(accumulation) <- c("ent_accumulation", "accumulation", class(accumulation))
+  class(ent_accumulation) <- c("accumulation", class(ent_accumulation))
   
-  return(accumulation)
+  return(ent_accumulation)
 }
 
 
@@ -341,15 +341,16 @@ ent_accum.abundances <- function(
   } else {
     site_names <- paste("site", seq_len(nrow(x)), sep = "_")
   }
-    
-  return(
-    # Make a tibble with site, estimator and richness
-    tibble::tibble(
-      site = rep(site_names, each = length(levels)),
-      # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, ent_accum_list)
-    )
+  
+  # Make a tibble with site, level and entropy
+  ent_accumulation <- tibble::tibble(
+    site = rep(site_names, each = length(levels)),
+    # Coerce the list returned by apply into a dataframe
+    do.call(rbind.data.frame, ent_accum_list)
   )
+  class(ent_accumulation) <- c("accumulation", class(ent_accumulation))
+  
+  return(ent_accumulation)
 }
 
 
@@ -359,3 +360,210 @@ ent_accum.abundances <- function(
 div_accum <- function(x, ...) {
   UseMethod("div_accum")
 }
+
+
+#' @rdname div_accum
+#'
+#' @export
+div_accum.numeric <- function(
+    x, 
+    q = 0,
+    levels = seq_len(sum(x)), 
+    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10,
+    n_simulations = 0,
+    alpha = 0.05,
+    show_progress = TRUE,
+    ...,
+    check_arguments = TRUE) {
+  
+  if (check_arguments) check_divent_args()
+  probability_estimator <- match.arg(probability_estimator) 
+  unveiling <- match.arg(unveiling) 
+  richness_estimator <- match.arg(richness_estimator) 
+  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  
+  # Accumulate entropy
+  div_accumulation <- ent_accum.numeric(
+    x,
+    q = q,
+    levels = levels, 
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    richness_estimator = richness_estimator,
+    jack_alpha  = jack_alpha, 
+    jack_max = jack_max,
+    n_simulations = n_simulations,
+    alpha = alpha,
+    show_progress = show_progress,
+    check_arguments = FALSE
+  )
+  
+  # Calculate diversity
+  div_accumulation <- dplyr::mutate(
+    div_accumulation,
+    diversity = exp_q(.data$entropy, q = q)
+  )
+  attr(div_accumulation, "level") <- exp_q(
+    attr(div_accumulation, "level"), 
+    q = q
+  )
+  
+  return(div_accumulation)
+}
+
+
+#' @rdname div_accum
+#'
+#' @export
+div_accum.abundances <- function(
+    x,
+    q = 0,
+    levels = NULL, 
+    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10,
+    n_simulations = 0,
+    alpha = 0.05,
+    show_progress = TRUE,
+    ...,
+    check_arguments = TRUE) {
+  
+  if (check_arguments) check_divent_args()
+  probability_estimator <- match.arg(probability_estimator) 
+  unveiling <- match.arg(unveiling) 
+  richness_estimator <- match.arg(richness_estimator) 
+  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  
+  # Set levels if needed
+  if (is.null(levels)) {
+    sample_size <- max(
+      colSums(
+        x[, !(colnames(x) %in% c("site", "weight"))]
+      )
+    )
+    levels <- seq_len(sample_size)
+  }
+  # Apply ent_accum.numeric() to each site
+  div_accum_list <- apply(
+    # Eliminate site and weight columns
+    x[, !(colnames(x) %in% c("site", "weight"))], 
+    # Apply to each row
+    MARGIN = 1,
+    FUN = div_accum.numeric,
+    # Arguments
+    q = q,
+    levels = levels, 
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    richness_estimator = richness_estimator,
+    jack_alpha  = jack_alpha, 
+    jack_max = jack_max,
+    n_simulations = n_simulations,
+    alpha = alpha,
+    show_progress = show_progress,
+    check_arguments = FALSE
+  )
+  
+  # Add site names if needed
+  if ("site" %in% colnames(x)) {
+    site_names <- x$site
+  } else {
+    site_names <- paste("site", seq_len(nrow(x)), sep = "_")
+  }
+  
+  # Make a tibble with site, level and diversity
+  div_accumulation <- tibble::tibble(
+    site = rep(site_names, each = length(levels)),
+    # Coerce the list returned by apply into a dataframe
+    do.call(rbind.data.frame, ent_accum_list)
+  )
+  class(div_accumulation) <- c("accumulation", class(div_accumulation))
+  
+  return(div_accumulation)
+}
+
+
+#' @rdname div_accum
+#'
+#' @export
+autoplot.accumulation <-  function(
+    object, 
+    ..., 
+    main = NULL,
+    xlab = "Sample Size",
+    ylab = NULL,
+    shade_color = "grey75",
+    alpha = 0.3,
+    border_color = "red",
+    col = ggplot2::GeomLine$default_aes$color,
+    lty = ggplot2::GeomLine$default_aes$linetype,
+    lwd = ggplot2::GeomLine$default_aes$linewidth){
+  
+  if ("diversity" %in% colnames(object)) {
+    the_plot <- ggplot2::ggplot(
+      object, 
+      ggplot2::aes(
+        x = .data$level, 
+        y = .data$diversity,
+        col = .data$site
+      )
+    )
+  } else {
+    the_plot <- ggplot2::ggplot(
+      object, 
+      ggplot2::aes(
+        x = .data$level, 
+        y = .data$entropy,
+        col = .data$site
+      )
+    )
+  }
+  if ("sup" %in% colnames(object) & "inf" %in% colnames(object)) {
+    the_plot <- the_plot +
+      ggplot2::geom_ribbon(
+        ggplot2::aes(
+          ymin = .data$inf, 
+          ymax = .data$sup
+        ), 
+        fill = shade_color, 
+        alpha = alpha
+      ) +
+      # Add red lines on borders of polygon
+      ggplot2::geom_line(
+        ggplot2::aes(y = .data$inf), 
+        color = border_color, 
+        linetype = 2
+      ) +
+      ggplot2::geom_line(
+        ggplot2::aes(y = .data$high), 
+        color = border_color, 
+        linetype = 2
+      )
+  }
+  if (is.null(ylab)) {
+    if ("diversity" %in% colnames(object)) {
+      ylab <- "Diversity"
+    } else {
+      ylab <- "Entropy"
+    }
+  }
+  the_plot <- the_plot +
+    ggplot2::geom_line(color = col, linetype = lty, linewidth = lwd) +
+    ggplot2::labs(title = main, x = xlab, y = ylab)
+  
+  # Actual value
+  if (!is.null(attr(object, "value"))) {
+    the_plot <- the_plot +
+      ggplot2::geom_hline(yintercept = attr(object, "value"), linetype = 2) +
+      ggplot2::geom_vline(xintercept = attr(object, "level"), linetype = 2)
+  }
+  
+  return(the_plot)
+}
+

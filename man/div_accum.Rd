@@ -5,6 +5,9 @@
 \alias{ent_accum}
 \alias{ent_accum.numeric}
 \alias{ent_accum.abundances}
+\alias{div_accum.numeric}
+\alias{div_accum.abundances}
+\alias{autoplot.accumulation}
 \title{Diversity Accumulation of a Community}
 \usage{
 ent_accum(x, ...)
@@ -20,7 +23,6 @@ ent_accum(x, ...)
   jack_max = 10,
   n_simulations = 0,
   alpha = 0.05,
-  as_numeric = FALSE,
   show_progress = TRUE,
   ...,
   check_arguments = TRUE
@@ -43,6 +45,52 @@ ent_accum(x, ...)
 )
 
 div_accum(x, ...)
+
+\method{div_accum}{numeric}(
+  x,
+  q = 0,
+  levels = seq_len(sum(x)),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+)
+
+\method{div_accum}{abundances}(
+  x,
+  q = 0,
+  levels = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+)
+
+\method{autoplot}{accumulation}(
+  object,
+  ...,
+  main = NULL,
+  xlab = "Sample Size",
+  ylab = NULL,
+  shade_color = "grey75",
+  alpha = 0.3,
+  border_color = "red",
+  col = ggplot2::GeomLine$default_aes$color,
+  lty = ggplot2::GeomLine$default_aes$linetype,
+  lwd = ggplot2::GeomLine$default_aes$linewidth
+)
 }
 \arguments{
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
@@ -65,8 +113,6 @@ see \link{div_richness}.}
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
-
-\item{as_numeric}{If \code{TRUE}, a number is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
