@@ -536,5 +536,4 @@ ent_shannon.abundances <- function(
       do.call(rbind.data.frame, ent_shannon_list)
     )
   )
-  
 }
