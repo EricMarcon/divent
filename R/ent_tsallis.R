@@ -530,7 +530,7 @@ ent_tsallis.numeric <- function(
         level = level, 
         probability_estimator = probability_estimator,
         unveiling = unveiling,
-        as_numeric  = FALSE,
+        as_numeric  = TRUE,
         check_arguments = FALSE
       ) -1
     )
