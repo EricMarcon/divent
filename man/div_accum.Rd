@@ -97,6 +97,10 @@ or an object of class \link{abundances}  or \link{probabilities}}
 
 \item{...}{Unused.}
 
+\item{q}{The order or diversity.}
+
+\item{levels}{The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.}
+
 \item{probability_estimator}{One of the estimators of a probability distribution:
 "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 the probabilities of the observed species in the asymptotic distribution.}
@@ -113,7 +117,11 @@ see \link{div_richness}.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
 
+\item{n_simulations}{The number of simulations used to estimate the confidence envelope of the accumulation.}
+
 \item{alpha}{The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).}
+
+\item{show_progress}{If TRUE, a progress bar is shown during long computations.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
@@ -133,14 +141,6 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 \item{lty}{The line type of the curves.}
 
 \item{lwd}{The line width of the curves.}
-
-\item{estimator}{An estimator of entropy.}
-
-\item{level}{The level of interpolation or extrapolation.
-It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).
-Richness extrapolation require its asymptotic estimation depending on the
-choice of the \code{estimator}.}
 }
 \value{
 A tibble with the site names, the estimators used and the accumulated entropy
@@ -150,7 +150,7 @@ or diversity at each level of sampling effort.
 Details TODO.
 }
 \examples{
-# TODO
+autoplot(div_accum(paracou_6_abd))
 
 }
 \references{

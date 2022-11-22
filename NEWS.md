@@ -1,4 +1,4 @@
-# divent 0.1-5
+# divent 0.1-6
 
 - First Version.
 
@@ -6,7 +6,7 @@
 
 - Data formats.
 - Sample coverage.
-- Species distributions.
+- Species distributions, metacommunity.
 - Richness.
 - Shannon's, Simpson's and Tsallis's entropies.
 - Hill numbers.
