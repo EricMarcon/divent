@@ -87,7 +87,6 @@ div_accum(x, ...)
   shade_color = "grey75",
   alpha = 0.3,
   border_color = "red",
-  col = ggplot2::GeomLine$default_aes$color,
   lty = ggplot2::GeomLine$default_aes$linetype,
   lwd = ggplot2::GeomLine$default_aes$linewidth
 )
@@ -114,8 +113,26 @@ see \link{div_richness}.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
 
+\item{alpha}{The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).}
+
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+
+\item{object}{An object of class "accumulation".}
+
+\item{main}{The main title of the plot.}
+
+\item{xlab}{The label of the x-axis.}
+
+\item{ylab}{The label of the y-axis.}
+
+\item{shade_color}{The color of the shaded confidence envelopes.}
+
+\item{border_color}{The color of the border of the confidence envelopes.}
+
+\item{lty}{The line type of the curves.}
+
+\item{lwd}{The line width of the curves.}
 
 \item{estimator}{An estimator of entropy.}
 

@@ -16,7 +16,7 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' # TODO
+#' autoplot(div_accum(paracou_6_abd))
 #' 
 #' @name div_accum
 NULL
@@ -32,12 +32,8 @@ ent_accum <- function(x, ...) {
 
 #' @rdname div_accum
 #'
-#' @param estimator An estimator of entropy. 
-#' @param level The level of interpolation or extrapolation. 
-#' It may be a chosen sample size (an integer) or a sample coverage 
-#' (a number between 0 and 1). 
-#' Richness extrapolation require its asymptotic estimation depending on the 
-#' choice of the `estimator`.
+#' @param q The order or diversity.
+#' @param levels The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.
 #' @param probability_estimator One of the estimators of a probability distribution: 
 #' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 #' the probabilities of the observed species in the asymptotic distribution.
@@ -49,6 +45,9 @@ ent_accum <- function(x, ...) {
 #' see [div_richness].
 #' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
 #' @param jack_max The highest jackknife order allowed. Default is 10. 
+#' @param n_simulations The number of simulations used to estimate the confidence envelope of the accumulation.
+#' @param alpha The risk level, 5% by default, of the confidence envelope of the accumulation.
+#' @param show_progress If TRUE, a progress bar is shown during long computations. 
 #' 
 #' @export
 ent_accum.numeric <- function(
@@ -90,6 +89,7 @@ ent_accum.numeric <- function(
   
   # Prepare the vector of results
   ent_level <- numeric(length(levels))
+  ent_estimator <- character(length(levels))
   pgb <- utils::txtProgressBar(min = 0, max = length(levels))
   # i must be initialized if the accumulation contains extrapolation only
   i <- 0
@@ -108,6 +108,7 @@ ent_accum.numeric <- function(
     )
     if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
   }
+  ent_estimator[levels_interp] <- "Interpolation"
   
   # Level == Sample Size ----
   if (any(levels == sample_size)) {
@@ -118,6 +119,7 @@ ent_accum.numeric <- function(
       as_numeric = TRUE,
       check_arguments = FALSE
     )
+    ent_estimator[i] <- "Sample"
     if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
   }
   
@@ -125,7 +127,7 @@ ent_accum.numeric <- function(
   # Don't use Tsallis for speed: probabily extrapolation should be run once only.
   levels_extrap <- levels[levels > sample_size]
   prob_unv <- NULL
-  if (length(levels_extrap)) {
+  if (length(levels_extrap) > 0) {
     # Unveil the full distribution that rarefies to the observed entropy (or other options)
     prob_unv <- probabilities.numeric(
       abd,
@@ -151,8 +153,8 @@ ent_accum.numeric <- function(
         # No singleton
         ent_level[(i + 1):length(levels)] <- s_obs - 1
       }
-      if(show_progress & interactive()) 
-        utils::setTxtProgressBar(pgb, length(levels))
+      ent_estimator[(i + 1):length(levels)] <- richness_estimator
+      if(show_progress & interactive()) utils::setTxtProgressBar(pgb, length(levels))
     } else {
       ## Shannon ----
       if (q == 1) {
@@ -163,6 +165,7 @@ ent_accum.numeric <- function(
         # Interpolation (the vector is levels_extrap)
         ent_level[(i+1):length(levels)] <- sample_size / levels_extrap * ent_obs + 
           (levels_extrap - sample_size) / levels_extrap * ent_est
+        ent_estimator[(i + 1):length(levels)] <- richness_estimator
         if(show_progress & interactive()) utils::setTxtProgressBar(pgb, length(levels))
       } else {
         ## Simpson ----
@@ -179,6 +182,7 @@ ent_accum.numeric <- function(
             ent_level[(i + 1):length(levels)] <- 1 - 1 / levels_extrap - 
               (1 - 1 / levels_extrap) * sum(abd * (abd - 1)) / sample_size / (sample_size - 1)
           }
+          ent_estimator[(i + 1):length(levels)] <- "Chao2014"
           if(show_progress & interactive()) utils::setTxtProgressBar(pgb, length(levels))
         } else {
           # General case: q is not 0, 1 or 2 ----
@@ -198,6 +202,7 @@ ent_accum.numeric <- function(
             # Estimate entropy (Chao et al., 2014, eq. 6)
             i <- which(levels == Level)
             ent_level[i] <- (sum((seq_len(level) / level)^q * s_nu) - 1) / (1 - q)
+            ent_estimator[(i + 1):length(levels)] <- richness_estimator
             if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
           }
         }
@@ -213,7 +218,7 @@ ent_accum.numeric <- function(
   }
   if (n_simulations > 0) {
     # Prepare the result matrix
-    ent_sim <- matrix(0, nrow = length(levels), ncol = 2)
+    ent_sim_quantiles <- matrix(0, nrow = length(levels), ncol = 2)
     if (is.null(prob_unv)) {
       # Unveil the full distribution if not done before
       prob_unv <- probabilities.numeric(
@@ -227,7 +232,7 @@ ent_accum.numeric <- function(
         check_arguments = FALSE
       )
     }
-    for(Level in levels) {
+    for(level in levels) {
       # Generate simulated communities at each level
       communities <- stats::rmultinom(n_simulations, size = level, prob = prob_unv)
       # Probabilities
@@ -239,40 +244,33 @@ ent_accum.numeric <- function(
         FUN = ent_tsallis.numeric, 
         q = q,
         as_numeric = TRUE,      
-        checkArguments=FALSE
+        check_arguments = FALSE
       )
       i <- which(levels == level)
       # Store quantiles
-      ent_sim[i, ] <- stats::quantile(ent_sim, probs = c(alpha / 2, 1 - alpha / 2))
+      ent_sim_quantiles[i, ] <- stats::quantile(
+        ent_sim, 
+        probs = c(alpha / 2, 1 - alpha / 2)
+      )
       if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
     }
   }
   close(pgb)
 
   # Format the result ----
-  if (n_simulations) {
+  if (n_simulations > 0) {
     ent_accumulation <- tibble::tibble(
       level = levels,
+      estimator = ent_estimator,
       entropy = ent_level,
-      inf = ent_sim[, 1],
-      sup = ent_sim[, 2]
+      inf = ent_sim_quantiles[, 1],
+      sup = ent_sim_quantiles[, 2]
     )
   } else {
     ent_accumulation <- tibble::tibble(
       level = levels,
+      estimator = ent_estimator,
       entropy = ent_level
-    )
-  }
-
-  # Return actual values as attributes
-  attr(ent_accumulation, "sample_size") <- sample_size
-  if (any(levels == sample_size)) {
-    attr(ent_accumulation, "value") <- ent_level[which(levels == sample_size)]
-  } else {
-    attr(ent_accumulation, "value") <- ent_tsallis.numeric(
-      prob, 
-      q = q,
-      check_arguments = FALSE
     )
   }
   class(ent_accumulation) <- c("accumulation", class(ent_accumulation))
@@ -308,7 +306,7 @@ ent_accum.abundances <- function(
   # Set levels if needed
   if (is.null(levels)) {
     sample_size <- max(
-      colSums(
+      rowSums(
         x[, !(colnames(x) %in% c("site", "weight"))]
       )
     )
@@ -407,11 +405,7 @@ div_accum.numeric <- function(
     div_accumulation,
     diversity = exp_q(.data$entropy, q = q)
   )
-  attr(div_accumulation, "level") <- exp_q(
-    attr(div_accumulation, "level"), 
-    q = q
-  )
-  
+
   return(div_accumulation)
 }
 
@@ -443,7 +437,7 @@ div_accum.abundances <- function(
   # Set levels if needed
   if (is.null(levels)) {
     sample_size <- max(
-      colSums(
+      rowSums(
         x[, !(colnames(x) %in% c("site", "weight"))]
       )
     )
@@ -481,7 +475,7 @@ div_accum.abundances <- function(
   div_accumulation <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
     # Coerce the list returned by apply into a dataframe
-    do.call(rbind.data.frame, ent_accum_list)
+    do.call(rbind.data.frame, div_accum_list)
   )
   class(div_accumulation) <- c("accumulation", class(div_accumulation))
   
@@ -490,6 +484,16 @@ div_accum.abundances <- function(
 
 
 #' @rdname div_accum
+#'
+#' @param object An object of class "accumulation".
+#' @param main The main title of the plot.
+#' @param xlab The label of the x-axis.
+#' @param ylab The label of the y-axis.
+#' @param shade_color The color of the shaded confidence envelopes.
+#' @param alpha The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).
+#' @param border_color The color of the border of the confidence envelopes.
+#' @param lty The line type of the curves.
+#' @param lwd The line width of the curves.
 #'
 #' @export
 autoplot.accumulation <-  function(
@@ -501,10 +505,14 @@ autoplot.accumulation <-  function(
     shade_color = "grey75",
     alpha = 0.3,
     border_color = "red",
-    col = ggplot2::GeomLine$default_aes$color,
     lty = ggplot2::GeomLine$default_aes$linetype,
     lwd = ggplot2::GeomLine$default_aes$linewidth){
   
+  # Add a site column if needed
+  if (!("site" %in% colnames(object))) {
+    object <- dplyr::mutate(object, site = "Unique site")
+  }
+
   if ("diversity" %in% colnames(object)) {
     the_plot <- ggplot2::ggplot(
       object, 
@@ -520,7 +528,7 @@ autoplot.accumulation <-  function(
       ggplot2::aes(
         x = .data$level, 
         y = .data$entropy,
-        col = .data$site
+        color = .data$site
       )
     )
   }
@@ -541,7 +549,7 @@ autoplot.accumulation <-  function(
         linetype = 2
       ) +
       ggplot2::geom_line(
-        ggplot2::aes(y = .data$high), 
+        ggplot2::aes(y = .data$sup), 
         color = border_color, 
         linetype = 2
       )
@@ -554,14 +562,33 @@ autoplot.accumulation <-  function(
     }
   }
   the_plot <- the_plot +
-    ggplot2::geom_line(color = col, linetype = lty, linewidth = lwd) +
+    ggplot2::geom_line(linetype = lty, linewidth = lwd) +
     ggplot2::labs(title = main, x = xlab, y = ylab)
   
   # Actual value
-  if (!is.null(attr(object, "value"))) {
+  actual <- dplyr::filter(object, .data$estimator == "Sample")
+  if (nrow(actual) > 0) {
+    if ("diversity" %in% colnames(object)) {
+      the_plot <- the_plot +
+        ggplot2::geom_hline(
+          data = actual, 
+          mapping = ggplot2::aes(yintercept = .data$diversity, color = .data$site), 
+          linetype = 2
+        )
+    } else {
+      the_plot <- the_plot +
+        ggplot2::geom_hline(
+          data = actual, 
+          mapping = ggplot2::aes(yintercept = .data$entropy, color = .data$site), 
+          linetype = 2
+        )
+    }
     the_plot <- the_plot +
-      ggplot2::geom_hline(yintercept = attr(object, "value"), linetype = 2) +
-      ggplot2::geom_vline(xintercept = attr(object, "level"), linetype = 2)
+      ggplot2::geom_vline(
+        data = actual, 
+        mapping = ggplot2::aes(xintercept = .data$level, color = .data$site), 
+        linetype = 2
+      ) 
   }
   
   return(the_plot)

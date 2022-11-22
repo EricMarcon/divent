@@ -1,4 +1,4 @@
-# divent 0.1-4
+# divent 0.1-5
 
 - First Version.
 
@@ -11,4 +11,3 @@
 - Shannon's, Simpson's and Tsallis's entropies.
 - Hill numbers.
 - Diversity Accumulation
-
