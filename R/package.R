@@ -73,6 +73,47 @@ check_divent_args <- function() {
 }
 
 
+#' Aggregate communities into a metacommunity
+#'
+#' @param abundances An object of class "abundances" that contains several communities.
+#' @param name The name of the metacommunity
+#'
+#' @return An object of class "abundances" with a single row.
+#' @export
+#'
+#' @examples
+#' metacommunity(paracou_6_abd)
+metacommunity <- function(
+    abundances, 
+    name = "metacommunity",
+    check_arguments = TRUE) {
+
+  if (check_arguments) check_divent_args()
+  
+  # Select species columns
+  species_columns <- !(colnames(abundances) %in% c("site", "weight"))
+  # Extract abundances
+  species_abd <- as.matrix(abundances[, species_columns])
+  # and weights
+  weights <- abundances$weight
+  # Multiply them
+  abd <- weights %*% species_abd
+  # Build the tibble
+  the_metacommunity <- tibble::as_tibble(
+    cbind(
+      data.frame(site = name, weight = sum(weights)),
+      as.data.frame(abd)
+    )
+  )
+  # Restore exact species names (spaces may have been transformed into "_")
+  colnames(the_metacommunity[, species_columns]) <- colnames(abundances[, species_columns])
+  # Classes
+  class(the_metacommunity) <- c("abundances", "species_distribution", class(the_metacommunity))
+  
+  return(the_metacommunity)
+}
+
+
 
 #' Error message
 #' 
