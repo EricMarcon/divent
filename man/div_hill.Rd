@@ -36,6 +36,7 @@ div_hill(x, q = 1, ...)
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  gamma = FALSE,
   ...,
   check_arguments = TRUE
 )
@@ -79,6 +80,8 @@ Used to calculate the gamma diversity of meta-communities, see details.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+
+\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated diversity.

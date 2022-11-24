@@ -399,7 +399,7 @@ div_richness.numeric <- function(
 
 #' @rdname div_richness
 #'
-#' @param gamma If `TRUE`, $\gamma$ diversity, i.e. diversity of the metacommunity, is computed.
+#' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' 
 #' @export
 div_richness.abundances <- function(

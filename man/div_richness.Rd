@@ -69,8 +69,7 @@ Used only by the estimator of richness "rarefy".}
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{gamma}{If \code{TRUE}, gamma diversity is calculated.
-The metacommunity if built by combining the community abundances with respect to their weight.}
+\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated numbers of species.

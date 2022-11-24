@@ -4,12 +4,22 @@
 \alias{metacommunity}
 \title{Aggregate communities into a metacommunity}
 \usage{
-metacommunity(abundances, name = "metacommunity", check_arguments = TRUE)
+metacommunity(
+  abundances,
+  name = "metacommunity",
+  as_numeric = FALSE,
+  check_arguments = TRUE
+)
 }
 \arguments{
 \item{abundances}{An object of class "abundances" that contains several communities.}
 
 \item{name}{The name of the metacommunity}
+
+\item{as_numeric}{If \code{TRUE}, a number is returned rather than a tibble.}
+
+\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
 An object of class "abundances" with a single row.
