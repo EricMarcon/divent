@@ -29,6 +29,7 @@ div_richness(x, ...)
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
   unveiling = c("geometric", "uniform"),
+  gamma = FALSE,
   ...,
   check_arguments = TRUE
 )
@@ -67,6 +68,9 @@ Used only by the estimator of richness "rarefy".}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+
+\item{gamma}{If \code{TRUE}, gamma diversity is calculated.
+The metacommunity if built by combining the community abundances with respect to their weight.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated numbers of species.

@@ -26,6 +26,8 @@
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances]  or [probabilities]
 #' @param ... Unused.
+#' @param gamma If `TRUE`, gamma diversity is calculated.
+#' The metacommunity if built by combining the community abundances with respect to their weight.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
@@ -406,6 +408,7 @@ div_richness.abundances <- function(
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
     unveiling = c("geometric", "uniform"),
+    gamma = FALSE,
     ..., 
     check_arguments = TRUE) {
   
