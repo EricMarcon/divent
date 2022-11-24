@@ -207,6 +207,8 @@ ent_simpson.numeric <- function(
 
 #' @rdname ent_simpson
 #'
+#' @param gamma If `TRUE`, $\gamma$ diversity, i.e. diversity of the metacommunity, is computed.
+#' 
 #' @export
 ent_simpson.abundances <- function(
     x,
@@ -218,6 +220,7 @@ ent_simpson.abundances <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    gamma = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -228,32 +231,49 @@ ent_simpson.abundances <- function(
   richness_estimator <- match.arg(richness_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
-  # Apply ent_simpson.numeric() to each site
-  ent_simpson_list <- apply(
-    # Eliminate site and weight columns
-    x[, !(colnames(x) %in% c("site", "weight"))], 
-    # Apply to each row
-    MARGIN = 1,
-    FUN = ent_simpson.numeric,
-    # Arguments
-    estimator = estimator,
-    level = level, 
-    probability_estimator = probability_estimator,
-    unveiling = unveiling,
-    richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
-    jack_max = jack_max, 
-    check_arguments = FALSE
-  )
-  
-  return(
-    # Make a tibble with site, estimator and richness
-    tibble::tibble(
-      # Do not assume column site exists
-      x[colnames(x) == "site"],
-      # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, ent_simpson_list)
+  if (gamma) {
+    return(
+      ent_simpson.numeric(
+        metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
+        # Arguments
+        estimator = estimator,
+        level = level, 
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = richness_estimator,
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max, 
+        as_numeric = FALSE,
+        check_arguments = FALSE
+      )
     )
-  )
-  
+  } else {
+    # Apply ent_simpson.numeric() to each site
+    ent_simpson_list <- apply(
+      # Eliminate site and weight columns
+      x[, !(colnames(x) %in% c("site", "weight"))], 
+      # Apply to each row
+      MARGIN = 1,
+      FUN = ent_simpson.numeric,
+      # Arguments
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+    return(
+      # Make a tibble with site, estimator and richness
+      tibble::tibble(
+        # Do not assume column site exists
+        x[colnames(x) == "site"],
+        # Coerce the list returned by apply into a dataframe
+        do.call(rbind.data.frame, ent_simpson_list)
+      )
+    )
+  }
 }

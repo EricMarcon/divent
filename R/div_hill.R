@@ -111,6 +111,8 @@ div_hill.numeric <- function(
 
 #' @rdname div_hill
 #'
+#' @param gamma If `TRUE`, $\gamma$ diversity, i.e. diversity of the metacommunity, is computed.
+#' 
 #' @export
 div_hill.abundances <- function(
     x, 
@@ -123,6 +125,7 @@ div_hill.abundances <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    gamma = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -133,34 +136,51 @@ div_hill.abundances <- function(
   richness_estimator <- match.arg(richness_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
-  # Apply div_hill.numeric() to each site
-  div_hill_list <- apply(
-    # Eliminate site and weight columns
-    x[, !(colnames(x) %in% c("site", "weight"))], 
-    # Apply to each row
-    MARGIN = 1,
-    FUN = div_hill.numeric,
-    # Arguments
-    q = q,
-    estimator = estimator,
-    level = level, 
-    probability_estimator = probability_estimator,
-    unveiling = unveiling,
-    richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
-    jack_max = jack_max, 
-    as_numeric = FALSE,
-    check_arguments = FALSE
-  )
-  
-  return(
-    # Make a tibble with site, estimator and richness
-    tibble::tibble(
-      # Do not assume column site exists
-      x[colnames(x) == "site"],
-      # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, div_hill_list)
+  if (gamma) {
+    return(
+      div_hill.numeric(
+        metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
+        # Arguments
+        q = q,
+        estimator = estimator,
+        level = level, 
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = richness_estimator,
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max, 
+        as_numeric = FALSE,
+        check_arguments = FALSE
+      )
     )
-  )
-  
+  } else {
+    # Apply div_hill.numeric() to each site
+    div_hill_list <- apply(
+      # Eliminate site and weight columns
+      x[, !(colnames(x) %in% c("site", "weight"))], 
+      # Apply to each row
+      MARGIN = 1,
+      FUN = div_hill.numeric,
+      # Arguments
+      q = q,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+    return(
+      # Make a tibble with site, estimator and richness
+      tibble::tibble(
+        # Do not assume column site exists
+        x[colnames(x) == "site"],
+        # Coerce the list returned by apply into a dataframe
+        do.call(rbind.data.frame, div_hill_list)
+      )
+    )
+  }
 }

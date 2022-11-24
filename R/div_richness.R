@@ -399,6 +399,8 @@ div_richness.numeric <- function(
 
 #' @rdname div_richness
 #'
+#' @param gamma If `TRUE`, $\gamma$ diversity, i.e. diversity of the metacommunity, is computed.
+#' 
 #' @export
 div_richness.abundances <- function(
     x, 
@@ -418,30 +420,47 @@ div_richness.abundances <- function(
   unveiling <- match.arg(unveiling) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
-  # Apply div_richness.numeric() to each site
-  div_richness_list <- apply(
-    # Eliminate site and weight columns
-    x[, !(colnames(x) %in% c("site", "weight"))], 
-    # Apply to each row
-    MARGIN = 1,
-    FUN = div_richness.numeric,
-    # Arguments
-    estimator = estimator,
-    jack_alpha  = jack_alpha, 
-    jack_max = jack_max, 
-    level = level, 
-    probability_estimator = probability_estimator,
-    unveiling = unveiling,
-    check_arguments = FALSE
-  )
-  
-  return(
-    # Make a tibble with site, estimator and richness
-    tibble::tibble(
-      # Do not assume column site exists
-      x[colnames(x) == "site"],
-      # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, div_richness_list)
+  if (gamma) {
+    return(
+      div_richness.numeric(
+        metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
+        # Arguments
+        estimator = estimator,
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max, 
+        level = level, 
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        as_numeric = FALSE,
+        check_arguments = FALSE
+      )
     )
-  )
+  } else {
+    # Apply div_richness.numeric() to each site
+    div_richness_list <- apply(
+      # Eliminate site and weight columns
+      x[, !(colnames(x) %in% c("site", "weight"))], 
+      # Apply to each row
+      MARGIN = 1,
+      FUN = div_richness.numeric,
+      # Arguments
+      estimator = estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+    return(
+      # Make a tibble with site, estimator and richness
+      tibble::tibble(
+        # Do not assume column site exists
+        x[colnames(x) == "site"],
+        # Coerce the list returned by apply into a dataframe
+        do.call(rbind.data.frame, div_richness_list)
+      )
+    ) 
+  }
 }
