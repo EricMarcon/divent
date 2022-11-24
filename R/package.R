@@ -77,6 +77,9 @@ check_divent_args <- function() {
 #'
 #' @param abundances An object of class "abundances" that contains several communities.
 #' @param name The name of the metacommunity
+#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
+#' @param check_arguments If `TRUE`, the function arguments are verified.
+#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
 #' @return An object of class "abundances" with a single row.
 #' @export
@@ -86,6 +89,7 @@ check_divent_args <- function() {
 metacommunity <- function(
     abundances, 
     name = "metacommunity",
+    as_numeric = FALSE,
     check_arguments = TRUE) {
 
   if (check_arguments) check_divent_args()
@@ -98,21 +102,23 @@ metacommunity <- function(
   weights <- abundances$weight
   # Multiply them
   abd <- weights %*% species_abd
-  # Build the tibble
-  the_metacommunity <- tibble::as_tibble(
-    cbind(
-      data.frame(site = name, weight = sum(weights)),
-      as.data.frame(abd)
+  if (as_numeric) {
+    return(as.numeric(abd))
+  } else {
+    # Build the tibble
+    the_metacommunity <- tibble::as_tibble(
+      cbind(
+        data.frame(site = name, weight = sum(weights)),
+        as.data.frame(abd)
+      )
     )
-  )
-  # Restore exact species names (spaces may have been transformed into "_")
-  colnames(the_metacommunity[, species_columns]) <- colnames(abundances[, species_columns])
-  # Classes
-  class(the_metacommunity) <- c("abundances", "species_distribution", class(the_metacommunity))
-  
-  return(the_metacommunity)
+    # Restore exact species names (spaces may have been transformed into "_")
+    colnames(the_metacommunity[, species_columns]) <- colnames(abundances[, species_columns])
+    # Classes
+    class(the_metacommunity) <- c("abundances", "species_distribution", class(the_metacommunity))
+    return(the_metacommunity)
+  }
 }
-
 
 
 #' Error message
