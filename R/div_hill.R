@@ -81,7 +81,7 @@ div_hill.numeric <- function(
   richness_estimator <- match.arg(richness_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
-  entropy <- ent_tsallis(
+  the_entropy <- ent_tsallis(
     x, 
     q = q, 
     estimator = estimator,
@@ -95,14 +95,14 @@ div_hill.numeric <- function(
     as_numeric = TRUE,
     check_arguments = FALSE
   )
-  diversity <- exp_q(entropy, q = q)
+  the_diversity <- exp_q(the_entropy, q = q)
   if (as_numeric) {
-    return(diversity)
+    return(the_diversity)
   } else {
     return(
       tibble::tibble_row(
         estimator = estimator, 
-        diversity = diversity
+        diversity = the_diversity
       )
     ) 
   }

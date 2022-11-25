@@ -80,14 +80,14 @@ ent_simpson.numeric <- function(
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
     # Probabilities sum to 1, allowing rounding error
-    entropy <- 1 - sum(x^2)
+    the_entropy <- 1 - sum(x^2)
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "naive", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -135,14 +135,14 @@ ent_simpson.numeric <- function(
     
     if (estimator == "Lande") {
       # Lande's estimator ----
-      entropy <- 1 - sum(abd * (abd - 1) / sample_size / (sample_size - 1))
+      the_entropy <- 1 - sum(abd * (abd - 1) / sample_size / (sample_size - 1))
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }     
@@ -177,28 +177,28 @@ ent_simpson.numeric <- function(
   }
   if (level == sample_size) {
     # No interpolation/extrapolation needed: return the observed entropy
-    entropy <- 1 - sum((abd / sample_size)^2)
+    the_entropy <- 1 - sum((abd / sample_size)^2)
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "Sample", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
   }
   ## Valid interpolation and extrapolation ----
-  entropy <- 1 - 1 / level - 
+  the_entropy <- 1 - 1 / level - 
     (1 - 1 / level) * sum(abd * (abd - 1)) / sample_size / (sample_size - 1)
   if (as_numeric) {
-    return(entropy)
+    return(the_entropy)
   } else {
     return(
       tibble::tibble_row(
         estimator = "Chao2014", 
-        entropy = entropy
+        entropy = the_entropy
       )
     )  
   }

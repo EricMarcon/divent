@@ -262,9 +262,9 @@ probabilities.numeric <- function(
   if (as_numeric) {
     return(prob)
   } else {
-    probabilities <- as_species_distribution(prob)
-    class(probabilities) <- c("probabilities", class(probabilities))
-    return(probabilities)
+    the_probabilities <- as_species_distribution(prob)
+    class(the_probabilities) <- c("probabilities", class(the_probabilities))
+    return(the_probabilities)
   }
 }
 
@@ -308,12 +308,12 @@ probabilities.abundances <- function(
   )
   
   # Bind the rows
-  probabilities <- dplyr::bind_rows(probabilities_list)
+  the_probabilities <- dplyr::bind_rows(probabilities_list)
   # Restore the site names
-  if (("site" %in% colnames(x))) probabilities$site <- x$site
+  if (("site" %in% colnames(x))) the_probabilities$site <- x$site
   # Replace NA's due to binding by zeros
-  probabilities <- dplyr::mutate_all(probabilities,  ~replace(., is.na(.), 0))
-  return(probabilities)
+  the_probabilities <- dplyr::mutate_all(the_probabilities,  ~replace(., is.na(.), 0))
+  return(the_probabilities)
 }
 
 

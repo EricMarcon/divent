@@ -87,14 +87,14 @@ ent_tsallis.numeric <- function(
     prob <- x[x > 0]
     # Avoid big numbers with this rather than prob * ln_q(1/prob, q)
     ent_species <- -prob^q * ln_q(prob, q = q)
-    entropy <- sum(ent_species)
+    the_entropy <- sum(ent_species)
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "naive", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -201,14 +201,14 @@ ent_tsallis.numeric <- function(
       # Eliminate unobserved species. Useless because filtered before
       # ent_species <- -prob^q * ln_q(prob, q)
       # ent_species[prob == 0] <- 0
-      entropy <- -sum(prob^q * ln_q(prob, q))
+      the_entropy <- -sum(prob^q * ln_q(prob, q))
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         ) 
       }
@@ -257,14 +257,14 @@ ent_tsallis.numeric <- function(
           # w_v <- 1/V
           # entropy <- sum(prob * vapply(seq_along(abd), S_v, 0))
           # Use EntropyEstimation instead
-          entropy <- EntropyEstimation::Entropy.z(abd)
+          the_entropy <- EntropyEstimation::Entropy.z(abd)
           if (as_numeric) {
-            return(entropy)
+            return(the_entropy)
           } else {
             return(
               tibble::tibble_row(
                 estimator = estimator, 
-                entropy = entropy
+                entropy = the_entropy
               )
             )  
           }
@@ -342,14 +342,14 @@ ent_tsallis.numeric <- function(
           s_1 / sample_size * (1 - A)^(1 - sample_size) * (A^(q - 1) - sum(eq7d_sum) - 1)
           ) / (1 - q)
       }
-      entropy <- ent_ZhangGrabchak + bias_chao_jost
+      the_entropy <- ent_ZhangGrabchak + bias_chao_jost
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }
@@ -403,42 +403,42 @@ ent_tsallis.numeric <- function(
       }
     }
     if (estimator == "Marcon") {
-      entropy <- max(ent_ChaoShen, ent_Grassberger)
+      the_entropy <- max(ent_ChaoShen, ent_Grassberger)
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }
     }
     if (estimator == "Holste") {
-      entropy <- 1 / (1 - q) * 
+      the_entropy <- 1 / (1 - q) * 
         (beta(s_obs + sample_size, q) * sum(1 / beta(abd + 1, q)) - 1)
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }
     } 
     if (estimator == "Bonachela") {
-      entropy <- 1 / (1 - q) *
+      the_entropy <- 1 / (1 - q) *
         (beta(2 + sample_size, q) * sum(1 / beta(abd + 1, q)) - 1)
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }
@@ -476,14 +476,14 @@ ent_tsallis.numeric <- function(
     }
     if (estimator == "UnveilC" | estimator == "UnveiliC" | estimator == "UnveilJ") {
       # Naive estimator applied to unveiled distribution
-      entropy <- -sum(prob_unv^q * ln_q(prob_unv, q))
+      the_entropy <- -sum(prob_unv^q * ln_q(prob_unv, q))
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )
       }
@@ -504,14 +504,14 @@ ent_tsallis.numeric <- function(
   }
   if (level == sample_size) {
     # No interpolation/extrapolation needed: return the observed entropy
-    entropy <- -sum(prob^q * ln_q(prob, q))
+    the_entropy <- -sum(prob^q * ln_q(prob, q))
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "Sample", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -576,14 +576,14 @@ ent_tsallis.numeric <- function(
     # Obtain Abundance Frequence Count
     abd_freq <- abd_freq_count(abd, level = level, check_arguments = FALSE)
     # Calculate entropy (Chao et al., 2014, eq. 6)
-    entropy <- (sum(((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1)/(1 - q)
+    the_entropy <- (sum(((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1)/(1 - q)
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "Interpolation", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -626,14 +626,14 @@ ent_tsallis.numeric <- function(
       FUN.VALUE=0
     )
     # Estimate entropy (Chao et al., 2014, eq. 6)
-    entropy <- (sum((seq_len(level) / level)^q * s_level) - 1) / (1 - q)
+    the_entropy <- (sum((seq_len(level) / level)^q * s_level) - 1) / (1 - q)
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = richness_estimator, 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }

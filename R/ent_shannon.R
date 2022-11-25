@@ -61,8 +61,8 @@ ent_shannon.numeric <- function(
                   "Grassberger2003", "Schurmann", "Bonachela", "Miller", "ZhangHz",
                   "naive"),
     level = NULL, 
-    probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-    unveiling = c("none", "uniform", "geometric"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
@@ -82,14 +82,14 @@ ent_shannon.numeric <- function(
     # Probabilities sum to 1, allowing rounding error
     prob <- x[x > 0]
     ent_species <- -prob * log(prob)
-    entropy <- sum(ent_species)
+    the_entropy <- sum(ent_species)
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "naive", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -148,14 +148,14 @@ ent_shannon.numeric <- function(
       ent_species <- sum(ent_species)
       # Eliminate unobserved species. Useless because filtered before
       # ent_species[prob == 0] <- 0
-      entropy <- sum(ent_species)
+      the_entropy <- sum(ent_species)
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }
@@ -163,19 +163,19 @@ ent_shannon.numeric <- function(
     
     ## Other estimators ----
     if (estimator == "Miller") {
-      entropy <- ent_shannon.numeric(
+      the_entropy <- ent_shannon.numeric(
           prob, 
           as_numeric = TRUE,
           check_arguments = FALSE
         ) +
         (s_obs - 1) / 2 / sample_size
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }
@@ -224,14 +224,14 @@ ent_shannon.numeric <- function(
       }
     }
     if (estimator == "Marcon") {
-      entropy <- max(ent_ChaoShen, ent_Grassberger)
+      the_entropy <- max(ent_ChaoShen, ent_Grassberger)
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         ) 
       }
@@ -263,17 +263,17 @@ ent_shannon.numeric <- function(
       )
     }
     if (estimator == "Grassberger2003" | estimator == "Schurmann") {
-      entropy <- sum(
+      the_entropy <- sum(
         abd / sample_size * 
         (digamma(sample_size) - digamma(abd) - (1 - abd %%2 * 2) * integral_value)
       )
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         ) 
       }
@@ -346,14 +346,14 @@ ent_shannon.numeric <- function(
       # Sum of products, weighted by p_s
       sum_prod <- function(v) {sum(prob * p_V_prob[seq_along(prob), v])}
       # Apply sum_prod to all values of V. Use logs or w_v goes to Inf.
-      entropy <- sum(exp(lnw_v + log(vapply(V, sum_prod, FUN.VALUE = 0))))
+      the_entropy <- sum(exp(lnw_v + log(vapply(V, sum_prod, FUN.VALUE = 0))))
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         ) 
       }
@@ -391,14 +391,14 @@ ent_shannon.numeric <- function(
     }
     if (estimator == "UnveilC" | estimator == "UnveiliC" | estimator == "UnveilJ") {
       # Naive estimator applied to unveiled distribution
-      entropy <- -sum(prob_unv * log(prob_unv))
+      the_entropy <- -sum(prob_unv * log(prob_unv))
       if (as_numeric) {
-        return(entropy)
+        return(the_entropy)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            entropy = entropy
+            entropy = the_entropy
           )
         )  
       }
@@ -420,14 +420,14 @@ ent_shannon.numeric <- function(
   }
   if (level == sample_size) {
     # No interpolation/extrapolation needed: return the observed entropy
-    entropy <- -sum(prob * log(prob))
+    the_entropy <- -sum(prob * log(prob))
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "Sample", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -436,14 +436,14 @@ ent_shannon.numeric <- function(
     ## Interpolation ----
     abd_freq <- abd_freq_count(abd, level = level, check_arguments = FALSE)
     seq_l <- seq_len(level)/level
-    entropy <- -(sum(seq_l * log(seq_l) * abd_freq$number_of_species))
+    the_entropy <- -(sum(seq_l * log(seq_l) * abd_freq$number_of_species))
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = "Interpolation", 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -470,15 +470,15 @@ ent_shannon.numeric <- function(
     # Estimate observed entropy
     ent_obs <- -sum(prob * log(prob))
     # Interpolation
-    entropy <- sample_size / level * ent_obs + 
+    the_entropy <- sample_size / level * ent_obs + 
       (level - sample_size) / level * ent_est
     if (as_numeric) {
-      return(entropy)
+      return(the_entropy)
     } else {
       return(
         tibble::tibble_row(
           estimator = probability_estimator, 
-          entropy = entropy
+          entropy = the_entropy
         )
       )  
     }
@@ -491,12 +491,12 @@ ent_shannon.numeric <- function(
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' 
 #' @export
-ent_shannon.abundances <- function(
+ent_shannon.species_distribution <- function(
     x,
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
                   "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
     level = NULL, 
-    probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("none", "uniform", "geometric"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 

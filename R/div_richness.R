@@ -147,7 +147,7 @@ div_richness.numeric <- function(
     
     ## Rarefaction estimator ----
     if (estimator == "rarefy") {
-      richness <- length(
+      the_richness <- length(
         probabilities.numeric(
           abd, 
           estimator = probability_estimator, 
@@ -158,12 +158,12 @@ div_richness.numeric <- function(
         )
       )
       if (as_numeric) {
-        return(s_obs)
+        return(the_richness)
       } else {
         return(
           tibble::tibble_row(
             estimator = "rarefy", 
-            richness = richness
+            richness = the_richness
           )
         )
       }
@@ -189,14 +189,14 @@ div_richness.numeric <- function(
     }
     ### Chao1 ----
     if (estimator == "Chao1") {
-      richness <- s_obs + s_0
+      the_richness <- s_obs + s_0
       if (as_numeric) {
-        return(richness)
+        return(the_richness)
       } else {
         return(
           tibble::tibble_row(
             estimator = "Chao1", 
-            richness = richness
+            richness = the_richness
           )
         )
       }
@@ -212,14 +212,14 @@ div_richness.numeric <- function(
         s_4 <- 1
       }
       s_0_iChao <- s_3 / 4 / s_4 * max(s_1 - s_2 * s_3 / 2 / s_4, 0)
-      richness <- s_obs + s_0 + s_0_iChao
+      the_richness <- s_obs + s_0 + s_0_iChao
       if (as_numeric) {
-        return(richness)
+        return(the_richness)
       } else {
         return(
           tibble::tibble_row(
             estimator = "iChao1", 
-            richness = richness
+            richness = the_richness
           )
         )
       }
@@ -334,17 +334,17 @@ div_richness.numeric <- function(
   }
   if (level <= sample_size) {
     ## Interpolation ----
-    richness <- s_obs - 
+    the_richness <- s_obs - 
       sum(
         exp(lchoose(sample_size - abd, level) - lchoose(sample_size, level))
       )
     if (as_numeric) {
-      return(richness)
+      return(the_richness)
     } else {
       return(
         tibble::tibble_row(
           estimator = "SAC", 
-          richness = richness
+          richness = the_richness
         )
       )  
     }
@@ -376,20 +376,20 @@ div_richness.numeric <- function(
         )
         s_0 <- length(prob_s_0) - s_obs
       }
-      richness <- s_obs + s_0 * (
+      the_richness <- s_obs + s_0 * (
         1 - (1 - s_1 / (sample_size * s_0 + s_1))^(level - sample_size)
       )
     } else {
       # No singleton
-      richness <- s_obs
+      the_richness <- s_obs
     }
     if (as_numeric) {
-      return(richness)
+      return(the_richness)
     } else {
       return(
         tibble::tibble_row(
           estimator = estimator, 
-          richness = richness
+          richness = the_richness
         )
       )  
     }
