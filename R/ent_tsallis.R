@@ -646,7 +646,7 @@ ent_tsallis.numeric <- function(
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' 
 #' @export
-ent_tsallis.abundances <- function(
+ent_tsallis.species_distribution <- function(
     x, 
     q = 1, 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 

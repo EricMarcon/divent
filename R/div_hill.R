@@ -114,7 +114,7 @@ div_hill.numeric <- function(
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' 
 #' @export
-div_hill.abundances <- function(
+div_hill.species_distribution <- function(
     x, 
     q = 1, 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 

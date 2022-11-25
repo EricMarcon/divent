@@ -402,7 +402,7 @@ div_richness.numeric <- function(
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' 
 #' @export
-div_richness.abundances <- function(
+div_richness.species_distribution <- function(
     x, 
     estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     jack_alpha  = 0.05, 
