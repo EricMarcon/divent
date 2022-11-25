@@ -121,7 +121,7 @@ probabilities.numeric <- function(
     sample_coverage <- coverage(abd, estimator = coverage_estimator)$coverage
     if (
       estimator == "Chao2015" | 
-      unveiling == "Chao2015" | 
+      unveiling != "none" | 
       richness_estimator == "Rarefy") {
       # Sample coverage of order 2 required
       s_1 <- sum(abd == 1)
@@ -232,7 +232,7 @@ probabilities.numeric <- function(
           jack_max = jack_max,
           as_numeric = TRUE, 
           check_arguments = FALSE
-        )$richness
+        )
       )
       s_0 <- s_est - s_obs
     }
