@@ -310,7 +310,7 @@ plot.species_distribution <- function(
     )
     
     # Draw the fitted models
-    if (fit_rac)) {
+    if (fit_rac) {
       rac_fitted <- fit_rac(
         abd, 
         distribution = distribution, 
