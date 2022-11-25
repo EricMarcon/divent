@@ -71,7 +71,7 @@ species_distribution <- function(
       names <- paste("site", round(stats::runif(1)*.Machine$integer.max), sep="_")
     }
     # Build a tibble
-    distribution <- tibble::as_tibble_row(c(site = names, x))
+    the_distribution <- tibble::as_tibble_row(c(site = names, x))
     
   } else {
     ## Several distributions ----
@@ -84,12 +84,12 @@ species_distribution <- function(
       )
     }
     # Build a tibble
-    distribution <- tibble::as_tibble(x, rownames = "site")
+    the_distribution <- tibble::as_tibble(x, rownames = "site")
     ### Rows: site names = names or matrix row names or default ----
     if (!is.null(names)) {
       # site = names if the size matches
       if (length(names) == nrow(x)) {
-        distribution$site <- names
+        the_distribution$site <- names
       } else {
         stop("The length of 'names' must match the number of lines of the data matrix.")
       }
@@ -97,7 +97,7 @@ species_distribution <- function(
       # names is null...
       if (is.null(row.names(x))) {
         # ...and no row names: set default names such as site_1
-        distribution$site <- paste(
+        the_distribution$site <- paste(
           "site", 
           formatC(seq_len(nrow(x)), width = ceiling(log10(nrow(x))), flag = "0"),
           sep = "_"
@@ -108,8 +108,8 @@ species_distribution <- function(
     if (!is.null(weights)) {
       # site = weights if the size matches
       if (length(weights) == nrow(x)) {
-        distribution <- tibble::add_column(
-          distribution, 
+        the_distribution <- tibble::add_column(
+          the_distribution, 
           weight = rowSums(x),
           .after = "site"
         )
@@ -118,8 +118,8 @@ species_distribution <- function(
       }
     } else {
       # Weights are the number of individuals
-      distribution <- tibble::add_column(
-        distribution, 
+      the_distribution <- tibble::add_column(
+        the_distribution, 
         weight = rowSums(x),
         .after = "site"
       )
@@ -127,8 +127,8 @@ species_distribution <- function(
   }
   
   # Set the class and return ----
-  class(distribution) <- c("species_distribution", class(distribution))
-  return(distribution)
+  class(the_distribution) <- c("species_distribution", class(the_distribution))
+  return(the_distribution)
 }
 
 
@@ -150,8 +150,7 @@ as_species_distribution.numeric <- function(
   
   return(
     species_distribution(
-      x, 
-      ..., 
+      x,
       check_arguments = check_arguments
     )
   )
@@ -170,10 +169,9 @@ as_species_distribution.matrix <- function(
   
   return(
     species_distribution(
-      x, 
-      names = names, 
-      weights = weights, 
-      ..., 
+      x,
+      names = names,
+      weights = weights,
       check_arguments = check_arguments
     )
   )
@@ -184,8 +182,7 @@ as_species_distribution.matrix <- function(
 #'
 #' @export
 as_species_distribution.data.frame <- function(
-    x, 
-    ...,
+    x,
     check_arguments = TRUE) {
   
   if (check_arguments) check_divent_args()
@@ -193,17 +190,17 @@ as_species_distribution.data.frame <- function(
   if (any(x < 0)) stop("All numeric values of the dataframe must be positive.")
   
   # Build a tibble
-  distribution <- tibble::as_tibble(x)
+  the_distribution <- tibble::as_tibble(x)
   
   # The first column should be "site"
-  if (!"site" %in% colnames(distribution)) {
-    distribution <- tibble::add_column(
-      distribution, 
+  if (!"site" %in% colnames(the_distribution)) {
+    the_distribution <- tibble::add_column(
+      the_distribution, 
       site = paste(
         "site", 
         formatC(
-          seq_len(nrow(distribution)), 
-          width = ceiling(log10(nrow(distribution))), 
+          seq_len(nrow(the_distribution)), 
+          width = ceiling(log10(nrow(the_distribution))), 
           flag = "0"
         ),
         sep = "_"
@@ -213,17 +210,17 @@ as_species_distribution.data.frame <- function(
   }
   
   # The second column should be "weight"
-  if (!"weight" %in% colnames(distribution)) {
-    distribution <- tibble::add_column(
-      distribution, 
-      weight = rowSums(distribution[colnames(distribution) != "site"]),
+  if (!"weight" %in% colnames(the_distribution)) {
+    the_distribution <- tibble::add_column(
+      the_distribution, 
+      weight = rowSums(the_distribution[colnames(the_distribution) != "site"]),
       .after = "site"
     )
   }
 
   # Set the class and return
-  class(distribution) <- c("species_distribution", class(distribution))
-  return(distribution)
+  class(the_distribution) <- c("species_distribution", class(the_distribution))
+  return(the_distribution)
 }
 
 
@@ -290,8 +287,8 @@ plot.species_distribution <- function(
   graphics::axis(2)
   graphics::box()
   
-  # Color palette
-  cols <- RColorBrewer::brewer.pal(nrow(x), name = palette)
+  # Color palette, min number of colors is 3
+  cols <- RColorBrewer::brewer.pal(max(nrow(x), 3), name = palette)
   
   # Loop in communities to build the plot
   for (community in seq_len(nrow(x))) {
@@ -388,7 +385,7 @@ autoplot.species_distribution <- function(
   
   # Prepare the data to plot
   the_data <- data.frame(site = NULL, rank = NULL, abd = NULL)
-  if (!is.null(distribution)) {
+  if (fit_rac) {
     the_model <- data.frame(site = NULL, rank = NULL, abd = NULL)
   }
   
@@ -438,7 +435,7 @@ autoplot.species_distribution <- function(
     ) 
 
   # Fitted models
-  if (!is.null(distribution)) {
+  if (fit_rac) {
     the_plot <- the_plot + 
       ggplot2::geom_line(
         data = the_model,
@@ -483,14 +480,13 @@ as_probabilities.numeric <- function(
 
   # Normalize to 1
   prob <- x / sum(x)
-  probabilities <- as_species_distribution(
-    prob, 
-    ...,
+  the_probabilities <- as_species_distribution(
+    prob,
     check_arguments = check_arguments
   )
 
-  class(probabilities) <- c("probabilities", class(probabilities))
-  return(probabilities)
+  class(the_probabilities) <- c("probabilities", class(the_probabilities))
+  return(the_probabilities)
 }
 
 
@@ -499,21 +495,25 @@ as_probabilities.numeric <- function(
 #' @export
 as_probabilities.matrix <- function(
     x,
-    names = NULL, 
-    weights = NULL, 
+    names = NULL,
+    weights = NULL,
     ...,
     check_arguments = TRUE) {
   
-  probabilities <- as_species_distribution.matrix(
-    x, 
+  # Calculate probabilities by row
+  prob <- x / rowSums(x)
+  
+  # Build the species distribution
+  the_probabilities <- as_species_distribution.matrix(
+    prob, 
     names = names, 
     weights = weights,
-    ..., 
     check_arguments = check_arguments
   )
   
-  class(probabilities) <- c("probabilities", class(probabilities))
-  return(probabilities)
+  # Set the class
+  class(the_probabilities) <- c("probabilities", class(the_probabilities))
+  return(the_probabilities)
 }
 
 
@@ -525,14 +525,35 @@ as_probabilities.data.frame <- function(
     ...,
     check_arguments = TRUE) {
   
-  probabilities <- as_species_distribution.data.frame(
+  # Build the species distribution to add site and weight columns if needed
+  abundances <- as_species_distribution.data.frame(
     x, 
-    ..., 
     check_arguments = check_arguments
   )
   
-  class(probabilities) <- c("probabilities", class(probabilities))
-  return(probabilities)
+  # Select species columns
+  species_columns <- !(colnames(abundances) %in% c("site", "weight"))
+  # Extract abundances
+  abd <- as.matrix(abundances[, species_columns])
+  # Normalize them
+  prob <- abd / rowSums(abd)
+  # Build the tibble
+  the_probabilities <- cbind(
+    data.frame(site = abundances$site, weight = abundances$weight),
+    as.data.frame(prob)
+  )
+  # Restore exact species names (spaces may have been transformed into "_")
+  colnames(the_probabilities[, species_columns]) <- colnames(abundances[, species_columns])
+  
+  # Build the species distribution again for the classes
+  the_probabilities <- as_species_distribution.data.frame(
+    the_probabilities,
+    check_arguments = FALSE
+  )
+  
+  # Set the class
+  class(the_probabilities) <- c("probabilities", class(the_probabilities))
+  return(the_probabilities)
 }
 
 
@@ -602,10 +623,10 @@ as_abundances.numeric <- function(
     x <- as.integer(round(x))
   }
 
-  abundances <- as_species_distribution(x, ..., check_arguments = FALSE)
+  the_abundances <- as_species_distribution(x, check_arguments = FALSE)
 
-  class(abundances) <- c("abundances", class(abundances))
-  return(abundances)
+  class(the_abundances) <- c("abundances", class(the_abundances))
+  return(the_abundances)
 }
 
 
@@ -615,8 +636,8 @@ as_abundances.numeric <- function(
 as_abundances.matrix <- function(
     x,
     round = TRUE,
-    names = NULL, 
-    weights = NULL, 
+    names = NULL,
+    weights = NULL,
     ...,
     check_arguments = TRUE) {
   
@@ -626,16 +647,15 @@ as_abundances.matrix <- function(
     mode(x) <- "integer"
   }
   
-  abundances <- as_species_distribution.matrix(
-    x, 
-    names = names, 
+  the_abundances <- as_species_distribution.matrix(
+    x,
+    names = names,
     weights = weights,
-    ..., 
     check_arguments = check_arguments
   )
   
-  class(abundances) <- c("abundances", class(abundances))
-  return(abundances)
+  class(the_abundances) <- c("abundances", class(the_abundances))
+  return(the_abundances)
 }
 
 
@@ -647,14 +667,13 @@ as_abundances.data.frame <- function(
     ...,
     check_arguments = TRUE) {
   
-  abundances <- as_species_distribution.data.frame(
-    x, 
-    ..., 
+  the_abundances <- as_species_distribution.data.frame(
+    x,
     check_arguments = check_arguments
   )
   
-  class(abundances) <- c("abundances", class(abundances))
-  return(abundances)
+  class(the_abundances) <- c("abundances", class(the_abundances))
+  return(the_abundances)
 }
 
 
