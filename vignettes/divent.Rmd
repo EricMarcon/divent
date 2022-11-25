@@ -1,0 +1,120 @@
+---
+title: "divent"
+subtitle: "Measures of Diversity based on Entropy"
+bibliography: ../inst/REFERENCES.bib
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to divent}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+set.seed(97310)
+```
+
+_divent_ is a package for _R_ designed to estimate diversity based on HCDT entropy or similarity-based entropy. 
+It is a reboot of the _entropart_ package, following the tidyverse manifest and easier to use.
+This is a short introduction to its use.
+
+The package allows estimating biodiversity according to the framework based on HCDT entropy, the correction of its estimation-bias [@Grassberger1988; @Chao2003; @Chao2015] and its transformation into equivalent numbers of species [@Hill1973; @Jost2006; @Marcon2014a].
+Estimation of diversity at arbitrary levels of sampling, requiring interpolation or extrapolation [@Chao2014] is available
+
+Phylogenetic or functional diversity [@Marcon2014b] can be estimated, considering phyloentropy as the average species-neutral diversity over slices of a phylogenetic or functional tree [@Pavoine2009]. 
+
+Similarity-based diversity [@Leinster2012] can be used to estimate [@Marcon2014e] functional diversity from a similarity or dissimilarity matrix between species without requiring building a dendrogram and thus preserving the topology of species  [@Pavoine2005a; @Podani2007].
+
+The classical diversity estimators (Shannon and Simpson entropy) can be found in many R packages. 
+Bias correction is rarely available except in the _EntropyEstimation_ [@Cao2014] package which provides the Zhang and Grabchak's estimators of entropy and diversity and their asymptotic variance (not included in _entropart_).
+
+
+# Estimating the diversity of a community
+
+## Community data
+
+Community data is a numeric vector containing abundances of species (the number of individual of each species) or their probabilities (the proportion of individuals of each species, summing to 1).
+
+Example data is provided in the dataset `paracou_6_abd`.
+Let's get the abundances of tree species in the 6.25-ha tropical forest plot #6 from Paracou forest station in French Guiana.
+It is divided into 4 equally-sized subplots:
+
+```{r load_paracou6}
+library("divent")
+paracou_6_abd
+abd_sum(paracou_6_abd)
+```
+
+
+The data in `paracou_6_abd` is an object of class `abundances`, i.e. a tibble with species as columns and sites as rows.
+It can be manipulated as any dataframe and plotted as a rank-abundance curve:
+
+```{r plot_paracou6}
+autoplot(paracou_6_abd[1, ])
+```
+
+The `rcommunity` function allows drawing random communities, e.g. a log-normal one [@Preston1948]:
+
+```{r rcommunity}
+rc <- rcommunity(1, size = 10000, distribution = "lnorm")
+autoplot(rc, fit_rac = TRUE, distribution="lnorm")
+```
+
+The Whittaker plot (rank-abundance curve) of a random log-normal distribution of 10000 individuals simulated with default parameter ($\sigma = 1$) is produced.
+
+
+## Diversity estimation
+
+The classical indices of diversity are richness (the number of species), Shannon's and Simpson's entropies:
+
+```{r shannon}
+div_richness(paracou_6_abd)
+ent_shannon(paracou_6_abd)
+ent_simpson(paracou_6_abd)
+```
+
+When applied to probabilities (created with `as_probaVector` in the following example), no estimation-bias correction is applied: this means that indices are just calculated by applying their definition function to the probabilities (that is the naive, or plugin estimator).
+
+```{r naiveshannon}
+library("dplyr")
+paracou_6_abd %>% 
+  as_probabilities() %>% 
+  ent_shannon()
+```
+
+When abundances are available, many estimators can be used [@Marcon2015a] to address unobserved species and the non-linearity of the indices:
+
+```{r IndicesAbd}
+ent_shannon(paracou_6_abd)
+ent_shannon(paracou_6_abd, estimator = "ChaoJost")
+```
+
+The best available estimator is chosen by default: its name is returned.
+
+Those indices are special cases of the Tsallis entropy [-@Tsallis1988] or order $q$ (respectively $q=0,1,2$ for richness, Shannon, Simpson):
+
+```{r Tsallis}
+ent_tsallis(paracou_6_abd, q = 1)
+```
+
+Entropy should be converted to its effective number of species, i.e. the number of species with equal probabilities that would yield the observed entropy, called @Hill1973 numbers or simply diversity [@Jost2006].
+
+```{r Diversity}
+div_hill(paracou_6_abd, q = 1)
+```
+
+Diversity is the deformed exponential of order $q$ of entropy, and entropy is the deformed logarithm of of order $q$ of diversity:
+
+```{r lnq}
+(d2 <- div_hill(paracou_6_abd, q = 2)$diversity)
+ln_q(d2, q = 2)
+(e2 <-ent_tsallis(paracou_6_abd, q = 2)$entropy)
+exp_q(e2, q = 2)
+```
+
+
+
+# Full documentation
+
+https://ericmarcon.github.io/entropart/ 
+
+# References
