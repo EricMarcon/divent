@@ -237,6 +237,7 @@ is_species_distribution <- function(x) {
 
 #' @rdname species_distribution
 #'
+#' @param fit_rac If `TRUE`, estimate a theoretical distribution and fit the data with it.
 #' @param distribution The distribution of species abundances.
 #' May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or 
 #' "bstick" (broken stick).
@@ -251,6 +252,7 @@ is_species_distribution <- function(x) {
 plot.species_distribution <- function(
     x, 
     ..., 
+    fit_rac = FALSE,
     distribution = c("lnorm", "lseries", "geom", "bstick"),
     ylog = "y", 
     main = NULL, 
@@ -308,7 +310,7 @@ plot.species_distribution <- function(
     )
     
     # Draw the fitted models
-    if (!is.null(distribution)) {
+    if (fit_rac)) {
       rac_fitted <- fit_rac(
         abd, 
         distribution = distribution, 
@@ -350,6 +352,7 @@ graphics::plot
 autoplot.species_distribution <- function(
     object, 
     ..., 
+    fit_rac = FALSE,
     distribution = c("lnorm", "lseries", "geom", "bstick"),
     ylog = TRUE, 
     main = NULL, 
@@ -409,7 +412,7 @@ autoplot.species_distribution <- function(
     )
     
     # Fitted model
-    if (!is.null(distribution)) {
+    if (fit_rac) {
       rac_fitted <- fit_rac(
         abd, 
         distribution = distribution, 
