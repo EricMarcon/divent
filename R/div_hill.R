@@ -64,8 +64,8 @@ div_hill.numeric <- function(
                   "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
                   "naive"),
     level = NULL, 
-    probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-    unveiling = c("none", "uniform", "geometric"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
@@ -81,7 +81,7 @@ div_hill.numeric <- function(
   richness_estimator <- match.arg(richness_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
-  the_entropy <- ent_tsallis(
+  the_entropy <- ent_tsallis.numeric(
     x, 
     q = q, 
     estimator = estimator,
@@ -120,8 +120,8 @@ div_hill.species_distribution <- function(
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
                   "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
     level = NULL, 
-    probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-    unveiling = c("none", "uniform", "geometric"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
