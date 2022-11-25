@@ -31,6 +31,7 @@ reference:
   - title: Utilities
     contents:
     - abd_freq_count
+    - abd_species
     - exp_q
     - ln_q
     - e_n_q

@@ -36,13 +36,14 @@ as_species_distribution(x, ...)
   check_arguments = TRUE
 )
 
-\method{as_species_distribution}{data.frame}(x, ..., check_arguments = TRUE)
+\method{as_species_distribution}{data.frame}(x, check_arguments = TRUE)
 
 is_species_distribution(x)
 
 \method{plot}{species_distribution}(
   x,
   ...,
+  fit_rac = FALSE,
   distribution = c("lnorm", "lseries", "geom", "bstick"),
   ylog = "y",
   main = NULL,
@@ -54,6 +55,7 @@ is_species_distribution(x)
 \method{autoplot}{species_distribution}(
   object,
   ...,
+  fit_rac = FALSE,
   distribution = c("lnorm", "lseries", "geom", "bstick"),
   ylog = TRUE,
   main = NULL,
@@ -109,6 +111,8 @@ is_abundances(x)
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
 \item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
+
+\item{fit_rac}{If \code{TRUE}, estimate a theoretical distribution and fit the data with it.}
 
 \item{distribution}{The distribution of species abundances.
 May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or

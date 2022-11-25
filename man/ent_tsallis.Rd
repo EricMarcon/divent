@@ -3,7 +3,7 @@
 \name{ent_tsallis}
 \alias{ent_tsallis}
 \alias{ent_tsallis.numeric}
-\alias{ent_tsallis.abundances}
+\alias{ent_tsallis.species_distribution}
 \title{Tsallis Entropy of a Community}
 \usage{
 ent_tsallis(x, q = 1, ...)
@@ -14,8 +14,8 @@ ent_tsallis(x, q = 1, ...)
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
     "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
@@ -25,14 +25,14 @@ ent_tsallis(x, q = 1, ...)
   check_arguments = TRUE
 )
 
-\method{ent_tsallis}{abundances}(
+\method{ent_tsallis}{species_distribution}(
   x,
   q = 1,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,

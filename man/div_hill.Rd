@@ -3,7 +3,7 @@
 \name{div_hill}
 \alias{div_hill}
 \alias{div_hill.numeric}
-\alias{div_hill.abundances}
+\alias{div_hill.species_distribution}
 \title{Hill number of a Community}
 \usage{
 div_hill(x, q = 1, ...)
@@ -14,8 +14,8 @@ div_hill(x, q = 1, ...)
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
     "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
@@ -25,14 +25,14 @@ div_hill(x, q = 1, ...)
   check_arguments = TRUE
 )
 
-\method{div_hill}{abundances}(
+\method{div_hill}{species_distribution}(
   x,
   q = 1,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
     "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,

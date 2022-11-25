@@ -3,7 +3,7 @@
 \name{div_richness}
 \alias{div_richness}
 \alias{div_richness.numeric}
-\alias{div_richness.abundances}
+\alias{div_richness.species_distribution}
 \title{Number of Species of a Community}
 \usage{
 div_richness(x, ...)
@@ -21,7 +21,7 @@ div_richness(x, ...)
   check_arguments = TRUE
 )
 
-\method{div_richness}{abundances}(
+\method{div_richness}{species_distribution}(
   x,
   estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_alpha = 0.05,

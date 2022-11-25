@@ -3,7 +3,7 @@
 \name{ent_shannon}
 \alias{ent_shannon}
 \alias{ent_shannon.numeric}
-\alias{ent_shannon.abundances}
+\alias{ent_shannon.species_distribution}
 \title{Shannon's Entropy of a Community}
 \usage{
 ent_shannon(x, ...)
@@ -14,8 +14,8 @@ ent_shannon(x, ...)
     "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "Grassberger2003", "Schurmann",
     "Bonachela", "Miller", "ZhangHz", "naive"),
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
@@ -24,12 +24,12 @@ ent_shannon(x, ...)
   check_arguments = TRUE
 )
 
-\method{ent_shannon}{abundances}(
+\method{ent_shannon}{species_distribution}(
   x,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
     "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("none", "uniform", "geometric"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,

@@ -3,7 +3,7 @@
 \name{ent_simpson}
 \alias{ent_simpson}
 \alias{ent_simpson.numeric}
-\alias{ent_simpson.abundances}
+\alias{ent_simpson.species_distribution}
 \title{Simpson's Entropy of a Community}
 \usage{
 ent_simpson(x, ...)
@@ -24,7 +24,7 @@ ent_simpson(x, ...)
   check_arguments = TRUE
 )
 
-\method{ent_simpson}{abundances}(
+\method{ent_simpson}{species_distribution}(
   x,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
     "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
