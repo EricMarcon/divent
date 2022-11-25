@@ -51,7 +51,7 @@ abd_sum <- function(
   the_abd_sum <- rowSums(
     abundances[, !(colnames(abundances) %in% c("site", "weight"))]
   )
-  if (as.numeric) {
+  if (as_numeric) {
     return(the_abd_sum)
   } else {
     return(
