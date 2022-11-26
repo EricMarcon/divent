@@ -311,7 +311,7 @@ div_richness.numeric <- function(
   }
 
   # Diversity at a level ----
-  # If Level is coverage, get size
+  # If level is coverage, get size
   if (level < 1) {
     level <- coverage_to_size.numeric(
       abd, 

@@ -110,7 +110,7 @@ ent_accum.numeric <- function(
   }
   ent_estimator[levels_interp] <- "Interpolation"
   
-  # Level == Sample Size ----
+  # level == Sample Size ----
   if (any(levels == sample_size)) {
     i <- which(levels == sample_size)
     ent_level[i] <- ent_tsallis.numeric(
@@ -187,7 +187,7 @@ ent_accum.numeric <- function(
         } else {
           # General case: q is not 0, 1 or 2 ----
           for(level in levels_extrap) {
-            # Abundance frequence count at Level (Chao et al., 2014, eq. 5)
+            # Abundance frequence count at level (Chao et al., 2014, eq. 5)
             s_nu <- vapply(
               seq_len(level), 
               function(nu) {
@@ -200,7 +200,7 @@ ent_accum.numeric <- function(
               FUN.VALUE=0.0
             )
             # Estimate entropy (Chao et al., 2014, eq. 6)
-            i <- which(levels == Level)
+            i <- which(levels == level)
             ent_level[i] <- (sum((seq_len(level) / level)^q * s_nu) - 1) / (1 - q)
             ent_estimator[(i + 1):length(levels)] <- richness_estimator
             if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)

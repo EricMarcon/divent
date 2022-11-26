@@ -167,7 +167,7 @@ ent_simpson.numeric <- function(
   }
 
   # Entropy at a level ----
-  # If Level is coverage, get size
+  # If level is coverage, get size
   if (level < 1) {
     level <- coverage_to_size.numeric(
       abd, 
