@@ -36,7 +36,7 @@ as_species_distribution(x, ...)
   check_arguments = TRUE
 )
 
-\method{as_species_distribution}{data.frame}(x, check_arguments = TRUE)
+\method{as_species_distribution}{data.frame}(x, ..., check_arguments = TRUE)
 
 is_species_distribution(x)
 
