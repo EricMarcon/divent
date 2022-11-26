@@ -94,6 +94,7 @@ ent_tsallis.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "naive", 
+          order = q,
           entropy = the_entropy
         )
       )  
@@ -118,6 +119,7 @@ ent_tsallis.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "No Species", 
+              order = q,
               entropy = NA
             )
           )  
@@ -129,6 +131,7 @@ ent_tsallis.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "Single Species", 
+              order = q,
               entropy = 0
             )
           )  
@@ -172,6 +175,7 @@ ent_tsallis.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "ChaoShen", 
+              order = q,
               entropy = chao_shen
             )
           )  
@@ -183,6 +187,7 @@ ent_tsallis.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "Grassberger", 
+              order = q,
               entropy = grassberger
             )
           )  
@@ -208,6 +213,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = the_entropy
           )
         ) 
@@ -240,6 +246,7 @@ ent_tsallis.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "ChaoShen", 
+              order = q,
               entropy = ent_ChaoShen
             )
           )
@@ -247,6 +254,7 @@ ent_tsallis.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "Grassberger", 
+              order = q,
               entropy = ent_Grassberger
             )
           )
@@ -264,6 +272,7 @@ ent_tsallis.numeric <- function(
             return(
               tibble::tibble_row(
                 estimator = estimator, 
+                order = q,
                 entropy = the_entropy
               )
             )  
@@ -307,6 +316,7 @@ ent_tsallis.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = estimator, 
+              order = q,
               entropy = ent_ZhangGrabchak
             )
           )  
@@ -350,6 +360,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = the_entropy
           )
         )  
@@ -383,6 +394,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = ent_ChaoShen
           )
         )  
@@ -398,6 +410,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = ent_Grassberger
           )
         )  
@@ -411,6 +424,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = the_entropy
           )
         )  
@@ -425,6 +439,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = the_entropy
           )
         )  
@@ -439,6 +454,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = the_entropy
           )
         )  
@@ -484,6 +500,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = q,
             entropy = the_entropy
           )
         )
@@ -512,6 +529,7 @@ ent_tsallis.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "Sample", 
+          order = q,
           entropy = the_entropy
         )
       )  
@@ -584,6 +602,7 @@ ent_tsallis.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "Interpolation", 
+          order = q,
           entropy = the_entropy
         )
       )  
@@ -598,6 +617,7 @@ ent_tsallis.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = "Single Species", 
+            order = q,
             entropy = 0
           )
         )  
@@ -634,6 +654,7 @@ ent_tsallis.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = richness_estimator, 
+          order = q,
           entropy = the_entropy
         )
       )  

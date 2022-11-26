@@ -102,6 +102,7 @@ div_hill.numeric <- function(
     return(
       tibble::tibble_row(
         estimator = estimator, 
+        order = q,
         diversity = the_diversity
       )
     ) 

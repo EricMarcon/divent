@@ -89,6 +89,7 @@ ent_shannon.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "naive", 
+          order = 1,
           entropy = the_entropy
         )
       )  
@@ -115,6 +116,7 @@ ent_shannon.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "No Species", 
+              order = 1,
               entropy = NA
             )
           )  
@@ -126,6 +128,7 @@ ent_shannon.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "Single Species", 
+              order = 1,
               entropy = 0
             )
           )  
@@ -155,6 +158,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = the_entropy
           )
         )  
@@ -175,6 +179,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = the_entropy
           )
         )  
@@ -218,6 +223,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = ent_Grassberger
           )
         ) 
@@ -231,6 +237,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = the_entropy
           )
         ) 
@@ -273,6 +280,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = the_entropy
           )
         ) 
@@ -294,6 +302,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = ent_hb
           )
         ) 
@@ -325,6 +334,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = ent_ChaoJost
           )
         ) 
@@ -353,6 +363,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = the_entropy
           )
         ) 
@@ -398,6 +409,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 1,
             entropy = the_entropy
           )
         )  
@@ -415,6 +427,7 @@ ent_shannon.numeric <- function(
     level <- coverage_to_size.numeric(
       abd, 
       sample_coverage = level,
+      order = 1,
       check_arguments = FALSE
     )
   }
@@ -427,6 +440,7 @@ ent_shannon.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "Sample", 
+          order = 1,
           entropy = the_entropy
         )
       )  
@@ -443,6 +457,7 @@ ent_shannon.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "Interpolation", 
+          order = 1,
           entropy = the_entropy
         )
       )  
@@ -478,6 +493,7 @@ ent_shannon.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = probability_estimator, 
+          order = 1,
           entropy = the_entropy
         )
       )  

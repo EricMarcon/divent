@@ -99,7 +99,8 @@ div_richness.numeric <- function(
     return(
       tibble::tibble_row(
         estimator = "naive", 
-        richness = sum(x > 0)
+        order = 0,
+        diversity = sum(x > 0)
       )
     )
   }
@@ -119,13 +120,25 @@ div_richness.numeric <- function(
         if (as_numeric) {
           return(NA)
         } else {
-          return(tibble::tibble_row(estimator = "No Species", richness = NA))
+          return(
+            tibble::tibble_row(
+              estimator = "No Species", 
+              order = 0,
+              diversity = NA
+            )
+          )
         }
       } else {
         if (as_numeric) {
           return(1)
         } else {
-          return(tibble::tibble_row(estimator = "Single Species", richness = 1))
+          return(
+            tibble::tibble_row(
+              estimator = "Single Species", 
+              order = 0,
+              diversity = 1
+            )
+          )
         }
       }
     } else {
@@ -141,7 +154,13 @@ div_richness.numeric <- function(
       if (as_numeric) {
         return(s_obs)
       } else {
-        return(tibble::tibble_row(estimator = "naive", richness = s_obs))
+        return(
+          tibble::tibble_row(
+            estimator = "naive", 
+            order = 0,
+            diversity = s_obs
+          )
+        )
       }
     }
     
@@ -163,7 +182,8 @@ div_richness.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = "rarefy", 
-            richness = the_richness
+            order = 0,
+            diversity = the_richness
           )
         )
       }
@@ -196,7 +216,8 @@ div_richness.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = "Chao1", 
-            richness = the_richness
+            order = 0,
+            diversity = the_richness
           )
         )
       }
@@ -219,7 +240,8 @@ div_richness.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = "iChao1", 
-            richness = the_richness
+            order = 0,
+            diversity = the_richness
           )
         )
       }
@@ -303,7 +325,8 @@ div_richness.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = paste("Jackknife", k_smallest - 1),
-            richness = s_jack
+            order = 0,
+            diversity = s_jack
           )
         )
       }
@@ -327,7 +350,8 @@ div_richness.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "Sample", 
-          richness = s_obs
+          order = 0,
+          diversity = s_obs
         )
       )
     }
@@ -344,7 +368,8 @@ div_richness.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "SAC", 
-          richness = the_richness
+          order = 0,
+          diversity = the_richness
         )
       )  
     }
@@ -389,7 +414,8 @@ div_richness.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = estimator, 
-          richness = the_richness
+          order = 0,
+          diversity = the_richness
         )
       )  
     }
