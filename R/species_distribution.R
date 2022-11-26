@@ -183,6 +183,7 @@ as_species_distribution.matrix <- function(
 #' @export
 as_species_distribution.data.frame <- function(
     x,
+    ..., 
     check_arguments = TRUE) {
   
   if (check_arguments) check_divent_args()
