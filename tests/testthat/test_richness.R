@@ -1,7 +1,7 @@
 # Check all estimators
 
 # Data: a vector of abundances
-abd <- paracou_6_abd[1, -(1:2)]
+abd <- abd_species(paracou_6_abd[1, ])
 
 testthat::test_that(
   "Naive estimator is correct", 
@@ -9,13 +9,13 @@ testthat::test_that(
     testthat::skip_on_cran()
     # Naive
     testthat::expect_equal(
-      div_richness(abd, estimator = "naive")$richness,
+      div_richness(abd, estimator = "naive")$diversity,
       # Length of the vector
       sum(abd > 0)
     )
     # Jacknife
     testthat::expect_equal(
-      div_richness(abd, estimator = "jackknife")$richness,
+      div_richness(abd, estimator = "jackknife")$diversity,
       SPECIES::jackknife(as.matrix(abd_freq_count(abd)))$Nhat
     )
   }
@@ -29,7 +29,7 @@ testthat::test_that(
   {
     testthat::skip_on_cran()
     testthat::expect_equal(
-      divent$richness,
+      divent$diversity,
       species$Nhat
     )
   }
@@ -43,8 +43,8 @@ testthat::test_that(
   {
     testthat::skip_on_cran()
     testthat::expect_gt(
-      ichao$richness,
-      chao1$richness
+      ichao$diversity,
+      chao1$diversity
     )
   }
 )
@@ -61,4 +61,3 @@ testthat::test_that(
     )
   }
 )
-
