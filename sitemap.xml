@@ -4,6 +4,12 @@
     <loc>https://ericmarcon.github.io/entropart/404.html</loc>
   </url>
   <url>
+    <loc>https://ericmarcon.github.io/entropart/articles/divent.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/articles/index.html</loc>
+  </url>
+  <url>
     <loc>https://ericmarcon.github.io/entropart/authors.html</loc>
   </url>
   <url>
@@ -14,6 +20,9 @@
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/abd_freq_count.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/abd_species.html</loc>
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/check_divent_args.html</loc>
