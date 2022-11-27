@@ -32,7 +32,7 @@ ent_accum <- function(x, ...) {
 
 #' @rdname div_accum
 #'
-#' @param q The order or diversity.
+#' @param q The order of diversity.
 #' @param levels The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.
 #' @param probability_estimator One of the estimators of a probability distribution: 
 #' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
