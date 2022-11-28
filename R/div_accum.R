@@ -90,6 +90,7 @@ ent_accum.numeric <- function(
   # Prepare the vector of results
   ent_level <- numeric(length(levels))
   ent_estimator <- character(length(levels))
+  # Prepare the progress bar
   pgb <- utils::txtProgressBar(min = 0, max = length(levels))
   # i must be initialized if the accumulation contains extrapolation only
   i <- 0
@@ -259,7 +260,7 @@ ent_accum.numeric <- function(
 
   # Format the result ----
   if (n_simulations > 0) {
-    ent_accumulation <- tibble::tibble(
+    the_ent_accum <- tibble::tibble(
       level = levels,
       estimator = ent_estimator,
       entropy = ent_level,
@@ -267,15 +268,15 @@ ent_accum.numeric <- function(
       sup = ent_sim_quantiles[, 2]
     )
   } else {
-    ent_accumulation <- tibble::tibble(
+    the_ent_accum <- tibble::tibble(
       level = levels,
       estimator = ent_estimator,
       entropy = ent_level
     )
   }
-  class(ent_accumulation) <- c("accumulation", class(ent_accumulation))
+  class(the_ent_accum) <- c("accumulation", class(the_ent_accum))
   
-  return(ent_accumulation)
+  return(the_ent_accum)
 }
 
 
@@ -341,14 +342,14 @@ ent_accum.abundances <- function(
   }
   
   # Make a tibble with site, level and entropy
-  ent_accumulation <- tibble::tibble(
+  the_ent_accum <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
     # Coerce the list returned by apply into a dataframe
     do.call(rbind.data.frame, ent_accum_list)
   )
-  class(ent_accumulation) <- c("accumulation", class(ent_accumulation))
+  class(the_ent_accum) <- c("accumulation", class(the_ent_accum))
   
-  return(ent_accumulation)
+  return(the_ent_accum)
 }
 
 
@@ -385,7 +386,7 @@ div_accum.numeric <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Accumulate entropy
-  div_accumulation <- ent_accum.numeric(
+  the_div_accum <- ent_accum.numeric(
     x,
     q = q,
     levels = levels, 
@@ -401,12 +402,12 @@ div_accum.numeric <- function(
   )
   
   # Calculate diversity
-  div_accumulation <- dplyr::mutate(
-    div_accumulation,
+  the_div_accum <- dplyr::mutate(
+    the_div_accum,
     diversity = exp_q(.data$entropy, q = q)
   )
 
-  return(div_accumulation)
+  return(the_div_accum)
 }
 
 
@@ -472,14 +473,14 @@ div_accum.abundances <- function(
   }
   
   # Make a tibble with site, level and diversity
-  div_accumulation <- tibble::tibble(
+  the_div_accum <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
     # Coerce the list returned by apply into a dataframe
     do.call(rbind.data.frame, div_accum_list)
   )
-  class(div_accumulation) <- c("accumulation", class(div_accumulation))
+  class(the_div_accum) <- c("accumulation", class(the_div_accum))
   
-  return(div_accumulation)
+  return(the_div_accum)
 }
 
 
@@ -593,4 +594,3 @@ autoplot.accumulation <-  function(
   
   return(the_plot)
 }
-
