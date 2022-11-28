@@ -1,4 +1,4 @@
-# divent 0.1-9
+# divent 0.1-10
 
 - First Version.
 
@@ -10,4 +10,9 @@
 - Richness.
 - Shannon's, Simpson's and Tsallis's entropies.
 - Hill numbers.
-- Diversity Accumulation
+- Diversity accumulation.
+- Diversity profiles.
+
+## TODO
+- `gamma` diversity is not estimated 
+- `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
