@@ -2,16 +2,12 @@
 #' 
 #' Calculate the diversity profile of a community, i.e. diversity against its order.
 #' 
-#' If `n_simulations` is greater than 0, a bootstrap confidence interval is produced 
-#' by simulating communities with [rcommunity] and calculating their profiles. 
-#' The size of those communities may be that of the actual community or specified by `size.`
+#' A bootstrap confidence interval can be produced by simulating communities 
+#' (their number is `n_simulations`) with [rcommunity] and calculating their profiles. 
 #' Simulating communities implies a downward bias in the estimation: 
 #' rare species of the actual community may have abundance zero in simulated communities. 
-#' Simulated diversity values are recentered if 'size = 1' so that their mean is that of the actual community. 
-#' Else, it is assumed that the bias is of interest and must not be corrected.
+#' Simulated diversity values are recentered so that their mean is that of the actual community.
 #' 
-#' TODO: `CommunityProfile` objects can be plotted. They can also be added to the current plot by `CEnvelope`.
-#'
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances]  or [probabilities]
 #' @param ... Unused.
@@ -19,6 +15,7 @@
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
+#' This is an object of class "profile" that can be plotted.
 #' @export
 #'
 #' @references
