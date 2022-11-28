@@ -79,6 +79,7 @@ ent_simpson.numeric <- function(
   
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
+    if (!is.null(level)) stop("Entropy can't be estimated at a level without the abundance of species.")
     # Probabilities sum to 1, allowing rounding error
     the_entropy <- 1 - sum(x^2)
     if (as_numeric) {

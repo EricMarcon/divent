@@ -83,6 +83,7 @@ ent_tsallis.numeric <- function(
   
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
+    if (!is.null(level)) stop("Entropy can't be estimated at a level without the abundance of species.")
     # Probabilities sum to 1, allowing rounding error
     prob <- x[x > 0]
     # Avoid big numbers with this rather than prob * ln_q(1/prob, q)
@@ -148,7 +149,7 @@ ent_tsallis.numeric <- function(
     ## Metacommunity estimation ----
     # abd may not be integers, sample_coverage is given
     # sample_coverage is between 0 and 1 (by check_arguments), sum(abd) must be an integer.
-    # estimator may be ChaoShen or Marcon (max(ChoShen, Grassberger))
+    # estimator may be ChaoShen or Marcon (max(ChaoShen, Grassberger))
     if (
         !is.null(sample_coverage) & 
         is_integer_values(sample_size) & 
