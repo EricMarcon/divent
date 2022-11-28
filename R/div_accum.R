@@ -492,7 +492,6 @@ div_accum.abundances <- function(
 #' @param ylab The label of the y-axis.
 #' @param shade_color The color of the shaded confidence envelopes.
 #' @param alpha The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).
-#' @param border_color The color of the border of the confidence envelopes.
 #' @param lty The line type of the curves.
 #' @param lwd The line width of the curves.
 #'
@@ -505,7 +504,6 @@ autoplot.accumulation <-  function(
     ylab = NULL,
     shade_color = "grey75",
     alpha = 0.3,
-    border_color = "red",
     lty = ggplot2::GeomLine$default_aes$linetype,
     lwd = ggplot2::GeomLine$default_aes$linewidth){
   
@@ -514,6 +512,7 @@ autoplot.accumulation <-  function(
     object <- dplyr::mutate(object, site = "Unique site")
   }
 
+  # Build the plot
   if ("diversity" %in% colnames(object)) {
     the_plot <- ggplot2::ggplot(
       object, 
@@ -533,15 +532,19 @@ autoplot.accumulation <-  function(
       )
     )
   }
+  
+  # Confidence envelope
   if ("sup" %in% colnames(object) & "inf" %in% colnames(object)) {
     the_plot <- the_plot +
       ggplot2::geom_ribbon(
         ggplot2::aes(
           ymin = .data$inf, 
-          ymax = .data$sup
+          ymax = .data$sup,
+          lty = .data$site
         ), 
-        fill = shade_color, 
-        alpha = alpha
+        fill = shade_color,
+        alpha = alpha,
+        col = shade_color 
       ) +
       # Add red lines on borders of polygon
       ggplot2::geom_line(
@@ -555,6 +558,8 @@ autoplot.accumulation <-  function(
         linetype = 2
       )
   }
+  
+  # y-axis label
   if (is.null(ylab)) {
     if ("diversity" %in% colnames(object)) {
       ylab <- "Diversity"
@@ -562,6 +567,8 @@ autoplot.accumulation <-  function(
       ylab <- "Entropy"
     }
   }
+  
+  # Accumulations
   the_plot <- the_plot +
     ggplot2::geom_line(linetype = lty, linewidth = lwd) +
     ggplot2::labs(title = main, x = xlab, y = ylab)
