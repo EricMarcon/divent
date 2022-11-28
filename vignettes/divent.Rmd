@@ -111,6 +111,11 @@ ln_q(d2, q = 2)
 exp_q(e2, q = 2)
 ```
 
+Diversity can be plotted against its order to provide a diversity profile. Order 0 corresponds to richness, 1 to Shannon's and 2 to Simpson's diversities:
+
+```{r DiversityProfile}
+div_profile(paracou_6_abd) %>% autoplot
+```
 
 
 # Full documentation

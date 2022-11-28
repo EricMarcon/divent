@@ -45,7 +45,7 @@ div_hill(x, q = 1, ...)
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
 or an object of class \link{abundances}  or \link{probabilities}}
 
-\item{q}{The order or diversity.}
+\item{q}{The order of diversity.}
 
 \item{...}{Unused.}
 
