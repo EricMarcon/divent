@@ -134,20 +134,17 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 }
 \value{
 A tibble with the site names, the estimators used and the estimated diversity at each order.
+This is an object of class "profile" that can be plotted.
 }
 \description{
 Calculate the diversity profile of a community, i.e. diversity against its order.
 }
 \details{
-If \code{n_simulations} is greater than 0, a bootstrap confidence interval is produced
-by simulating communities with \link{rcommunity} and calculating their profiles.
-The size of those communities may be that of the actual community or specified by \code{size.}
+A bootstrap confidence interval can be produced by simulating communities
+(their number is \code{n_simulations}) with \link{rcommunity} and calculating their profiles.
 Simulating communities implies a downward bias in the estimation:
 rare species of the actual community may have abundance zero in simulated communities.
-Simulated diversity values are recentered if 'size = 1' so that their mean is that of the actual community.
-Else, it is assumed that the bias is of interest and must not be corrected.
-
-TODO: \code{CommunityProfile} objects can be plotted. They can also be added to the current plot by \code{CEnvelope}.
+Simulated diversity values are recentered so that their mean is that of the actual community.
 }
 \examples{
 div_profile(paracou_6_abd)
