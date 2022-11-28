@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-10</span>
       </span>
     </div>
 
@@ -293,6 +293,12 @@ diversity:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/exp_q.html">exp_q</a></span><span class="op">(</span><span class="va">e2</span>, q <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 42.28417 44.58777 48.83999 36.01687</span></span></code></pre>
+<p>Diversity can be plotted against its order to provide a diversity
+profile. Order 0 corresponds to richness, 1 to Shannon’s and 2 to
+Simpson’s diversities:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/div_profile.html">div_profile</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
+<p><img src="divent_files/figure-html/DiversityProfile-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
