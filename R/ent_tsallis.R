@@ -147,7 +147,7 @@ ent_tsallis.numeric <- function(
     }
     
     ## Metacommunity estimation ----
-    # abd may not be integers, sample_coverage is given
+    # abd may not be integers, then sample_coverage is given
     # sample_coverage is between 0 and 1 (by check_arguments), sum(abd) must be an integer.
     # estimator may be ChaoShen or Marcon (max(ChaoShen, Grassberger))
     if (
@@ -156,7 +156,7 @@ ent_tsallis.numeric <- function(
         (estimator == "ChaoShen" | estimator == "Marcon")) {
       
       cp <- sample_coverage * abd / sample_size
-      chao_shen <- sum(cp^q * ln_q(1 / cp, q = q) /(1 - (1 - cp)^sample_size))
+      chao_shen <- -sum(cp^q * ln_q(cp, q = q) /(1 - (1 - cp)^sample_size))
       if (estimator == "Marcon") {
         # Calculate Grassberger's correction
         if (q == 1) {
@@ -693,9 +693,25 @@ ent_tsallis.species_distribution <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
+    # Build the metacommunity
+    the_metacommmunity <- metacommunity(x, as_numeric = TRUE, check_arguments = FALSE)
+    if (is_integer_values(the_metacommmunity)) {
+      # Sample coverage is useless
+      sample_coverage <- NULL
+    } else {
+      # Non integer values in the metacommunity. Calculate the sample coverage and change the estimator.
+      sample_coverage <- coverage.numeric(
+        colSums(x[, !(colnames(x) %in% c("site", "weight"))]),
+        as_numeric = TRUE,
+        check_arguments = FALSE
+      )
+      if (!estimator %in% c("Marcon", "ChaoShen")) {
+        estimator <- "Marcon"
+      }
+    }
     return(
       ent_tsallis.numeric(
-        metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
+        the_metacommmunity,
         # Arguments
         q = q,
         estimator = estimator,
@@ -705,6 +721,7 @@ ent_tsallis.species_distribution <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max, 
+        sample_coverage = sample_coverage,
         as_numeric = FALSE,
         check_arguments = FALSE
       )
