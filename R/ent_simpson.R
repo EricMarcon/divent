@@ -236,18 +236,16 @@ ent_simpson.species_distribution <- function(
   
   if (gamma) {
     return(
-      ent_simpson.numeric(
-        metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
-        # Arguments
+      ent_gamma(
+        x = x,
+        q = 2,
         estimator = estimator,
         level = level, 
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha, 
-        jack_max = jack_max, 
-        as_numeric = FALSE,
-        check_arguments = FALSE
+        jack_alpha  = jack_alpha,
+        jack_max = jack_max
       )
     )
   } else {

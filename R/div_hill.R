@@ -19,6 +19,7 @@
 #' 
 #' @examples
 #' div_hill(paracou_6_abd, q = 2)
+#' div_hill(paracou_6_abd, q = 2, gamma = TRUE)
 #' 
 #' @name div_hill
 NULL
@@ -138,22 +139,24 @@ div_hill.species_distribution <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
-    return(
-      div_hill.numeric(
-        metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
-        # Arguments
-        q = q,
-        estimator = estimator,
-        level = level, 
-        probability_estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha, 
-        jack_max = jack_max, 
-        as_numeric = FALSE,
-        check_arguments = FALSE
-      )
+    # Calculate gamma entropy
+    the_diversity <- ent_gamma(
+      x = x,
+      q = q,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max
     )
+    # Calculate diversity
+    the_diversity$entropy <- exp_q(the_diversity$entropy, q = q)
+    # Change the column's name
+    the_diversity <- dplyr::rename(the_diversity, diversity = entropy)
+    # return the diversity
+    return(the_diversity)
   } else {
     # Apply div_hill.numeric() to each site
     div_hill_list <- apply(

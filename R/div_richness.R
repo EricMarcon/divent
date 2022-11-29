@@ -190,7 +190,7 @@ div_richness.numeric <- function(
       }
     }
     
-    # Calculate basic statistics
+    ## Abundance frequency count ----
     abd_freq <- abd_freq_count(abd)
     s_1 <- as.integer(abd_freq[abd_freq[, 1] == 1, 2])
     s_2 <- as.integer(abd_freq[abd_freq[, 1] == 2, 2])
@@ -368,7 +368,7 @@ div_richness.numeric <- function(
     } else {
       return(
         tibble::tibble_row(
-          estimator = "SAC", 
+          estimator = "SAC",
           order = 0,
           diversity = the_richness
         )
@@ -448,20 +448,37 @@ div_richness.species_distribution <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
-    return(
-      div_richness.numeric(
-        metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
-        # Arguments
-        estimator = estimator,
-        jack_alpha  = jack_alpha, 
-        jack_max = jack_max, 
-        level = level, 
-        probability_estimator = probability_estimator,
-        unveiling = unveiling,
-        as_numeric = FALSE,
-        check_arguments = FALSE
-      )
+    # Choose the estimator of entropy
+    if (estimator == "rarefy") stop ("The 'rarefy' estimator is not implemented for gamma diversity.")
+    # Entropy estimators rely on richness estimators
+    ent_estimator <- switch(
+      estimator,
+      jackknife = "UnveilJ", 
+      iChao1 = "UnveiliC", 
+      Chao1 = "UnveilC", 
+      naive = "naive"
     )
+    # Calculate gamma entropy of order 0
+    ent_0 <- ent_gamma(
+      x = x,
+      q = 0,
+      estimator = ent_estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max
+    )
+    # Restore the estimator's name
+    ent_0$estimator <- estimator
+    # Calculate diversity
+    ent_0 <- dplyr::mutate(
+      ent_0, 
+      diversity = entropy + 1, 
+      .keep = "unused")
+    # return the richness
+    return(ent_0)
   } else {
     # Apply div_richness.numeric() to each site
     div_richness_list <- apply(

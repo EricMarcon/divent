@@ -539,21 +539,25 @@ ent_tsallis.numeric <- function(
   
   ## Integer q ----
   if (q==0) {
-    # Richness-1. Same result as general formula but faster
-    return(
-      div_richness.numeric(
-        abd, 
-        # Unused
-        estimator = richness_estimator,
-        jack_alpha  = jack_alpha, 
-        jack_max = jack_max, 
-        level = level, 
-        probability_estimator = probability_estimator,
-        unveiling = unveiling,
-        as_numeric  = TRUE,
-        check_arguments = FALSE
-      ) -1
+    # Richness - 1. Same result as general formula but faster
+    the_richness <- div_richness.numeric(
+      abd, 
+      # Unused
+      estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      as_numeric = FALSE,
+      check_arguments = FALSE
     )
+    # Calculate entropy
+    the_richness <- dplyr::mutate(
+      the_richness,
+      entropy = diversity - 1,
+      .keep = "unused")
+    return(the_richness)
   } 
   if (q==1) {
     # Shannon. General formula is not defined at q=1
@@ -693,37 +697,17 @@ ent_tsallis.species_distribution <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
-    # Build the metacommunity
-    the_metacommmunity <- metacommunity(x, as_numeric = TRUE, check_arguments = FALSE)
-    if (is_integer_values(the_metacommmunity)) {
-      # Sample coverage is useless
-      sample_coverage <- NULL
-    } else {
-      # Non integer values in the metacommunity. Calculate the sample coverage and change the estimator.
-      sample_coverage <- coverage.numeric(
-        colSums(x[, !(colnames(x) %in% c("site", "weight"))]),
-        as_numeric = TRUE,
-        check_arguments = FALSE
-      )
-      if (!estimator %in% c("Marcon", "ChaoShen")) {
-        estimator <- "Marcon"
-      }
-    }
     return(
-      ent_tsallis.numeric(
-        the_metacommmunity,
-        # Arguments
+      ent_gamma(
+        x = x,
         q = q,
         estimator = estimator,
         level = level, 
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha, 
-        jack_max = jack_max, 
-        sample_coverage = sample_coverage,
-        as_numeric = FALSE,
-        check_arguments = FALSE
+        jack_alpha  = jack_alpha,
+        jack_max = jack_max
       )
     )
   } else {
@@ -756,4 +740,69 @@ ent_tsallis.species_distribution <- function(
       )
     )
   }
+}
+
+
+#' Gamma entropy of a metacommunity
+#' 
+#' Build the metacommunity and check that abundances are integers.
+#' If they are not (due to weights of communities) then use a fallback estimator:
+#' "ChaoShen" requires the sample coverage of the assemblage of sites.
+#' "Grassberger" accepts non integer abundances.
+#' "Marcon" combines both.
+#' 
+#' `ent_tsallis.numeric` contains the only implementation of this estimation.
+#' e.g., `ent_shannon` can't be used but `ent_tsallis.numeric`with `q=1` will work fine.
+#'
+#' @return A tibble with the estimator used and the estimated entropy.
+#' @noRd
+ent_gamma <- function (
+    x,
+    q,
+    estimator,
+    level,
+    probability_estimator,
+    unveiling,
+    richness_estimator,
+    jack_alpha,
+    jack_max) {
+  
+  # Build the metacommunity
+  abd <- metacommunity(
+    x, 
+    as_numeric = TRUE, 
+    check_arguments = FALSE
+  )
+  if (is_integer_values(abd)) {
+    # Sample coverage is useless
+    sample_coverage <- NULL
+  } else {
+    # Non integer values in the metacommunity. 
+    # Calculate the sample coverage and change the estimator.
+    sample_coverage <- coverage.numeric(
+      colSums(x[, !(colnames(x) %in% c("site", "weight"))]),
+      as_numeric = TRUE,
+      check_arguments = FALSE
+    )
+    if (!estimator %in% c("Marcon", "ChaoShen")) {
+      estimator <- "Marcon"
+    }
+  }
+  return(
+    ent_tsallis.numeric(
+      abd,
+      # Arguments
+      q = q,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      sample_coverage = sample_coverage,
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+  )
 }
