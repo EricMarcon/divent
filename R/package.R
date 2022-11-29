@@ -98,18 +98,18 @@ metacommunity <- function(
   species_columns <- !(colnames(abundances) %in% c("site", "weight"))
   # Extract abundances
   species_abd <- as.matrix(abundances[, species_columns])
+  sample_size <- sum(species_abd)
   # Multiply them by weights and normalize so that 
   # sample_size is the sum of sample sizes
   abd <- abundances$weight %*% species_abd *
-    sum(species_abd) / 
-    as.numeric(abundances$weight %*% rowSums(species_abd))
+    sample_size / as.numeric(abundances$weight %*% rowSums(species_abd))
   if (as_numeric) {
     return(as.numeric(abd))
   } else {
     # Build the tibble
     the_metacommunity <- tibble::as_tibble(
       cbind(
-        data.frame(site = name, weight = sum(weights)),
+        data.frame(site = name, weight = sample_size),
         as.data.frame(abd)
       )
     )
