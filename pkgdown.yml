@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   divent: divent.html
-last_built: 2022-11-28T21:09Z
+last_built: 2022-11-29T15:35Z
 urls:
   reference: https://ericmarcon.github.io/entropart/reference
   article: https://ericmarcon.github.io/entropart/articles
