@@ -513,6 +513,22 @@ ent_tsallis.numeric <- function(
   }
   
   # Entropy at a level ----
+
+  # Single species. 
+  if (s_obs == 1 | level == 1) {
+    if (as_numeric) {
+      return(0)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = "Single Species", 
+          order = q,
+          entropy = 0
+        )
+      )  
+    }
+  }
+  
   # If level is coverage, get size
   if (level < 1) {
     level <- coverage_to_size.numeric(
@@ -552,12 +568,16 @@ ent_tsallis.numeric <- function(
       as_numeric = FALSE,
       check_arguments = FALSE
     )
-    # Calculate entropy
-    the_richness <- dplyr::mutate(
-      the_richness,
-      entropy = diversity - 1,
-      .keep = "unused")
-    return(the_richness)
+    # Calculate entropy and return
+    if (as_numeric) {
+      return(the_richness$diversity - 1)
+    } else {
+      the_richness <- dplyr::mutate(
+        the_richness,
+        entropy = .data$diversity - 1,
+        .keep = "unused")
+      return(the_richness)  
+    }
   } 
   if (q==1) {
     # Shannon. General formula is not defined at q=1
@@ -614,20 +634,6 @@ ent_tsallis.numeric <- function(
     }
   } else {
     ## Extrapolation ----
-    if (s_obs == 1) {
-      # Single species: general formula won't work: log(1-prob_unv)
-      if (as_numeric) {
-        return(0)
-      } else {
-        return(
-          tibble::tibble_row(
-            estimator = "Single Species", 
-            order = q,
-            entropy = 0
-          )
-        )  
-      }
-    }
     # Unveil the full distribution that rarefies to the observed entropy
     prob_unv <- probabilities.numeric(
       abd,
