@@ -152,9 +152,11 @@ div_hill.species_distribution <- function(
       jack_max = jack_max
     )
     # Calculate diversity
-    the_diversity$entropy <- exp_q(the_diversity$entropy, q = q)
-    # Change the column's name
-    the_diversity <- dplyr::rename(the_diversity, diversity = entropy)
+    the_diversity <- dplyr::mutate(
+      the_diversity, 
+      diversity = exp_q(.data$entropy, q = q),
+      .keep = "unused"
+    )
     # return the diversity
     return(the_diversity)
   } else {
