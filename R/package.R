@@ -98,12 +98,11 @@ metacommunity <- function(
   species_columns <- !(colnames(abundances) %in% c("site", "weight"))
   # Extract abundances
   species_abd <- as.matrix(abundances[, species_columns])
-  # and weights (normalize them)
-  weights <- abundances$weight / sum(abundances$weight)
-  # Multiply them
-  abd <- weights %*% species_abd
-  # Normalize abd so that sample_size is the sum of sample sizes
-  abd <- abd / sum(abd) * sum(species_abd)
+  # Multiply them by weights and normalize so that 
+  # sample_size is the sum of sample sizes
+  abd <- abundances$weight %*% species_abd *
+    sum(species_abd) / 
+    as.numeric(abundances$weight %*% rowSums(species_abd))
   if (as_numeric) {
     return(as.numeric(abd))
   } else {
