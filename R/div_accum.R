@@ -105,6 +105,7 @@ ent_accum.numeric <- function(
       abd, 
       q = q, 
       level = level, 
+      as_numeric = TRUE,
       check_arguments = FALSE
     )
     if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
@@ -545,17 +546,6 @@ autoplot.accumulation <-  function(
         fill = shade_color,
         alpha = alpha,
         col = shade_color 
-      ) +
-      # Add red lines on borders of polygon
-      ggplot2::geom_line(
-        ggplot2::aes(y = .data$inf), 
-        color = border_color, 
-        linetype = 2
-      ) +
-      ggplot2::geom_line(
-        ggplot2::aes(y = .data$sup), 
-        color = border_color, 
-        linetype = 2
       )
   }
   
