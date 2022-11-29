@@ -187,7 +187,11 @@ ent_shannon.numeric <- function(
       }
     }
     if (estimator == "ChaoShen" | estimator == "GenCov" | estimator == "Marcon") {
-      sample_coverage <- coverage.numeric(abd, check_arguments = FALSE)$coverage
+      sample_coverage <- coverage.numeric(
+        abd,
+        as_numeric = TRUE,
+        check_arguments = FALSE
+      )
     }
     if (estimator == "ChaoShen") {
       prob_cov <- sample_coverage * prob
@@ -200,6 +204,7 @@ ent_shannon.numeric <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
+        as_numeric = TRUE,
         check_arguments = FALSE
       )
     } 
@@ -207,7 +212,12 @@ ent_shannon.numeric <- function(
       ent_ChaoShen <- -sum(prob_cov * log(prob_cov) / (1 - (1 - prob_cov)^sample_size))
     }
     if (estimator == "ChaoShen" | estimator == "GenCov") {
-      return(tibble::tibble_row(estimator = estimator, entropy = ent_ChaoShen))
+      return(
+        tibble::tibble_row(
+          estimator = estimator,
+          entropy = ent_ChaoShen
+        )
+      )
     } 
     if (estimator == "Grassberger" | estimator == "Marcon") {
       # (-1)^n is problematic for long vectors (returns NA for large values). 
@@ -273,7 +283,7 @@ ent_shannon.numeric <- function(
     if (estimator == "Grassberger2003" | estimator == "Schurmann") {
       the_entropy <- sum(
         abd / sample_size * 
-        (digamma(sample_size) - digamma(abd) - (1 - abd %%2 * 2) * integral_value)
+        (digamma(sample_size) - digamma(abd) - (1 - abd %% 2 * 2) * integral_value)
       )
       if (as_numeric) {
         return(the_entropy)
