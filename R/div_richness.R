@@ -83,7 +83,7 @@ div_richness.numeric <- function(
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
-    as_numeric  = FALSE,
+    as_numeric = FALSE,
     ..., 
     check_arguments = TRUE) {
   
@@ -470,12 +470,10 @@ div_richness.species_distribution <- function(
       jack_alpha  = jack_alpha,
       jack_max = jack_max
     )
-    # Restore the estimator's name
-    ent_0$estimator <- estimator
     # Calculate diversity
     ent_0 <- dplyr::mutate(
       ent_0, 
-      diversity = entropy + 1, 
+      diversity = .data$entropy + 1, 
       .keep = "unused")
     # return the richness
     return(ent_0)
