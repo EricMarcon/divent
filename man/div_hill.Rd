@@ -95,6 +95,7 @@ Bias correction requires the number of individuals.
 }
 \examples{
 div_hill(paracou_6_abd, q = 2)
+div_hill(paracou_6_abd, q = 2, gamma = TRUE)
 
 }
 \references{
