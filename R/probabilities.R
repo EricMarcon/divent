@@ -99,7 +99,7 @@ probabilities.numeric <- function(
     check_arguments = TRUE) {
   
   # Check the data ----
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   estimator <- match.arg(estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
@@ -300,7 +300,7 @@ probabilities.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   estimator <- match.arg(estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 

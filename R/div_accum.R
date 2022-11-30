@@ -65,7 +65,7 @@ ent_accum.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
@@ -299,7 +299,7 @@ ent_accum.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
@@ -380,7 +380,7 @@ div_accum.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
@@ -430,7 +430,7 @@ div_accum.abundances <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 

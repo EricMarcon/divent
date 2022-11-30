@@ -47,7 +47,7 @@ fit_rac.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   distribution <- match.arg(distribution) 
   if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
   
@@ -153,7 +153,7 @@ fit_rac.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   distribution <- match.arg(distribution) 
   if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
   

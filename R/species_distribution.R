@@ -53,7 +53,7 @@ species_distribution <- function(
     check_arguments = TRUE) {
 
   # Check the data ----
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   if (!is.numeric(x)) stop("'x' must be numeric")
   if (length(dim(x)) > 2) stop("'x' may be a vector or a matrix")
   if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
@@ -192,7 +192,7 @@ as_species_distribution.data.frame <- function(
     ..., 
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   # Check the data
   if (any(x < 0)) stop("All numeric values of the dataframe must be positive.")
   
@@ -623,7 +623,7 @@ as_abundances.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   if (any(x < 0)) stop("Species abundances must be positive.")
   
   if (round) {

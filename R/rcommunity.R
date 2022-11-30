@@ -73,7 +73,7 @@ rcommunity <- function(
     alpha_lseries = 40,
     check_arguments = TRUE) {
 
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   bootstrap <- match.arg(bootstrap) 
   distribution <- match.arg(distribution) 
 

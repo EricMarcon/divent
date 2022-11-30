@@ -226,7 +226,7 @@ coverage.abundances <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   estimator <- match.arg(estimator) 
   
   # Apply coverage.numeric() to each site
@@ -272,7 +272,7 @@ coverage_to_size.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   
   # Round values
   abd <- as.integer(round(x))
@@ -330,8 +330,8 @@ coverage_to_size.abundances <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
-
+  if (any(check_arguments)) check_divent_args()
+  
   # Apply coverage_to_size.numeric() to each site
   size_list <- apply(
     # Eliminate site and weight columns

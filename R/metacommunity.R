@@ -18,7 +18,7 @@ metacommunity <- function(
     as_numeric = FALSE,
     check_arguments = TRUE) {
   
-  if (check_arguments) check_divent_args()
+  if (any(check_arguments)) check_divent_args()
   
   # Select species columns
   species_columns <- !(colnames(abundances) %in% c("site", "weight"))
