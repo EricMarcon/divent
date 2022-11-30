@@ -29,7 +29,14 @@
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' 
 #' @examples
+#' # Just transform abundances into probabilities
 #' probabilities(paracou_6_abd)
+#' # Estimate the distribution of probabilities from observed abundances (unveiled probabilities)
+#' prob_unv <- probabilities(paracou_6_abd, estimator = "Chao2015", unveiling = "geometric")
+#' # Estimate entropy from the unveiled probabilities
+#' ent_shannon(prob_unv)
+#' # Identical to
+#' ent_shannon(paracou_6_abd, estimator = "UnveilJ")
 #' @references
 #' \insertAllCited{}
 #' 
@@ -118,7 +125,12 @@ probabilities.numeric <- function(
     sample_size <- sum(abd)
     prob <- abd / sample_size
     # Sample coverage
-    sample_coverage <- coverage(abd, estimator = coverage_estimator)$coverage
+    sample_coverage <- coverage.numeric(
+      abd, 
+      estimator = coverage_estimator,
+      as_numeric = TRUE,
+      check_arguments = FALSE
+      )
     if (
       estimator == "Chao2015" | 
       unveiling != "none" | 
@@ -240,9 +252,9 @@ probabilities.numeric <- function(
     ## Distribution of unobserved species ----
     if (s_0) {
       if (unveiling == "none") {
-        prob <- prob_tuned
+        the_prob <- prob_tuned
       } else {
-        prob <- c(
+        the_prob <- c(
           prob_tuned, 
           estimate_prob_s_0(
             unveiling = unveiling, 
@@ -254,15 +266,15 @@ probabilities.numeric <- function(
         )
       }
     } else {
-      prob <- prob_tuned
+      the_prob <- prob_tuned
     }
   }
   
   # Set the class and return ----
   if (as_numeric) {
-    return(prob)
+    return(the_prob)
   } else {
-    the_probabilities <- as_species_distribution(prob)
+    the_probabilities <- as_species_distribution(the_prob)
     class(the_probabilities) <- c("probabilities", class(the_probabilities))
     return(the_probabilities)
   }
@@ -391,11 +403,11 @@ estimate_prob_s_0 <- function(
     sample_coverage, 
     coverage_deficit_2) {
 
-  prob_s_0 <- NA
+  the_prob_s_0 <- NA
   if (unveiling == "geometric") {
     if (s_0 == 1) {
       # A single unobserved species
-      prob_s_0 <- 1 - sample_coverage
+      the_prob_s_0 <- 1 - sample_coverage
     } else {
       r <- (1 - sample_coverage)^2 / coverage_deficit_2
       i <- seq_len(s_0)
@@ -411,24 +423,24 @@ estimate_prob_s_0 <- function(
         error = function(e) {(r - 1) / (r + 1)}
       )
       alpha <- (1 - sample_coverage) / sum(beta^i)
-      prob_s_0 <- alpha * beta^i
+      the_prob_s_0 <- alpha * beta^i
       # Sometimes fails when the distribution is very uneven (sometimes r < 1) 
       # Then, fall back to the uniform distribution
-      if (any(is.na(prob_s_0)) | any(prob_s_0 <= 0)) {
+      if (any(is.na(the_prob_s_0)) | any(the_prob_s_0 <= 0)) {
         unveiling <- "uniform"
       }
     }
   }      
   if (unveiling == "uniform") {
     # Add s_0 unobserved species with equal probabilities
-    prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
+    the_prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
   }
-  if (any(is.na(prob_s_0))) {
+  if (any(is.na(the_prob_s_0))) {
     warning("Unveiling method was not recognized")
     return(NA)
   } else {
-    names(prob_s_0) <- paste("UnobsSp", seq_along(prob_s_0), sep = "")
-    return(prob_s_0)
+    names(the_prob_s_0) <- paste("Unobs_sp", seq_along(the_prob_s_0), sep = "_")
+    return(the_prob_s_0)
   }         
 }
 
@@ -488,7 +500,7 @@ rarefaction_bias <- function(
   )
   # Get entropy at level=sample_size and calculate the bias
   if (q == 1) {
-    ent_bias <- abs(
+    the_ent_bias <- abs(
       sum(
         -seq_len(sample_size) / sample_size * 
           log(seq_len(sample_size) / sample_size) * s_nu
@@ -496,10 +508,10 @@ rarefaction_bias <- function(
       - ent_target
     )
   } else {
-    ent_bias <- abs(
+    the_ent_bias <- abs(
       (sum((seq_len(sample_size)/sample_size)^q * s_nu) - 1) / (1 - q) 
       - ent_target
     )
   }
-  return(ent_bias)
+  return(the_ent_bias)
 }
