@@ -331,8 +331,8 @@ probabilities.abundances <- function(
   # Replace NA's due to binding by zeros
   the_probabilities <- dplyr::mutate(
     the_probabilities,
-    across(
-      .cols = everything(),
+    dplyr::across(
+      .cols = dplyr::everything(),
       .fns = ~ ifelse(is.na(.x), 0, .x))
   )
   return(the_probabilities)
