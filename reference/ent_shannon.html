@@ -18,7 +18,7 @@ Several estimators are available to deal with incomplete sampling."><meta proper
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-13</span>
       </span>
     </div>
 
@@ -81,10 +81,10 @@ Several estimators are available to deal with incomplete sampling.</p>
 <span><span class="fu">ent_shannon</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UnveilJ"</span>, <span class="st">"ChaoJost"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"GenCov"</span>, <span class="st">"Grassberger"</span>, <span class="st">"Holste"</span>,</span>
-<span>    <span class="st">"Marcon"</span>, <span class="st">"UnveilC"</span>, <span class="st">"UnveiliC"</span>, <span class="st">"ZhangGrabchak"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"Marcon"</span>, <span class="st">"UnveilC"</span>, <span class="st">"UnveiliC"</span>, <span class="st">"ZhangGrabchak"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
 <span>  level <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chao2015"</span>, <span class="st">"Chao2013"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
-<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"uniform"</span>, <span class="st">"geometric"</span><span class="op">)</span>,</span>
+<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
 <span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -112,22 +112,19 @@ or an object of class <a href="species_distribution.html">abundances</a>  or <a 
 <dt>level</dt>
 <dd><p>The level of interpolation or extrapolation.
 It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).
-Richness extrapolation require its asymptotic estimation depending on the
-choice of the <code>estimator</code>.</p></dd>
+(a number between 0 and 1).</p></dd>
 
 
 <dt>probability_estimator</dt>
-<dd><p>One of the estimators of a probability distribution:
-"naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-the probabilities of the observed species in the asymptotic distribution.</p></dd>
+<dd><p>A string containing one of the possible estimators
+of the probability distribution (see <a href="probabilities.html">probabilities</a>).
+Used only for extrapolation.</p></dd>
 
 
 <dt>unveiling</dt>
-<dd><p>One of the possible unveiling methods to estimate the probabilities
-of the unobserved species: "none" (default, no species is added), "uniform"
-(all unobserved species have the same probability) or "geometric" (the
-unobserved species distribution is geometric).</p></dd>
+<dd><p>A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
+Used only for extrapolation.</p></dd>
 
 
 <dt>richness_estimator</dt>
@@ -144,7 +141,7 @@ see <a href="div_richness.html">div_richness</a>.</p></dd>
 
 
 <dt>as_numeric</dt>
-<dd><p>If <code>TRUE</code>, a number is returned rather than a tibble.</p></dd>
+<dd><p>If <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
 
 
 <dt>check_arguments</dt>
@@ -177,10 +174,10 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site      estimator order entropy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1 UnveilJ       1    3.93</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2 UnveilJ       1    3.98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3 UnveilJ       1    4.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4 UnveilJ       1    3.88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1 UnveilJ       1    4.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2 UnveilJ       1    4.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3 UnveilJ       1    4.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4 UnveilJ       1    4.55</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

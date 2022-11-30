@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-13</span>
       </span>
     </div>
 
@@ -162,16 +162,15 @@ or an object of class <a href="species_distribution.html">abundances</a>  or <a 
 
 
 <dt>probability_estimator</dt>
-<dd><p>One of the estimators of a probability distribution:
-"naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-the probabilities of the observed species in the asymptotic distribution.</p></dd>
+<dd><p>A string containing one of the possible estimators
+of the probability distribution (see <a href="probabilities.html">probabilities</a>).
+Used only for extrapolation.</p></dd>
 
 
 <dt>unveiling</dt>
-<dd><p>One of the possible unveiling methods to estimate the probabilities
-of the unobserved species: "none" (default, no species is added), "uniform"
-(all unobserved species have the same probability) or "geometric" (the
-unobserved species distribution is geometric).</p></dd>
+<dd><p>A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
+Used only for extrapolation.</p></dd>
 
 
 <dt>richness_estimator</dt>
@@ -188,7 +187,7 @@ see <a href="div_richness.html">div_richness</a>.</p></dd>
 
 
 <dt>n_simulations</dt>
-<dd><p>The number of simulations used to estimate the confidence envelope of the accumulation.</p></dd>
+<dd><p>The number of simulations used to estimate the confidence envelope.</p></dd>
 
 
 <dt>alpha</dt>

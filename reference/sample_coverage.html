@@ -20,7 +20,7 @@ sample coverage."><meta property="og:image" content="https://ericmarcon.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-13</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@ sample coverage.</p>
 
 
 <dt>as_numeric</dt>
-<dd><p>If <code>TRUE</code>, a number is returned rather than a tibble.</p></dd>
+<dd><p>If <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
 
 
 <dt>check_arguments</dt>
@@ -123,18 +123,16 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 <dt>sample_coverage</dt>
 <dd><p>The target sample coverage.</p></dd>
 
-
-<dt>abundances</dt>
-<dd><p>An object of class <code>abundances</code>.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
 <p><code>coverage()</code> returns a named number equal to the calculated sample coverage.
-The name is that of the estimator used.
-<code>coverage_to_size()</code> returns a number equal to the sample size corresponding
+The name is that of the estimator used.</p>
+
+
+<p><code>coverage_to_size()</code> returns a number equal to the sample size corresponding
 to the chosen sample coverage.</p>
     </div>
     <div id="references">

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-13</span>
       </span>
     </div>
 
@@ -47,7 +47,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Aggregate communities into a metacommunity</h1>
-    <small class="dont-index">Source: <a href="https://github.com/EricMarcon/divent/blob/HEAD/R/package.R" class="external-link"><code>R/package.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/EricMarcon/divent/blob/HEAD/R/metacommunity.R" class="external-link"><code>R/metacommunity.R</code></a></small>
     <div class="hidden name"><code>metacommunity.Rd</code></div>
     </div>
 
@@ -67,7 +67,7 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>abundances</dt>
-<dd><p>An object of class "abundances" that contains several communities.</p></dd>
+<dd><p>An object of class <a href="species_distribution.html">abundances</a> that contains several communities.</p></dd>
 
 
 <dt>name</dt>
@@ -75,7 +75,7 @@
 
 
 <dt>as_numeric</dt>
-<dd><p>If <code>TRUE</code>, a number is returned rather than a tibble.</p></dd>
+<dd><p>If <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
 
 
 <dt>check_arguments</dt>
@@ -87,7 +87,7 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
     <h2>Value</h2>
     
 
-<p>An object of class "abundances" with a single row.</p>
+<p>An object of class <a href="species_distribution.html">abundances</a> with a single row.</p>
     </div>
 
     <div id="ref-examples">

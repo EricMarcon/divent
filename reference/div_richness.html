@@ -18,7 +18,7 @@ Several estimators are available to deal with incomplete sampling."><meta proper
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-13</span>
       </span>
     </div>
 
@@ -81,8 +81,8 @@ Several estimators are available to deal with incomplete sampling.</p>
 <span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  level <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chao2015"</span>, <span class="st">"Chao2013"</span>, <span class="st">"ChaoShen"</span><span class="op">)</span>,</span>
-<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span><span class="op">)</span>,</span>
+<span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chao2015"</span>, <span class="st">"Chao2013"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  gamma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -109,35 +109,29 @@ or an object of class <a href="species_distribution.html">abundances</a>  or <a 
 
 
 <dt>jack_max</dt>
-<dd><p>The highest jackknife order allowed. Default is 10.
-Allowed values are between 1 and 10.</p></dd>
+<dd><p>The highest jackknife order allowed. Default is 10.</p></dd>
 
 
 <dt>level</dt>
 <dd><p>The level of interpolation or extrapolation.
 It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).
-Richness extrapolation require its asymptotic estimation depending on the
-choice of the <code>estimator</code>.</p></dd>
+(a number between 0 and 1).</p></dd>
 
 
 <dt>probability_estimator</dt>
-<dd><p>One of the estimators of a probability distribution:
-"Chao2015", "Chao2013" or "ChaoShen" to estimate
-the probabilities of the observed species in the asymptotic distribution.
+<dd><p>A string containing one of the possible estimators
+of the probability distribution (see <a href="probabilities.html">probabilities</a>).
 Used only by the estimator of richness "rarefy".</p></dd>
 
 
 <dt>unveiling</dt>
-<dd><p>One of the possible unveiling methods to estimate the probabilities
-of the unobserved species: "geometric" (default, the
-unobserved species distribution is geometric) or  "uniform"
-(all unobserved species have the same probability).
+<dd><p>A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
 Used only by the estimator of richness "rarefy".</p></dd>
 
 
 <dt>as_numeric</dt>
-<dd><p>If <code>TRUE</code>, a number is returned rather than a tibble.</p></dd>
+<dd><p>If <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
 
 
 <dt>check_arguments</dt>

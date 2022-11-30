@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-13</span>
       </span>
     </div>
 
@@ -120,8 +120,7 @@ the actual entropy of the data.</p></dd>
 
 
 <dt>jack_max</dt>
-<dd><p>The highest jackknife order allowed. Default is 10.
-Allowed values are between 1 and 10.</p></dd>
+<dd><p>The highest jackknife order allowed. Default is 10.</p></dd>
 
 
 <dt>coverage_estimator</dt>
@@ -138,7 +137,7 @@ at the observed sample size equals the actual entropy of the data.</p></dd>
 
 
 <dt>as_numeric</dt>
-<dd><p>If <code>TRUE</code>, a numeric vector is returned rather than a tibble.</p></dd>
+<dd><p>If <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
 
 
 <dt>check_arguments</dt>
@@ -189,21 +188,47 @@ according to a geometric distribution (<code>unveiling</code> = "geometric", (Ch
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">probabilities</span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 336</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site   Abare…¹ Abare…² Amaio…³ Amano…⁴ Amano…⁵ Ambel…⁶ Amphi…⁷ Andir…⁸ Apeib…⁹</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subpl… 0.0021… 0.0021… 0.0010… 0.0010… 0.0010… 0.0010… 0.0031… 0.0010… 0.0031…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subpl… 0.0022… 0       0.0011… 0       0.0011… 0       0       0.0045… 0.0011…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subpl… 0.0021… 0.0021… 0       0       0       0       0       0.0021… 0.0021…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subpl… 0.0050… 0       0       0       0       0.0037… 0       0       0.0037…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 326 more variables: Aspidosperma_album &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Aspidosperma_cruentum &lt;chr&gt;, Aspidosperma_excelsum &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Bocoa_prouacensis &lt;chr&gt;, Brosimum_guianense &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Brosimum_rubescens &lt;chr&gt;, Brosimum_utile &lt;chr&gt;, Carapa_surinamensis &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Caryocar_glabrum &lt;chr&gt;, Casearia_decandra &lt;chr&gt;, Casearia_javitensis &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Catostemma_fragrans &lt;chr&gt;, Chaetocarpus_schomburgkianus &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Chaetocarpus_sp.1-CAY` &lt;chr&gt;, Chaunochiton_kappleri &lt;chr&gt;, …</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Just transform abundances into probabilities</span></span></span>
+<span class="r-in"><span><span class="fu">probabilities</span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 337</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site    weight Abare…¹ Abare…² Amaio…³ Amano…⁴ Amano…⁵ Ambel…⁶ Amphi…⁷ Andir…⁸</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplo…      1 0.002<span style="text-decoration: underline;">12</span> 0.002<span style="text-decoration: underline;">12</span> 0.001<span style="text-decoration: underline;">06</span> 0.001<span style="text-decoration: underline;">06</span> 0.001<span style="text-decoration: underline;">06</span> 0.001<span style="text-decoration: underline;">06</span> 0.003<span style="text-decoration: underline;">18</span> 0.001<span style="text-decoration: underline;">06</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplo…      1 0.002<span style="text-decoration: underline;">29</span> 0       0.001<span style="text-decoration: underline;">15</span> 0       0.001<span style="text-decoration: underline;">15</span> 0       0       0.004<span style="text-decoration: underline;">59</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplo…      1 0.002<span style="text-decoration: underline;">15</span> 0.002<span style="text-decoration: underline;">15</span> 0       0       0       0       0       0.002<span style="text-decoration: underline;">15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplo…      1 0.005<span style="text-decoration: underline;">01</span> 0       0       0       0       0.003<span style="text-decoration: underline;">76</span> 0       0      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 327 more variables: Apeiba_glabra &lt;dbl&gt;, Aspidosperma_album &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Aspidosperma_cruentum &lt;dbl&gt;, Aspidosperma_excelsum &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Bocoa_prouacensis &lt;dbl&gt;, Brosimum_guianense &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Brosimum_rubescens &lt;dbl&gt;, Brosimum_utile &lt;dbl&gt;, Carapa_surinamensis &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Caryocar_glabrum &lt;dbl&gt;, Casearia_decandra &lt;dbl&gt;, Casearia_javitensis &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Catostemma_fragrans &lt;dbl&gt;, Chaetocarpus_schomburgkianus &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Chaetocarpus_sp.1-CAY` &lt;dbl&gt;, Chaunochiton_kappleri &lt;dbl&gt;, …</span></span>
+<span class="r-in"><span><span class="co"># Estimate the distribution of probabilities from observed abundances (unveiled probabilities)</span></span></span>
+<span class="r-in"><span><span class="va">prob_unv</span> <span class="op">&lt;-</span> <span class="fu">probabilities</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">paracou_6_abd</span>, </span></span>
+<span class="r-in"><span>  estimator <span class="op">=</span> <span class="st">"Chao2015"</span>, </span></span>
+<span class="r-in"><span>  unveiling <span class="op">=</span> <span class="st">"geometric"</span>,</span></span>
+<span class="r-in"><span>  richness_estimator <span class="op">=</span> <span class="st">"jackknife"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Estimate entropy from the unveiled probabilities</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ent_shannon.html">ent_shannon</a></span><span class="op">(</span><span class="va">prob_unv</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site      estimator order entropy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1 naive         1    4.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2 naive         1    4.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3 naive         1    4.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4 naive         1    4.55</span>
+<span class="r-in"><span><span class="co"># Identical to</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ent_shannon.html">ent_shannon</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, estimator <span class="op">=</span> <span class="st">"UnveilJ"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site      estimator order entropy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1 UnveilJ       1    4.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2 UnveilJ       1    4.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3 UnveilJ       1    4.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4 UnveilJ       1    4.55</span>
 </code></pre></div>
     </div>
   </div>
