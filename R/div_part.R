@@ -1,10 +1,17 @@
 #' Diversity partition
 #' 
 #' Calculate \eqn{\gamma}, \eqn{\beta} and \eqn{\alpha} diversities of a metacommunity.
+#' 
+#' The function computes \eqn{\gamma} diversity after building a metacommunity 
+#' from local communities according to their weight.
+#' \eqn{\alpha} entropy is the weighted mean local entropy, converted into Hill
+#' numbers to obtain \eqn{\alpha} diversity.
+#' \eqn{\beta} diversity is obtained as the ratio of \eqn{\gamma} to \eqn{\alpha}.
 #'
 #' @inheritParams check_divent_args
+#' @param estimator An estimator of diversity.
 #'
-#' @return A tibble with diversity values at each scale
+#' @return A tibble with diversity values at each scale.
 #' @export
 #'
 #' @examples

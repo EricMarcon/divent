@@ -119,13 +119,40 @@ check_divent_args <- function(
   parent_function_name <- parent_function_split[length(parent_function_split)]
   args <- formals(match.fun(parent_function_name))
   
+  # abundances
+  if (!is.na(names(args["abundances"]))) {
+    abundances <- eval(expression(abundances), parent.frame())
+    if (!is_abundances(abundances)) {
+      error_message(
+        "abundances must be an object of class 'abundances'", 
+        abundances, 
+        parent_function
+      )
+    }
+  }
+  # check_arguments
+  if (!is.na(names(args["check_arguments"]))) {
+    check_arguments <- eval(expression(check_arguments), parent.frame())
+    if (!is.logical(check_arguments) | length(check_arguments) != 1) {
+      error_message(
+        "check_arguments must be TRUE or FALSE", 
+        check_arguments, 
+        parent_function
+      )
+    }
+  }
   # q
   if (!is.na(names(args["q"]))) {
     q <- eval(expression(q), parent.frame())
-    if (!is.numeric(q) | length(q) != 1)
-      error_message("q must be a number.", q, parent_function)
+    if (!is.numeric(q) | length(q) != 1) {
+      error_message(
+        "q must be a number.", 
+        q, 
+        parent_function
+      )
+    }
   }
-
+  
   # All tests passed.
   return (TRUE)
 }

@@ -7,7 +7,7 @@
 #' 
 #' `abd_sum()` returns the sample sizes of the communities.
 #'
-#' @param abundances An object of class of class [abundances].
+#' @inheritParams check_divent_args
 #' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
