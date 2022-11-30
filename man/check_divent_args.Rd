@@ -12,10 +12,12 @@ check_divent_args(
   jack_alpha = NULL,
   jack_max = NULL,
   level = NULL,
+  n_simulations = NULL,
   probability_estimator = NULL,
   q = NULL,
   richness_estimator = NULL,
   sample_coverage = NULL,
+  show_progress = NULL,
   unveiling = NULL
 )
 }
@@ -29,9 +31,15 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 
 \item{estimator}{An estimator of entropy, diversity or richness.}
 
+\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+
+\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
 \item{level}{The level of interpolation or extrapolation.
 It may be a chosen sample size (an integer) or a sample coverage
 (a number between 0 and 1).}
+
+\item{n_simulations}{The number of simulations used to estimate the confidence envelope.}
 
 \item{probability_estimator}{A string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
@@ -45,9 +53,13 @@ see \link{div_richness}.}
 \item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}
 
+\item{show_progress}{If TRUE, a progress bar is shown during long computations.}
+
 \item{unveiling}{A string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only for extrapolation.}
+
+\item{alpha}{The risk level, 5\% by default.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.

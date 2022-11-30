@@ -57,6 +57,8 @@ An alternative is "rarefy" to estimate the number of species such that the
 entropy of the asymptotic distribution rarefied to the observed sample size equals
 the actual entropy of the data.}
 
+\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
 \item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}:
 "ZhangHuang" (the default value), \code{"Chao"}, \code{"Turing"} or \code{"Good"}.}
 

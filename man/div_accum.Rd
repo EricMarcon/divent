@@ -111,7 +111,11 @@ Used only for extrapolation.}
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
 see \link{div_richness}.}
 
-\item{n_simulations}{The number of simulations used to estimate the confidence envelope of the accumulation.}
+\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+
+\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
+\item{n_simulations}{The number of simulations used to estimate the confidence envelope.}
 
 \item{alpha}{The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).}
 

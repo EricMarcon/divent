@@ -66,6 +66,10 @@ Used only for extrapolation.}
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
 see \link{div_richness}.}
 
+\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+
+\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
 \item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}
 

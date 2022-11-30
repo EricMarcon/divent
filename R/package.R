@@ -55,13 +55,17 @@ NULL
 #' It stops if an argument is not correct.
 #' 
 #' @param abundances An object of class [abundances].
+#' @param alpha The risk level, 5% by default.
 #' @param as_numeric If `TRUE`, a number or a numeric vector is returned rather than a tibble.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param estimator An estimator of entropy, diversity or richness.
+#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
+#' @param jack_max The highest jackknife order allowed. Default is 10.
 #' @param level The level of interpolation or extrapolation. 
 #' It may be a chosen sample size (an integer) or a sample coverage 
 #' (a number between 0 and 1). 
+#' @param n_simulations The number of simulations used to estimate the confidence envelope.
 #' @param probability_estimator A string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
@@ -70,6 +74,7 @@ NULL
 #' see [div_richness].
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
+#' @param show_progress If TRUE, a progress bar is shown during long computations. 
 #' @param unveiling A string containing one of the possible unveiling methods 
 #' to estimate the probabilities of the unobserved species (see [probabilities]).
 #' Used only for extrapolation.
@@ -88,15 +93,16 @@ check_divent_args <- function(
     jack_alpha = NULL,
     jack_max = NULL,
     level = NULL,
+    n_simulations = NULL,
     probability_estimator = NULL,
     q = NULL,
     richness_estimator = NULL,
     sample_coverage = NULL,
-    unveiling = NULL
-) {
+    show_progress = NULL,
+    unveiling = NULL) {
 
   # Verify that the package is attached
-  if (! "divent" %in% .packages()) {
+  if (!"divent" %in% .packages()) {
     warning("Function arguments cannot be checked because the SpatDiv package is not attached. Add CheckArguments=FALSE to suppress this warning or run library('SpatDiv')")
     return (TRUE)
   }
@@ -121,6 +127,24 @@ check_divent_args <- function(
       error_message(
         "abundances must be an object of class 'abundances'", 
         abundances, 
+        parent_function
+      )
+    }
+  }
+  # alpha
+  if (!is.na(names(args["alpha"]))) {
+    alpha <- eval(expression(alpha), parent.frame())
+    if (!is.numeric(alpha) | length(alpha)!=1) {
+      error_message(
+        "alpha must be a number.",
+        alpha,
+        parent_function
+      )
+    }
+    if (any(alpha < 0) | any(alpha > 1)) {
+      error_message(
+        "alpha must be between 0 and 1",
+        alpha,
         parent_function
       )
     }
@@ -187,17 +211,37 @@ check_divent_args <- function(
   # level
   if (!is.na(names(args["level"]))) {
     level <- eval(expression(level), parent.frame())
-    if (!is.numeric(level) | length(level)!=1) {
+    if (!is.null(level)) {
+      if (!is.numeric(level) | length(level)!=1) {
+        error_message(
+          "level must be a number.",
+          level,
+          parent_function
+        )
+      }
+      if (any(level <=0)) {
+        error_message(
+          "level must be positive.",
+          level,
+          parent_function
+        )
+      }
+    }
+   }
+  # n_simulations
+  if (!is.na(names(args["n_simulations"]))) {
+    n_simulations <- eval(expression(n_simulations), parent.frame())
+    if (!is.numeric(n_simulations) | length(n_simulations)!=1) {
       error_message(
-        "level must be a number.",
-        level,
+        "n_simulations must be a number.",
+        n_simulations,
         parent_function
       )
     }
-    if (any(level <=0)) {
+    if (any(n_simulations !=0 & n_simulations < 2)) {
       error_message(
-        "level must be positive.",
-        level,
+        "n_simulations must be 0 or at least 2",
+        n_simulations,
         parent_function
       )
     }
@@ -229,6 +273,17 @@ check_divent_args <- function(
       error_message(
         "sample_coverage must be between 0 and 1",
         sample_coverage,
+        parent_function
+      )
+    }
+  }
+  # show_progress
+  if (!is.na(names(args["show_progress"]))) {
+    show_progress <- eval(expression(show_progress), parent.frame())
+    if (!is.logical(show_progress) | length(show_progress) != 1) {
+      error_message(
+        "show_progress must be TRUE or FALSE", 
+        show_progress, 
         parent_function
       )
     }

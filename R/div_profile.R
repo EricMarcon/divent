@@ -51,7 +51,6 @@ div_profile <- function(
 #' If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used 
 #' (see [as_probabilities]) following\insertCite{Chao2013;textual}{divent} or 
 #' \insertCite{Chao2015;textual}{divent}.
-#' @param show_progress If TRUE, a progress bar is shown during long computations. 
 #' 
 #' @export
 div_profile.numeric <- function(

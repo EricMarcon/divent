@@ -62,6 +62,10 @@ Used only for extrapolation.}
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
 see \link{div_richness}.}
 
+\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+
+\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.

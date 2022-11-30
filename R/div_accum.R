@@ -32,9 +32,6 @@ ent_accum <- function(x, ...) {
 #' @rdname div_accum
 #'
 #' @param levels The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.
-#' @param n_simulations The number of simulations used to estimate the confidence envelope of the accumulation.
-#' @param alpha The risk level, 5% by default, of the confidence envelope of the accumulation.
-#' @param show_progress If TRUE, a progress bar is shown during long computations. 
 #' 
 #' @export
 ent_accum.numeric <- function(
@@ -44,7 +41,7 @@ ent_accum.numeric <- function(
     probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
-    jack_alpha  = 0.05, 
+    jack_alpha = 0.05, 
     jack_max = 10,
     n_simulations = 0,
     alpha = 0.05,
