@@ -54,9 +54,8 @@ div_richness <- function(x, ...) {
 #' @rdname div_richness
 #'
 #' @param estimator An estimator of richness to evaluate the total number of species. 
-#' @param probability_estimator One of the estimators of a probability distribution: 
-#' "Chao2015", "Chao2013" or "ChaoShen" to estimate
-#' the probabilities of the observed species in the asymptotic distribution.
+#' @param probability_estimator A string containing one of the possible estimators
+#' of the probability distribution (see [probabilities]). 
 #' Used only by the estimator of richness "rarefy".
 #' @param unveiling One of the possible unveiling methods to estimate the probabilities 
 #' of the unobserved species: "geometric" (default, the 

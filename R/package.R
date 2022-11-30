@@ -59,9 +59,12 @@ NULL
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param estimator An estimator of entropy, diversity or richness.
-#' @param probability_estimator One of the estimators of a probability distribution: 
-#' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-#' the probabilities of the observed species in the asymptotic distribution.
+#' @param level The level of interpolation or extrapolation. 
+#' It may be a chosen sample size (an integer) or a sample coverage 
+#' (a number between 0 and 1). 
+#' @param probability_estimator A string containing one of the possible estimators
+#' of the probability distribution (see [probabilities]). 
+#' Used only for extrapolation.
 #' @param q The order of diversity.
 #' @param richness_estimator An estimator of richness to evaluate the total number of species,
 #' see [div_richness].
@@ -145,7 +148,7 @@ check_divent_args <- function(
       )
     }
   }
-  # estimator is check by match.arg
+  # estimator is checked by match.arg()
   # jack_alpha
   if (!is.na(names(args["jack_alpha"]))) {
     jack_alpha <- eval(expression(jack_alpha), parent.frame())
@@ -200,6 +203,9 @@ check_divent_args <- function(
       )
     }
   }
+  
+  # probability_estimator is checked by match.arg()
+  # richness_estimator is checked by match.arg()
   # q
   if (!is.na(names(args["q"]))) {
     q <- eval(expression(q), parent.frame())

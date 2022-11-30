@@ -34,9 +34,6 @@ ent_simpson <- function(x, ...) {
 #' @rdname ent_simpson
 #'
 #' @param estimator An estimator of entropy. 
-#' @param probability_estimator One of the estimators of a probability distribution: 
-#' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-#' the probabilities of the observed species in the asymptotic distribution.
 #' @param unveiling One of the possible unveiling methods to estimate the probabilities 
 #' of the unobserved species: "none" (default, no species is added), "uniform" 
 #' (all unobserved species have the same probability) or "geometric" (the 

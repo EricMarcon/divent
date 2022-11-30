@@ -13,9 +13,6 @@
 #'
 #' @inheritParams check_divent_args
 #' @param abd A numeric vector containing species abundances.
-#' @param probability_estimator A string containing one of the possible estimators
-#' of the probability distribution (see [probabilities]). 
-#' Used only for extrapolation.
 #' @param unveiling A string containing one of the possible unveiling methods 
 #' to estimate the probabilities of the unobserved species (see [probabilities]).
 #' Used only for extrapolation.

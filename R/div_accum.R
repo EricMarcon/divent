@@ -32,9 +32,6 @@ ent_accum <- function(x, ...) {
 #' @rdname div_accum
 #'
 #' @param levels The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.
-#' @param probability_estimator One of the estimators of a probability distribution: 
-#' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-#' the probabilities of the observed species in the asymptotic distribution.
 #' @param unveiling One of the possible unveiling methods to estimate the probabilities 
 #' of the unobserved species: "none" (default, no species is added), "uniform" 
 #' (all unobserved species have the same probability) or "geometric" (the 
