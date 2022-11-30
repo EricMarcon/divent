@@ -34,8 +34,6 @@ ent_tsallis <- function(x, q = 1, ...) {
 #' @rdname ent_tsallis
 #'
 #' @param estimator An estimator of entropy. 
-#' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
-#' Used to calculate the gamma diversity of meta-communities, see details. 
 #' 
 #' @export
 ent_tsallis.numeric <- function(

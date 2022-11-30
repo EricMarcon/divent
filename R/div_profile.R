@@ -42,8 +42,6 @@ div_profile <- function(
 #'
 #' @param orders The orders of diversity used to build the profile.
 #' @param estimator An estimator of entropy. 
-#' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
-#' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the profile.
 #' @param alpha The risk level, 5% by default, of the confidence envelope of the profile.
 #' @param bootstrap The method used to obtain the probabilities to generate 

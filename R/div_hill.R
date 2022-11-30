@@ -35,8 +35,6 @@ div_hill <- function(x, q = 1, ...) {
 #' @rdname div_hill
 #'
 #' @param estimator An estimator of diversity.
-#' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
-#' Used to calculate the gamma diversity of meta-communities, see details. 
 #' 
 #' @export
 div_hill.numeric <- function(
