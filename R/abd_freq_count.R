@@ -13,9 +13,6 @@
 #'
 #' @inheritParams check_divent_args
 #' @param abd A numeric vector containing species abundances.
-#' @param level The level of interpolation or extrapolation. 
-#' It may be an an arbitrary sample size (an integer) or a sample coverage
-#' (a number between 0 and 1).
 #' @param probability_estimator A string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.

@@ -59,11 +59,6 @@ NULL
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param estimator An estimator of entropy, diversity or richness.
-#' @param level The level of interpolation or extrapolation. 
-#' It may be a chosen sample size (an integer) or a sample coverage 
-#' (a number between 0 and 1). 
-#' Richness extrapolation require its asymptotic estimation depending on the 
-#' choice of the `estimator`.
 #' @param probability_estimator One of the estimators of a probability distribution: 
 #' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 #' the probabilities of the observed species in the asymptotic distribution.
@@ -183,6 +178,24 @@ check_divent_args <- function(
       error_message(
         "jack_max must be between 1 and 10",
         jack_max,
+        parent_function
+      )
+    }
+  }
+  # level
+  if (!is.na(names(args["level"]))) {
+    level <- eval(expression(level), parent.frame())
+    if (!is.numeric(level) | length(level)!=1) {
+      error_message(
+        "level must be a number.",
+        level,
+        parent_function
+      )
+    }
+    if (any(level <=0)) {
+      error_message(
+        "level must be positive.",
+        level,
         parent_function
       )
     }

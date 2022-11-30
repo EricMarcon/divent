@@ -34,11 +34,6 @@ ent_shannon <- function(x, ...) {
 #' @rdname ent_shannon
 #'
 #' @param estimator An estimator of entropy. 
-#' @param level The level of interpolation or extrapolation. 
-#' It may be a chosen sample size (an integer) or a sample coverage 
-#' (a number between 0 and 1). 
-#' Richness extrapolation require its asymptotic estimation depending on the 
-#' choice of the `estimator`.
 #' @param probability_estimator One of the estimators of a probability distribution: 
 #' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
 #' the probabilities of the observed species in the asymptotic distribution.
