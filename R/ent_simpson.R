@@ -33,8 +33,7 @@ ent_simpson <- function(x, ...) {
 
 #' @rdname ent_simpson
 #'
-#' @param estimator An estimator of entropy. 
-' 
+#' @param estimator An estimator of entropy.
 #' @export
 ent_simpson.numeric <- function(
     x, 
