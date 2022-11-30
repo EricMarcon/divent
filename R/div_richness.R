@@ -435,8 +435,8 @@ div_richness.species_distribution <- function(
     jack_alpha  = 0.05, 
     jack_max = 10, 
     level = NULL, 
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen"),
-    unveiling = c("geometric", "uniform"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
     gamma = FALSE,
     ..., 
     check_arguments = TRUE) {

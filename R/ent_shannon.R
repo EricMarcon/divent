@@ -149,7 +149,7 @@ ent_shannon.numeric <- function(
       estimator <- "naive"
     }
     if (estimator == "naive") {
-      ent_species <- sum(ent_species)
+      ent_species <- -prob * log(prob)
       # Eliminate unobserved species. Useless because filtered before
       # ent_species[prob == 0] <- 0
       the_entropy <- sum(ent_species)
@@ -525,7 +525,7 @@ ent_shannon.species_distribution <- function(
                   "naive"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("none", "uniform", "geometric"),
+    unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
