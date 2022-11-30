@@ -12,7 +12,28 @@
 #' \insertAllCited{}
 NULL
 
-# Names of variables:
+
+#  Data ----
+#' Paracou plot 6
+#'
+#' A community assembly.
+#' It contains number of trees per species of the plot #6 of Paracou.
+#' The plot covers 6.25 ha of tropical rainforest, divided into 4 equally-sized subplots.
+#' Each line of the tibble is a subplot. 
+#' The "site" column contains the subplot number, "weight" contains its area and all others columns contain a species.
+#' Data are the number of trees above 10 cm diameter at breast height (DBH).
+#' 
+#' This dataset is from Paracou field station, French Guiana, managed by [Cirad](https://www.cirad.fr).
+#'
+#' @format An object of class [abundances], which is also a [tibble::tibble].
+#' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
+"paracou_6_abd"
+
+
+
+#  Utilities ----
+
+# Names of variables inside functions:
 # abd: a numeric vector of abundances
 # prob: a numeric vector of probabilities
 # prob_unv : unveiled probabilities
@@ -25,7 +46,6 @@ NULL
 # coverage_deficit_2: coverage deficit of order 2 of the sample
 
 
-#  Utilities ----
 #' check_divent_args
 #'
 #' Checks the arguments of a function of the package divent
@@ -33,6 +53,31 @@ NULL
 #' The function compares the arguments passed to its parent function to the type 
 #' they should be and performs some extra tests, *e.g.* probabilities must be positive and sum to 1. 
 #' It stops if an argument is not correct.
+#' 
+#' @param abundances An object of class [abundances].
+#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
+#' @param check_arguments If `TRUE`, the function arguments are verified.
+#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
+#' @param estimator An estimator of entropy, diversity or richness.
+#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
+#' @param jack_max The highest jackknife order allowed. Default is 10. 
+#' @param level The level of interpolation or extrapolation. 
+#' It may be a chosen sample size (an integer) or a sample coverage 
+#' (a number between 0 and 1). 
+#' Richness extrapolation require its asymptotic estimation depending on the 
+#' choice of the `estimator`.
+#' @param probability_estimator One of the estimators of a probability distribution: 
+#' "naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
+#' the probabilities of the observed species in the asymptotic distribution.
+#' @param q The order of diversity.
+#' @param richness_estimator An estimator of richness to evaluate the total number of species,
+#' see [div_richness].
+#' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
+#' Used to calculate the gamma diversity of meta-communities, see details. 
+#' @param unveiling One of the possible unveiling methods to estimate the probabilities 
+#' of the unobserved species: "none" (default, no species is added), "uniform" 
+#' (all unobserved species have the same probability) or "geometric" (the 
+#' unobserved species distribution is geometric).
 #'
 #' @return Returns `TRUE` or stops if a problem is detected.
 #' 
@@ -40,7 +85,20 @@ NULL
 #'
 #' @keywords internal
 #' 
-check_divent_args <- function() {
+check_divent_args <- function(
+    abundances = NULL,
+    as_numeric = NULL,
+    check_arguments = NULL,
+    estimator = NULL,
+    jack_alpha = NULL,
+    jack_max = NULL,
+    level = NULL,
+    probability_estimator = NULL,
+    q = NULL,
+    richness_estimator = NULL,
+    sample_coverage = NULL,
+    unveiling = NULL
+) {
 
   # Verify that the package is attached
   if (! "divent" %in% .packages()) {
@@ -70,55 +128,6 @@ check_divent_args <- function() {
 
   # All tests passed.
   return (TRUE)
-}
-
-
-#' Aggregate communities into a metacommunity
-#'
-#' @param abundances An object of class "abundances" that contains several communities.
-#' @param name The name of the metacommunity
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
-#'
-#' @return An object of class "abundances" with a single row.
-#' @export
-#'
-#' @examples
-#' metacommunity(paracou_6_abd)
-metacommunity <- function(
-    abundances, 
-    name = "metacommunity",
-    as_numeric = FALSE,
-    check_arguments = TRUE) {
-
-  if (check_arguments) check_divent_args()
-  
-  # Select species columns
-  species_columns <- !(colnames(abundances) %in% c("site", "weight"))
-  # Extract abundances
-  species_abd <- as.matrix(abundances[, species_columns])
-  sample_size <- sum(species_abd)
-  # Multiply them by weights and normalize so that 
-  # sample_size is the sum of sample sizes
-  abd <- abundances$weight %*% species_abd *
-    sample_size / as.numeric(abundances$weight %*% rowSums(species_abd))
-  if (as_numeric) {
-    return(as.numeric(abd))
-  } else {
-    # Build the tibble
-    the_metacommunity <- tibble::as_tibble(
-      cbind(
-        data.frame(site = name, weight = sample_size),
-        as.data.frame(abd)
-      )
-    )
-    # Restore exact species names (spaces may have been transformed into "_")
-    colnames(the_metacommunity[, species_columns]) <- colnames(abundances[, species_columns])
-    # Classes
-    class(the_metacommunity) <- c("abundances", "species_distribution", class(the_metacommunity))
-    return(the_metacommunity)
-  }
 }
 
 
@@ -156,20 +165,3 @@ is_integer_values <- function (x) {
   # Return TRUE if no value in x has been modified by rounding
   return(!(any(abs(x_int - x) > sum(x) * .Machine$double.eps)))
 }
-
-
-#  Data ----
-#' Paracou plot 6
-#'
-#' A community assembly.
-#' It contains number of trees per species of the plot #6 of Paracou.
-#' The plot covers 6.25 ha of tropical rainforest, divided into 4 equally-sized subplots.
-#' Each line of the tibble is a subplot. 
-#' The "site" column contains the subplot number, "weight" contains its area and all others columns contain a species.
-#' Data are the number of trees above 10 cm diameter at breast height (DBH).
-#' 
-#' This dataset is from Paracou field station, French Guiana, managed by [Cirad](https://www.cirad.fr).
-#'
-#' @format An object of class [abundances], which is also a [tibble::tibble].
-#' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
-"paracou_6_abd"
