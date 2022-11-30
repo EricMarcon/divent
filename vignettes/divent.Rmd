@@ -66,7 +66,7 @@ The Whittaker plot (rank-abundance curve) of a random log-normal distribution of
 
 The classical indices of diversity are richness (the number of species), Shannon's and Simpson's entropies:
 
-```{r shannon}
+```{r estimation}
 div_richness(paracou_6_abd)
 ent_shannon(paracou_6_abd)
 ent_simpson(paracou_6_abd)
@@ -74,7 +74,7 @@ ent_simpson(paracou_6_abd)
 
 When applied to probabilities (created with `as_probaVector` in the following example), no estimation-bias correction is applied: this means that indices are just calculated by applying their definition function to the probabilities (that is the naive, or plugin estimator).
 
-```{r naiveshannon}
+```{r naive_shannon}
 library("dplyr")
 paracou_6_abd %>% 
   as_probabilities() %>% 
@@ -83,7 +83,7 @@ paracou_6_abd %>%
 
 When abundances are available, many estimators can be used [@Marcon2015a] to address unobserved species and the non-linearity of the indices:
 
-```{r IndicesAbd}
+```{r shannon_estimators}
 ent_shannon(paracou_6_abd)
 ent_shannon(paracou_6_abd, estimator = "ChaoJost")
 ```
@@ -92,13 +92,13 @@ The best available estimator is chosen by default: its name is returned.
 
 Those indices are special cases of the Tsallis entropy [-@Tsallis1988] or order $q$ (respectively $q=0,1,2$ for richness, Shannon, Simpson):
 
-```{r Tsallis}
+```{r ent_tsallis}
 ent_tsallis(paracou_6_abd, q = 1)
 ```
 
 Entropy should be converted to its effective number of species, i.e. the number of species with equal probabilities that would yield the observed entropy, called @Hill1973 numbers or simply diversity [@Jost2006].
 
-```{r Diversity}
+```{r div_hill}
 div_hill(paracou_6_abd, q = 1)
 ```
 
@@ -113,7 +113,7 @@ exp_q(e2, q = 2)
 
 Diversity can be plotted against its order to provide a diversity profile. Order 0 corresponds to richness, 1 to Shannon's and 2 to Simpson's diversities:
 
-```{r DiversityProfile}
+```{r div_profile}
 div_profile(paracou_6_abd) %>% autoplot
 ```
 
