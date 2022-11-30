@@ -57,9 +57,6 @@ An alternative is "rarefy" to estimate the number of species such that the
 entropy of the asymptotic distribution rarefied to the observed sample size equals
 the actual entropy of the data.}
 
-\item{jack_max}{The highest jackknife order allowed. Default is 10.
-Allowed values are between 1 and 10.}
-
 \item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}:
 "ZhangHuang" (the default value), \code{"Chao"}, \code{"Turing"} or \code{"Good"}.}
 
@@ -69,7 +66,7 @@ Used only to estimate asymptotic probability distributions when argument
 fitted so that the entropy of order q of the asymptotic probability distribution
 at the observed sample size equals the actual entropy of the data.}
 
-\item{as_numeric}{If \code{TRUE}, a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
@@ -96,7 +93,19 @@ species equally (\code{unveiling} = "uniform", \insertCite{Chao2013}{divent}) or
 according to a geometric distribution (\code{unveiling} = "geometric", \insertCite{Chao2015}{divent}).
 }
 \examples{
+# Just transform abundances into probabilities
 probabilities(paracou_6_abd)
+# Estimate the distribution of probabilities from observed abundances (unveiled probabilities)
+prob_unv <- probabilities(
+  paracou_6_abd, 
+  estimator = "Chao2015", 
+  unveiling = "geometric",
+  richness_estimator = "jackknife"
+)
+# Estimate entropy from the unveiled probabilities
+ent_shannon(prob_unv)
+# Identical to
+ent_shannon(paracou_6_abd, estimator = "UnveilJ")
 }
 \references{
 \insertAllCited{}

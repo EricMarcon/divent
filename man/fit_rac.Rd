@@ -31,8 +31,8 @@ fit_rac(x, ...)
 May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 "bstick" (broken stick).}
 
-\item{check_arguments}{If TRUE, the function arguments are verified.
-Should be set to FALSE to save time when the arguments have been checked elsewhere.}
+\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
 When applied to a \code{species_distribution}, the function returns a tibble with

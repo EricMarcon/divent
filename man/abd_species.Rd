@@ -10,12 +10,12 @@ abd_species(abundances, check_arguments = TRUE)
 abd_sum(abundances, as_numeric = FALSE, check_arguments = TRUE)
 }
 \arguments{
-\item{abundances}{An object of class of class \link{abundances}.}
+\item{abundances}{An object of class \link{abundances}.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{as_numeric}{If \code{TRUE}, a number is returned rather than a tibble.}
+\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 }
 \description{
 Utilities for community abundances (objects of class "abundances").

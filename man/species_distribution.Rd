@@ -153,10 +153,13 @@ the same output as \code{probabilities()} with \code{estimator = "naive"}.
 
 TODO: These functions can be applied to data frames to calculate the joint diversity \insertCite{Gregorius2010}{divent}.
 
-\code{species_distribution} objects objects can be plotted by \code{plot()} and \code{autoplot()}.
+\code{species_distribution} objects objects can be plotted by \link{plot} and \link{autoplot}.
 }
 \examples{
-# Paracou data
+# Paracou data is a tibble
+paracou_6_abd
+# Class
+class(paracou_6_abd)
 is_species_distribution(paracou_6_abd)
 # Whittaker plot fitted by a log-normal distribution
 autoplot(paracou_6_abd[1,], distribution = "lnorm")

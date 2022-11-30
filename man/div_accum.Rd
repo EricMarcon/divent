@@ -100,21 +100,16 @@ or an object of class \link{abundances}  or \link{probabilities}}
 
 \item{levels}{The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.}
 
-\item{probability_estimator}{One of the estimators of a probability distribution:
-"naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-the probabilities of the observed species in the asymptotic distribution.}
+\item{probability_estimator}{A string containing one of the possible estimators
+of the probability distribution (see \link{probabilities}).
+Used only for extrapolation.}
 
-\item{unveiling}{One of the possible unveiling methods to estimate the probabilities
-of the unobserved species: "none" (default, no species is added), "uniform"
-(all unobserved species have the same probability) or "geometric" (the
-unobserved species distribution is geometric).}
+\item{unveiling}{A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see \link{probabilities}).
+Used only for extrapolation.}
 
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
 see \link{div_richness}.}
-
-\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
-
-\item{jack_max}{The highest jackknife order allowed. Default is 10.}
 
 \item{n_simulations}{The number of simulations used to estimate the confidence envelope of the accumulation.}
 

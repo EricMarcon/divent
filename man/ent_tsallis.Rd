@@ -53,30 +53,23 @@ or an object of class \link{abundances}  or \link{probabilities}}
 
 \item{level}{The level of interpolation or extrapolation.
 It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).
-Richness extrapolation require its asymptotic estimation depending on the
-choice of the \code{estimator}.}
+(a number between 0 and 1).}
 
-\item{probability_estimator}{One of the estimators of a probability distribution:
-"naive" (the default value), or "Chao2013", "Chao2015", "ChaoShen" to estimate
-the probabilities of the observed species in the asymptotic distribution.}
+\item{probability_estimator}{A string containing one of the possible estimators
+of the probability distribution (see \link{probabilities}).
+Used only for extrapolation.}
 
-\item{unveiling}{One of the possible unveiling methods to estimate the probabilities
-of the unobserved species: "none" (default, no species is added), "uniform"
-(all unobserved species have the same probability) or "geometric" (the
-unobserved species distribution is geometric).}
+\item{unveiling}{A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see \link{probabilities}).
+Used only for extrapolation.}
 
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
 see \link{div_richness}.}
 
-\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
-
-\item{jack_max}{The highest jackknife order allowed. Default is 10.}
-
 \item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}
 
-\item{as_numeric}{If \code{TRUE}, a number is returned rather than a tibble.}
+\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

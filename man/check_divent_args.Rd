@@ -4,7 +4,50 @@
 \alias{check_divent_args}
 \title{check_divent_args}
 \usage{
-check_divent_args()
+check_divent_args(
+  abundances = NULL,
+  as_numeric = NULL,
+  check_arguments = NULL,
+  estimator = NULL,
+  jack_alpha = NULL,
+  jack_max = NULL,
+  level = NULL,
+  probability_estimator = NULL,
+  q = NULL,
+  richness_estimator = NULL,
+  sample_coverage = NULL,
+  unveiling = NULL
+)
+}
+\arguments{
+\item{abundances}{An object of class \link{abundances}.}
+
+\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+
+\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+
+\item{estimator}{An estimator of entropy, diversity or richness.}
+
+\item{level}{The level of interpolation or extrapolation.
+It may be a chosen sample size (an integer) or a sample coverage
+(a number between 0 and 1).}
+
+\item{probability_estimator}{A string containing one of the possible estimators
+of the probability distribution (see \link{probabilities}).
+Used only for extrapolation.}
+
+\item{q}{The order of diversity.}
+
+\item{richness_estimator}{An estimator of richness to evaluate the total number of species,
+see \link{div_richness}.}
+
+\item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
+Used to calculate the gamma diversity of meta-communities, see details.}
+
+\item{unveiling}{A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see \link{probabilities}).
+Used only for extrapolation.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.
