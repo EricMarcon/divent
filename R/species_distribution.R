@@ -23,7 +23,10 @@
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' 
 #' @examples
-#' # Paracou data
+#' # Paracou data is a tibble
+#' paracou_6_abd
+#' # Class
+#' class(paracou_6_abd)
 #' is_species_distribution(paracou_6_abd)
 #' # Whittaker plot fitted by a log-normal distribution
 #' autoplot(paracou_6_abd[1,], distribution = "lnorm")
