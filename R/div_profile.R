@@ -42,10 +42,6 @@ div_profile <- function(
 #'
 #' @param orders The orders of diversity used to build the profile.
 #' @param estimator An estimator of entropy. 
-#' @param unveiling One of the possible unveiling methods to estimate the probabilities 
-#' of the unobserved species: "none" (default, no species is added), "uniform" 
-#' (all unobserved species have the same probability) or "geometric" (the 
-#' unobserved species distribution is geometric).
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the profile.

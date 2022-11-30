@@ -57,10 +57,8 @@ div_richness <- function(x, ...) {
 #' @param probability_estimator A string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only by the estimator of richness "rarefy".
-#' @param unveiling One of the possible unveiling methods to estimate the probabilities 
-#' of the unobserved species: "geometric" (default, the 
-#' unobserved species distribution is geometric) or  "uniform" 
-#' (all unobserved species have the same probability).
+#' @param unveiling A string containing one of the possible unveiling methods 
+#' to estimate the probabilities of the unobserved species (see [probabilities]).
 #' Used only by the estimator of richness "rarefy".
 #' 
 #' @export

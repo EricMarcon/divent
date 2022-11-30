@@ -70,10 +70,9 @@ NULL
 #' see [div_richness].
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
-#' @param unveiling One of the possible unveiling methods to estimate the probabilities 
-#' of the unobserved species: "none" (default, no species is added), "uniform" 
-#' (all unobserved species have the same probability) or "geometric" (the 
-#' unobserved species distribution is geometric).
+#' @param unveiling A string containing one of the possible unveiling methods 
+#' to estimate the probabilities of the unobserved species (see [probabilities]).
+#' Used only for extrapolation.
 #'
 #' @return Returns `TRUE` or stops if a problem is detected.
 #' 
@@ -217,6 +216,7 @@ check_divent_args <- function(
       )
     }
   }
+  # unveiling is checked by match.arg()
   
   # All tests passed.
   return (TRUE)

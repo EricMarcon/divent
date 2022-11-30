@@ -32,10 +32,6 @@ ent_accum <- function(x, ...) {
 #' @rdname div_accum
 #'
 #' @param levels The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.
-#' @param unveiling One of the possible unveiling methods to estimate the probabilities 
-#' of the unobserved species: "none" (default, no species is added), "uniform" 
-#' (all unobserved species have the same probability) or "geometric" (the 
-#' unobserved species distribution is geometric).
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the accumulation.
 #' @param alpha The risk level, 5% by default, of the confidence envelope of the accumulation.
 #' @param show_progress If TRUE, a progress bar is shown during long computations. 
