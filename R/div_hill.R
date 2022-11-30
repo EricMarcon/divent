@@ -34,7 +34,6 @@ div_hill <- function(x, q = 1, ...) {
 
 #' @rdname div_hill
 #'
-#' @param q The order of diversity.
 #' @param estimator An estimator of diversity.
 #' @param level The level of interpolation or extrapolation. 
 #' It may be a chosen sample size (an integer) or a sample coverage 
