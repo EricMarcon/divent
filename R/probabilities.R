@@ -32,7 +32,12 @@
 #' # Just transform abundances into probabilities
 #' probabilities(paracou_6_abd)
 #' # Estimate the distribution of probabilities from observed abundances (unveiled probabilities)
-#' prob_unv <- probabilities(paracou_6_abd, estimator = "Chao2015", unveiling = "geometric")
+#' prob_unv <- probabilities(
+#'   paracou_6_abd, 
+#'   estimator = "Chao2015", 
+#'   unveiling = "geometric",
+#'   richness_estimator = "jackknife"
+#' )
 #' # Estimate entropy from the unveiled probabilities
 #' ent_shannon(prob_unv)
 #' # Identical to
@@ -108,7 +113,7 @@ probabilities.numeric <- function(
   # Naive estimator ----
   if (estimator == "naive") {
     # Just normalize so that x sums to 1
-    prob <- x / sum(x)
+    the_prob <- x / sum(x)
   # Other estimators ----
   } else {
     # Integer abundances are required by all non-naive estimators
