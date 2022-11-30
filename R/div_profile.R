@@ -46,8 +46,6 @@ div_profile <- function(
 #' of the unobserved species: "none" (default, no species is added), "uniform" 
 #' (all unobserved species have the same probability) or "geometric" (the 
 #' unobserved species distribution is geometric).
-#' @param richness_estimator An estimator of richness to evaluate the total number of species,
-#' see [div_richness].
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the profile.

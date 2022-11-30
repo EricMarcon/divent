@@ -38,8 +38,6 @@ ent_simpson <- function(x, ...) {
 #' of the unobserved species: "none" (default, no species is added), "uniform" 
 #' (all unobserved species have the same probability) or "geometric" (the 
 #' unobserved species distribution is geometric).
-#' @param richness_estimator An estimator of richness to evaluate the total number of species,
-#' see [div_richness].
 ' 
 #' @export
 ent_simpson.numeric <- function(

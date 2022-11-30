@@ -36,8 +36,6 @@ ent_accum <- function(x, ...) {
 #' of the unobserved species: "none" (default, no species is added), "uniform" 
 #' (all unobserved species have the same probability) or "geometric" (the 
 #' unobserved species distribution is geometric).
-#' @param richness_estimator An estimator of richness to evaluate the total number of species,
-#' see [div_richness].
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the accumulation.
 #' @param alpha The risk level, 5% by default, of the confidence envelope of the accumulation.
 #' @param show_progress If TRUE, a progress bar is shown during long computations. 
