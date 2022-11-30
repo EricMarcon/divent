@@ -48,8 +48,6 @@ ent_simpson <- function(x, ...) {
 #' unobserved species distribution is geometric).
 #' @param richness_estimator An estimator of richness to evaluate the total number of species,
 #' see [div_richness].
-#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
-#' @param jack_max The highest jackknife order allowed. Default is 10. 
 ' 
 #' @export
 ent_simpson.numeric <- function(

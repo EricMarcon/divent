@@ -73,8 +73,6 @@ probabilities <- function(x, ...) {
 #' An alternative is "rarefy" to estimate the number of species such that the 
 #' entropy of the asymptotic distribution rarefied to the observed sample size equals
 #' the actual entropy of the data.
-#' @param jack_max The highest jackknife order allowed. Default is 10. 
-#' Allowed values are between 1 and 10.
 #' @param coverage_estimator An estimator of sample coverage used by [coverage]:
 #' "ZhangHuang" (the default value), \code{"Chao"}, \code{"Turing"} or \code{"Good"}.
 #' @param q The order of diversity. Default is 0 for richness. 

@@ -54,9 +54,6 @@ div_richness <- function(x, ...) {
 #' @rdname div_richness
 #'
 #' @param estimator An estimator of richness to evaluate the total number of species. 
-#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
-#' @param jack_max The highest jackknife order allowed. Default is 10. 
-#' Allowed values are between 1 and 10.
 #' @param level The level of interpolation or extrapolation. 
 #' It may be a chosen sample size (an integer) or a sample coverage 
 #' (a number between 0 and 1). 

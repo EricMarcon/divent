@@ -41,8 +41,6 @@ ent_accum <- function(x, ...) {
 #' unobserved species distribution is geometric).
 #' @param richness_estimator An estimator of richness to evaluate the total number of species,
 #' see [div_richness].
-#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
-#' @param jack_max The highest jackknife order allowed. Default is 10. 
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the accumulation.
 #' @param alpha The risk level, 5% by default, of the confidence envelope of the accumulation.
 #' @param show_progress If TRUE, a progress bar is shown during long computations. 

@@ -59,8 +59,6 @@ NULL
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param estimator An estimator of entropy, diversity or richness.
-#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
-#' @param jack_max The highest jackknife order allowed. Default is 10. 
 #' @param level The level of interpolation or extrapolation. 
 #' It may be a chosen sample size (an integer) or a sample coverage 
 #' (a number between 0 and 1). 
@@ -148,6 +146,43 @@ check_divent_args <- function(
       error_message(
         "check_arguments must be TRUE or FALSE", 
         check_arguments, 
+        parent_function
+      )
+    }
+  }
+  # estimator is check by match.arg
+  # jack_alpha
+  if (!is.na(names(args["jack_alpha"]))) {
+    jack_alpha <- eval(expression(jack_alpha), parent.frame())
+    if (!is.numeric(jack_alpha) | length(jack_alpha)!=1) {
+      error_message(
+        "jack_alpha must be a number.",
+        jack_alpha,
+        parent_function
+      )
+    }
+    if (any(jack_alpha <= 0) | any(jack_alpha >= 1)) {
+      error_message(
+        "jack_alpha must be between 0 and 1",
+        jack_alpha,
+        parent_function
+      )
+    }
+  }
+  # jack_max
+  if (!is.na(names(args["jack_max"]))) {
+    jack_max <- eval(expression(jack_max), parent.frame())
+    if (!is.numeric(jack_max) | length(jack_max)!=1) {
+      error_message(
+        "jack_max must be a number.",
+        jack_max,
+        parent_function
+      )
+    }
+    if (any(jack_max < 1) | any(jack_max > 10)) {
+      error_message(
+        "jack_max must be between 1 and 10",
+        jack_max,
         parent_function
       )
     }

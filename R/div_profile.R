@@ -56,8 +56,6 @@ div_profile <- function(
 #' unobserved species distribution is geometric).
 #' @param richness_estimator An estimator of richness to evaluate the total number of species,
 #' see [div_richness].
-#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
-#' @param jack_max The highest jackknife order allowed. Default is 10. 
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the profile.
