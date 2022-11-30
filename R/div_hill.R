@@ -140,7 +140,7 @@ div_hill.species_distribution <- function(
   
   if (gamma) {
     # Calculate gamma entropy
-    the_diversity <- ent_gamma(
+    the_entropy <- ent_gamma(
       x = x,
       q = q,
       estimator = estimator,
@@ -153,7 +153,7 @@ div_hill.species_distribution <- function(
     )
     # Calculate diversity
     the_diversity <- dplyr::mutate(
-      the_diversity, 
+      the_entropy, 
       diversity = exp_q(.data$entropy, q = q),
       .keep = "unused"
     )
