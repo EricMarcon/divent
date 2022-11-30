@@ -29,6 +29,7 @@
 #' Log-normal, log-series and broken-stick distributions are stochastic. 
 #' The geometric distribution is completely determined by its parameters.
 #'
+#' @inheritParams check_divent_args
 #' @param n The number of communities to draw.
 #' @param size The number of individuals to draw in each community.
 #' @param prob A numeric vector containing probabilities.
@@ -49,10 +50,8 @@
 #' @param prob_geom The proportion of ressources taken by successive species 
 #' of the geometric distribution.
 #' @param alpha_lseries Fisher's alpha in the log-series distribution.
-#' @param check_arguments If TRUE, the function arguments are verified. 
-#' Should be set to FALSE to save time when the arguments have been checked elsewhere.
 #'
-#' @return An object of class "abundances".
+#' @return An object of class [abundances].
 #' @export
 #'
 #' @examples

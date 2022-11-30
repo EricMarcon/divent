@@ -23,13 +23,12 @@
 #' so that the richness of a sample of this distribution of the size of the 
 #' actual sample has the richness of the actual sample.
 #'
+#' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances]  or [probabilities]
 #' @param ... Unused.
 #' @param gamma If `TRUE`, gamma diversity is calculated.
 #' The metacommunity if built by combining the community abundances with respect to their weight.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated numbers of species.
 #' @export

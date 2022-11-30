@@ -15,12 +15,11 @@
 #' 
 #' TODO: These functions can be applied to data frames to calculate the joint diversity \insertCite{Gregorius2010}{divent}.
 #'  
-#' `species_distribution` objects objects can be plotted by `plot()` and `autoplot()`.
+#' `species_distribution` objects objects can be plotted by [plot] and [autoplot].
 #'
+#' @inheritParams check_divent_args
 #' @param x An object.
 #' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' 
 #' @examples
 #' # Paracou data is a tibble

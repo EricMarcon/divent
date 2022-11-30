@@ -11,6 +11,7 @@
 #' distribution of the community by [probabilities] and eq. (5) 
 #' of \insertCite{Chao2014}{divent}.
 #'
+#' @inheritParams check_divent_args
 #' @param abd A numeric vector containing species abundances.
 #' @param level The level of interpolation or extrapolation. 
 #' It may be an an arbitrary sample size (an integer) or a sample coverage
@@ -24,8 +25,6 @@
 #' @param richness_estimator A string containing an estimator recognized by 
 #' [div_richness] to evaluate the total number of species in [probabilities]. 
 #' Used only for extrapolation.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
 #' @return A two-column tibble. The first column contains the number of observations, 
 #' the second one the number of species observed this number of times.

@@ -2,10 +2,9 @@
 #' 
 #' Fit a well-known distribution to a species distribution.
 #'
+#' @inheritParams check_divent_args
 #' @param x An object
 #' @param ... Unused.
-#' @param check_arguments If TRUE, the function arguments are verified. 
-#' Should be set to FALSE to save time when the arguments have been checked elsewhere.
 #'
 #' @return 
 #' When applied to a `species_distribution`, the function returns a tibble with

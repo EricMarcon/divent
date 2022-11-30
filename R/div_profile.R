@@ -8,11 +8,10 @@
 #' rare species of the actual community may have abundance zero in simulated communities. 
 #' Simulated diversity values are recentered so that their mean is that of the actual community.
 #' 
+#' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances]  or [probabilities]
 #' @param ... Unused.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.

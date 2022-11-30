@@ -5,11 +5,10 @@
 #' 
 #' Bias correction requires the number of individuals. 
 #'
+#' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances]  or [probabilities]
 #' @param ... Unused.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated entropy.
 #' @export

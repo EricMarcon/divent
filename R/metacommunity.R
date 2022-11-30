@@ -4,8 +4,6 @@
 #' @param abundances An object of class [abundances] that contains several communities.
 #' @param name The name of the metacommunity
 #' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #'
 #' @return An object of class [abundances] with a single row.
 #' @export

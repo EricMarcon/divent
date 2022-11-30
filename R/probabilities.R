@@ -20,13 +20,12 @@
 #' according to a geometric distribution (`unveiling` = "geometric", \insertCite{Chao2015}{divent}).
 #'  
 #'
+#' @inheritParams check_divent_args
 #' @param x An object. It may be:
 #' 
 #' - a numeric vector containing abundances. It may be named to track species names.
 #' - an object of class [species_distribution].
 #' @param ... Unused.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
-#' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' 
 #' @examples
 #' # Just transform abundances into probabilities
