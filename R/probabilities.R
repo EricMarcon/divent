@@ -329,7 +329,12 @@ probabilities.abundances <- function(
   # Restore the site names
   if (("site" %in% colnames(x))) the_probabilities$site <- x$site
   # Replace NA's due to binding by zeros
-  the_probabilities <- dplyr::mutate_all(the_probabilities,  ~replace(., is.na(.), 0))
+  the_probabilities <- dplyr::mutate(
+    the_probabilities,
+    across(
+      .cols = everything(),
+      .fns = ~ ifelse(is.na(.x), 0, .x))
+  )
   return(the_probabilities)
 }
 
