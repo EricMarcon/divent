@@ -71,8 +71,7 @@ species_distribution <- function(
       names <- paste("site", round(stats::runif(1)*.Machine$integer.max), sep="_")
     }
     # Build a tibble
-    the_distribution <- tibble::as_tibble_row(c(site = names, x))
-    
+    the_distribution <- tibble::tibble_row(site = names, as.data.frame(t(x)))
   } else {
     ## Several distributions ----
     if (is.null(colnames(x))) {
