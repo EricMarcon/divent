@@ -71,7 +71,6 @@ div_richness <- function(x, ...) {
 #' unobserved species distribution is geometric) or  "uniform" 
 #' (all unobserved species have the same probability).
 #' Used only by the estimator of richness "rarefy".
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
 #' 
 #' @export
 div_richness.numeric <- function(

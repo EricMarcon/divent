@@ -82,7 +82,6 @@ probabilities <- function(x, ...) {
 #' `richness_estimator` is "rarefy". Then, the number of unobserved species is 
 #' fitted so that the entropy of order q of the asymptotic probability distribution 
 #' at the observed sample size equals the actual entropy of the data.
-#' @param as_numeric If `TRUE`, a numeric vector is returned rather than a tibble.
 #'
 #' @export
 probabilities.numeric <- function(

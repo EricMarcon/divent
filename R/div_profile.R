@@ -60,7 +60,6 @@ div_profile <- function(
 #' @param jack_max The highest jackknife order allowed. Default is 10. 
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the profile.
 #' @param alpha The risk level, 5% by default, of the confidence envelope of the profile.
 #' @param bootstrap The method used to obtain the probabilities to generate 

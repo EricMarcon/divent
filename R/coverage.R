@@ -38,7 +38,6 @@ coverage <- function(x, ...) {
 #' @param estimator A string containing one of the possible estimators: 
 #' "ZhangHuang", "Chao", "Turing", "Good".
 #' @param level The level of interpolation or extrapolation, i.e. an abundance.
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
 #'
 #' @export
 coverage.numeric <- function(

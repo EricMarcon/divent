@@ -55,7 +55,7 @@ NULL
 #' It stops if an argument is not correct.
 #' 
 #' @param abundances An object of class [abundances].
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
+#' @param as_numeric If `TRUE`, a number or a numeric vector is returned rather than a tibble.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param estimator An estimator of entropy, diversity or richness.
@@ -126,6 +126,17 @@ check_divent_args <- function(
       error_message(
         "abundances must be an object of class 'abundances'", 
         abundances, 
+        parent_function
+      )
+    }
+  }
+  # as_numeric
+  if (!is.na(names(args["as_numeric"]))) {
+    as_numeric <- eval(expression(as_numeric), parent.frame())
+    if (!is.logical(as_numeric) | length(as_numeric) != 1) {
+      error_message(
+        "as_numeric must be TRUE or FALSE", 
+        as_numeric, 
         parent_function
       )
     }

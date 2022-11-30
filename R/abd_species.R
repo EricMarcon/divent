@@ -8,7 +8,6 @@
 #' `abd_sum()` returns the sample sizes of the communities.
 #'
 #' @inheritParams check_divent_args
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
 #'
 #' @export
 #'

@@ -52,7 +52,6 @@ ent_tsallis <- function(x, q = 1, ...) {
 #' @param jack_max The highest jackknife order allowed. Default is 10. 
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
 #' 
 #' @export
 ent_tsallis.numeric <- function(

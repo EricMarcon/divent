@@ -50,8 +50,7 @@ ent_simpson <- function(x, ...) {
 #' see [div_richness].
 #' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
 #' @param jack_max The highest jackknife order allowed. Default is 10. 
-#' @param as_numeric If `TRUE`, a number is returned rather than a tibble.
-#' 
+' 
 #' @export
 ent_simpson.numeric <- function(
     x, 
