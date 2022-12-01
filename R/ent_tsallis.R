@@ -570,7 +570,7 @@ ent_tsallis.numeric <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
-        as_numeric  = FALSE,
+        as_numeric  = as_numeric,
         check_arguments = FALSE
       )
     )
@@ -588,7 +588,7 @@ ent_tsallis.numeric <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
-        as_numeric  = FALSE,
+        as_numeric  = as_numeric,
         check_arguments = FALSE
       )
     )
