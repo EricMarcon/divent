@@ -262,19 +262,21 @@ check_divent_args <- function(
   # sample_coverage
   if (!is.na(names(args["sample_coverage"]))) {
     sample_coverage <- eval(expression(sample_coverage), parent.frame())
-    if (!is.numeric(sample_coverage) | length(sample_coverage)!=1) {
-      error_message(
-        "sample_coverage must be a number.",
-        sample_coverage,
-        parent_function
-      )
-    }
-    if (any(sample_coverage <= 0) | any(sample_coverage >= 1)) {
-      error_message(
-        "sample_coverage must be between 0 and 1",
-        sample_coverage,
-        parent_function
-      )
+    if (!is.null(sample_coverage)) {
+      if (!is.numeric(sample_coverage) | length(sample_coverage)!=1) {
+        error_message(
+          "sample_coverage must be a number.",
+          sample_coverage,
+          parent_function
+        )
+      }
+      if (any(sample_coverage <= 0) | any(sample_coverage >= 1)) {
+        error_message(
+          "sample_coverage must be between 0 and 1",
+          sample_coverage,
+          parent_function
+        )
+      }
     }
   }
   # show_progress
