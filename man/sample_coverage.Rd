@@ -31,7 +31,13 @@ coverage(x, ...)
 
 coverage_to_size(x, ...)
 
-\method{coverage_to_size}{numeric}(x, sample_coverage, ..., check_arguments = TRUE)
+\method{coverage_to_size}{numeric}(
+  x,
+  sample_coverage,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+)
 
 \method{coverage_to_size}{abundances}(x, sample_coverage, ..., check_arguments = TRUE)
 }

@@ -162,7 +162,7 @@ paracou_6_abd
 class(paracou_6_abd)
 is_species_distribution(paracou_6_abd)
 # Whittaker plot fitted by a log-normal distribution
-autoplot(paracou_6_abd[1,], distribution = "lnorm")
+autoplot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
 }
 \references{
 \insertAllCited{}
