@@ -103,14 +103,14 @@ coverage.numeric <- function(
       } else {
         nu <- as.integer(names(abd_distribution))
         # Use nu %% 2 * 2 - 1 for (-1)^(Nu + 1)
-        sample_coverage <- 1 - sum((nu %% 2 * 2 - 1) / choose(sample_size, nu) * abd_distribution)
+        the_coverage <- 1 - sum((nu %% 2 * 2 - 1) / choose(sample_size, nu) * abd_distribution)
         if (as_numeric) {
-          return(sample_coverage)
+          return(the_coverage)
         } else {
           return(
             tibble::tibble_row(
               estimator = estimator, 
-              coverage = sample_coverage
+              coverage = the_coverage
             )
           )  
         }
@@ -119,14 +119,14 @@ coverage.numeric <- function(
     
     ## Chao's estimator ----
     if (estimator == "Chao") {
-      sample_coverage <- 1 - s_1 / sample_size * (1-chao_A(abd))
+      the_coverage <- 1 - s_1 / sample_size * (1-chao_A(abd))
       if (as_numeric) {
-        return(sample_coverage)
+        return(the_coverage)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            coverage = sample_coverage
+            coverage = the_coverage
           )
         )  
       }
@@ -134,14 +134,14 @@ coverage.numeric <- function(
     
     ## Turing's estimator ----
     if (estimator == "Turing") {
-      sample_coverage <- 1 - s_1 / sample_size
+      the_coverage <- 1 - s_1 / sample_size
       if (as_numeric) {
-        return(sample_coverage)
+        return(the_coverage)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            coverage = sample_coverage
+            coverage = the_coverage
           )
         )  
       }
@@ -156,14 +156,14 @@ coverage.numeric <- function(
     ## Good's estimator ----
     if (estimator == "Good") {
       if (level >= sample_size) stop("Good's estimator only allows interpolation: level must be less than the observed community size.")
-      sample_coverage <- 1 - EntropyEstimation::GenSimp.z(abd, level)
+      the_coverage <- 1 - EntropyEstimation::GenSimp.z(abd, level)
       if (as_numeric) {
-        return(sample_coverage)
+        return(the_coverage)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            coverage = sample_coverage
+            coverage = the_coverage
           )
         )  
       }
@@ -174,7 +174,7 @@ coverage.numeric <- function(
       if (level < sample_size) {
         ### Interpolation ----
         abd_restricted <- abd[(sample_size - abd) >= level]
-        sample_coverage <- 1 - sum(
+        the_coverage <- 1 - sum(
           abd_restricted / sample_size * 
           exp(lgamma(sample_size - abd_restricted + 1) - 
           lgamma(sample_size - abd_restricted - level + 1) - 
@@ -195,18 +195,18 @@ coverage.numeric <- function(
             )  
           }
         } else {
-          sample_coverage <- 1 - 
+          the_coverage <- 1 - 
             s_1 / sample_size * 
             (1 - chao_A(abd))^(level - sample_size + 1)
         }
       }
       if (as_numeric) {
-        return(sample_coverage)
+        return(the_coverage)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            coverage = sample_coverage
+            coverage = the_coverage
           )
         )  
       }
@@ -268,6 +268,7 @@ coverage_to_size <- function(x, ...) {
 coverage_to_size.numeric <- function(
     x, 
     sample_coverage,
+    as_numeric  = FALSE,
     ...,
     check_arguments = TRUE) {
   
@@ -297,7 +298,7 @@ coverage_to_size.numeric <- function(
   
   if (sample_coverage >= sample_coverage_actual) {
     # Extrapolation
-    size <- round(
+    the_size <- round(
       sample_size + 
         (log(sample_size / s_1) + log(1 - sample_coverage)) / 
           log(1 - chao_A(abd)
@@ -305,7 +306,7 @@ coverage_to_size.numeric <- function(
     )
   } else {
     # Interpolation. Numeric resolution: minimize the function delta
-    size <- round(
+    the_size <- round(
       stats::optimize(
         chao_delta,
         abd = abd,
@@ -315,8 +316,17 @@ coverage_to_size.numeric <- function(
       )$minimum
     )
   }
-  return(tibble::tibble_row(sample_coverage = sample_coverage, size = size))
   
+  if (as_numeric) {
+    return(the_size)
+  } else {
+    return(
+      tibble::tibble_row(
+        sample_coverage = sample_coverage, 
+        size = the_size
+      )
+    )    
+  }
 }
 
 
