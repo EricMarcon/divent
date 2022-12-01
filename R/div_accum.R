@@ -92,9 +92,9 @@ ent_accum.numeric <- function(
       as_numeric = TRUE,
       check_arguments = FALSE
     )
+    ent_estimator[i] <- "Interpolation"
     if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
   }
-  ent_estimator[levels_interp] <- "Interpolation"
   
   # level == Sample Size ----
   if (any(levels == sample_size)) {
@@ -188,7 +188,7 @@ ent_accum.numeric <- function(
             # Estimate entropy (Chao et al., 2014, eq. 6)
             i <- which(levels == level)
             ent_level[i] <- (sum((seq_len(level) / level)^q * s_nu) - 1) / (1 - q)
-            ent_estimator[(i + 1):length(levels)] <- richness_estimator
+            ent_estimator[i] <- richness_estimator
             if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
           }
         }
@@ -371,7 +371,7 @@ div_accum.numeric <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Accumulate entropy
-  the_div_accum <- ent_accum.numeric(
+  the_ent_accum <- ent_accum.numeric(
     x,
     q = q,
     levels = levels, 
@@ -388,7 +388,7 @@ div_accum.numeric <- function(
   
   # Calculate diversity
   the_div_accum <- dplyr::mutate(
-    the_div_accum,
+    the_ent_accum,
     diversity = exp_q(.data$entropy, q = q)
   )
 
