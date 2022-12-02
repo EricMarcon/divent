@@ -175,7 +175,7 @@ _iNEXT_ [@Hsieh2014] is designed primarily to interpolate or extrapolate diversi
 Extrapolation of diversity of order 0 relies on the Chao1 estimator of richness and that of order 1 uses the Chao-Jost estimator.
 In _divent_, extrapolation relies on the estimation of the asymptotic distribution of the community with asymptotic richness such that the entropy of the asymptotic distribution rarefied to the observed sample size equals the observed entropy of the data.
 This approach allows consistent estimation of extrapolated diversity at integer and non-integer orders, thus allowing consistent diversity profiles without discontinuities at $q=0$ and $q=1$.
-The results of _iNEXT_ can be obtained by forcing argument `PCorrection = "None"` to avoid estimating the asymptotic distribution and `Correction="Chao1"` for richness or `Correction="ChaoJost"` for Shannon's diversity.
+The results of _iNEXT_ can be obtained by forcing argument `estimator = "ChaoJost"`.
 
 ```{r}
 library("iNEXT")
