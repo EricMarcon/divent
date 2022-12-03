@@ -223,21 +223,29 @@ ent_tsallis.numeric <- function(
         ent_ChaoShen <- ent_shannon(abd, estimator="ChaoShen", check_arguments = FALSE)
         ent_Grassberger <- ent_shannon(abd, estimator="Grassberger", CheckArguments=FALSE)
         if (ent_ChaoShen > ent_Grassberger) {
-          return(
-            tibble::tibble_row(
-              estimator = "ChaoShen", 
-              order = q,
-              entropy = ent_ChaoShen
+          if (as_numeric) {
+            return(ent_ChaoShen)
+          } else {
+            return(
+              tibble::tibble_row(
+                estimator = "ChaoShen", 
+                order = q,
+                entropy = ent_ChaoShen
+              )
             )
-          )
+          }
         } else {
-          return(
-            tibble::tibble_row(
-              estimator = "Grassberger", 
-              order = q,
-              entropy = ent_Grassberger
+          if (as_numeric) {
+            return(ent_Grassberger)
+          } else {
+            return(
+              tibble::tibble_row(
+                estimator = "Grassberger", 
+                order = q,
+                entropy = ent_Grassberger
+              )
             )
-          )
+          }
         }
       } else {
         if (estimator == "ZhangGrabchak") {
