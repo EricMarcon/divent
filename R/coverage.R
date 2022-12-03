@@ -152,20 +152,31 @@ coverage.numeric <- function(
   if (!is.null(level)) {
     # level must be an integer. check_divent_args() may have accepted a value between 0 and 1
     if (level <=1) stop("level must be an integer > 1.")
-
+    
+    ## Turing or Zhang & Huang's estimator ----
+    if (estimator == "Turing" ! estimator == "ZhangHuang") {
+      warning("Turing and ZhangHuang estimators do not allow interpolation or extrapolation. Chao's estimator is used.")
+      estimator <- "Chao"
+    }
+  
     ## Good's estimator ----
     if (estimator == "Good") {
-      if (level >= sample_size) stop("Good's estimator only allows interpolation: level must be less than the observed community size.")
-      the_coverage <- 1 - EntropyEstimation::GenSimp.z(abd, level)
-      if (as_numeric) {
-        return(the_coverage)
+      if (level >= sample_size) {
+        warning("Good's estimator only allows interpolation. Chao's estimator is used.")
+        estimator <- "Chao"
       } else {
-        return(
-          tibble::tibble_row(
-            estimator = estimator, 
-            coverage = the_coverage
-          )
-        )  
+        the_coverage <- 1 - EntropyEstimation::GenSimp.z(abd, level)
+        if (as_numeric) {
+          return(the_coverage)
+        } else {
+          return(
+            tibble::tibble_row(
+              estimator = estimator,
+              level = level,
+              coverage = the_coverage
+            )
+          )  
+        }
       }
     }
     
@@ -190,6 +201,7 @@ coverage.numeric <- function(
             return(
               tibble::tibble_row(
                 estimator = "No singleton", 
+                level = level,
                 coverage = 1
               )
             )  
@@ -206,6 +218,7 @@ coverage.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            level = level,
             coverage = the_coverage
           )
         )  
