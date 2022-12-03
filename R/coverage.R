@@ -154,7 +154,7 @@ coverage.numeric <- function(
     if (level <=1) stop("level must be an integer > 1.")
     
     ## Turing or Zhang & Huang's estimator ----
-    if (estimator == "Turing" ! estimator == "ZhangHuang") {
+    if (estimator == "Turing" | estimator == "ZhangHuang") {
       warning("Turing and ZhangHuang estimators do not allow interpolation or extrapolation. Chao's estimator is used.")
       estimator <- "Chao"
     }

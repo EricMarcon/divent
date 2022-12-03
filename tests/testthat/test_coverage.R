@@ -65,9 +65,8 @@ testthat::test_that(
     # All values must be < 1
     testthat::expect_gt(
       1,
-      max(coverage.dataframe$coverage))
+      max(coverage.dataframe$coverage)
     )
-    
   }
 )
 
