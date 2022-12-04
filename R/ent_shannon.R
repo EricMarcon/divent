@@ -427,6 +427,7 @@ ent_shannon.numeric <- function(
       abd, 
       sample_coverage = level,
       order = 1,
+      level = level,
       check_arguments = FALSE
     )
   }
@@ -440,6 +441,7 @@ ent_shannon.numeric <- function(
         tibble::tibble_row(
           estimator = "Sample", 
           order = 1,
+          level = level,
           entropy = the_entropy
         )
       )  
@@ -493,6 +495,7 @@ ent_shannon.numeric <- function(
         tibble::tibble_row(
           estimator = probability_estimator, 
           order = 1,
+          level = level,
           entropy = the_entropy
         )
       )  

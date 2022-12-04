@@ -219,75 +219,37 @@ ent_tsallis.numeric <- function(
     
     ## Shannon ----
     if (q == 1) {
-      if (estimator == "Marcon") {
-        ent_ChaoShen <- ent_shannon(
-          abd,
-          estimator = "ChaoShen",
-          check_arguments = FALSE
-        )
-        ent_Grassberger <- ent_shannon(
-          abd,
-          estimator = "Grassberger",
-          check_arguments = FALSE
-        )
-        if (ent_ChaoShen > ent_Grassberger) {
-          if (as_numeric) {
-            return(ent_ChaoShen)
-          } else {
-            return(
-              tibble::tibble_row(
-                estimator = "ChaoShen", 
-                order = q,
-                entropy = ent_ChaoShen
-              )
-            )
-          }
-        } else {
-          if (as_numeric) {
-            return(ent_Grassberger)
-          } else {
-            return(
-              tibble::tibble_row(
-                estimator = "Grassberger", 
-                order = q,
-                entropy = ent_Grassberger
-              )
-            )
-          }
-        }
-      } else {
-        if (estimator == "ZhangGrabchak") {
-          # Weights. Useless if EntropyEstimation is used.
-          # w_v <- 1/V
-          # entropy <- sum(prob * vapply(seq_along(abd), S_v, 0))
-          # Use EntropyEstimation instead
-          the_entropy <- EntropyEstimation::Entropy.z(abd)
-          if (as_numeric) {
-            return(the_entropy)
-          } else {
-            return(
-              tibble::tibble_row(
-                estimator = estimator, 
-                order = q,
-                entropy = the_entropy
-              )
-            )  
-          }
+      if (estimator == "ZhangGrabchak") {
+        # Weights. Useless if EntropyEstimation is used.
+        # w_v <- 1/V
+        # entropy <- sum(prob * vapply(seq_along(abd), S_v, 0))
+        # Use EntropyEstimation instead
+        the_entropy <- EntropyEstimation::Entropy.z(abd)
+        if (as_numeric) {
+          return(the_entropy)
         } else {
           return(
-            ent_shannon.numeric(
-              abd, 
+            tibble::tibble_row(
               estimator = estimator, 
-              probability_estimator = probability_estimator,
-              unveiling = unveiling,
-              richness_estimator = richness_estimator,
-              jack_alpha  = jack_alpha, 
-              jack_max = jack_max,
-              as_numeric = as_numeric,
-              check_arguments = FALSE
+              order = q,
+              entropy = the_entropy
             )
-          )
+          )  
         }
+      } else {
+        return(
+          ent_shannon.numeric(
+            abd, 
+            estimator = estimator, 
+            probability_estimator = probability_estimator,
+            unveiling = unveiling,
+            richness_estimator = richness_estimator,
+            jack_alpha  = jack_alpha, 
+            jack_max = jack_max,
+            as_numeric = as_numeric,
+            check_arguments = FALSE
+          )
+        )
       }
     }
     
@@ -526,6 +488,7 @@ ent_tsallis.numeric <- function(
         tibble::tibble_row(
           estimator = "Single Species", 
           order = q,
+          level = 1,
           entropy = 0
         )
       )  
@@ -551,6 +514,7 @@ ent_tsallis.numeric <- function(
         tibble::tibble_row(
           estimator = "Sample", 
           order = q,
+          level = level,
           entropy = the_entropy
         )
       )  
@@ -632,6 +596,7 @@ ent_tsallis.numeric <- function(
         tibble::tibble_row(
           estimator = "Interpolation", 
           order = q,
+          level = level,
           entropy = the_entropy
         )
       )  
@@ -670,6 +635,7 @@ ent_tsallis.numeric <- function(
         tibble::tibble_row(
           estimator = richness_estimator, 
           order = q,
+          level = level,
           entropy = the_entropy
         )
       )  

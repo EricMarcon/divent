@@ -171,6 +171,7 @@ ent_simpson.numeric <- function(
         tibble::tibble_row(
           estimator = "Sample", 
           order = 2,
+          level = level,
           entropy = the_entropy
         )
       )  
@@ -186,6 +187,7 @@ ent_simpson.numeric <- function(
       tibble::tibble_row(
         estimator = "Chao2014", 
         order = 2,
+        level = level,
         entropy = the_entropy
       )
     )  

@@ -339,6 +339,7 @@ div_richness.numeric <- function(
         tibble::tibble_row(
           estimator = "Sample", 
           order = 0,
+          level = level,
           diversity = s_obs
         )
       )
@@ -357,6 +358,7 @@ div_richness.numeric <- function(
         tibble::tibble_row(
           estimator = "SAC",
           order = 0,
+          level = level,
           diversity = the_richness
         )
       )  
@@ -403,6 +405,7 @@ div_richness.numeric <- function(
         tibble::tibble_row(
           estimator = estimator, 
           order = 0,
+          level = level,
           diversity = the_richness
         )
       )  
