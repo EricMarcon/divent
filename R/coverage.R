@@ -133,7 +133,7 @@ coverage.numeric <- function(
     }
     
     ## Turing's estimator ----
-    if (estimator == "Turing") {
+    if (estimator == "Turing" | estimator == "Good") {
       the_coverage <- 1 - s_1 / sample_size
       if (as_numeric) {
         return(the_coverage)
