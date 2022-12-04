@@ -63,7 +63,7 @@ testthat::test_that(
     
     # The min value must be the number of observed species
     testthat::expect_equal(
-      min(div_hill.dataframe$diversity),
+      min(div_hill.dataframe$diversity, na.rm = TRUE),
       div_hill(
         abundances, 
         q = max(orders), 
