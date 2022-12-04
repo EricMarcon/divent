@@ -84,16 +84,18 @@ testthat::test_that(
                 if ((estimator == "rarefy" & unveiling == "none")) {
                   NULL
                 } else {
-                  div_richness(
-                    abundances,
-                    estimator = estimator,
-                    jack_alpha = 0.05,
-                    jack_max = 10,
-                    level = NULL,
-                    probability_estimator = probability_estimator,
-                    unveiling = unveiling,
-                    as_numeric = FALSE,
-                    check_arguments = TRUE
+                  suppressWarnings(
+                    div_richness(
+                      abundances,
+                      estimator = estimator,
+                      jack_alpha = 0.05,
+                      jack_max = 10,
+                      level = NULL,
+                      probability_estimator = probability_estimator,
+                      unveiling = unveiling,
+                      as_numeric = FALSE,
+                      check_arguments = TRUE
+                    )
                   )
                 }
               }
