@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-16</span>
       </span>
     </div>
 
@@ -340,10 +340,7 @@ rarefied to the observed sample size equals the observed entropy of the
 data. This approach allows consistent estimation of extrapolated
 diversity at integer and non-integer orders, thus allowing consistent
 diversity profiles without discontinuities at <span class="math inline">\(q=0\)</span> and <span class="math inline">\(q=1\)</span>. The results of <em>iNEXT</em> can be
-obtained by forcing argument <code>PCorrection = "None"</code> to avoid
-estimating the asymptotic distribution and
-<code>Correction="Chao1"</code> for richness or
-<code>Correction="ChaoJost"</code> for Shannon’s diversity.</p>
+obtained by forcing argument <code>estimator = "ChaoJost"</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://chao.stat.nthu.edu.tw/wordpress/software_download/" class="external-link">"iNEXT"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span></span>

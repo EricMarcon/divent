@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-16</span>
       </span>
     </div>
 
@@ -74,6 +74,7 @@
 <span>  estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"naive"</span>, <span class="st">"Chao2013"</span>, <span class="st">"Chao2015"</span>, <span class="st">"ChaoShen"</span><span class="op">)</span>,</span>
 <span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"uniform"</span>, <span class="st">"geometric"</span><span class="op">)</span>,</span>
 <span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"rarefy"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -88,6 +89,7 @@
 <span>  estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"naive"</span>, <span class="st">"Chao2013"</span>, <span class="st">"Chao2015"</span>, <span class="st">"ChaoShen"</span><span class="op">)</span>,</span>
 <span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"uniform"</span>, <span class="st">"geometric"</span><span class="op">)</span>,</span>
 <span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"rarefy"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -127,6 +129,10 @@ of species. "jackknife" is the default value.
 An alternative is "rarefy" to estimate the number of species such that the
 entropy of the asymptotic distribution rarefied to the observed sample size equals
 the actual entropy of the data.</p></dd>
+
+
+<dt>jack_alpha</dt>
+<dd><p>The risk level, 5% by default, used to optimize the jackknife order.</p></dd>
 
 
 <dt>jack_max</dt>
