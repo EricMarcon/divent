@@ -33,10 +33,42 @@ testthat::test_that(
 # Combine all parameters
 abundances <- paracou_6_abd[1, ]
 sample_size <- abd_sum(abundances, as_numeric = TRUE)
-levels <- c(sample_size, round(sample_size / 2))
 
 testthat::test_that(
   "No estimator fails", 
+  {
+    # Estimate coverage systematically
+    coverage.list <- lapply(
+      # All estimators
+      eval(formals(divent:::coverage.numeric)$estimator), 
+      function(estimator) {
+        print(estimator)
+        suppressWarnings(
+          coverage(
+            abundances,
+            estimator = estimator,
+            level = NULL,
+            as_numeric = FALSE,
+            check_arguments = TRUE
+          )
+        )
+      }
+    )
+    # Coerce to a dataframe
+    coverage.dataframe <- do.call(rbind, coverage.list)
+    # All values must be < 1
+    testthat::expect_gt(
+      1,
+      max(coverage.dataframe$coverage)
+    )
+  }
+)
+
+# Interpolation and extrapolation
+levels <- c(sample_size / 2, round(sample_size * 1.5))
+
+testthat::test_that(
+  "No estimator fails during interpolation and extrapolation", 
   {
     # Estimate coverage systematically
     coverage.list <- lapply(
@@ -47,12 +79,15 @@ testthat::test_that(
           # Two levels
           levels, 
           function(level) {
-            coverage(
-              abundances,
-              estimator = estimator,
-              level = level,
-              as_numeric = FALSE,
-              check_arguments = TRUE
+            print(paste(estimator, level))
+            suppressWarnings(
+              coverage(
+                abundances,
+                estimator = estimator,
+                level = level,
+                as_numeric = FALSE,
+                check_arguments = TRUE
+              )
             )
           }
         )
@@ -69,4 +104,3 @@ testthat::test_that(
     )
   }
 )
-

@@ -108,6 +108,7 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     div_richness.dataframe <- do.call(rbind, div_richness.list)
+    
     # The min value must be the number of observed species
     testthat::expect_equal(
       min(div_richness.dataframe$diversity),

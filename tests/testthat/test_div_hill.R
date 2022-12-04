@@ -1,5 +1,7 @@
 # Combine all parameters
 abundances <- paracou_6_abd[1, ]
+# integer and non-integer q's
+orders <- (0:6) / 2
 
 testthat::test_that(
   "No estimator fails", {
@@ -12,23 +14,41 @@ testthat::test_that(
           # All probability estimators
           eval(formals(divent:::div_hill.numeric)$probability_estimator), 
           function(probability_estimator) {
-            the_list <- lapply(
-              # All unveilings
-              eval(formals(divent:::div_hill.numeric)$unveiling), 
-              function(unveiling) {
-                print(paste(estimator, probability_estimator, unveiling))
-                div_hill(
-                  abundances,
-                  q = 1.5,
-                  estimator = estimator,
-                  level = NULL,
-                  probability_estimator = probability_estimator,
-                  unveiling = unveiling,
-                  as_numeric = FALSE,
-                  check_arguments = TRUE
+            the_list <-lapply(
+              # All richness estimators
+              eval(formals(divent:::div_hill.numeric)$richness_estimator), 
+              function(richness_estimator) {
+                the_list <-lapply(
+                  # All q's
+                  orders, 
+                  function(q) {
+                    the_list <- lapply(
+                      # All unveilings
+                      eval(formals(divent:::div_hill.numeric)$unveiling), 
+                      function(unveiling) {
+                        print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
+                        suppressWarnings(
+                          div_hill(
+                            abundances,
+                            q = q,
+                            estimator = estimator,
+                            level = NULL,
+                            probability_estimator = probability_estimator,
+                            unveiling = unveiling,
+                            as_numeric = FALSE,
+                            check_arguments = TRUE
+                          )
+                        )
+                      }
+                    ) 
+                    # Make a dataframe with the list to avoid nested lists
+                    the_df <- do.call(rbind, the_list)
+                  }
                 )
+                # Make a dataframe with the list to avoid nested lists
+                the_df <- do.call(rbind, the_list)
               }
-            ) 
+            )
             # Make a dataframe with the list to avoid nested lists
             the_df <- do.call(rbind, the_list)
           }
@@ -39,5 +59,16 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     div_hill.dataframe <- do.call(rbind, div_hill.list)
+    
+    # The min value must be the number of observed species
+    testthat::expect_equal(
+      min(div_hill.dataframe$diversity),
+      div_hill(
+        abundances, 
+        q = q, 
+        probability_estimator = "Chao2013",
+        unveiling = "none"
+      )$diversity
+    )
   }
 )
