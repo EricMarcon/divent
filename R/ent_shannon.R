@@ -201,6 +201,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator,
+            order = 1,
             entropy = ent_cov
           )
         )

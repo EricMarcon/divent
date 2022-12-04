@@ -70,6 +70,7 @@ ent_simpson.numeric <- function(
       return(
         tibble::tibble_row(
           estimator = "naive", 
+          order = 2,
           entropy = the_entropy
         )
       )  
@@ -92,6 +93,7 @@ ent_simpson.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "No Species", 
+              order = 2,
               entropy = NA
             )
           )  
@@ -125,6 +127,7 @@ ent_simpson.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
+            order = 2,
             entropy = the_entropy
           )
         )  
