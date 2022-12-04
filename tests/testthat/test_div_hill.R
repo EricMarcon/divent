@@ -61,7 +61,7 @@ testthat::test_that(
     # Coerce to a dataframe
     div_hill.dataframe <- do.call(rbind, div_hill.list)
     
-    # The min value must be the number of observed species
+    # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_hill.dataframe$diversity, na.rm = TRUE),
       div_hill(
@@ -144,7 +144,7 @@ testthat::test_that(
     # Coerce to a dataframe
     div_hill.dataframe <- do.call(rbind, div_hill.list)
     
-    # The min value must be the number of observed species
+    # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_hill.dataframe$diversity, na.rm = TRUE),
       div_hill(
