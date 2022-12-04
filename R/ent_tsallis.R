@@ -220,8 +220,16 @@ ent_tsallis.numeric <- function(
     ## Shannon ----
     if (q == 1) {
       if (estimator == "Marcon") {
-        ent_ChaoShen <- ent_shannon(abd, estimator="ChaoShen", check_arguments = FALSE)
-        ent_Grassberger <- ent_shannon(abd, estimator="Grassberger", CheckArguments=FALSE)
+        ent_ChaoShen <- ent_shannon(
+          abd,
+          estimator = "ChaoShen",
+          check_arguments = FALSE
+        )
+        ent_Grassberger <- ent_shannon(
+          abd,
+          estimator = "Grassberger",
+          check_arguments = FALSE
+        )
         if (ent_ChaoShen > ent_Grassberger) {
           if (as_numeric) {
             return(ent_ChaoShen)
@@ -354,17 +362,25 @@ ent_tsallis.numeric <- function(
         )  
       }
     }
-    if (estimator == "ChaoShen" | estimator == "GenCov" | estimator == "Marcon") {
-      sample_coverage <- coverage(abd, check_arguments = FALSE)
-    }
-    if (estimator == "ChaoShen") {
+    if (estimator == "ChaoShen" | estimator == "Marcon") {
+      sample_coverage <- coverage.numeric(
+        abd, 
+        as_numeric = TRUE,
+        check_arguments = FALSE
+      )
       prob_cov <- sample_coverage * abd / sample_size
     }
-    if (estimator == "GenCov" | estimator == "Marcon") {
+    if (estimator == "GenCov") {
+      if (probability_estimator == "naive") {
+        warning("'probability_estimator' can't be 'naive' with estimator 'GenCov'. It is forced to 'Chao2015'.")
+      }
+      if (unveiling != "none") {
+        warning("'unveiling' is forced to 'none' with estimator 'GenCov'.")
+      }
       prob_cov <- probabilities.numeric(
         abd, 
-        probability_estimator = probability_estimator, 
-        unveiling = unveiling,
+        estimator = probability_estimator, 
+        unveiling = "none",
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
@@ -372,18 +388,18 @@ ent_tsallis.numeric <- function(
         check_arguments = FALSE
       )
     } 
-    if (estimator == "ChaoShen" | estimator == "GenCov" | estimator == "Marcon") {
-      ent_ChaoShen <- -sum(prob_cov^q * ln_q(prob_cov, q) /(1 - (1 - prob_cov)^sample_size))
+    if (estimator == "ChaoShen" | estimator == "Marcon" | estimator == "GenCov") {
+      ent_cov <- -sum(prob_cov^q * ln_q(prob_cov, q) / (1 - (1 - prob_cov)^sample_size))
     }
     if (estimator == "ChaoShen" | estimator == "GenCov") {
       if (as_numeric) {
-        return(ent_ChaoShen)
+        return(ent_cov)
       } else {
         return(
           tibble::tibble_row(
             estimator = estimator, 
             order = q,
-            entropy = ent_ChaoShen
+            entropy = ent_cov
           )
         )  
       }
@@ -405,7 +421,7 @@ ent_tsallis.numeric <- function(
       }
     }
     if (estimator == "Marcon") {
-      the_entropy <- max(ent_ChaoShen, ent_Grassberger)
+      the_entropy <- max(ent_cov, ent_Grassberger)
       if (as_numeric) {
         return(the_entropy)
       } else {

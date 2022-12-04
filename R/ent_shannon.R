@@ -168,21 +168,22 @@ ent_shannon.numeric <- function(
         )  
       }
     }
-    if (estimator == "ChaoShen" | estimator == "GenCov" | estimator == "Marcon") {
+    if (estimator == "ChaoShen" | estimator == "Marcon") {
       sample_coverage <- coverage.numeric(
-        abd,
+        abd, 
         as_numeric = TRUE,
         check_arguments = FALSE
       )
+      prob_cov <- sample_coverage * abd / sample_size
     }
-    if (estimator == "ChaoShen") {
-      prob_cov <- sample_coverage * prob
-    }
-    if (estimator == "GenCov" | estimator == "Marcon") {
+    if (estimator == "GenCov") {
+      if (unveiling != "none") {
+        warning("'unveiling' is forced to 'none' with estimator 'GenCov'.")
+      }
       prob_cov <- probabilities.numeric(
         abd, 
-        probability_estimator = probability_estimator, 
-        unveiling = unveiling,
+        estimator = probability_estimator, 
+        unveiling = "none",
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
@@ -190,16 +191,20 @@ ent_shannon.numeric <- function(
         check_arguments = FALSE
       )
     } 
-    if (estimator == "ChaoShen" | estimator == "GenCov" | estimator == "Marcon") {
-      ent_ChaoShen <- -sum(prob_cov * log(prob_cov) / (1 - (1 - prob_cov)^sample_size))
+    if (estimator == "ChaoShen" | estimator == "Marcon" | estimator == "GenCov") {
+      ent_cov <- -sum(prob_cov * log(prob_cov) / (1 - (1 - prob_cov)^sample_size))
     }
     if (estimator == "ChaoShen" | estimator == "GenCov") {
-      return(
-        tibble::tibble_row(
-          estimator = estimator,
-          entropy = ent_ChaoShen
+      if (as_numeric) {
+        return(ent_cov)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = estimator,
+            entropy = ent_cov
+          )
         )
-      )
+      }
     } 
     if (estimator == "Grassberger" | estimator == "Marcon") {
       # (-1)^n is problematic for long vectors (returns NA for large values). 
@@ -223,7 +228,7 @@ ent_shannon.numeric <- function(
       }
     }
     if (estimator == "Marcon") {
-      the_entropy <- max(ent_ChaoShen, ent_Grassberger)
+      the_entropy <- max(ent_cov, ent_Grassberger)
       if (as_numeric) {
         return(the_entropy)
       } else {
