@@ -87,6 +87,7 @@ probabilities.numeric <- function(
     estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
+    jack_alpha = 0.05, 
     jack_max = 10, 
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     q = 0,
@@ -242,6 +243,7 @@ probabilities.numeric <- function(
         div_richness.numeric(
           abd, 
           estimator = richness_estimator, 
+          jack_alpha = jack_alpha, 
           jack_max = jack_max,
           as_numeric = TRUE, 
           check_arguments = FALSE
@@ -290,6 +292,7 @@ probabilities.abundances <- function(
     estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"), 
+    jack_alpha = 0.05, 
     jack_max = 10, 
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     q = 0,
@@ -314,6 +317,7 @@ probabilities.abundances <- function(
     estimator = estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
+    jack_alpha = jack_alpha, 
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     q = q,
