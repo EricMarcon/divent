@@ -13,6 +13,7 @@ probabilities(x, ...)
   estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
   unveiling = c("none", "uniform", "geometric"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   q = 0,
@@ -26,6 +27,7 @@ probabilities(x, ...)
   estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
   unveiling = c("none", "uniform", "geometric"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   q = 0,
@@ -56,6 +58,8 @@ of species. "jackknife" is the default value.
 An alternative is "rarefy" to estimate the number of species such that the
 entropy of the asymptotic distribution rarefied to the observed sample size equals
 the actual entropy of the data.}
+
+\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
 

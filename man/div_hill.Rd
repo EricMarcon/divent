@@ -29,7 +29,7 @@ div_hill(x, q = 1, ...)
   x,
   q = 1,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
