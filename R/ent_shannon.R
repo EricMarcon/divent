@@ -39,9 +39,8 @@ ent_shannon <- function(x, ...) {
 ent_shannon.numeric <- function(
     x, 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
-                  "Grassberger2003", "Schurmann", "Bonachela", "Miller", "ZhangHz",
-                  "naive"),
+                  "Holste", "Marcon", "UnveilC", "UnveiliC", "Grassberger2003",
+                  "Schurmann", "Bonachela", "Miller", "ZhangHz", "naive"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
@@ -459,6 +458,7 @@ ent_shannon.numeric <- function(
         tibble::tibble_row(
           estimator = "Interpolation", 
           order = 1,
+          level = level,
           entropy = the_entropy
         )
       )  
@@ -468,7 +468,12 @@ ent_shannon.numeric <- function(
     # Estimate the asymptotic entropy
     if (probability_estimator == "naive") {
       # Don't unveil the asymptotic distribution, use the asymptotic estimator
-      ent_est <- ent_shannon(abd, estimator = estimator, check_arguments = FALSE)
+      ent_est <- ent_shannon.numeric(
+        abd, 
+        estimator = estimator, 
+        as_numeric = TRUE,
+        check_arguments = FALSE
+        )
     } else {
       # Unveil so that the estimation of H is similar to that of non-integer entropy
       prob_unv <- probabilities.numeric(
@@ -512,8 +517,8 @@ ent_shannon.numeric <- function(
 ent_shannon.species_distribution <- function(
     x,
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
-                  "naive"),
+                  "Holste", "Marcon", "UnveilC", "UnveiliC", "Grassberger2003",
+                  "Schurmann", "Bonachela", "Miller", "ZhangHz", "naive"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
