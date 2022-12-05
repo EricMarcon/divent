@@ -64,39 +64,31 @@ testthat::test_that(
   "No estimator fails during interpolation and extrapolation", {
     # Estimate diversity systematically
     ent_shannon.list <- lapply(
-      # All estimators
-      eval(formals(divent:::ent_shannon.numeric)$estimator), 
-      function(estimator) {
-        the_list <-lapply(
-          # All probability estimators
-          eval(formals(divent:::ent_shannon.numeric)$probability_estimator), 
-          function(probability_estimator) {
-            the_list <- lapply(
-              # All unveilings
-              eval(formals(divent:::ent_shannon.numeric)$unveiling), 
-              function(unveiling) {
-                the_list <-lapply(
-                  # All levels
-                  levels, 
-                  function(level) {
-                    # print(paste(estimator, probability_estimator, unveiling, level))
-                    suppressWarnings(
-                      ent_shannon(
-                        abundances,
-                        estimator = estimator,
-                        jack_alpha = 0.05,
-                        jack_max = 10,
-                        level = level,
-                        probability_estimator = probability_estimator,
-                        unveiling = unveiling,
-                        as_numeric = FALSE,
-                        check_arguments = TRUE
-                      )
-                    )
-                  }
+      # All probability estimators
+      eval(formals(divent:::ent_shannon.numeric)$probability_estimator), 
+      function(probability_estimator) {
+        the_list <- lapply(
+          # All unveilings
+          eval(formals(divent:::ent_shannon.numeric)$unveiling), 
+          function(unveiling) {
+            the_list <-lapply(
+              # All levels
+              levels, 
+              function(level) {
+                # print(paste(probability_estimator, unveiling, level))
+                suppressWarnings(
+                  ent_shannon(
+                    abundances,
+                    estimator = "naive",
+                    jack_alpha = 0.05,
+                    jack_max = 10,
+                    level = level,
+                    probability_estimator = probability_estimator,
+                    unveiling = unveiling,
+                    as_numeric = FALSE,
+                    check_arguments = TRUE
+                  )
                 )
-                # Make a dataframe with the list to avoid nested lists
-                the_df <- do.call(rbind, the_list)
               }
             )
             # Make a dataframe with the list to avoid nested lists
