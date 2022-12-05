@@ -26,7 +26,7 @@ testthat::test_that(
                       # All unveilings
                       eval(formals(divent:::div_hill.numeric)$unveiling), 
                       function(unveiling) {
-                        print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
+                        # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
                         suppressWarnings(
                           div_hill(
                             abundances,
@@ -105,7 +105,7 @@ testthat::test_that(
                           # All unveilings
                           eval(formals(divent:::div_hill.numeric)$unveiling), 
                           function(unveiling) {
-                            print(paste(estimator, probability_estimator, unveiling, richness_estimator, q, level))
+                            # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q, level))
                             suppressWarnings(
                               div_hill(
                                 abundances,

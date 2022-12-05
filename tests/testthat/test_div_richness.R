@@ -16,16 +16,14 @@ testthat::test_that(
     # Jacknife
     testthat::expect_equal(
       div_richness(abd, estimator = "jackknife")$diversity,
-      suppressWarnings(
-        SPECIES::jackknife(as.matrix(abd_freq_count(abd)))$Nhat
-      )
+      SPECIES::jackknife(as.matrix(abd_freq_count(abd)))$Nhat
     )
   }
 )
 
 # Jacknife
 divent <- div_richness(abd, estimator = "jackknife")
-species <- suppressWarnings(SPECIES::jackknife(as.matrix(abd_freq_count(abd))))
+species <- SPECIES::jackknife(as.matrix(abd_freq_count(abd)))
 testthat::test_that(
   "Jacknife estimator is equal to that of SPECIES", 
   {
@@ -86,7 +84,7 @@ testthat::test_that(
                 if ((estimator == "rarefy" & unveiling == "none")) {
                   NULL
                 } else {
-                  print(paste(estimator, probability_estimator, unveiling))
+                  # print(paste(estimator, probability_estimator, unveiling))
                   suppressWarnings(
                     div_richness(
                       abundances,
@@ -150,7 +148,7 @@ testthat::test_that(
                     if ((estimator == "rarefy" & unveiling == "none")) {
                       NULL
                     } else {
-                      print(paste(estimator, probability_estimator, unveiling, level))
+                      # print(paste(estimator, probability_estimator, unveiling, level))
                       suppressWarnings(
                         div_richness(
                           abundances,
