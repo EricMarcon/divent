@@ -214,42 +214,28 @@ ent_tsallis.numeric <- function(
     #     return(sum(w_v[used_v] * p_V_abd[s, used_v]))
     #   }
     # }
+    # Specific code for q=1
+    # # Weights
+    # w_v <- 1/V
+    # the_entropy <- sum(prob * vapply(seq_along(abd), S_v, 0))
+    
     
     
     ## Shannon ----
     if (q == 1) {
-      if (estimator == "ZhangGrabchak") {
-        # Weights. Useless if EntropyEstimation is used.
-        # w_v <- 1/V
-        # entropy <- sum(prob * vapply(seq_along(abd), S_v, 0))
-        # Use EntropyEstimation instead
-        the_entropy <- EntropyEstimation::Entropy.z(abd)
-        if (as_numeric) {
-          return(the_entropy)
-        } else {
-          return(
-            tibble::tibble_row(
-              estimator = estimator, 
-              order = q,
-              entropy = the_entropy
-            )
-          )  
-        }
-      } else {
-        return(
-          ent_shannon.numeric(
-            abd, 
-            estimator = estimator, 
-            probability_estimator = probability_estimator,
-            unveiling = unveiling,
-            richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha, 
-            jack_max = jack_max,
-            as_numeric = as_numeric,
-            check_arguments = FALSE
-          )
+      return(
+        ent_shannon.numeric(
+          abd, 
+          estimator = estimator, 
+          probability_estimator = probability_estimator,
+          unveiling = unveiling,
+          richness_estimator = richness_estimator,
+          jack_alpha  = jack_alpha, 
+          jack_max = jack_max,
+          as_numeric = as_numeric,
+          check_arguments = FALSE
         )
-      }
+      )
     }
     
     ## Not Shannon ----

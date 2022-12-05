@@ -338,6 +338,20 @@ ent_shannon.numeric <- function(
         ) 
       }
     }
+    if (estimator == "ZhangGrabchak") {
+      the_entropy <- EntropyEstimation::Entropy.z(abd)
+      if (as_numeric) {
+        return(the_entropy)
+      } else {
+        return(
+          tibble::tibble_row(
+            estimator = estimator, 
+            order = q,
+            entropy = the_entropy
+          )
+        )  
+      }
+    }
     if (estimator == "ZhangHz") {
       # Values of v in vector V
       V <- seq_len(sample_size - 1)
