@@ -11,8 +11,7 @@ ent_simpson(x, ...)
 \method{ent_simpson}{numeric}(
   x,
   estimator = c("Lande", "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-    "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "Grassberger2003",
-    "Schurmann", "Bonachela", "Miller", "ZhangHz", "naive"),
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
@@ -26,8 +25,8 @@ ent_simpson(x, ...)
 
 \method{ent_simpson}{species_distribution}(
   x,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
+  estimator = c("Lande", "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),

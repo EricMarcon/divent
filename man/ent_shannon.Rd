@@ -10,9 +10,9 @@ ent_shannon(x, ...)
 
 \method{ent_shannon}{numeric}(
   x,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "Grassberger2003", "Schurmann",
-    "Bonachela", "Miller", "ZhangHz", "naive"),
+  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Grassberger2003",
+    "Holste", "Miller", "Schurmann", "ZhangHz"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
@@ -26,8 +26,9 @@ ent_shannon(x, ...)
 
 \method{ent_shannon}{species_distribution}(
   x,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Grassberger2003",
+    "Holste", "Miller", "Schurmann", "ZhangHz"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),

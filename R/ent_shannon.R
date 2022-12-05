@@ -39,8 +39,8 @@ ent_shannon <- function(x, ...) {
 ent_shannon.numeric <- function(
     x, 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "Grassberger2003",
-                  "Schurmann", "Bonachela", "Miller", "ZhangHz", "naive"),
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Grassberger2003", "Holste", "Miller", "Schurmann", "ZhangHz"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
@@ -517,8 +517,8 @@ ent_shannon.numeric <- function(
 ent_shannon.species_distribution <- function(
     x,
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "Grassberger2003",
-                  "Schurmann", "Bonachela", "Miller", "ZhangHz", "naive"),
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Grassberger2003", "Holste", "Miller", "Schurmann", "ZhangHz"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),

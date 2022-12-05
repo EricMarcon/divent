@@ -38,10 +38,9 @@ ent_simpson <- function(x, ...) {
 #' @export
 ent_simpson.numeric <- function(
     x, 
-    estimator = c("Lande", "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
-                  "Grassberger2003", "Schurmann", "Bonachela", "Miller", "ZhangHz",
-                  "naive"),
+    estimator = c("Lande",
+                  "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
@@ -202,8 +201,9 @@ ent_simpson.numeric <- function(
 #' @export
 ent_simpson.species_distribution <- function(
     x,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
+    estimator = c("Lande",
+                  "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
