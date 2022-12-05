@@ -49,11 +49,12 @@ or an object of class \link{abundances}  or \link{probabilities}}
 
 \item{...}{Unused.}
 
-\item{estimator}{An estimator of diversity.}
+\item{estimator}{An estimator of asymptotic diversity.}
 
 \item{level}{The level of interpolation or extrapolation.
-It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).}
+It may be a sample size (an integer) or a sample coverage
+(a number between 0 and 1).
+If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
 
 \item{probability_estimator}{A string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
@@ -64,7 +65,7 @@ to estimate the probabilities of the unobserved species (see \link{probabilities
 Used only for extrapolation.}
 
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
-see \link{div_richness}.}
+see \link{div_richness}. Used for interpolation and extrapolation.}
 
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
@@ -91,7 +92,9 @@ Several estimators are available to deal with incomplete sampling.
 Bias correction requires the number of individuals.
 }
 \examples{
+# Diversity of each community
 div_hill(paracou_6_abd, q = 2)
+# gamma diversity
 div_hill(paracou_6_abd, q = 2, gamma = TRUE)
 
 }

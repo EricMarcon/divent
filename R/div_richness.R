@@ -54,6 +54,11 @@ div_richness <- function(x, ...) {
 #' @rdname div_richness
 #'
 #' @param estimator An estimator of richness to evaluate the total number of species. 
+#' @param level The level of interpolation or extrapolation. 
+#' It may be a sample size (an integer) or a sample coverage 
+#' (a number between 0 and 1).
+#' The asymptotic `estimator` is used in extrapolation 
+#' (i.e. a `level` greater than the sample size).
 #' @param probability_estimator A string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only by the estimator of richness "rarefy".

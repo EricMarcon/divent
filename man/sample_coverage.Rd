@@ -46,8 +46,13 @@ coverage_to_size(x, ...)
 
 \item{...}{Unused.}
 
-\item{estimator}{A string containing one of the possible estimators:
-"ZhangHuang", "Chao", "Turing", "Good".}
+\item{estimator}{An estimator of the sample coverage.
+"ZhangHuang" is the most accurate but does not allow choosing a \code{level}.
+"Good"'s estimator only allows interpolation, i.e. estimation of the coverage
+of a subsample.
+"Chao" allows estimation at any \code{level}, including extrapolation.
+"Turing" is the simplest estimator, equal to 1 minus the number of singletons
+divided by the sample size.}
 
 \item{level}{The level of interpolation or extrapolation, i.e. an abundance.}
 

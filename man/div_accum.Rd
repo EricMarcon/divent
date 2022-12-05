@@ -109,7 +109,7 @@ to estimate the probabilities of the unobserved species (see \link{probabilities
 Used only for extrapolation.}
 
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
-see \link{div_richness}.}
+see \link{div_richness}. Used for interpolation and extrapolation.}
 
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 

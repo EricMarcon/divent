@@ -47,8 +47,10 @@ or an object of class \link{abundances}  or \link{probabilities}}
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
 
 \item{level}{The level of interpolation or extrapolation.
-It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).}
+It may be a sample size (an integer) or a sample coverage
+(a number between 0 and 1).
+The asymptotic \code{estimator} is used in extrapolation
+(i.e. a \code{level} greater than the sample size).}
 
 \item{probability_estimator}{A string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).

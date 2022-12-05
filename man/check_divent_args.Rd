@@ -29,15 +29,16 @@ check_divent_args(
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{estimator}{An estimator of entropy, diversity or richness.}
+\item{estimator}{An estimator of asymptotic entropy, diversity or richness.}
 
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
 
 \item{level}{The level of interpolation or extrapolation.
-It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).}
+It may be a sample size (an integer) or a sample coverage
+(a number between 0 and 1).
+If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
 
 \item{n_simulations}{The number of simulations used to estimate the confidence envelope.}
 
@@ -48,7 +49,7 @@ Used only for extrapolation.}
 \item{q}{The order of diversity.}
 
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
-see \link{div_richness}.}
+see \link{div_richness}. Used for interpolation and extrapolation.}
 
 \item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}

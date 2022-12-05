@@ -17,7 +17,9 @@
 #' \insertAllCited{}
 #' 
 #' @examples
+#' # Diversity of each community
 #' div_hill(paracou_6_abd, q = 2)
+#' # gamma diversity
 #' div_hill(paracou_6_abd, q = 2, gamma = TRUE)
 #' 
 #' @name div_hill
@@ -34,7 +36,7 @@ div_hill <- function(x, q = 1, ...) {
 
 #' @rdname div_hill
 #'
-#' @param estimator An estimator of diversity.
+#' @param estimator An estimator of asymptotic diversity.
 #' 
 #' @export
 div_hill.numeric <- function(
@@ -71,21 +73,17 @@ div_hill.numeric <- function(
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
     sample_coverage = sample_coverage,
-    as_numeric = TRUE,
+    as_numeric = FALSE,
     check_arguments = FALSE
   )
-  the_diversity <- exp_q(the_entropy, q = q)
-  if (as_numeric) {
-    return(the_diversity)
-  } else {
-    return(
-      tibble::tibble_row(
-        estimator = estimator, 
-        order = q,
-        diversity = the_diversity
-      )
-    ) 
-  }
+  # Calculate diversity
+  the_diversity <- dplyr::mutate(
+    the_entropy, 
+    diversity = exp_q(.data$entropy, q = q),
+    .keep = "unused"
+  )
+  # return the diversity
+  return(the_diversity)
 }
 
 

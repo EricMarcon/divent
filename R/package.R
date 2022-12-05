@@ -59,19 +59,20 @@ NULL
 #' @param as_numeric If `TRUE`, a number or a numeric vector is returned rather than a tibble.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
-#' @param estimator An estimator of entropy, diversity or richness.
+#' @param estimator An estimator of asymptotic entropy, diversity or richness.
 #' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
 #' @param jack_max The highest jackknife order allowed. Default is 10.
 #' @param level The level of interpolation or extrapolation. 
-#' It may be a chosen sample size (an integer) or a sample coverage 
-#' (a number between 0 and 1). 
+#' It may be a sample size (an integer) or a sample coverage 
+#' (a number between 0 and 1).
+#' If not `NULL`, the asymptotic `estimator` is ignored.
 #' @param n_simulations The number of simulations used to estimate the confidence envelope.
 #' @param probability_estimator A string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
 #' @param q The order of diversity.
 #' @param richness_estimator An estimator of richness to evaluate the total number of species,
-#' see [div_richness].
+#' see [div_richness]. Used for interpolation and extrapolation.
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param show_progress If TRUE, a progress bar is shown during long computations. 
