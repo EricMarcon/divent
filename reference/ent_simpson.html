@@ -18,7 +18,7 @@ Several estimators are available to deal with incomplete sampling."><meta proper
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-18</span>
       </span>
     </div>
 
@@ -120,8 +120,9 @@ or an object of class <a href="species_distribution.html">abundances</a>  or <a 
 
 <dt>level</dt>
 <dd><p>The level of interpolation or extrapolation.
-It may be a chosen sample size (an integer) or a sample coverage
-(a number between 0 and 1).</p></dd>
+It may be a sample size (an integer) or a sample coverage
+(a number between 0 and 1).
+If not <code>NULL</code>, the asymptotic <code>estimator</code> is ignored.</p></dd>
 
 
 <dt>probability_estimator</dt>
@@ -138,7 +139,7 @@ Used only for extrapolation.</p></dd>
 
 <dt>richness_estimator</dt>
 <dd><p>An estimator of richness to evaluate the total number of species,
-see <a href="div_richness.html">div_richness</a>.</p></dd>
+see <a href="div_richness.html">div_richness</a>. Used for interpolation and extrapolation.</p></dd>
 
 
 <dt>jack_alpha</dt>
