@@ -35,8 +35,13 @@ coverage <- function(x, ...) {
 
 #' @rdname sample_coverage
 #' 
-#' @param estimator A string containing one of the possible estimators: 
-#' "ZhangHuang", "Chao", "Turing", "Good".
+#' @param estimator An estimator of the sample coverage.
+#' "ZhangHuang" is the most accurate but does not allow choosing a `level`. 
+#' "Good"'s estimator only allows interpolation, i.e. estimation of the coverage 
+#' of a subsample. 
+#' "Chao" allows estimation at any `level`, including extrapolation.
+#' "Turing" is the simplest estimator, equal to 1 minus the number of singletons 
+#' divided by the sample size.
 #' @param level The level of interpolation or extrapolation, i.e. an abundance.
 #'
 #' @export
