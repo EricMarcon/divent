@@ -11,8 +11,8 @@ div_hill(x, q = 1, ...)
 \method{div_hill}{numeric}(
   x,
   q = 1,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
@@ -28,8 +28,8 @@ div_hill(x, q = 1, ...)
 \method{div_hill}{species_distribution}(
   x,
   q = 1,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Holste",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
