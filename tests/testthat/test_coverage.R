@@ -32,7 +32,6 @@ testthat::test_that(
 
 # Combine all parameters
 abundances <- paracou_6_abd[1, ]
-sample_size <- abd_sum(abundances, as_numeric = TRUE)
 
 testthat::test_that(
   "No estimator fails", 
@@ -42,7 +41,7 @@ testthat::test_that(
       # All estimators
       eval(formals(divent:::coverage.numeric)$estimator), 
       function(estimator) {
-        print(estimator)
+        # print(estimator)
         suppressWarnings(
           coverage(
             abundances,
@@ -65,6 +64,7 @@ testthat::test_that(
 )
 
 # Interpolation and extrapolation
+sample_size <- abd_sum(abundances, as_numeric = TRUE)
 levels <- c(sample_size / 2, round(sample_size * 1.5))
 
 testthat::test_that(
@@ -79,7 +79,7 @@ testthat::test_that(
           # Two levels
           levels, 
           function(level) {
-            print(paste(estimator, level))
+            # print(paste(estimator, level))
             suppressWarnings(
               coverage(
                 abundances,

@@ -57,6 +57,10 @@ testthat::test_that(
 )
 
 
+# Interpolation and extrapolation
+sample_size <- abd_sum(abundances, as_numeric = TRUE)
+levels <- c(sample_size / 2, round(sample_size * 1.5))
+
 testthat::test_that(
   "No estimator fails during interpolation and extrapolation", {
     # Estimate diversity systematically
