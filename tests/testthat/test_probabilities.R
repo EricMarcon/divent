@@ -20,7 +20,7 @@ testthat::test_that(
                 # All coverage estimators
                 eval(formals(divent:::probabilities.numeric)$coverage_estimator), 
                 function(coverage_estimator) {
-                  print(paste(estimator, unveiling, richness_estimator, coverage_estimator))
+                  # print(paste(estimator, unveiling, richness_estimator, coverage_estimator))
                   # Forbidden combination raises an error
                   if ((richness_estimator == "rarefy" & unveiling == "none")) {
                     NULL
