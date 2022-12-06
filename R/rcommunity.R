@@ -80,27 +80,29 @@ rcommunity <- function(
     stop("'prob' and 'abd' can't be both given.")
   }
 
-  probabilities <- abundances <- NULL
+  the_prob <- the_abd <- NULL
   
   # Generate a distribution (prob and abd are null) or use prob or build probabilities from abd
   if (is.null(prob) & is.null(abd)) {
     # Draw in a distribution
     if (distribution == "lseries") {
       # Draw probabilities, except for logseries: draw abundances.
-      abundances <- replicate(
-        # Number of communities
-        n,
-        # Draw each species separately
+      the_abd <- t(
         replicate(
-          # Number of species (Fisher's formula)
-          round(-alpha_lseries * log(alpha_lseries / (size + alpha_lseries))),
-          # Internal function to draw the number of individuals of a species
-          abd_lseries(size, alpha_lseries)
+          # Number of communities
+          n,
+          # Draw each species separately
+          replicate(
+            # Number of species (Fisher's formula)
+            round(-alpha_lseries * log(alpha_lseries / (size + alpha_lseries))),
+            # Internal function to draw the number of individuals of a species
+            abd_lseries(size, alpha_lseries)
+          )
         )
       )
     } else {
       # Other distributions: draw probabilities
-      probabilities <- switch(distribution,
+      the_prob <- switch(distribution,
         geom = prob_geom / (1 - (1 - prob_geom) ^ species_number) * (1 - prob_geom) ^ (0:(species_number - 1)),
         lnorm = (n_lnorm <- stats::rlnorm(species_number, 0, sd_lnorm)) / sum(n_lnorm),
         bstick = c(cuts <- sort(stats::runif(species_number - 1)), 1) - c(0, cuts)
@@ -109,38 +111,40 @@ rcommunity <- function(
   } 
   if (!is.null(prob)) {
     # Probabilities are given
-    probabilities <- prob[prob != 0]
+    the_prob <- prob[prob != 0]
   }
   if (!is.null(abd)) {
     # Subsample in given abundances. Generate probabilities according to the chosen method.
     if (bootstrap == "Chao2015") {
-      probabilities <- as_probabilities.numeric(
-        abd, 
-        estimator = "Chao2015", 
-        unveiling = "geometric", 
+      the_prob <- probabilities.numeric(
+        abd,
+        estimator = "Chao2015",
+        unveiling = "geometric",
+        as_numeric = TRUE,
         check_arguments = FALSE)
     }
     if (bootstrap == "Chao2013") {
-      probabilities <- as_probabilities.numeric(
+      the_prob <- probabilities.numeric(
         abd, 
         estimator = "Chao2013", 
         unveiling = "uniform", 
+        as_numeric = TRUE,
         check_arguments = FALSE)
     }
     if (bootstrap == "Marcon2012") {
-      probabilities <- abd/sum(abd)
+      the_prob <- abd / sum(abd)
     }
   }
   
   # Generate communities according to probabilities
-  if (is.null(abundances)) {
+  if (is.null(the_abd)) {
     # Draw multinomial samples from probabilities except if abundances have already been obtained (e.g.: lseries)
-    abundances <- t(stats::rmultinom(n, size, probabilities))
+    the_abd <- t(stats::rmultinom(n, size, the_prob))
   }
 
   return(
     as_abundances.matrix(
-      abundances,
+      the_abd,
       names = paste(
         distribution, 
         1:n,
