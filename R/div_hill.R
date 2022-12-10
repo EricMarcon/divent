@@ -1,9 +1,48 @@
 #' Hill number of a Community
 #' 
-#' Estimate the diversity sensu stricto, i.e. the Hill number of species from abundance or probability data.
+#' Estimate the diversity sensu stricto, i.e. the \insertCite{Hill1973;textual}{divent} 
+#' number of species from abundance or probability data.
+#' 
 #' Several estimators are available to deal with incomplete sampling.
 #' 
 #' Bias correction requires the number of individuals. 
+#' 
+#' Estimation techniques are from \insertCite{Chao2003;textual}{divent}, 
+#' \insertCite{Grassberger1988;textual}{divent},\insertCite{Holste1998;textual}{divent}, 
+#' \insertCite{Bonachela2008;textual}{divent}, \insertCite{Marcon2014a;textual}{divent} 
+#' which is actually the max value of "ChaoShen" and "Grassberger", 
+#' \insertCite{Zhang2014a;textual}{divent}, \insertCite{Chao2014c;textual}{divent},
+#' \insertCite{Chao2015;textual}{divent} and \insertCite{Marcon2015a;textual}{divent}.
+#' 
+#' The `ChaoJost` estimator \insertCite{Chao2013,Chao2015;textual}{divent} contains 
+#' an unbiased part concerning observed species, equal to that of 
+#' \insertCite{Zhang2014a;textual}{divent}, and a (biased) estimator of the remaining 
+#' bias based on the estimation of the species-accumulation curve. 
+#' It is very efficient but slow if the number of individuals is more than a few hundreds.
+#' 
+#' The unveiled estimators rely on \insertCite{Chao2014c;textual}{divent}, 
+#' completed by \insertCite{Marcon2015a;textual}{divent}. 
+#' The actual probabilities of observed species are estimated and completed by 
+#' a geometric distribution of the probabilities of unobserved species. 
+#' The number of unobserved species is estimated by the Chao1 estimator (`UnveilC`), 
+#' following \insertCite{Chao2014c;textual}{divent}, or by the iChao1 (`UnveiliC`)
+#' or the jackknife (`UnveilJ`).
+#' The `UnveilJ` correction often has a lower bias but a greater variance 
+#' \insertCite{Marcon2015a}{divent}.
+#' It is a good first choice thanks to the versatility of the jackknife 
+#' estimator of richness.
+#' 
+#' To estimate \eqn{\gamma} diversity, the size of a metacommunity (see 
+#' [metacommunity]) is unknown so it has to be set according to a rule which does
+#' not ensure that its abundances are integer values.
+#' Then, classical bias-correction methods do not apply. 
+#' Providing the `sample_coverage` argument allows applying the `ChaoShen` and
+#' `Grassberger` corrections to estimate quite well the entropy.
+#' 
+#' Diversity can be estimated at a specified level of interpolation or 
+#' extrapolation, either a chosen sample size or sample coverage 
+#' \insertCite{Chao2014}{divent}, rather than its asymptotic value.
+#' See [div_accum] for details.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
@@ -21,6 +60,9 @@
 #' div_hill(paracou_6_abd, q = 2)
 #' # gamma diversity
 #' div_hill(paracou_6_abd, q = 2, gamma = TRUE)
+#' 
+#' @references
+#' \insertAllCited{}
 #' 
 #' @name div_hill
 NULL

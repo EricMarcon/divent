@@ -64,7 +64,7 @@ div_profile(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
 }
 \arguments{
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
-or an object of class \link{abundances}  or \link{probabilities}}
+or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{orders}{The orders of diversity used to build the profile.}
 
@@ -106,7 +106,7 @@ bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
 number of individuals \insertCite{Marcon2012a}{divent}.
 If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
-(see \link{as_probabilities}) following\insertCite{Chao2013;textual}{divent} or
+(see \link{as_probabilities}) following \insertCite{Chao2013;textual}{divent} or
 \insertCite{Chao2015;textual}{divent}.}
 
 \item{show_progress}{If TRUE, a progress bar is shown during long computations.}

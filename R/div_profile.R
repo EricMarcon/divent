@@ -10,18 +10,18 @@
 #' 
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
-#' or an object of class [abundances]  or [probabilities]
+#' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
 #' @export
 #'
-#' @references
-#' \insertAllCited{}
-#' 
 #' @examples
 #' div_profile(paracou_6_abd)
+#' 
+#' @references
+#' \insertAllCited{}
 #' 
 #' @name div_profile
 NULL
@@ -49,7 +49,7 @@ div_profile <- function(
 #' If "Marcon2012", the probabilities are simply the abundances divided by the total
 #' number of individuals \insertCite{Marcon2012a}{divent}. 
 #' If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used 
-#' (see [as_probabilities]) following\insertCite{Chao2013;textual}{divent} or 
+#' (see [as_probabilities]) following \insertCite{Chao2013;textual}{divent} or 
 #' \insertCite{Chao2015;textual}{divent}.
 #' 
 #' @export

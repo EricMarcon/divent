@@ -26,6 +26,7 @@
 #' 
 #' @references
 #' \insertAllCited{}
+#' 
 e_n_q <- function(n, q) {
   if (q == 0) {
     return (rep(1, length(n)))

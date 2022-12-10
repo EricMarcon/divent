@@ -17,3 +17,4 @@
 
 ## TODO
 - `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
+- document starting from `ent_shannon`.

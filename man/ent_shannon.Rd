@@ -42,7 +42,7 @@ ent_shannon(x, ...)
 }
 \arguments{
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
-or an object of class \link{abundances}  or \link{probabilities}}
+or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{...}{Unused.}
 

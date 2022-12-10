@@ -2,13 +2,13 @@
 #' 
 #' Calculate the deformed logarithm of order *q*.
 #' 
-#' The deformed logarithm is defined as 
+#' The deformed logarithm \insertCite{Tsallis1994}{divent} is defined as 
 #' \eqn{\ln_q{x}=\frac{(x^{(1-q)}-1)}{(1-q)}}.
 #' 
 #' The shape of the deformed logarithm is similar to that of the regular one.
-#'  \eqn{\ln_1{x}=\log{x}}.
+#' \eqn{\ln_1{x}=\log{x}}.
 #'  
-#'  For \eqn{q>1}, \eqn{\ln_q{(+\infty)}=\frac{1}{(q-1)}}.
+#' For \eqn{q>1}, \eqn{\ln_q{(+\infty)}=\frac{1}{(q-1)}}.
 #'
 #' @param x A numeric vector or array.
 #' @param q A number.
@@ -25,7 +25,10 @@
 #'   lty = c(2, 1, 3), 
 #'   inset = 0.02
 #'  )
-
+#'  
+#' @references
+#' \insertAllCited{}
+#' 
 ln_q <- function(x, q) {
   if (q == 1) {
     return (log(x))

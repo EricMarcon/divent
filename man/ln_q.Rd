@@ -18,7 +18,7 @@ A vector of the same length as \code{x} containing the transformed values.
 Calculate the deformed logarithm of order \emph{q}.
 }
 \details{
-The deformed logarithm is defined as
+The deformed logarithm \insertCite{Tsallis1994}{divent} is defined as
 \eqn{\ln_q{x}=\frac{(x^{(1-q)}-1)}{(1-q)}}.
 
 The shape of the deformed logarithm is similar to that of the regular one.
@@ -35,4 +35,8 @@ legend("topright",
   lty = c(2, 1, 3), 
   inset = 0.02
  )
+ 
+}
+\references{
+\insertAllCited{}
 }

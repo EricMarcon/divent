@@ -1,6 +1,25 @@
 #' Diversity Accumulation of a Community
 #' 
-#' Details TODO. 
+#' Diversity and Entropy Accumulation Curves represent the accumulation of 
+#' entropy with respect to the sample size.
+#' 
+#' `div_accum()` or `ent_accum()` estimate the diversity or entropy accumulation 
+#' curve of a distribution.
+#' See [ent_tsallis] for details about the computation of entropy at each level
+#' of interpolation and extrapolation.
+#' 
+#' In accumulation curves, extrapolation if done by estimating the asymptotic 
+#' distribution of the community and estimating entropy at different levels 
+#' by interpolation. 
+#' 
+#' Interpolation and extrapolation of integer orders of diversity are from 
+#' \insertCite{Chao2014;textual}{divent}.
+#' The asymptotic richness is adjusted so that the extrapolated part of the 
+#' accumulation joins the observed value at the sample size.
+#' 
+#' [accumulation] objects can be plotted.
+#' They generalize the classical Species Accumulation Curves (SAC) which are 
+#' diversity accumulation of order $q=0$.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
@@ -16,6 +35,9 @@
 #' 
 #' @examples
 #' autoplot(div_accum(paracou_6_abd))
+#' 
+#' @references
+#' \insertAllCited{}
 #' 
 #' @name div_accum
 NULL

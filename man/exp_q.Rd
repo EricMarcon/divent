@@ -18,7 +18,9 @@ A vector of the same length as \code{x} containing the transformed values.
 Calculate the deformed exponential of order \emph{q}.
 }
 \details{
-The deformed exponential is defined as \eqn{(x(1-q)+1)^{\frac{1}{(1-q)}}}.
+The deformed exponential is the reciprocal of the deformed logarithm
+\insertCite{Tsallis1994}{divent}, see \link{lnq}.
+It is defined as \eqn{(x(1-q)+1)^{\frac{1}{(1-q)}}}.
 For \eqn{q>1}, \eqn{\ln_q{(+\infty)}=\frac{1}{(q-1)}}
 so \eqn{\exp_q{(x)}} is not defined for \eqn{x>\frac{1}{(q-1)}}.
 }
@@ -30,5 +32,9 @@ legend("topleft",
   legend = c("exp_0(x)", "exp(x)", "exp_2(x)"), 
   lty = c(2, 1, 3), 
   inset = 0.02
-  )
+)
+
+}
+\references{
+\insertAllCited{}
 }

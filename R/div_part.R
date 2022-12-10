@@ -3,7 +3,7 @@
 #' Calculate \eqn{\gamma}, \eqn{\beta} and \eqn{\alpha} diversities of a metacommunity.
 #' 
 #' The function computes \eqn{\gamma} diversity after building a metacommunity 
-#' from local communities according to their weight.
+#' from local communities according to their weight \insertCite{Marcon2014a}{divent}.
 #' \eqn{\alpha} entropy is the weighted mean local entropy, converted into Hill
 #' numbers to obtain \eqn{\alpha} diversity.
 #' \eqn{\beta} diversity is obtained as the ratio of \eqn{\gamma} to \eqn{\alpha}.
@@ -16,6 +16,10 @@
 #'
 #' @examples
 #' div_part(paracou_6_abd)
+#' 
+#' @references
+#' \insertAllCited{}
+#' 
 div_part <- function(
     abundances, 
     q = 1, 

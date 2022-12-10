@@ -143,12 +143,34 @@ A tibble with the site names, the estimators used and the accumulated entropy
 or diversity at each level of sampling effort.
 }
 \description{
-Details TODO.
+Diversity and Entropy Accumulation Curves represent the accumulation of
+entropy with respect to the sample size.
+}
+\details{
+\code{div_accum()} or \code{ent_accum()} estimate the diversity or entropy accumulation
+curve of a distribution.
+See \link{ent_tsallis} for details about the computation of entropy at each level
+of interpolation and extrapolation.
+
+In accumulation curves, extrapolation if done by estimating the asymptotic
+distribution of the community and estimating entropy at different levels
+by interpolation.
+
+Interpolation and extrapolation of integer orders of diversity are from
+\insertCite{Chao2014;textual}{divent}.
+The asymptotic richness is adjusted so that the extrapolated part of the
+accumulation joins the observed value at the sample size.
+
+\link{accumulation} objects can be plotted.
+They generalize the classical Species Accumulation Curves (SAC) which are
+diversity accumulation of order $q=0$.
 }
 \examples{
 autoplot(div_accum(paracou_6_abd))
 
 }
 \references{
+\insertAllCited{}
+
 \insertAllCited{}
 }

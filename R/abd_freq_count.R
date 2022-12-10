@@ -81,7 +81,7 @@ abd_freq_count <- function (
             )
           )
         }, 
-        FUN.VALUE=0.0
+        FUN.VALUE = 0
       )
     } else {
       # Extrapolation ----
@@ -109,7 +109,7 @@ abd_freq_count <- function (
               )
             )
           } , 
-          FUN.VALUE=0.0
+          FUN.VALUE = 0
         )
       }
     }

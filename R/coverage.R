@@ -4,6 +4,23 @@
 #' described by its abundance vector. 
 #' `coverage_to_size()` estimates the sample size corresponding to the chosen 
 #' sample coverage.
+#' 
+#' The sample coverage \eqn{C} of a community is the total probability of 
+#' occurrence of the species observed in the sample. 
+#' \eqn{1-C} is the probability for an individual of the whole community to 
+#' belong to a species that has not been sampled.
+#' 
+#' The historical estimator is due to Turing \insertCite{Good1953}{divent}. 
+#' It only relies on singletons (species observed only once). 
+#' Chao's \insertCite{Chao2010a}{divent} estimator uses doubletons too and 
+#' Zhang-Huang's \insertCite{Chao1988,Zhang2007}{divent} uses the whole 
+#' distribution.
+#' 
+#' If `level` is not `NULL`, the sample coverage is interpolated or extrapolated. 
+#' Interpolation by the Good estimator relies on the equality between sampling 
+#' deficit and the generalized Simpson entropy \insertCite{Good1953}{divent}. 
+#' The \insertCite{Chao2014;textual}{divent} estimator allows extrapolation, 
+#' reliable up a level equal to the double size of the sample.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object.
@@ -21,6 +38,9 @@
 #' @examples
 #' coverage(paracou_6_abd)
 #' coverage_to_size(paracou_6_abd, sample_coverage = 0.9)
+#' 
+#' @references
+#' \insertAllCited{}
 #' 
 #' @name sample_coverage
 NULL
