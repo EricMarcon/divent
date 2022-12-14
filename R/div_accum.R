@@ -36,9 +36,6 @@
 #' @examples
 #' autoplot(div_accum(paracou_6_abd))
 #' 
-#' @references
-#' \insertAllCited{}
-#' 
 #' @name div_accum
 NULL
 

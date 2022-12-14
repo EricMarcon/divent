@@ -15,6 +15,9 @@
 #'
 #' @return A vector of the same length as n containing the transformed values.
 #' @export
+#' 
+#' @references
+#' \insertAllCited{}
 #'
 #' @examples
 #' # Compare
@@ -23,9 +26,6 @@
 #' mean(rpois(1000, lambda = 5)^2)
 #' # and (naive estimation)
 #' 5^2
-#' 
-#' @references
-#' \insertAllCited{}
 #' 
 e_n_q <- function(n, q) {
   if (q == 0) {

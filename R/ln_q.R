@@ -15,6 +15,9 @@
 #'
 #' @return A vector of the same length as `x` containing the transformed values.
 #' @export
+#'  
+#' @references
+#' \insertAllCited{}
 #'
 #' @examples
 #' curve(ln_q( 1/ x, q = 0), 0, 1, lty = 2, ylab = "Logarithm", ylim = c(0, 10))
@@ -25,9 +28,6 @@
 #'   lty = c(2, 1, 3), 
 #'   inset = 0.02
 #'  )
-#'  
-#' @references
-#' \insertAllCited{}
 #' 
 ln_q <- function(x, q) {
   if (q == 1) {

@@ -14,6 +14,9 @@
 #' @return A vector of the same length as `x` containing the transformed values.
 #' @export
 #'
+#' @references
+#' \insertAllCited{}
+#'
 #' @examples
 #' curve(exp_q(x, q = 0), from = -5, to = 0, lty = 2)
 #' curve(exp(x), from = -5, to = 0, lty= 1, add = TRUE)
@@ -23,9 +26,6 @@
 #'   lty = c(2, 1, 3), 
 #'   inset = 0.02
 #' )
-#'
-#' @references
-#' \insertAllCited{}
 #' 
 exp_q <- function(x, q) {
   if (q == 1) {

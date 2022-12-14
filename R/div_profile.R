@@ -13,12 +13,12 @@
 #' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
+#' @examples
+#' div_profile(paracou_6_abd)
+#'
 #' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
 #' @export
-#'
-#' @examples
-#' div_profile(paracou_6_abd)
 #' 
 #' @references
 #' \insertAllCited{}

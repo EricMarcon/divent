@@ -8,6 +8,7 @@
 #' @name divent
 #' @docType package
 #' @importFrom Rdpack reprompt
+#' 
 #' @references
 #' \insertAllCited{}
 NULL

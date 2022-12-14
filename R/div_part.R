@@ -13,12 +13,12 @@
 #'
 #' @return A tibble with diversity values at each scale.
 #' @export
-#'
-#' @examples
-#' div_part(paracou_6_abd)
 #' 
 #' @references
 #' \insertAllCited{}
+#'
+#' @examples
+#' div_part(paracou_6_abd)
 #' 
 div_part <- function(
     abundances, 

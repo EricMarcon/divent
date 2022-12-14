@@ -27,6 +27,9 @@
 #' - an object of class [species_distribution].
 #' @param ... Unused.
 #' 
+#' @references
+#' \insertAllCited{}
+#' 
 #' @examples
 #' # Just transform abundances into probabilities
 #' probabilities(paracou_6_abd)
@@ -41,9 +44,6 @@
 #' ent_shannon(prob_unv)
 #' # Identical to
 #' ent_shannon(paracou_6_abd, estimator = "UnveilJ")
-#' 
-#' @references
-#' \insertAllCited{}
 #' 
 #' @name probabilities
 NULL

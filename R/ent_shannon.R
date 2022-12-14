@@ -12,12 +12,12 @@
 #'
 #' @return A tibble with the site names, the estimators used and the estimated entropy.
 #' @export
-#'
-#' @references
-#' \insertAllCited{}
 #' 
 #' @examples
 #' ent_shannon(paracou_6_abd)
+#'
+#' @references
+#' \insertAllCited{}
 #' 
 #' @name ent_shannon
 NULL

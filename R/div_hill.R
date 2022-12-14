@@ -61,9 +61,6 @@
 #' # gamma diversity
 #' div_hill(paracou_6_abd, q = 2, gamma = TRUE)
 #' 
-#' @references
-#' \insertAllCited{}
-#' 
 #' @name div_hill
 NULL
 

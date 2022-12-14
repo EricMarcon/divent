@@ -21,6 +21,9 @@
 #' @param x An object.
 #' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
 #' 
+#' @references
+#' \insertAllCited{}
+#' 
 #' @examples
 #' # Paracou data is a tibble
 #' paracou_6_abd
@@ -29,9 +32,6 @@
 #' is_species_distribution(paracou_6_abd)
 #' # Whittaker plot fitted by a log-normal distribution
 #' autoplot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
-#' @references
-#' \insertAllCited{}
-#' 
 #' 
 #' @name species_distribution
 NULL
