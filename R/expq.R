@@ -3,7 +3,7 @@
 #' Calculate the deformed exponential of order *q*.
 #' 
 #' The deformed exponential is the reciprocal of the deformed logarithm
-#' \insertCite{Tsallis1994}{divent}, see [lnq].
+#' \insertCite{Tsallis1994}{divent}, see [ln_q].
 #' It is defined as \eqn{(x(1-q)+1)^{\frac{1}{(1-q)}}}.
 #' For \eqn{q>1}, \eqn{\ln_q{(+\infty)}=\frac{1}{(q-1)}} 
 #' so \eqn{\exp_q{(x)}} is not defined for \eqn{x>\frac{1}{(q-1)}}.
