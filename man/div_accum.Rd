@@ -161,7 +161,7 @@ Interpolation and extrapolation of integer orders of diversity are from
 The asymptotic richness is adjusted so that the extrapolated part of the
 accumulation joins the observed value at the sample size.
 
-\link{accumulation} objects can be plotted.
+"accumulation" objects can be plotted.
 They generalize the classical Species Accumulation Curves (SAC) which are
 diversity accumulation of order $q=0$.
 }
@@ -170,7 +170,5 @@ autoplot(div_accum(paracou_6_abd))
 
 }
 \references{
-\insertAllCited{}
-
 \insertAllCited{}
 }

@@ -101,6 +101,4 @@ coverage_to_size(paracou_6_abd, sample_coverage = 0.9)
 }
 \references{
 \insertAllCited{}
-
-\insertAllCited{}
 }
