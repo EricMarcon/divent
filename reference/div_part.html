@@ -141,10 +141,19 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
     <div id="details">
     <h2>Details</h2>
     <p>The function computes \(\gamma\) diversity after building a metacommunity
-from local communities according to their weight.
+from local communities according to their weight (Marcon et al. 2014)
+.
 \(\alpha\) entropy is the weighted mean local entropy, converted into Hill
 numbers to obtain \(\alpha\) diversity.
 \(\beta\) diversity is obtained as the ratio of \(\gamma\) to \(\alpha\).</p>
+    </div>
+    <div id="references">
+    <h2>References</h2>
+    <p>Marcon E, Scotti I, Hérault B, Rossi V, Lang G (2014).
+“Generalization of the Partitioning of Shannon Diversity.”
+<em>Plos One</em>, <b>9</b>(3), e90289.
+<a href="https://doi.org/10.1371/journal.pone.0090289" class="external-link">doi:10.1371/journal.pone.0090289</a>
+.</p>
     </div>
 
     <div id="ref-examples">
@@ -160,6 +169,7 @@ numbers to obtain \(\alpha\) diversity.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> subplot_2     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    113.  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> subplot_3     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    105.  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> subplot_4     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1     94.6 </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
