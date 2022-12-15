@@ -38,6 +38,9 @@
 #' 
 #' @examples
 #' div_richness(paracou_6_abd)
+#'
+#' # At 80% coverage
+#' div_richness(paracou_6_abd, level=0.8)
 #' 
 #' @name div_richness
 NULL

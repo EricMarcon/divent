@@ -1,10 +1,22 @@
 #' Shannon's Entropy of a Community
 #' 
-#' Estimate the entropy species from abundance or probability data.
+#' Estimate the entropy \insertCite{Shannon1948}{divent} of species from abundance
+#' or probability data.
 #' Several estimators are available to deal with incomplete sampling.
 #' 
-#' Bias correction requires the number of individuals. 
-#'
+#' Bias correction requires the number of individuals.
+#' 
+#' See [div_hill] for non-specific estimators.
+#' Shannon-specific estimators are from \insertCite{Miller1955;textual}{divent},
+#' \insertCite{Grassberger2003;textual}{divent}, \insertCite{Schurmann2004;textual}{divent}
+#' and \insertCite{Zhang2012;textual}{divent}.
+#' More estimators can be found in the **entropy** package.
+#' 
+#' Entropy can be estimated at a specified level of interpolation or 
+#' extrapolation, either a chosen sample size or sample coverage 
+#' \insertCite{Chao2014}{divent}, rather than its asymptotic value.
+#' See [ent_accum] for details.
+#' 
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
@@ -15,6 +27,9 @@
 #' 
 #' @examples
 #' ent_shannon(paracou_6_abd)
+#' 
+#' # At 80% coverage
+#' ent_shannon(paracou_6_abd, level=0.8)
 #'
 #' @references
 #' \insertAllCited{}
@@ -439,8 +454,7 @@ ent_shannon.numeric <- function(
     level <- coverage_to_size.numeric(
       abd, 
       sample_coverage = level,
-      order = 1,
-      level = level,
+      as_numeric = TRUE,
       check_arguments = FALSE
     )
   }

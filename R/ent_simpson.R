@@ -1,9 +1,18 @@
 #' Simpson's Entropy of a Community
 #' 
-#' Estimate the entropy species from abundance or probability data.
+#' Estimate the entropy \insertCite{Simpson1949}{divent} of species from abundance
+#' or probability data.
 #' Several estimators are available to deal with incomplete sampling.
 #' 
 #' Bias correction requires the number of individuals. 
+#' See [div_hill] for non-specific estimators.
+#' 
+#' Simpson-specific estimator is from \insertCite{Lande1996;textual}{divent}.
+#' 
+#' Entropy can be estimated at a specified level of interpolation or 
+#' extrapolation, either a chosen sample size or sample coverage 
+#' \insertCite{Chao2014}{divent}, rather than its asymptotic value.
+#' See [ent_accum] for details.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
@@ -18,6 +27,9 @@
 #' 
 #' @examples
 #' ent_simpson(paracou_6_abd)
+#' 
+#' # At 80% coverage
+#' ent_simpson(paracou_6_abd, level=0.8)
 #' 
 #' @name ent_simpson
 NULL

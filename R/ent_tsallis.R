@@ -4,6 +4,12 @@
 #' Several estimators are available to deal with incomplete sampling.
 #' 
 #' Bias correction requires the number of individuals. 
+#' See [div_hill] for estimators.
+#' 
+#' Entropy can be estimated at a specified level of interpolation or 
+#' extrapolation, either a chosen sample size or sample coverage 
+#' \insertCite{Chao2014}{divent}, rather than its asymptotic value.
+#' See [ent_accum] for details.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
@@ -18,6 +24,9 @@
 #' 
 #' @examples
 #' ent_tsallis(paracou_6_abd, q = 2)
+#' 
+#' # At 80% coverage
+#' ent_tsallis(paracou_6_abd, level=0.8)
 #' 
 #' @name ent_tsallis
 NULL
