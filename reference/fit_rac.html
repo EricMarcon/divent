@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-20</span>
       </span>
     </div>
 
@@ -110,19 +110,53 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
     <h2>Value</h2>
     
 
-<p>When applied to a <code>species_distribution</code>, the function returns a tibble with
-the fitted parameters in columns: <code>mu</code> and <code>sigma</code> (lognormal),
-<code>alpha</code> (log-series), <code>prob</code> (geometric) or <code>max</code> (the number of individuals
-of the most abundant species in a broken-stick distribution,
-which has no parameter).</p>
-
-
-<p>When applied to a numeric vector, the function returns a list of two tibbles.
-The first one is <code>$rac</code>:</p><ul><li><p><code>rank</code>: the rank of species, in decreasing order of abundance,</p></li>
-<li><p><code>abundance</code> : the theoretical number of individuals of the species.</p></li>
-</ul><p>The other one is <code>$parameters</code> with the fitted parameters.</p>
+<p>A tibble with the sites and the estimated distribution parameters.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p><a href="species_distribution.html">abundances</a> can be used to fit rank-abundance curves (RAC) of classical
+distributions:</p><ul><li><p>"lnorm" for log-normal (Preston 1948)
+.</p></li>
+<li><p>"lseries" for log-series (Fisher et al. 1943)
+.</p></li>
+<li><p>"geom" for geometric (Motomura 1932)
+.</p></li>
+<li><p>"bstick" for broken stick (MacArthur 1957)
+.
+It has no parameter, so the maximum abundance is returned.</p></li>
+</ul></div>
+    <div id="references">
+    <h2>References</h2>
+    <p>Fisher RA, Corbet AS, Williams CB (1943).
+“The Relation between the Number of Species and the Number of Individuals in a Random Sample of an Animal Population.”
+<em>Journal of Animal Ecology</em>, <b>12</b>, 42--58.
+<a href="https://doi.org/10.2307/1411" class="external-link">doi:10.2307/1411</a>
+.<br><br> MacArthur RH (1957).
+“On the Relative Abundance of Bird Species.”
+<em>Proceedings of the National Academy of Sciences of the United States of America</em>, <b>43</b>(3), 293--295.
+<a href="https://doi.org/10.1073/pnas.43.3.293" class="external-link">doi:10.1073/pnas.43.3.293</a>
+.<br><br> Motomura I (1932).
+“On the statistical treatment of communities.”
+<em>Zoological Magazine</em>, <b>44</b>, 379--383.<br><br> Preston FW (1948).
+“The Commonness, and Rarity, of Species.”
+<em>Ecology</em>, <b>29</b>(3), 254--283.
+<a href="https://doi.org/10.2307/1930989" class="external-link">doi:10.2307/1930989</a>
+.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fit_rac</span><span class="op">(</span><span class="va">paracou_6_abd</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site         mu sigma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1 0.848 1.03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2 0.802 0.981</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3 0.848 1.00 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4 0.823 0.979</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
