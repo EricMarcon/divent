@@ -31,7 +31,11 @@ curve(ln_q( 1/ x, q = 0), 0, 1, lty = 2, ylab = "Logarithm", ylim = c(0, 10))
 curve(log(1 / x), 0, 1, lty = 1, n =1E4, add = TRUE)
 curve(ln_q(1 / x, q = 2), 0, 1, lty = 3, add = TRUE)
 legend("topright", 
-  legend = c("ln_0(1 / x)", "log(1 / x)", "ln_2(1 / x)"), 
+  legend = c(
+    expression(ln[0](1/x)),
+    expression(log(1/x)),
+    expression(ln[2](1/x))
+  ),
   lty = c(2, 1, 3), 
   inset = 0.02
  )

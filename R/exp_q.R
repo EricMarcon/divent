@@ -21,8 +21,12 @@
 #' curve(exp_q(x, q = 0), from = -5, to = 0, lty = 2)
 #' curve(exp(x), from = -5, to = 0, lty= 1, add = TRUE)
 #' curve(exp_q(x, q = 2), from = -5, to = 0, lty = 3, add = TRUE)
-#' legend("topleft", 
-#'   legend = c("exp_0(x)", "exp(x)", "exp_2(x)"), 
+#' legend("bottomright", 
+#'   legend = c(
+#'     expression(exp[0](x)),
+#'     expression(exp(x)),
+#'     expression(exp[2](x))
+#'   ),
 #'   lty = c(2, 1, 3), 
 #'   inset = 0.02
 #' )
