@@ -20,12 +20,14 @@
 #' \insertAllCited{}
 #'
 #' @examples
+#' n <- 10
+#' q <- 2
 #' # Compare
-#' e_n_q(5, q = 2)
+#' e_n_q(n, q)
 #' # with (empirical estimation)
-#' mean(rpois(1000, lambda = 5)^2)
+#' mean(rpois(1000, lambda = n)^q)
 #' # and (naive estimation)
-#' 5^2
+#' n^q
 #' 
 e_n_q <- function(n, q) {
   if (q == 0) {
