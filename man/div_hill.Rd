@@ -12,7 +12,7 @@ div_hill(x, q = 1, ...)
   x,
   q = 1,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
-    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
@@ -29,7 +29,7 @@ div_hill(x, q = 1, ...)
   x,
   q = 1,
   estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
-    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
@@ -117,6 +117,9 @@ The \code{UnveilJ} correction often has a lower bias but a greater variance
 \insertCite{Marcon2015a}{divent}.
 It is a good first choice thanks to the versatility of the jackknife
 estimator of richness.
+
+Estimators by \insertCite{Bonachela2008;textual}{divent} and
+\insertCite{Holste1998;textual}{divent} are rarely used.
 
 To estimate \eqn{\gamma} diversity, the size of a metacommunity (see
 \link{metacommunity}) is unknown so it has to be set according to a rule which does

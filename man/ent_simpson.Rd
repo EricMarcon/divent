@@ -11,7 +11,7 @@ ent_simpson(x, ...)
 \method{ent_simpson}{numeric}(
   x,
   estimator = c("Lande", "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
@@ -26,7 +26,7 @@ ent_simpson(x, ...)
 \method{ent_simpson}{species_distribution}(
   x,
   estimator = c("Lande", "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
@@ -77,14 +77,26 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 A tibble with the site names, the estimators used and the estimated entropy.
 }
 \description{
-Estimate the entropy species from abundance or probability data.
+Estimate the entropy \insertCite{Simpson1949}{divent} of species from abundance
+or probability data.
 Several estimators are available to deal with incomplete sampling.
 }
 \details{
 Bias correction requires the number of individuals.
+See \link{div_hill} for non-specific estimators.
+
+Simpson-specific estimator is from \insertCite{Lande1996;textual}{divent}.
+
+Entropy can be estimated at a specified level of interpolation or
+extrapolation, either a chosen sample size or sample coverage
+\insertCite{Chao2014}{divent}, rather than its asymptotic value.
+See \link{ent_accum} for details.
 }
 \examples{
 ent_simpson(paracou_6_abd)
+
+# At 80\% coverage
+ent_simpson(paracou_6_abd, level=0.8)
 
 }
 \references{

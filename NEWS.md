@@ -1,4 +1,4 @@
-# divent 0.1-19
+# divent 0.1-20
 
 - First Version.
 
@@ -17,4 +17,4 @@
 
 ## TODO
 - `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
-- document starting from `ent_shannon`.
+- document starting from `metacommunity`.

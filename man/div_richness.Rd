@@ -98,6 +98,9 @@ actual sample has the richness of the actual sample.
 \examples{
 div_richness(paracou_6_abd)
 
+# At 80\% coverage
+div_richness(paracou_6_abd, level=0.8)
+
 }
 \references{
 \insertAllCited{}

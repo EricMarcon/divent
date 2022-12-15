@@ -35,21 +35,26 @@ May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
-When applied to a \code{species_distribution}, the function returns a tibble with
-the fitted parameters in columns: \code{mu} and \code{sigma} (lognormal),
-\code{alpha} (log-series), \code{prob} (geometric) or \code{max} (the number of individuals
-of the most abundant species in a broken-stick distribution,
-which has no parameter).
-
-When applied to a numeric vector, the function returns a list of two tibbles.
-The first one is \verb{$rac}:
-\itemize{
-\item \code{rank}: the rank of species, in decreasing order of abundance,
-\item \code{abundance} : the theoretical number of individuals of the species.
-}
-
-The other one is \verb{$parameters} with the fitted parameters.
+A tibble with the sites and the estimated distribution parameters.
 }
 \description{
 Fit a well-known distribution to a species distribution.
+}
+\details{
+\link{abundances} can be used to fit rank-abundance curves (RAC) of classical
+distributions:
+\itemize{
+\item "lnorm" for log-normal \insertCite{Preston1948}{divent}.
+\item "lseries" for log-series \insertCite{Fisher1943}{divent}.
+\item "geom" for geometric \insertCite{Motomura1932}{divent}.
+\item "bstick" for broken stick \insertCite{MacArthur1957}{divent}.
+It has no parameter, so the maximum abundance is returned.
+}
+}
+\examples{
+fit_rac(paracou_6_abd, distribution = "lnorm")
+
+}
+\references{
+\insertAllCited{}
 }
