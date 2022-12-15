@@ -32,6 +32,9 @@
 #' It is a good first choice thanks to the versatility of the jackknife 
 #' estimator of richness.
 #' 
+#' Estimators by \insertCite{Bonachela2008;textual}{divent} and 
+#' \insertCite{Holste1998;textual}{divent} are rarely used.
+#' 
 #' To estimate \eqn{\gamma} diversity, the size of a metacommunity (see 
 #' [metacommunity]) is unknown so it has to be set according to a rule which does
 #' not ensure that its abundances are integer values.
@@ -82,7 +85,8 @@ div_hill.numeric <- function(
     x, 
     q = 1, 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Holste"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
@@ -135,7 +139,8 @@ div_hill.species_distribution <- function(
     x, 
     q = 1, 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive"),
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Holste"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
