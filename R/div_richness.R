@@ -335,6 +335,7 @@ div_richness.numeric <- function(
     level <- coverage_to_size.numeric(
       abd, 
       sample_coverage = level,
+      as_numeric = TRUE,
       check_arguments = FALSE
     )
   }
