@@ -1,25 +1,27 @@
 #' Fit a distribution
 #' 
 #' Fit a well-known distribution to a species distribution.
+#' 
+#' [abundances] can be used to fit rank-abundance curves (RAC) of classical 
+#' distributions: 
+#' 
+#' - "lnorm" for log-normal \insertCite{Preston1948}{divent}.
+#' - "lseries" for log-series \insertCite{Fisher1943}{divent}.
+#' - "geom" for geometric \insertCite{Motomura1932}{divent}.
+#' - "bstick" for broken stick \insertCite{MacArthur1957}{divent}. 
+#'    It has no parameter, so the maximum abundance is returned.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object
 #' @param ... Unused.
 #'
-#' @return 
-#' When applied to a `species_distribution`, the function returns a tibble with
-#' the fitted parameters in columns: `mu` and `sigma` (lognormal), 
-#' `alpha` (log-series), `prob` (geometric) or `max` (the number of individuals
-#' of the most abundant species in a broken-stick distribution, 
-#' which has no parameter).
+#' @return A tibble with the sites and the estimated distribution parameters.
 #' 
-#' When applied to a numeric vector, the function returns a list of two tibbles.
-#' The first one is `$rac`:
-#' 
-#' - `rank`: the rank of species, in decreasing order of abundance,
-#' - `abundance` : the theoretical number of individuals of the species.
-#' 
-#' The other one is `$parameters` with the fitted parameters.
+#' @references
+#' \insertAllCited{}
+#'
+#' @examples
+#' fit_rac(paracou_6_abd, distribution = "lnorm")
 #' 
 #' @name fit_rac
 NULL
