@@ -25,8 +25,22 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 An object of class \link{abundances} with a single row.
 }
 \description{
-Aggregate communities into a metacommunity
+Abundances of communities are summed according to their weights to obtain
+the abundances of the metacommunity.
+}
+\details{
+The total abundance of the metacommunity is by design equal to the sum
+of community abundances so that the information used by diversity estimators.
+A consequence is that equal weights lead to a metacommunity whose species
+abundances are the sum of community species abundances.
+
+If community weights are not equal then the metacommunity abundances are
+in general not integer.
+Most diversity estimators can't be applied to non-integer abundances but the knowledge
+of the sample coverage of each community allow "ChaoShen" and "Grassberger"
+estimators.
 }
 \examples{
 metacommunity(paracou_6_abd)
+
 }

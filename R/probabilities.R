@@ -25,6 +25,7 @@
 #' 
 #' - a numeric vector containing abundances. It may be named to track species names.
 #' - an object of class [species_distribution].
+#' 
 #' @param ... Unused.
 #' 
 #' @references

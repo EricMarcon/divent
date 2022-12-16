@@ -151,8 +151,6 @@ Abundance values are rounded (by default) to the nearest integer.
 \code{as_probabilities()} normalizes the vector \code{x} so that it sums to 1. It gives
 the same output as \code{probabilities()} with \code{estimator = "naive"}.
 
-TODO: These functions can be applied to data frames to calculate the joint diversity \insertCite{Gregorius2010}{divent}.
-
 \code{species_distribution} objects objects can be plotted by \link{plot} and \link{autoplot}.
 }
 \examples{

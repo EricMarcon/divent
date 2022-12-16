@@ -13,8 +13,6 @@
 #' `as_probabilities()` normalizes the vector `x` so that it sums to 1. It gives
 #' the same output as `probabilities()` with `estimator = "naive"`.
 #' 
-#' TODO: These functions can be applied to data frames to calculate the joint diversity \insertCite{Gregorius2010}{divent}.
-#'  
 #' `species_distribution` objects objects can be plotted by [plot] and [autoplot].
 #'
 #' @inheritParams check_divent_args
