@@ -9,9 +9,6 @@
 #'
 #' @inheritParams check_divent_args
 #'
-#' @export
-#'
-#' 
 #' @examples
 #' abd_species(paracou_6_abd)
 #' abd_sum(paracou_6_abd)

@@ -28,7 +28,6 @@
 #'
 #' @return A tibble with the site names, the estimators used and the accumulated entropy
 #' or diversity at each level of sampling effort.
-#' @export
 #'
 #' @references
 #' \insertAllCited{}

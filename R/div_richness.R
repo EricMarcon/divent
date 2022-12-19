@@ -31,7 +31,6 @@
 #' The metacommunity if built by combining the community abundances with respect to their weight.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated numbers of species.
-#' @export
 #'
 #' @references
 #' \insertAllCited{}

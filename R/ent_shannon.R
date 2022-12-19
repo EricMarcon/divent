@@ -23,7 +23,6 @@
 #' @param ... Unused.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated entropy.
-#' @export
 #' 
 #' @examples
 #' ent_shannon(paracou_6_abd)

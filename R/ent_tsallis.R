@@ -17,7 +17,6 @@
 #' @param ... Unused.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated entropy.
-#' @export
 #'
 #' @references
 #' \insertAllCited{}

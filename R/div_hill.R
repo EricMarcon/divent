@@ -53,7 +53,6 @@
 #' @param ... Unused.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated diversity.
-#' @export
 #'
 #' @references
 #' \insertAllCited{}
