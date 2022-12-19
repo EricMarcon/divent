@@ -67,12 +67,10 @@ as_phylo_divent <- function(tree) {
   # Calculate distances between nodes and leaves
   dist_from_leaves <- ape::branching.times(tree.phylo)
   # Get a sorted list of cuts (eliminate leaves)
-  cuts <- sort(
-    dist_from_leaves[setdiff(names(dist_from_leaves), names(tree.phylo$leaves))]
-  )
+  cuts <- sort(unique(dist_from_leaves))
   # Calculate intervals between cuts (add 0 to cuts to get the first interval)
   intervals <- diff(c(0, cuts))
-  # Eliminate 0 intervals (when a node contains more than 2 tips), 
+  # Eliminate 0 intervals (happen when a node contains more than 2 tips), 
   # including rounding errors
   rounding_error <- max(dist_from_leaves) * 10 * .Machine$double.eps
   cuts <- cuts[intervals > rounding_error]
