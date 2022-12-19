@@ -31,6 +31,19 @@ NULL
 "paracou_6_abd"
 
 
+#' Taxonomy of Paracou plot 6 species
+#'
+#' The taxonomy of species of the dataset [paracou_6_abd].
+#' Distances in the tree are 1 (different species of the same genus),
+#' 2 (same family) or 3 (different families).
+#' 
+#' This dataset is from Paracou field station, French Guiana, managed by [Cirad](https://www.cirad.fr).
+#'
+#' @format An object of class [phylo_divent], which is a phylogenetic tree.
+#' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
+"paracou_6_taxo"
+
+
 
 #  Utilities ----
 
