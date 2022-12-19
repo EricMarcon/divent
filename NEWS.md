@@ -1,4 +1,4 @@
-# divent 0.1-21
+# divent 0.1-22
 
 - First Version.
 
@@ -6,7 +6,8 @@
 
 - Data formats: 
     - species distribution: `species_distribution()`
-    - metacommunity : `metacommunity()`
+    - metacommunity: `metacommunity()`
+    - phylo_divent: `as_phylo_divent()`
 - Sample coverage: `coverage()`
 - Richness: `div_richness()`
 - Shannon's, Simpson's and Tsallis's entropies: `ent_shannon()`, `ent_simpson()`, `ent_tsallis()`

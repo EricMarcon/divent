@@ -18,7 +18,7 @@ is_phylo_divent(x)
 
 \item{x}{An object of class "phylo_divent".}
 
-\item{...}{Arguments passed to \link{plot.hclust}.}
+\item{...}{Arguments passed to \link{plot.phylo}.}
 }
 \value{
 \code{as_phylo_divent} returns a phylogenetic tree that is an object of
@@ -34,6 +34,7 @@ The conversion preprocesses the tree: it calculates cuts so that the tree
 can be reused efficiently by \link{phylo_apply}.
 }
 \examples{
-# TODO
+# Paracou plot 6 species taxonomy 
+plot(paracou_6_taxo, type="fan", show.tip.label=FALSE)
 
 }
