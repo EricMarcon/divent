@@ -31,7 +31,7 @@ Methods for dendrograms of class "phylo_divent".
 \code{as_phylo_divent} calculates cuts and intervals of a phylogenetic tree and makes
 it available both in \link[stats:hclust]{stats::hclust} and \link[ape:read.tree]{ape::phylo} formats.
 The conversion preprocesses the tree: it calculates cuts so that the tree
-can be reused efficiently by \link{phylo_apply}.
+can be reused efficiently by phylodiversity functions.
 }
 \examples{
 # Paracou plot 6 species taxonomy 
