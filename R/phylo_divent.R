@@ -103,5 +103,9 @@ is_phylo_divent <- function (x) {
 #' @export
 plot.phylo_divent <- function (x, ...) {  
   # Plot the phylo object
-  plot(x$phylo, ...)
+  if (require("ade4")) {
+    plot(x$phylo, ...)
+  } else {
+    warning("The package 'ade4' is require to plot the tree.")
+  }
 }

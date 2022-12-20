@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.1-22
+Version: 0.1-23
 Authors@R: c(
     person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X"))
     )
@@ -13,7 +13,6 @@ License: GNU General Public License
 Depends: 
   R (>= 3.5)
 Imports:
-  ade4,
   ape, 
   dplyr,
   ggplot2,
@@ -26,6 +25,7 @@ Imports:
   tibble,
   vegan
 Suggests: 
+  ade4,
   knitr,
   pkgdown,
   rmarkdown,
