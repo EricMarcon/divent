@@ -10,7 +10,10 @@ Description: Measurement and partitioning of diversity, based on Tsallis entropy
 URL: https://github.com/EricMarcon/divent
 BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
+Depends: 
+  R (>= 3.5)
 Imports:
+  ade4,
   ape, 
   dplyr,
   ggplot2,
@@ -28,13 +31,11 @@ Suggests:
   rmarkdown,
   SPECIES,
   testthat (>= 3.0.0)
+Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 SystemRequirements: pandoc
 RdMacros: Rdpack
-Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Depends: 
-    R (>= 3.5)
 Config/testthat/edition: 3
