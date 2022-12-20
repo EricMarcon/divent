@@ -684,7 +684,7 @@ ent_tsallis.species_distribution <- function(
     # Apply ent_tsallis.numeric() to each site
     ent_tsallis_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% c("site", "weight"))], 
+      x[, !(colnames(x) %in% non_species_columns)], 
       # Apply to each row
       MARGIN = 1,
       FUN = ent_tsallis.numeric,
@@ -750,7 +750,7 @@ ent_gamma <- function (
     # Non integer values in the metacommunity. 
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage.numeric(
-      colSums(x[, !(colnames(x) %in% c("site", "weight"))]),
+      colSums(x[, !(colnames(x) %in% non_species_columns)]),
       as_numeric = TRUE,
       check_arguments = FALSE
     )

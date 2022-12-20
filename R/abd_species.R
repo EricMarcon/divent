@@ -27,7 +27,7 @@ abd_species <- function(
   if (any(check_arguments)) check_divent_args()
   
   return(
-    abundances[, !(colnames(abundances) %in% c("site", "weight"))]
+    abundances[, !(colnames(abundances) %in% non_species_columns)]
   )
 }
 
@@ -43,7 +43,7 @@ abd_sum <- function(
   if (any(check_arguments)) check_divent_args()
   
   the_abd_sum <- rowSums(
-    abundances[, !(colnames(abundances) %in% c("site", "weight"))]
+    abundances[, !(colnames(abundances) %in% non_species_columns)]
   )
   if (as_numeric) {
     return(the_abd_sum)

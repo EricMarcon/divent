@@ -374,7 +374,7 @@ autoplot.species_distribution <- function(
   # Find the max number of species in all communities
   s_obs_max <- max(
     rowSums(
-      object[, !(colnames(object) %in% c("site", "weight"))] > 0
+      object[, !(colnames(object) %in% non_species_columns)] > 0
     )
   )
   
@@ -396,7 +396,7 @@ autoplot.species_distribution <- function(
   # Loop in communities to build the plot
   for (community in seq_len(nrow(object))) {
     # Extract the abundances of the community
-    abd <- object[community, !(colnames(object) %in% c("site", "weight"))]
+    abd <- object[community, !(colnames(object) %in% non_species_columns)]
     # Eliminate zeros and sort
     abd <- sort(abd[abd > 0], decreasing = TRUE)
     sample_size <- sum(abd)
@@ -536,7 +536,7 @@ as_probabilities.data.frame <- function(
   )
   
   # Select species columns
-  species_columns <- !(colnames(abundances) %in% c("site", "weight"))
+  species_columns <- !(colnames(abundances) %in% non_species_columns)
   # Extract abundances
   abd <- as.matrix(abundances[, species_columns])
   # Normalize them

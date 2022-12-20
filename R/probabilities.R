@@ -310,7 +310,7 @@ probabilities.abundances <- function(
   # Apply probabilities.numeric() to each site
   probabilities_list <- apply(
     # Eliminate site and weight columns
-    x[, !(colnames(x) %in% c("site", "weight"))], 
+    x[, !(colnames(x) %in% non_species_columns)], 
     # Apply to each row
     MARGIN = 1,
     FUN = probabilities.numeric,

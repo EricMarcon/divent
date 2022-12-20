@@ -161,7 +161,7 @@ fit_rac.species_distribution <- function(
   # Apply probabilities.numeric() to each site
   rac_list <- apply(
     # Eliminate site and weight columns
-    x[, !(colnames(x) %in% c("site", "weight"))], 
+    x[, !(colnames(x) %in% non_species_columns)], 
     # Apply to each row
     MARGIN = 1,
     FUN = fit_rac.numeric,

@@ -66,7 +66,7 @@ div_part <- function(
   # Apply div_hill.numeric() to each site
   ent_sites <- apply(
     # Eliminate site and weight columns
-    abundances[, !(colnames(abundances) %in% c("site", "weight"))], 
+    abundances[, !(colnames(abundances) %in% non_species_columns)], 
     # Apply to each row
     MARGIN = 1,
     FUN = ent_tsallis.numeric,

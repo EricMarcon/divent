@@ -13,6 +13,22 @@
 #' \insertAllCited{}
 NULL
 
+#  Initialization ----
+# Columns to ignore when computing species distributions 
+non_species_columns <- c(
+  # Site characteristics
+  "site",
+  "weight",
+  # Phylodiversity cuts
+  "cut",
+  "interval",
+  # Outputs
+  "q",
+  "entropy",
+  "diversity",
+  # Free comments
+  "Comments"
+)
 
 #  Data ----
 #' Paracou plot 6
