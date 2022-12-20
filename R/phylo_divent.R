@@ -5,7 +5,7 @@
 #' `as_phylo_divent` calculates cuts and intervals of a phylogenetic tree and makes
 #' it available both in [stats::hclust] and [ape::phylo] formats.
 #' The conversion preprocesses the tree: it calculates cuts so that the tree
-#' can be reused efficiently by [phylo_apply].
+#' can be reused efficiently by phylodiversity functions.
 #'
 #' @param x An object of class "phylo_divent".
 #' @param ... Arguments passed to [plot.phylo].
