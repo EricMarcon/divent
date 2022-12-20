@@ -27,7 +27,8 @@ reference:
     contents:
     - abundances
     - probabilities
-    - species_distribution
+    - species_distribution,
+    - phylo_divent
   - title: Utilities
     contents:
     - abd_freq_count
