@@ -26,8 +26,9 @@ non_species_columns <- c(
   "q",
   "entropy",
   "diversity",
+  "abundance",
   # Free comments
-  "Comments"
+  "comments"
 )
 
 #  Data ----

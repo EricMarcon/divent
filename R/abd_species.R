@@ -49,11 +49,10 @@ abd_sum <- function(
     return(the_abd_sum)
   } else {
     return(
-      # Make a tibble with site, estimator and richness
+      # Make a tibble with site etc., estimator and richness
       tibble::tibble(
-        # Do not assume column site exists
-        abundances[colnames(abundances) == "site"],
-        # Coerce the list returned by apply into a dataframe
+        # Restore non-species columns
+        abundances[colnames(abundances) %in% non_species_columns],
         abundance = the_abd_sum
       )
     )

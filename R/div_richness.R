@@ -496,8 +496,8 @@ div_richness.species_distribution <- function(
     return(
       # Make a tibble with site, estimator and richness
       tibble::tibble(
-        # Do not assume column site exists
-        x[colnames(x) == "site"],
+        # Restore non-species columns
+        x[colnames(x) %in% non_species_columns],
         # Coerce the list returned by apply into a dataframe
         do.call(rbind.data.frame, div_richness_list)
       )
