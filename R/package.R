@@ -56,7 +56,7 @@ non_species_columns <- c(
 #' 
 #' This dataset is from Paracou field station, French Guiana, managed by [Cirad](https://www.cirad.fr).
 #'
-#' @format An object of class [phylo_divent], which is a phylogenetic tree.
+#' @format An object of class [ape::phylo], which is a phylogenetic tree.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
 "paracou_6_taxo"
 

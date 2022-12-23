@@ -5,7 +5,7 @@
 \alias{paracou_6_taxo}
 \title{Taxonomy of Paracou plot 6 species}
 \format{
-An object of class \link{phylo_divent}, which is a phylogenetic tree.
+An object of class \link[ape:read.tree]{ape::phylo}, which is a phylogenetic tree.
 }
 \source{
 Permanent data census of Paracou: \url{https://paracou.cirad.fr/}
