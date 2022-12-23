@@ -198,8 +198,6 @@ div_profile.numeric <- function(
 
 #' @rdname div_profile
 #'
-#' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
-#' 
 #' @export
 div_profile.species_distribution <- function(
     x, 

@@ -92,6 +92,7 @@ non_species_columns <- c(
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param estimator An estimator of asymptotic entropy, diversity or richness.
+#' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
 #' @param jack_max The highest jackknife order allowed. Default is 10.
 #' @param level The level of interpolation or extrapolation. 
@@ -99,6 +100,7 @@ non_species_columns <- c(
 #' (a number between 0 and 1).
 #' If not `NULL`, the asymptotic `estimator` is ignored.
 #' @param n_simulations The number of simulations used to estimate the confidence envelope.
+#' @param normalize If `TRUE`, phylogenetic is normalized: the height of the tree is set to 1.
 #' @param probability_estimator A string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
@@ -207,6 +209,17 @@ check_divent_args <- function(
     }
   }
   # estimator is checked by match.arg()
+  # gamma
+  if (!is.na(names(args["gamma"]))) {
+    gamma <- eval(expression(gamma), parent.frame())
+    if (!is.logical(gamma) | length(gamma) != 1) {
+      error_message(
+        "gamma must be TRUE or FALSE", 
+        gamma, 
+        parent_function
+      )
+    }
+  }
   # jack_alpha
   if (!is.na(names(args["jack_alpha"]))) {
     jack_alpha <- eval(expression(jack_alpha), parent.frame())
@@ -277,6 +290,17 @@ check_divent_args <- function(
       error_message(
         "n_simulations must be 0 or at least 2",
         n_simulations,
+        parent_function
+      )
+    }
+  }
+  # normalize
+  if (!is.na(names(args["normalize"]))) {
+    normalize <- eval(expression(normalize), parent.frame())
+    if (!is.logical(normalize) | length(normalize) != 1) {
+      error_message(
+        "normalize must be TRUE or FALSE", 
+        normalize, 
         parent_function
       )
     }

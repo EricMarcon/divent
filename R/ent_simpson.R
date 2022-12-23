@@ -209,8 +209,6 @@ ent_simpson.numeric <- function(
 
 #' @rdname ent_simpson
 #'
-#' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
-#' 
 #' @export
 ent_simpson.species_distribution <- function(
     x,

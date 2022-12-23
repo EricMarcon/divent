@@ -27,7 +27,6 @@
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances]  or [probabilities].
 #' @param ... Unused.
-#' @param gamma If `TRUE`, gamma diversity is calculated.
 #' The metacommunity if built by combining the community abundances with respect to their weight.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated numbers of species.
@@ -424,8 +423,6 @@ div_richness.numeric <- function(
 
 #' @rdname div_richness
 #'
-#' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
-#' 
 #' @export
 div_richness.species_distribution <- function(
     x, 

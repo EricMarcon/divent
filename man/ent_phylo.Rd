@@ -55,6 +55,8 @@ May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo},
 
 \item{...}{Unused.}
 
+\item{normalize}{If \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
+
 \item{estimator}{An estimator of entropy.}
 
 \item{level}{The level of interpolation or extrapolation.
@@ -81,6 +83,8 @@ see \link{div_richness}. Used for interpolation and extrapolation.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+
+\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated entropy.

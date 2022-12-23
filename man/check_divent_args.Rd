@@ -62,6 +62,10 @@ Used only for extrapolation.}
 
 \item{alpha}{The risk level, 5\% by default.}
 
+\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
+
+\item{normalize}{If \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
+
 \item{tree}{An ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 }

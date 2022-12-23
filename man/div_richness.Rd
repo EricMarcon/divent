@@ -38,7 +38,8 @@ div_richness(x, ...)
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
 or an object of class \link{abundances}  or \link{probabilities}.}
 
-\item{...}{Unused.}
+\item{...}{Unused.
+The metacommunity if built by combining the community abundances with respect to their weight.}
 
 \item{estimator}{An estimator of richness to evaluate the total number of species.}
 
