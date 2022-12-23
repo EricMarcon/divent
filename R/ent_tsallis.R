@@ -701,7 +701,7 @@ ent_tsallis.species_distribution <- function(
       check_arguments = FALSE
     )
     return(
-      # Make a tibble with site, estimator and richness
+      # Make a tibble with site, estimator and entropy
       tibble::tibble(
         # Restore non-species columns
         x[colnames(x) %in% non_species_columns],

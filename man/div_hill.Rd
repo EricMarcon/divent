@@ -43,7 +43,7 @@ div_hill(x, q = 1, ...)
 }
 \arguments{
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
-or an object of class \link{abundances}  or \link{probabilities}}
+or an object of class \link{abundances}  or \link{probabilities}.}
 
 \item{q}{The order of diversity.}
 
