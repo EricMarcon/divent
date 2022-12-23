@@ -13,7 +13,7 @@
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
-#' or an object of class [abundances] or [probabilities]
+#' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
 #' @return A tibble with the site names, the estimators used and the estimated entropy.
@@ -722,11 +722,11 @@ ent_tsallis.species_distribution <- function(
 #' "Marcon" combines both.
 #' 
 #' `ent_tsallis.numeric` contains the only implementation of this estimation.
-#' e.g., `ent_shannon` can't be used but `ent_tsallis.numeric`with `q=1` will work fine.
+#' i.e., `ent_shannon` can't be used but `ent_tsallis.numeric`with `q=1` will work fine.
 #'
 #' @return A tibble with the estimator used and the estimated entropy.
 #' @noRd
-ent_gamma <- function (
+ent_gamma <- function(
     x,
     q,
     estimator,

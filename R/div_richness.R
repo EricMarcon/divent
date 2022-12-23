@@ -25,7 +25,7 @@
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
-#' or an object of class [abundances]  or [probabilities]
+#' or an object of class [abundances]  or [probabilities].
 #' @param ... Unused.
 #' @param gamma If `TRUE`, gamma diversity is calculated.
 #' The metacommunity if built by combining the community abundances with respect to their weight.
