@@ -30,6 +30,7 @@ as_phylo_divent <- function(tree) {
   # The tree may be NULL or already processed
   if (is.null(tree) | inherits(tree, "phylo_divent")) return (tree)
   
+  # Convert tree to phylo and hclust----
   # tree must be either a phylog, phylo or a hclust object
   if (inherits(tree, "phylog")) {
     # Build an hclust object to use cutree later. 
@@ -64,7 +65,12 @@ as_phylo_divent <- function(tree) {
     }
   }
   
-  # Calculate distances between nodes and leaves
+  # The tree must be ultrametric ----
+  if (!ape::is.ultrametric(tree.phylo)) {
+    stop("The tree must be ultrametric.")
+  }
+  
+  # Calculate distances between nodes and leaves ----
   dist_from_leaves <- ape::branching.times(tree.phylo)
   # Get a sorted list of cuts (eliminate leaves)
   cuts <- sort(unique(dist_from_leaves))
@@ -76,13 +82,34 @@ as_phylo_divent <- function(tree) {
   cuts <- cuts[intervals > rounding_error]
   intervals <- intervals[intervals > rounding_error]
   
+  # Derive phylogenetic groups, i.e. how to group species along the tree ----
+  # Rounding errors in cutree: is.unsorted(hclust$height) may return TRUE 
+  # even though height is sorted by construction
+  # Values are may not be sorted properly because of rounding errors, 
+  # e.g. 4e-16 (2 * .Machine$double.eps) in a taxonomy where cuts contains (1,2,3)
+  heights_original <- tree.hclust$height
+  # Run sort so that is.unsorted returns FALSE.
+  tree.hclust$height <- sort(heights_original)
+  # If there is no rounding error, add one:
+  # (10 * .Machine$double.eps times the tree height) or cutree will miss some nodes.
+  rounding_error <- max(tree.hclust$height) * 10 * .Machine$double.eps
+  # Cut the tree at each node (eliminate the root). 
+  # Cut at the values + RoundingError or many nodes will be missed.
+  phylo_groups <- stats::cutree(
+    tree.hclust, 
+    h = c(0, cuts[-length(cuts)]) + rounding_error
+  )
+  # Eliminate the rounding error
+  colnames(phylo_groups) <- cuts - intervals
+
   # Format and return
   the_tree <- list(
     phylo     = tree.phylo,
     hclust    = tree.hclust,
     height    = cuts[length(cuts)],
     cuts      = cuts,
-    intervals = intervals
+    intervals = intervals,
+    phylo_groups = phylo_groups
   )
   class(the_tree) <- "phylo_divent"
   return(the_tree)
