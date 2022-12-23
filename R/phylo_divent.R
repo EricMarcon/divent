@@ -7,6 +7,7 @@
 #' The conversion preprocesses the tree: it calculates cuts so that the tree
 #' can be reused efficiently by phylodiversity functions.
 #'
+#' @inheritParams check_divent_args
 #' @param x An object of class "phylo_divent".
 #' @param ... Arguments passed to [plot.phylo].
 #'
@@ -23,8 +24,6 @@ NULL
 
 #' @rdname phylo_divent
 #' 
-#' @param tree An object of class [ape::phylo], [ade4::phylog] or [stats::hclust].
-#'
 #' @export
 as_phylo_divent <- function(tree) {
   # The tree may be NULL or already processed

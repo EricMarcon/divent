@@ -61,6 +61,9 @@ to estimate the probabilities of the unobserved species (see \link{probabilities
 Used only for extrapolation.}
 
 \item{alpha}{The risk level, 5\% by default.}
+
+\item{tree}{An ultrametric, phylogenetic tree.
+May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.

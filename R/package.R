@@ -75,6 +75,7 @@ non_species_columns <- c(
 # sample_size: number of observed individuals
 # sample_coverage: coverage of order 1
 # coverage_deficit_2: coverage deficit of order 2 of the sample
+# species_names: char vector with the species names of the community
 
 
 #' check_divent_args
@@ -107,6 +108,8 @@ non_species_columns <- c(
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param show_progress If TRUE, a progress bar is shown during long computations. 
+#' @param tree An ultrametric, phylogenetic tree.
+#' May be an object of class [phylo_divent], [ape::phylo], [ade4::phylog] or [stats::hclust]. 
 #' @param unveiling A string containing one of the possible unveiling methods 
 #' to estimate the probabilities of the unobserved species (see [probabilities]).
 #' Used only for extrapolation.
@@ -318,6 +321,21 @@ check_divent_args <- function(
       error_message(
         "show_progress must be TRUE or FALSE", 
         show_progress, 
+        parent_function
+      )
+    }
+  }
+  # tree
+  if (!is.na(names(args["tree"]))) {
+    tree <- eval(expression(tree), parent.frame())
+    if (
+        !inherits(tree, "phylo_divent") &
+        !inherits(tree, "phylo") &
+        !inherits(tree, "phylog") &
+        !inherits(tree, "hclust")) {
+      error_message(
+        "tree must be an object of class 'phylo_divent', 'phylo', 'phylog' or 'hclust'", 
+        tree, 
         parent_function
       )
     }

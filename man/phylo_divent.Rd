@@ -14,7 +14,8 @@ is_phylo_divent(x)
 \method{plot}{phylo_divent}(x, ...)
 }
 \arguments{
-\item{tree}{An object of class \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+\item{tree}{An ultrametric, phylogenetic tree.
+May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
 \item{x}{An object of class "phylo_divent".}
 
