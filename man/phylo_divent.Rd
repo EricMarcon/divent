@@ -19,7 +19,7 @@ May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo},
 
 \item{x}{An object of class "phylo_divent".}
 
-\item{...}{Arguments passed to \link{plot.phylo}.}
+\item{...}{Arguments passed to \link[stats:dendrogram]{stats::plot.dendrogram}.}
 }
 \value{
 \code{as_phylo_divent} returns a phylogenetic tree that is an object of

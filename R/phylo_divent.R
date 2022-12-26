@@ -9,7 +9,7 @@
 #'
 #' @inheritParams check_divent_args
 #' @param x An object of class "phylo_divent".
-#' @param ... Arguments passed to [plot.phylo].
+#' @param ... Arguments passed to [stats::plot.dendrogram].
 #'
 #' @return `as_phylo_divent` returns a phylogenetic tree that is an object of 
 #' class "phylo_divent".
@@ -128,10 +128,6 @@ is_phylo_divent <- function (x) {
 #' @importFrom graphics plot
 #' @export
 plot.phylo_divent <- function (x, ...) {  
-  # Plot the phylo object
-  if (requireNamespace("ape")) {
-    plot(x$phylo, ...)
-  } else {
-    warning("The package 'ape' is required to plot the tree.")
-  }
+  # Plot the hclust object as a dendrogram
+    plot(stats::as.dendrogram(x$hclust), ...)
 }
