@@ -1,0 +1,149 @@
+---
+title: "Phylogenies in divent"
+output:
+  rmarkdown::html_document:
+    toc: yes
+    toc_float: yes
+bibliography: ../../inst/REFERENCES.bib
+vignette: >
+  %\VignetteIndexEntry{Phylogenies in entropart}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+set.seed(97310)
+```
+
+_divent_ is a package for _R_ designed to estimate diversity based on HCDT entropy or similarity-based entropy. 
+
+Several object classes can be used in the package to represent phylogenies and calculate phylogenetic diversity. They are detailed here.
+
+# Formats used
+
+Supported phylogenies are classes `phylo` from package _ape_, `phylog` from package _ade4_ and `hclust` from package _base_.
+
+To optimize performance, a specific class `phylo_divent` is introduced by the package: it is basically a list containing a `phylo` and an `hclust` representation of the phylogeny and preprocessed useful statistics.
+
+The argument `tree` used in phylogenetic diversity estimation functions of the package may be any of those formats.
+
+
+# Conversion between classes
+
+Let's start from an ultrametric distance matrix.
+Three species are defined, with distance 1 between the first 2 and distance 2 between both and the last one.
+
+```{r DistMatrix}
+species_dist <- matrix(c(0, 1, 2, 1, 0, 2, 2, 2, 0), nrow=3, byrow=TRUE)
+row.names(species_dist) <- colnames(species_dist) <- c("A", "B", "C")
+species_dist
+```
+
+## hclust
+
+An `hclust` object is created by UPGMA hierarchical clustering.
+
+```{r hclust}
+library("stats")
+plot(
+  tree.hclust <- hclust(
+    as.dist(species_dist), 
+    method = "average"
+  ), 
+  hang = -0.01, 
+  axes = F
+)
+axis(2)
+```
+
+Node heights are stored in `$height`.
+
+```{r hclust2}
+tree.hclust$height
+```
+
+## phylo
+
+Conversion to a `phylo` object is straightforward.
+
+```{r phylo}
+library("ape")
+plot(tree.phylo <- as.phylo(tree.hclust))
+axis(1)
+```
+
+Edge lengths have been divided by 2 during the conversion, as documented in `?as.phylo.hclust`.
+
+```{r phylo2}
+tree.phylo$edge.length
+```
+
+That does not suit our needs.
+In _divent_, edge lengths are multiplied by 2 after conversion, so that `phylo` objects can be identical to other phylogenies. 
+
+```{r phylo3}
+tree.phylo$edge.length <- 2 * tree.phylo$edge.length
+plot(tree.phylo)
+axis(1)
+```
+
+## phylog
+
+The last conversion is from `phylo` to `phylog`.
+
+```{r phylog}
+library("ade4")
+plot(tree.phylog <- hclust2phylog(tree.hclust))
+axis(1)
+```
+
+Edge lengths are not stored directly in `phylog` objects.
+The `$droot` component keeps distances from tips to root.
+The `$Wdist` component is a `dist` (half a distance matrix without the zero-diagonal) whose values are $d_{s,t}=\sqrt{2 \delta_{s,t}^2}$, where $\delta_{s,t}$ is the distance between species $s$ ant $t$.
+
+```{r phylog2}
+tree.phylog$droot
+tree.phylog$Wdist^2/2
+```
+
+It contains: 
+
+- `$phylo`: the tree as a `phylo` object.
+- `$hclust`: the tree as a `hclust` object.
+- `$height`: the height of the tree.
+- `$cuts`: the heights of the nodes of the tree.
+- `$intervals`: the intervals between the cuts.
+- `$phylo_groups`: a matrix that describes the ancestors of species in each interval.
+The column names give the most recent cut of each interval.
+Values are the group each present species belongs to in each interval.
+In the example above, species A and B belong to the same group in the interval starting at 1. 
+
+
+## phylo_divent
+
+The function `as_phylo_divent` converts any object of one of the previous types.
+
+```{r phylo_divent}
+library("divent")
+plot(tree.phylo_divent <- as_phylo_divent(tree.phylo))
+axis(2)
+```
+
+Its `plot` method is that of `dendrogram` objects.
+
+A `phylo_divent` tree is a list.
+
+```{r phylo_divent2}
+tree.phylo_divent
+```
+
+# Newick dendrograms
+
+A Newick description of a dendrogram can be read into a `phylo` object.
+
+```{r Newick}
+NewickABC <- "(C:2,(A:1,B:1):1);"
+plot(phyloABC <- ape::read.tree(text = NewickABC))
+axis(1)
+```
+
