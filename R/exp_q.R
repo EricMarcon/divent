@@ -32,13 +32,19 @@
 #' )
 #' 
 exp_q <- function(x, q) {
-  if (q == 1) {
-    return (exp(x))
-  } else {
-    the_exp_q <- (x * (1 - q) + 1)^(1 / (1 - q))
-    if (q > 1) {
-      the_exp_q[x > 1 / (q - 1)] <- NA
-    }
-    return(the_exp_q)
+  # Explicit recycling
+  if (length(x) > length(q)) {
+    q <- rep_len(q, length(x))
+  } else if (length(x) < length(q)) {
+    x <- rep_len(x, length(q))
   }
+  
+  # General formula
+  the_exp_q <- (x * (1 - q) + 1)^(1 / (1 - q))
+  # returns 1 if q==1: calculate exp(x)
+  the_exp_q[q == 1] <- exp(x)[q == 1]
+  # Force NaN for x out of limits
+  the_exp_q[q > 1 & x > 1 / (q - 1)] <- NaN
+  
+  return(the_exp_q)
 }

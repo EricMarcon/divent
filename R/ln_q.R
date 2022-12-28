@@ -34,11 +34,19 @@
 #'  )
 #' 
 ln_q <- function(x, q) {
-  if (q == 1) {
-    return (log(x))
-  } else {
-    the_ln_q <- (x^(1 - q) - 1) / (1 - q)
-    the_ln_q[x < 0] <- NA
-    return (the_ln_q)
+  # Explicit recycling
+  if (length(x) > length(q)) {
+    q <- rep_len(q, length(x))
+  } else if (length(x) < length(q)) {
+    x <- rep_len(x, length(q))
   }
+  
+  # General formula
+  the_ln_q <- (x^(1 - q) - 1) / (1 - q)
+  # returns NaN if q==1: calculate log(x)
+  the_ln_q[q == 1] <- log(x)[q == 1]
+  # Force NaN for negative x
+  the_ln_q[x < 0] <- NaN
+  
+  return (the_ln_q)
 }
