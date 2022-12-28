@@ -115,6 +115,7 @@ non_species_columns <- c(
 #' @param unveiling A string containing one of the possible unveiling methods 
 #' to estimate the probabilities of the unobserved species (see [probabilities]).
 #' Used only for extrapolation.
+#' @param weights The weights of the sites of the species distributions.
 #'
 #' @return Returns `TRUE` or stops if a problem is detected.
 #' 
@@ -365,6 +366,24 @@ check_divent_args <- function(
     }
   }
   # unveiling is checked by match.arg()
+  # weights
+  if (!is.na(names(args["weights"]))) {
+    weights <- eval(expression(weights), parent.frame())
+    if (!is.numeric(weights)) {
+      error_message(
+        "weights must be a numeric vector",
+        weights,
+        parent_function
+      )
+    }
+    if (any(weights < 0)) {
+      error_message(
+        "weights must be positive",
+        weights,
+        parent_function
+      )
+    }
+  }
   
   # All tests passed.
   return (TRUE)

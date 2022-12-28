@@ -40,7 +40,6 @@ NULL
 #' @rdname species_distribution
 #'
 #' @param names The names of the species distributions.
-#' @param weights The weights of the sites of the species distributions.
 #' 
 #' @export
 species_distribution <- function(

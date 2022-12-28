@@ -68,6 +68,8 @@ Used only for extrapolation.}
 
 \item{tree}{An ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+
+\item{weights}{The weights of the sites of the species distributions.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.

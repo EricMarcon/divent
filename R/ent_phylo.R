@@ -28,6 +28,9 @@
 #' # At 80% coverage
 #' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, level=0.8)
 #' 
+#' # Gamma entropy
+#' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, gamma = TRUE)
+#' 
 #' @name ent_phylo
 NULL
 
@@ -71,7 +74,30 @@ ent_phylo.numeric <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   tree <- as_phylo_divent(tree)
 
-  # TODO
+  # Make a species_distribution
+  distribution <- as_species_distribution(as.vector(x))
+  
+  # Entropy
+  the_entropy <- ent_phylo.species_distribution(
+    distribution,
+    tree = tree,
+    q = q,
+    normalize = normalize,
+    estimator = estimator,
+    level = level, 
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    richness_estimator = richness_estimator,
+    jack_alpha  = jack_alpha, 
+    jack_max = jack_max,
+    check_arguments = FALSE)
+ 
+  # Return
+  if(as_numeric) {
+    return(the_entropy$entropy)
+  } else {
+    return(the_entropy)
+  }
 }
 
 #' @rdname ent_phylo
@@ -109,7 +135,7 @@ ent_phylo.species_distribution <- function(
   
   # Calculate abundances along the tree, that are a list of matrices
   phylo_abd <- sapply(
-    # Each phylogenetic group yieds an item of the list
+    # Each phylogenetic group yields an item of the list
     colnames(tree$phylo_groups), 
     function(group) {
       # Create a matrix with the abundances of groups in each community
@@ -130,26 +156,58 @@ ent_phylo.species_distribution <- function(
     simplify = FALSE
   )
   
-  # Calculate entropy of each community in each group. 
-  # simplify2array() makes a matrix with the list of vectors.
-  phylo_entropies <- simplify2array(
-    lapply(
-      # Calculate entropy in each item of the list, i.e. group.
-      # Obtain a list.
-      phylo_abd,
-      FUN = function(group) {
-        apply(
-          group,
-          # Calculate entropy of each column of the matrix, i.e. community.
-          # Obtain a vector.
-          MARGIN = 2,
-          FUN = ent_tsallis,
-          q = q,
-          as_numeric = TRUE
-        )
-      }
+  # Calculate entropy of each community in each group.
+  if (gamma) {
+    phylo_entropies <- simplify2array(
+      lapply(
+        # Calculate entropy in each item of the list, i.e. group.
+        # Obtain a list.
+        phylo_abd,
+        FUN = function(group) {
+          ent_gamma.matrix(
+            abd = group,
+            weights = x$weight,
+            q = q,
+            estimator = estimator,
+            level = level, 
+            probability_estimator = probability_estimator,
+            unveiling = unveiling,
+            richness_estimator = richness_estimator,
+            jack_alpha  = jack_alpha, 
+            jack_max = jack_max
+          )
+        }
+      )
     )
-  )
+  } else {
+    # simplify2array() makes a matrix with the list of vectors.
+    phylo_entropies <- simplify2array(
+      lapply(
+        # Calculate entropy in each item of the list, i.e. group.
+        # Obtain a list.
+        phylo_abd,
+        FUN = function(group) {
+          apply(
+            group,
+            # Calculate entropy of each column of the matrix, i.e. community.
+            MARGIN = 2,
+            FUN = ent_tsallis.numeric,
+            q = q,
+            estimator = estimator,
+            level = level, 
+            probability_estimator = probability_estimator,
+            unveiling = unveiling,
+            richness_estimator = richness_estimator,
+            jack_alpha  = jack_alpha, 
+            jack_max = jack_max,
+            # Obtain a vector.
+            as_numeric = TRUE,
+            check_arguments = FALSE
+          )
+        }
+      )
+    )
+  }
   # Should be a matrix, but simplify2array() makes a vector instead of a 1-col 
   # matrix. Force a matrix.
   if(is.vector(phylo_entropies)) phylo_entropies <- t(phylo_entropies)
@@ -158,17 +216,74 @@ ent_phylo.species_distribution <- function(
   the_entropy <- as.numeric(tree$intervals %*% t(phylo_entropies))
   if (normalize) the_entropy <- the_entropy / sum(tree$intervals)
   
+  if (gamma) {
+    return(
+      # Make a tibble with site, estimator and entropy
+      tibble::tibble_row(
+        # estimator and order
+        estimator = estimator,
+        q = q,
+        # Entropy
+        entropy = the_entropy
+      )
+    )
+  } else {
+    return(
+      # Make a tibble with site, estimator and entropy
+      tibble::tibble(
+        # Restore non-species columns
+        x[colnames(x) %in% non_species_columns],
+        # estimator and order
+        estimator = estimator,
+        q = q,
+        # Entropy
+        entropy = the_entropy
+      )
+    )
+  }
+}
+
+#' Gamma entropy of a metacommunity
+#' 
+#' `abd` is assumed to be a matrix of abundances, lines are communities.
+#' `weights` are necessary for gamma diversity.
+#' 
+#' @param abd A matrix containing abundances or probabilities.
+#' 
+#' @return A number equal to gamma entropy.
+#' @noRd
+ent_gamma.matrix <- function(
+    abd,
+    weights,
+    q,
+    estimator,
+    level,
+    probability_estimator,
+    unveiling,
+    richness_estimator,
+    jack_alpha,
+    jack_max) {
+  
+  # Build the species distribution
+  distribution <- species_distribution(
+    t(abd),
+    weights = weights,
+    check_arguments = FALSE
+  )
+  
+  # Call ent_gamma.species_distribution
   return(
-    # Make a tibble with site, estimator and entropy
-    tibble::tibble(
-      # Restore non-species columns
-      x[colnames(x) %in% non_species_columns],
-      # estimator and order
-      estimator = estimator,
+    ent_gamma.species_distribution(
+      distribution,
       q = q,
-      # Entropy
-      entropy = the_entropy
+      estimator = estimator,
+      level = level,
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha = jack_alpha,
+      jack_max = jack_max,
+      as_numeric = TRUE
     )
   )
 }
-

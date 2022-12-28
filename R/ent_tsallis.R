@@ -229,7 +229,6 @@ ent_tsallis.numeric <- function(
     # the_entropy <- sum(prob * vapply(seq_along(abd), S_v, 0))
     
     
-    
     ## Shannon ----
     if (q == 1) {
       return(
@@ -666,8 +665,8 @@ ent_tsallis.species_distribution <- function(
   
   if (gamma) {
     return(
-      ent_gamma(
-        x = x,
+      ent_gamma.species_distribution(
+        distribution = x,
         q = q,
         estimator = estimator,
         level = level, 
@@ -675,7 +674,8 @@ ent_tsallis.species_distribution <- function(
         unveiling = unveiling,
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha,
-        jack_max = jack_max
+        jack_max = jack_max,
+        as_numeric = FALSE
       )
     )
   } else {
@@ -713,6 +713,8 @@ ent_tsallis.species_distribution <- function(
 
 #' Gamma entropy of a metacommunity
 #' 
+#' `distribution` is assumed to be a species_distribution.
+#' 
 #' Build the metacommunity and check that abundances are integers.
 #' If they are not (due to weights of communities) then use a fallback estimator:
 #' "ChaoShen" requires the sample coverage of the assemblage of sites.
@@ -720,12 +722,15 @@ ent_tsallis.species_distribution <- function(
 #' "Marcon" combines both.
 #' 
 #' `ent_tsallis.numeric` contains the only implementation of this estimation.
-#' i.e., `ent_shannon` can't be used but `ent_tsallis.numeric`with `q=1` will work fine.
+#' i.e., `ent_shannon` can't be used but `ent_tsallis.numeric` 
+#' with `q=1` will work fine.
+#' 
+#' @param distribution An object of class `species_distribution`.
 #'
 #' @return A tibble with the estimator used and the estimated entropy.
 #' @noRd
-ent_gamma <- function(
-    x,
+ent_gamma.species_distribution <- function(
+    distribution,
     q,
     estimator,
     level,
@@ -733,11 +738,12 @@ ent_gamma <- function(
     unveiling,
     richness_estimator,
     jack_alpha,
-    jack_max) {
+    jack_max,
+    as_numeric) {
   
   # Build the metacommunity
   abd <- metacommunity(
-    x, 
+    distribution, 
     as_numeric = TRUE, 
     check_arguments = FALSE
   )
@@ -748,7 +754,7 @@ ent_gamma <- function(
     # Non integer values in the metacommunity. 
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage.numeric(
-      colSums(x[, !(colnames(x) %in% non_species_columns)]),
+      colSums(distribution[, !(colnames(distribution) %in% non_species_columns)]),
       as_numeric = TRUE,
       check_arguments = FALSE
     )
@@ -769,7 +775,7 @@ ent_gamma <- function(
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
       sample_coverage = sample_coverage,
-      as_numeric = FALSE,
+      as_numeric = as_numeric,
       check_arguments = FALSE
     )
   )
