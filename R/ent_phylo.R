@@ -1,7 +1,7 @@
 #' Phylogenetic Entropy of a Community
 #' 
 #' Estimate the entropy of species from abundance or probability data
-#' and a phylogénetic tree.
+#' and a phylogenetic tree.
 #' Several estimators are available to deal with incomplete sampling.
 #' 
 #' Bias correction requires the number of individuals. 
@@ -13,11 +13,12 @@
 #' See [ent_accum] for details.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object, that may be a numeric vector containing abundances or probabilities,
-#' or an object of class [abundances] or [probabilities].
+#' @param x An object, that may be a numeric vector containing abundances 
+#' or probabilities, or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated entropy.
+#' @return A tibble with the site names, the estimators used and the estimated
+#' entropy.
 #'
 #' @references
 #' \insertAllCited{}

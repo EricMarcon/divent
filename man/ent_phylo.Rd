@@ -45,8 +45,8 @@ ent_phylo(x, tree, q = 1, ...)
 )
 }
 \arguments{
-\item{x}{An object, that may be a numeric vector containing abundances or probabilities,
-or an object of class \link{abundances} or \link{probabilities}.}
+\item{x}{An object, that may be a numeric vector containing abundances
+or probabilities, or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{tree}{An ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
@@ -87,11 +87,12 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 \item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 }
 \value{
-A tibble with the site names, the estimators used and the estimated entropy.
+A tibble with the site names, the estimators used and the estimated
+entropy.
 }
 \description{
 Estimate the entropy of species from abundance or probability data
-and a phylogénetic tree.
+and a phylogenetic tree.
 Several estimators are available to deal with incomplete sampling.
 }
 \details{
