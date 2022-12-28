@@ -6,7 +6,7 @@
 \alias{div_phylo.species_distribution}
 \title{Phylogenetic Diversity of a Community}
 \usage{
-div_phylo(x, q = 1, ...)
+div_phylo(x, tree, q = 1, ...)
 
 \method{div_phylo}{numeric}(
   x,
@@ -48,12 +48,12 @@ div_phylo(x, q = 1, ...)
 \item{x}{An object, that may be a numeric vector containing abundances
 or probabilities, or an object of class \link{abundances} or \link{probabilities}.}
 
+\item{tree}{An ultrametric, phylogenetic tree.
+May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+
 \item{q}{The order of diversity.}
 
 \item{...}{Unused.}
-
-\item{tree}{An ultrametric, phylogenetic tree.
-May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
 \item{normalize}{If \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
 
