@@ -25,10 +25,13 @@
 #' \insertAllCited{}
 #' 
 #' @examples
+#' # Entropy of each community
 #' ent_simpson(paracou_6_abd)
+#' # gamma entropy
+#' ent_simpson(paracou_6_abd, gamma = TRUE)
 #' 
 #' # At 80% coverage
-#' ent_simpson(paracou_6_abd, level=0.8)
+#' ent_simpson(paracou_6_abd, level = 0.8)
 #' 
 #' @name ent_simpson
 NULL

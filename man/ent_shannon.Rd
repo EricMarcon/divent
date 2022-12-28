@@ -98,10 +98,13 @@ extrapolation, either a chosen sample size or sample coverage
 See \link{ent_accum} for details.
 }
 \examples{
+# Entropy of each community
 ent_shannon(paracou_6_abd)
+# gamma entropy
+ent_shannon(paracou_6_abd, gamma = TRUE)
 
 # At 80\% coverage
-ent_shannon(paracou_6_abd, level=0.8)
+ent_shannon(paracou_6_abd, level = 0.8)
 
 }
 \references{

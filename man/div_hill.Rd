@@ -139,6 +139,9 @@ div_hill(paracou_6_abd, q = 2)
 # gamma diversity
 div_hill(paracou_6_abd, q = 2, gamma = TRUE)
 
+# At 80\% coverage
+div_hill(paracou_6_abd, q = 2, level = 0.8)
+
 }
 \references{
 \insertAllCited{}

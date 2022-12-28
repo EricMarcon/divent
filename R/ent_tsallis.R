@@ -22,10 +22,13 @@
 #' \insertAllCited{}
 #' 
 #' @examples
+#' # Entropy of each community
 #' ent_tsallis(paracou_6_abd, q = 2)
+#' # gamma entropy
+#' ent_tsallis(paracou_6_abd, q = 2, gamma = TRUE)
 #' 
 #' # At 80% coverage
-#' ent_tsallis(paracou_6_abd, level=0.8)
+#' ent_tsallis(paracou_6_abd, level = 0.8)
 #' 
 #' @name ent_tsallis
 NULL

@@ -97,10 +97,13 @@ so that the richness of a sample of this distribution of the size of the
 actual sample has the richness of the actual sample.
 }
 \examples{
+# Diversity of each community
 div_richness(paracou_6_abd)
+# gamma diversity
+div_div_richness(paracou_6_abd, gamma = TRUE)
 
 # At 80\% coverage
-div_richness(paracou_6_abd, level=0.8)
+div_richness(paracou_6_abd, level = 0.8)
 
 }
 \references{
