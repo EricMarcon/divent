@@ -39,7 +39,7 @@ NULL
 #' @rdname div_phylo
 #'
 #' @export
-div_phylo <- function(x, q = 1, ...) {
+div_phylo <- function(x, tree, q = 1, ...) {
   UseMethod("div_phylo")
 }
 
