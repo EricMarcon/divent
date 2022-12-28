@@ -369,19 +369,21 @@ check_divent_args <- function(
   # weights
   if (!is.na(names(args["weights"]))) {
     weights <- eval(expression(weights), parent.frame())
-    if (!is.numeric(weights)) {
-      error_message(
-        "weights must be a numeric vector",
-        weights,
-        parent_function
-      )
-    }
-    if (any(weights < 0)) {
-      error_message(
-        "weights must be positive",
-        weights,
-        parent_function
-      )
+    if (!is.null(weights)) {
+      if (!is.numeric(weights)) {
+        error_message(
+          "weights must be a numeric vector",
+          weights,
+          parent_function
+        )
+      }
+      if (any(weights < 0)) {
+        error_message(
+          "weights must be positive",
+          weights,
+          parent_function
+        )
+      }
     }
   }
   
