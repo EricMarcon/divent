@@ -42,8 +42,8 @@ div_part <- function(
   
   # Gamma diversity ----
   # Calculate gamma entropy
-  ent_gamma <- ent_gamma(
-    x = abundances,
+  ent_gamma <- ent_gamma.species_distribution(
+    distribution = abundances,
     q = q,
     estimator = estimator,
     level = level, 
@@ -51,7 +51,8 @@ div_part <- function(
     unveiling = unveiling,
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha,
-    jack_max = jack_max
+    jack_max = jack_max,
+    as_numeric = FALSE
   )
   # Calculate diversity
   div_gamma <- dplyr::mutate(

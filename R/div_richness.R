@@ -454,8 +454,8 @@ div_richness.species_distribution <- function(
       naive = "naive"
     )
     # Calculate gamma entropy of order 0
-    ent_0 <- ent_gamma(
-      x = x,
+    ent_0 <- ent_gamma.species_distribution(
+      distribution = x,
       q = 0,
       estimator = ent_estimator,
       level = level, 
@@ -463,7 +463,8 @@ div_richness.species_distribution <- function(
       unveiling = unveiling,
       richness_estimator = estimator,
       jack_alpha  = jack_alpha,
-      jack_max = jack_max
+      jack_max = jack_max,
+      as_numeric = FALSE
     )
     # Calculate diversity
     ent_0 <- dplyr::mutate(

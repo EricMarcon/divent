@@ -563,8 +563,8 @@ ent_shannon.species_distribution <- function(
   
   if (gamma) {
     return(
-      ent_gamma(
-        x = x,
+      ent_gamma.species_distribution(
+        distribution = x,
         q = 1,
         estimator = estimator,
         level = level, 
@@ -572,7 +572,8 @@ ent_shannon.species_distribution <- function(
         unveiling = unveiling,
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha,
-        jack_max = jack_max
+        jack_max = jack_max,
+        as_numeric = FALSE
       )
     )
   } else {

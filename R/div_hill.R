@@ -157,8 +157,8 @@ div_hill.species_distribution <- function(
   
   if (gamma) {
     # Calculate gamma entropy
-    the_entropy <- ent_gamma(
-      x = x,
+    the_entropy <- ent_gamma.species_distribution(
+      distribution = x,
       q = q,
       estimator = estimator,
       level = level, 
@@ -166,7 +166,8 @@ div_hill.species_distribution <- function(
       unveiling = unveiling,
       richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha,
-      jack_max = jack_max
+      jack_max = jack_max,
+      as_numeric = FALSE
     )
     # Calculate diversity
     the_diversity <- dplyr::mutate(
