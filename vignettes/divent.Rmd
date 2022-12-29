@@ -117,6 +117,12 @@ Diversity can be plotted against its order to provide a diversity profile. Order
 div_profile(paracou_6_abd) %>% autoplot
 ```
 
+If an ultrametric dendrogram describing species phylogeny (here, a mere taxonomy with family, genus and species) is available, phylogenetic entropy and diversity [@Marcon2014b] can be calculated:
+
+```{r PhyloDiversity}
+div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
+```
+
 
 # Full documentation
 
