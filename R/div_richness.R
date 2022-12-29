@@ -446,21 +446,11 @@ div_richness.species_distribution <- function(
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
-    # Choose the estimator of entropy
-    if (estimator == "rarefy") stop ("The 'rarefy' estimator is not implemented for gamma diversity.")
-    # Entropy estimators rely on richness estimators
-    ent_estimator <- switch(
-      estimator,
-      jackknife = "UnveilJ", 
-      iChao1 = "UnveiliC", 
-      Chao1 = "UnveilC", 
-      naive = "naive"
-    )
     # Calculate gamma entropy of order 0
     ent_0 <- ent_gamma.species_distribution(
       distribution = x,
       q = 0,
-      estimator = ent_estimator,
+      estimator = estimator,
       level = level, 
       probability_estimator = probability_estimator,
       unveiling = unveiling,

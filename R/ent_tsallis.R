@@ -765,10 +765,58 @@ ent_gamma.species_distribution <- function(
       estimator <- "Marcon"
     }
   }
-  return(
-    ent_tsallis.numeric(
+  
+  # Compute the entropy. Call the appropriate function for its estimators.
+  # Richness estimators are specific
+  if (q==0 & estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
+    the_diversity <- div_richness.numeric(
+      abd, 
+      estimator = estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+    # Calculate entropy
+    the_entropy <- dplyr::mutate(
+      the_diversity, 
+      entropy = .data$diversity - 1, 
+      .keep = "unused"
+    )
+  } else if (q==1 & is.null(sample_coverage)) {
+    # Non integer values in the metacommunity are supported only by ent_tsallis
+    the_entropy <- ent_shannon.numeric(
       abd,
-      # Arguments
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      as_numeric = as_numeric,
+      check_arguments = FALSE
+    )
+  } else if (q==2 & is.null(sample_coverage)) {
+    # Non integer values in the metacommunity are supported only by ent_tsallis
+    the_entropy <- ent_simpson.numeric(
+      abd,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      as_numeric = as_numeric,
+      check_arguments = FALSE
+    )
+  } else {
+    the_entropy <- ent_tsallis.numeric(
+      abd,
       q = q,
       estimator = estimator,
       level = level, 
@@ -781,5 +829,13 @@ ent_gamma.species_distribution <- function(
       as_numeric = as_numeric,
       check_arguments = FALSE
     )
-  )
+  }
+  # Add the site column
+  if (!as_numeric) {
+    the_entropy <- dplyr::bind_cols(
+      site = "Metacommunity",
+      the_entropy
+    )
+  }
+  return(the_entropy)
 }
