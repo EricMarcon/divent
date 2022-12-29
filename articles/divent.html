@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-4</span>
       </span>
     </div>
 
@@ -314,6 +314,19 @@ Simpson’s diversities:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/div_profile.html">div_profile</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/div_profile-1.png" width="700"></p>
+<p>If an ultrametric dendrogram describing species phylogeny (here, a
+mere taxonomy with family, genus and species) is available, phylogenetic
+entropy and diversity <span class="citation">(Marcon and Hérault
+2015)</span> can be calculated:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/div_phylo.html">div_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
+<span><span class="co">##   site      weight estimator diversity</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ        41.0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ        52.9</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ        46.1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ        43.2</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">

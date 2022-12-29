@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-4</span>
       </span>
     </div>
 
@@ -162,16 +162,19 @@ numbers to obtain \(\alpha\) diversity.
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">div_part</span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site          scale     estimator order diversity weight</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> metacommunity gamma     <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    111.    <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> metacommunity beta      <span style="color: #949494;">""</span>            1      1.09  <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> metacommunity alpha     <span style="color: #949494;">""</span>            1    102.    <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_1     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1     96.3    1.56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> subplot_2     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    113.     1.56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> subplot_3     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    105.     1.56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> subplot_4     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1     94.6    1.56</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> New names:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `site` -&gt; `site...1`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `site` -&gt; `site...3`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site...1      scale     site...3      estimator order diversity site    weight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> metacommunity gamma     Metacommunity <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    111.   <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> metacommunity beta      <span style="color: #BB0000;">NA</span>            <span style="color: #949494;">""</span>            1      1.09 <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> metacommunity alpha     <span style="color: #BB0000;">NA</span>            <span style="color: #949494;">""</span>            1    102.   <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #BB0000;">NA</span>            community <span style="color: #BB0000;">NA</span>            <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1     96.3  subplo…   1.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>            community <span style="color: #BB0000;">NA</span>            <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    113.   subplo…   1.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>            community <span style="color: #BB0000;">NA</span>            <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    105.   subplo…   1.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> <span style="color: #BB0000;">NA</span>            community <span style="color: #BB0000;">NA</span>            <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1     94.6  subplo…   1.56</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
