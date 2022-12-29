@@ -24,13 +24,14 @@
 #' \insertAllCited{}
 #' 
 #' @examples
+#' # Entropy of each community
 #' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
+#' # Gamma entropy
+#' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, gamma = TRUE)
 #' 
 #' # At 80% coverage
 #' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, level = 0.8)
 #' 
-#' # Gamma entropy
-#' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, gamma = TRUE)
 #' 
 #' @name ent_phylo
 NULL
@@ -221,6 +222,7 @@ ent_phylo.species_distribution <- function(
     return(
       # Make a tibble with site, estimator and entropy
       tibble::tibble_row(
+        site = "Metacommunity",
         # estimator and order
         estimator = estimator,
         q = q,
