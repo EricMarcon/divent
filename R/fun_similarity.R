@@ -13,7 +13,8 @@
 #' @export
 #'
 #' @examples
-#' # TODO
+#' # Similarity between Paracou 6 species
+#' hist(fun_similarity(paracou_6_fundist))
 #' 
 fun_similarity <- function (
     distances,
@@ -35,7 +36,7 @@ fun_similarity <- function (
       sep = "_"
     )
     rownames(x) <- colnames(x)
-  } else if (identical(colnames(distances), rownames(distances))) {
+  } else if (!identical(colnames(distances), rownames(distances))) {
     stop("Row and column names must be identical in 'distances'.")
   }
   

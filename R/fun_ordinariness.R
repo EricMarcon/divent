@@ -1,4 +1,4 @@
-#' Functional ordinariness of a communitu
+#' Functional ordinariness of a community
 #' 
 #' TODO
 #'
@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' fun_ordinariness(paracou_6_abd, Z)
+#' fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist))
 #' 
 fun_ordinariness <- function (
     distribution,
