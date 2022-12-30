@@ -61,6 +61,19 @@ non_species_columns <- c(
 "paracou_6_taxo"
 
 
+#' Functional distances between Paracou plot 6 species
+#'
+#' A functional distance matrix of species of the dataset [paracou_6_abd].
+#' Distances were computed from a trait dataset including specific leaf area, 
+#' wood density, seed mass and 95th percentile of height. Gower's metric
+#' \insertCite{Gower1971}{divent} was used to obtain a distance matrix.
+#' 
+#' This dataset is from Paracou field station, French Guiana, managed by [Cirad](https://www.cirad.fr).
+#'
+#' @format A matrix.
+#' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
+"paracou_6_fundist"
+
 
 #  Utilities ----
 
@@ -141,7 +154,7 @@ check_divent_args <- function(
 
   # Verify that the package is attached
   if (!"divent" %in% .packages()) {
-    warning("Function arguments cannot be checked because the SpatDiv package is not attached. Add CheckArguments=FALSE to suppress this warning or run library('SpatDiv')")
+    warning("Function arguments cannot be checked because the package divent is not attached. Add CheckArguments=FALSE to suppress this warning or run library('SpatDiv')")
     return (TRUE)
   }
   # Get the list of arguments of the parent function
