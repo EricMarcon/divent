@@ -1,10 +1,22 @@
-# divent 0.2-4
+# divent 0.3-0
+
+## Features
+
+- Similarity and ordinariness of species.
+
+## TODO
+- `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
+- Check all species in div_phylo() are in the tree.
+
+
+# divent 0.2-5
 
 ## Features
 
 - Data formats: 
     - phylo_divent (phylogenetic tree): `as_phylo_divent()`
 - Phylogenetic entropy: `ent_phylo()`
+- species names must be valid names
 
 
 # divent 0.1-24
@@ -23,6 +35,3 @@
 - Diversity accumulation: `div_accum()`
 - Diversity profiles: `div_profile()`
 - Diversity partitioning: `div_profile()`
-
-## TODO
-- `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.

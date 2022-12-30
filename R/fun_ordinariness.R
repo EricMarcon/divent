@@ -22,7 +22,7 @@ fun_ordinariness <- function (
   
   # Species names
   is_species_column <- !(colnames(distribution) %in% non_species_columns)
-  species_names <- col_names[is_species_column]
+  species_names <- colnames(distribution)[is_species_column]
   if (length(setdiff(species_names, colnames(similarities))) != 0) {
     stop("Some species are missing in the similarity matrix.")    
   } else {
