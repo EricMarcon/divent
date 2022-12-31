@@ -23,7 +23,7 @@ fun_ordinariness <- function (
   
   if (any(check_arguments)) check_divent_args()
   
-  # Species names
+  # Check species names
   is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
   species_names <- colnames(species_distribution)[is_species_column]
   if (length(setdiff(species_names, colnames(similarities))) != 0) {
@@ -37,15 +37,15 @@ fun_ordinariness <- function (
   prob <- probabilities(species_distribution)[, is_species_column]
   
   # Calculate ordinariness
-  the_similarities <- as.matrix(prob) %*% t(similarities)
+  the_ordinariness <- as.matrix(prob) %*% t(similarities)
   
   if (as_numeric) {
-    return(the_similarities)
+    return(the_ordinariness)
   } else {
     return(
       tibble::tibble(
         species_distribution[, !is_species_column],
-        as.data.frame(the_similarities)
+        as.data.frame(the_ordinariness)
       )
     )
   }
