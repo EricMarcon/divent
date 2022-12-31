@@ -5,16 +5,16 @@
 \title{Functional ordinariness of a community}
 \usage{
 fun_ordinariness(
-  distribution,
+  species_distribution,
   similarities,
   as_numeric = FALSE,
   check_arguments = TRUE
 )
 }
 \arguments{
-\item{distribution}{TODO}
+\item{species_distribution}{An object of class \link{species_distribution}.}
 
-\item{similarities}{TODO}
+\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.}
 
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
@@ -22,12 +22,17 @@ fun_ordinariness(
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
-A tibble with the ordinariness of each species.
+A tibble with the ordinariness of each species, or a matrix if
+argument \code{as_numeric} is \code{TRUE}.
 }
 \description{
-TODO
+The ordinariness of a species is the average similarity of its individuals
+with others \insertCite{Leinster2012}{divent}.
 }
 \examples{
 fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist))
 
+}
+\references{
+\insertAllCited{}
 }

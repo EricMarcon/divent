@@ -62,9 +62,17 @@ Used only for extrapolation.}
 
 \item{alpha}{The risk level, 5\% by default.}
 
+\item{distances}{A distance matrix.}
+
 \item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 
 \item{normalize}{If \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
+
+\item{rate}{The decay rate of the exponential similarity.}
+
+\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.}
+
+\item{species_distribution}{An object of class \link{species_distribution}.}
 
 \item{tree}{An ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}

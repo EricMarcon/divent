@@ -7,7 +7,7 @@
 fun_similarity(distances, exponential = TRUE, rate = 1, check_arguments = TRUE)
 }
 \arguments{
-\item{distances}{TODO}
+\item{distances}{A distance matrix.}
 
 \item{exponential}{If \code{TRUE}, similarity is \eqn{e^{-r \delta}},
 where \eqn{r} is argument \code{rate}.
@@ -22,10 +22,17 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 A similarity matrix.
 }
 \description{
-Transform a distance matrix into a similarity matrix.
+Transform a distance matrix into a similarity matrix
+\insertCite{Leinster2012}{divent}.
+Similarity between two species is defined either by a negative exponential
+function of their distance or by the complement to 1 of their normalized
+distance (such that the most distant species are 1 apart).
 }
 \examples{
 # Similarity between Paracou 6 species
 hist(fun_similarity(paracou_6_fundist))
 
+}
+\references{
+\insertAllCited{}
 }

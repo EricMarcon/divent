@@ -1,19 +1,22 @@
 #' Functional ordinariness of a community
 #' 
-#' TODO
+#' The ordinariness of a species is the average similarity of its individuals 
+#' with others \insertCite{Leinster2012}{divent}.
 #'
 #' @inheritParams check_divent_args
-#' @param distribution TODO
-#' @param similarities TODO
 #'
-#' @return A tibble with the ordinariness of each species.
+#' @return A tibble with the ordinariness of each species, or a matrix if
+#' argument `as_numeric` is `TRUE`.
 #' @export
 #'
+#' @references
+#' \insertAllCited{}
+#' 
 #' @examples
 #' fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist))
 #' 
 fun_ordinariness <- function (
-    distribution,
+    species_distribution,
     similarities,
     as_numeric = FALSE,
     check_arguments = TRUE) {
@@ -21,8 +24,8 @@ fun_ordinariness <- function (
   if (any(check_arguments)) check_divent_args()
   
   # Species names
-  is_species_column <- !(colnames(distribution) %in% non_species_columns)
-  species_names <- colnames(distribution)[is_species_column]
+  is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
+  species_names <- colnames(species_distribution)[is_species_column]
   if (length(setdiff(species_names, colnames(similarities))) != 0) {
     stop("Some species are missing in the similarity matrix.")    
   } else {
@@ -31,7 +34,7 @@ fun_ordinariness <- function (
   }
   
   # Calculate species probabilities
-  prob <- probabilities(distribution)[, is_species_column]
+  prob <- probabilities(species_distribution)[, is_species_column]
   
   # Calculate ordinariness
   the_similarities <- as.matrix(prob) %*% t(similarities)
@@ -41,7 +44,7 @@ fun_ordinariness <- function (
   } else {
     return(
       tibble::tibble(
-        distribution[, !is_species_column],
+        species_distribution[, !is_species_column],
         as.data.frame(the_similarities)
       )
     )

@@ -1,17 +1,22 @@
 #' Functional similarity
 #' 
-#' Transform a distance matrix into a similarity matrix.
+#' Transform a distance matrix into a similarity matrix 
+#' \insertCite{Leinster2012}{divent}.
+#' Similarity between two species is defined either by a negative exponential 
+#' function of their distance or by the complement to 1 of their normalized 
+#' distance (such that the most distant species are 1 apart).
 #'
 #' @inheritParams check_divent_args
-#' @param distances TODO
 #' @param exponential If `TRUE`, similarity is \eqn{e^{-r \delta}}, 
 #' where \eqn{r} is argument `rate`.
 #' If `FALSE`, it is \eqn{1 - \delta / \max(\delta)}.
-#' @param rate The decay rate of the exponential similarity.
 #'
 #' @return A similarity matrix.
 #' @export
 #'
+#' @references
+#' \insertAllCited{}
+#' 
 #' @examples
 #' # Similarity between Paracou 6 species
 #' hist(fun_similarity(paracou_6_fundist))

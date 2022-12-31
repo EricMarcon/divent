@@ -104,6 +104,7 @@ non_species_columns <- c(
 #' @param as_numeric If `TRUE`, a number or a numeric vector is returned rather than a tibble.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
+#' @param distances A distance matrix.
 #' @param estimator An estimator of asymptotic entropy, diversity or richness.
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
@@ -118,11 +119,14 @@ non_species_columns <- c(
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
 #' @param q The order of diversity.
+#' @param rate The decay rate of the exponential similarity.
 #' @param richness_estimator An estimator of richness to evaluate the total number of species,
 #' see [div_richness]. Used for interpolation and extrapolation.
 #' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param show_progress If TRUE, a progress bar is shown during long computations. 
+#' @param similarities A similarity matrix, that can be obtained by [fun_similarity].
+#' @param species_distribution An object of class [species_distribution].
 #' @param tree An ultrametric, phylogenetic tree.
 #' May be an object of class [phylo_divent], [ape::phylo], [ade4::phylog] or [stats::hclust]. 
 #' @param unveiling A string containing one of the possible unveiling methods 
@@ -223,6 +227,52 @@ check_divent_args <- function(
     }
   }
   # estimator is checked by match.arg()
+  # distances
+  if (!is.na(names(args["distances"]))) {
+    distances <- eval(expression(distances), parent.frame())
+    if (!is.numeric(distances)) {
+      error_message(
+        "distances must be a numeric",
+        distances,
+        parent_function
+      )
+    }
+    if (!is.matrix(distances)) {
+      error_message(
+        "distances must be a matrix",
+        distances,
+        parent_function
+      )
+    }
+    if (nrow(distances) != ncol(distances)) {
+      error_message(
+        "distances must be a square matrix",
+        distances,
+        parent_function
+      )
+    }
+    if (!isSymmetric(distances)) {
+      error_message(
+        "distances must be a symmetric matrix",
+        distances,
+        parent_function
+      )
+    }
+    if (any(distances < 0)) {
+      error_message(
+        "distances must be positive",
+        distances,
+        parent_function
+      )
+    }
+    if (any(diag(distances != 0))) {
+      error_message(
+        "distances must be zero between a species and itself",
+        distances,
+        parent_function
+      )
+    }
+  }
   # gamma
   if (!is.na(names(args["gamma"]))) {
     gamma <- eval(expression(gamma), parent.frame())
@@ -332,6 +382,26 @@ check_divent_args <- function(
       )
     }
   }
+  # rate
+  if (!is.na(names(args["rate"]))) {
+    rate <- eval(expression(rate), parent.frame())
+    if (!is.null(rate)) {
+      if (!is.numeric(rate) | length(rate)!=1) {
+        error_message(
+          "rate must be a number.",
+          rate,
+          parent_function
+        )
+      }
+      if (any(rate <=0)) {
+        error_message(
+          "rate must be positive.",
+          rate,
+          parent_function
+        )
+      }
+    }
+  }
   # sample_coverage
   if (!is.na(names(args["sample_coverage"]))) {
     sample_coverage <- eval(expression(sample_coverage), parent.frame())
@@ -359,6 +429,56 @@ check_divent_args <- function(
       error_message(
         "show_progress must be TRUE or FALSE", 
         show_progress, 
+        parent_function
+      )
+    }
+  }
+  # similarities
+  if (!is.na(names(args["similarities"]))) {
+    similarities <- eval(expression(similarities), parent.frame())
+    if (!is.numeric(similarities)) {
+      error_message(
+        "similarities must be a numeric",
+        similarities,
+        parent_function
+      )
+    }
+    if (!is.matrix(similarities)) {
+      error_message(
+        "similarities must be a matrix",
+        similarities,
+        parent_function
+      )
+    }
+    if (nrow(similarities) != ncol(similarities)) {
+      error_message(
+        "similarities must be a square matrix",
+        similarities,
+        parent_function
+      )
+    }
+    if (any(similarities = 0 | similarities > 1)) {
+      error_message(
+        "similarities must be between 0 and 1",
+        similarities,
+        parent_function
+      )
+    }
+    if (any(diag(similarities != 1))) {
+      error_message(
+        "similarities must be 1 between a species and itself",
+        similarities,
+        parent_function
+      )
+    }
+  }
+  # species_distribution
+  if (!is.na(names(args["species_distribution"]))) {
+    species_distribution <- eval(expression(species_distribution), parent.frame())
+    if (!is_species_distribution(species_distribution)) {
+      error_message(
+        "species_distribution must be an object of class 'species_distribution'", 
+        species_distribution, 
         parent_function
       )
     }
