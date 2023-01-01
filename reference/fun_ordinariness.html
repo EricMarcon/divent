@@ -19,7 +19,7 @@ with others (Leinster and Cobbold 2012)
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@ with others (Leinster and Cobbold 2012)
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fun_ordinariness</span><span class="op">(</span></span>
 <span>  <span class="va">species_distribution</span>,</span>
-<span>  <span class="va">similarities</span>,</span>
+<span>  similarities <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">species_distribution</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">non_species_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  as_numeric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -88,7 +88,8 @@ with others (Leinster and Cobbold 2012)
 
 
 <dt>similarities</dt>
-<dd><p>A similarity matrix, that can be obtained by <a href="fun_similarity.html">fun_similarity</a>.</p></dd>
+<dd><p>A similarity matrix, that can be obtained by <a href="fun_similarity.html">fun_similarity</a>.
+Its default value is the identity matrix.</p></dd>
 
 
 <dt>as_numeric</dt>
@@ -106,6 +107,14 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 
 <p>A tibble with the ordinariness of each species, or a matrix if
 argument <code>as_numeric</code> is <code>TRUE</code>.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>All species of the <code>species_distribution</code> must be found in the matrix of
+<code>similarities</code> if it is named.
+If it is not, its size must equal the number of species.
+Then, the order of species is assumed to be the same as that of the
+<code>species_distribution</code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
