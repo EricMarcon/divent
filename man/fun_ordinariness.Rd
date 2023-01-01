@@ -6,7 +6,7 @@
 \usage{
 fun_ordinariness(
   species_distribution,
-  similarities,
+  similarities = diag(sum(!(colnames(species_distribution) \%in\% non_species_columns))),
   as_numeric = FALSE,
   check_arguments = TRUE
 )
@@ -14,7 +14,8 @@ fun_ordinariness(
 \arguments{
 \item{species_distribution}{An object of class \link{species_distribution}.}
 
-\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.}
+\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.
+Its default value is the identity matrix.}
 
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
@@ -28,6 +29,13 @@ argument \code{as_numeric} is \code{TRUE}.
 \description{
 The ordinariness of a species is the average similarity of its individuals
 with others \insertCite{Leinster2012}{divent}.
+}
+\details{
+All species of the \code{species_distribution} must be found in the matrix of
+\code{similarities} if it is named.
+If it is not, its size must equal the number of species.
+Then, the order of species is assumed to be the same as that of the
+\code{species_distribution}.
 }
 \examples{
 fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist))

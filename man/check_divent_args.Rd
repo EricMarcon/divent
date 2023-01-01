@@ -70,7 +70,8 @@ Used only for extrapolation.}
 
 \item{rate}{The decay rate of the exponential similarity.}
 
-\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.}
+\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.
+Its default value is the identity matrix.}
 
 \item{species_distribution}{An object of class \link{species_distribution}.}
 

@@ -1,4 +1,4 @@
-# divent 0.3-1
+# divent 0.3-2
 
 ## Features
 
@@ -7,6 +7,7 @@
 ## TODO
 - `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
 - Check all species in div_phylo() are in the tree.
+- Check arguments of `probabilities.numeric()` everywhere.
 
 
 # divent 0.2-5
