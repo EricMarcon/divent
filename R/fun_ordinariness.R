@@ -2,6 +2,12 @@
 #' 
 #' The ordinariness of a species is the average similarity of its individuals 
 #' with others \insertCite{Leinster2012}{divent}.
+#' 
+#' All species of the `species_distribution` must be found in the matrix of 
+#' `similarities` if it is named.
+#' If it is not, its size must equal the number of species.
+#' Then, the order of species is assumed to be the same as that of the
+#' `species_distribution`.
 #'
 #' @inheritParams check_divent_args
 #'
@@ -17,7 +23,7 @@
 #' 
 fun_ordinariness <- function (
     species_distribution,
-    similarities,
+    similarities = diag(sum(!(colnames(x) %in% non_species_columns))),
     as_numeric = FALSE,
     check_arguments = TRUE) {
   
@@ -26,11 +32,18 @@ fun_ordinariness <- function (
   # Check species names
   is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
   species_names <- colnames(species_distribution)[is_species_column]
-  if (length(setdiff(species_names, colnames(similarities))) != 0) {
-    stop("Some species are missing in the similarity matrix.")    
+  # Similarities may not be named
+  if (is.null(colnames(similarities))) {
+    if (ncol(similarities) != length(species_names)) {
+      stop("If the similarity matrix is not named, then its size must fit the number of species.")
+    }
   } else {
-    # Filter and reorder the similarity matrix
-    similarities <- similarities[species_names, species_names]
+    if (length(setdiff(species_names, colnames(similarities))) != 0) {
+      stop("Some species are missing in the similarity matrix.")    
+    } else {
+      # Filter and reorder the similarity matrix
+      similarities <- similarities[species_names, species_names]
+    }
   }
   
   # Calculate species probabilities

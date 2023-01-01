@@ -126,6 +126,7 @@ non_species_columns <- c(
 #' Used to calculate the gamma diversity of meta-communities, see details. 
 #' @param show_progress If TRUE, a progress bar is shown during long computations. 
 #' @param similarities A similarity matrix, that can be obtained by [fun_similarity].
+#' Its default value is the identity matrix.
 #' @param species_distribution An object of class [species_distribution].
 #' @param tree An ultrametric, phylogenetic tree.
 #' May be an object of class [phylo_divent], [ape::phylo], [ade4::phylog] or [stats::hclust]. 
