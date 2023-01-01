@@ -754,7 +754,7 @@ ent_gamma.species_distribution <- function(
     # Sample coverage is useless
     sample_coverage <- NULL
   } else {
-    # Non integer values in the metacommunity. 
+    # Non-integer values in the metacommunity. 
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage.numeric(
       colSums(distribution[, !(colnames(distribution) %in% non_species_columns)]),
@@ -787,7 +787,7 @@ ent_gamma.species_distribution <- function(
       .keep = "unused"
     )
   } else if (q==1 & is.null(sample_coverage)) {
-    # Non integer values in the metacommunity are supported only by ent_tsallis
+    # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_shannon.numeric(
       abd,
       estimator = estimator,
@@ -801,7 +801,7 @@ ent_gamma.species_distribution <- function(
       check_arguments = FALSE
     )
   } else if (q==2 & is.null(sample_coverage)) {
-    # Non integer values in the metacommunity are supported only by ent_tsallis
+    # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_simpson.numeric(
       abd,
       estimator = estimator,

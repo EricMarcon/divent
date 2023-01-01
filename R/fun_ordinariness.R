@@ -23,7 +23,9 @@
 #' 
 fun_ordinariness <- function (
     species_distribution,
-    similarities = diag(sum(!(colnames(x) %in% non_species_columns))),
+    similarities = diag(
+      sum(!(colnames(species_distribution) %in% non_species_columns))
+    ),
     as_numeric = FALSE,
     check_arguments = TRUE) {
   
