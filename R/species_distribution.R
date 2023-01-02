@@ -112,7 +112,7 @@ species_distribution <- function(
       if (length(weights) == nrow(x)) {
         the_distribution <- tibble::add_column(
           the_distribution, 
-          weight = rowSums(x),
+          weight = weights,
           .after = "site"
         )
       } else {
