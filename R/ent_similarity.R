@@ -11,7 +11,7 @@
 #' Then, the order of species is assumed to be the same as that of the
 #' `species_distribution`.
 #' 
-#' Similarity-Based Entropy can't be interpolated of extrapolated as of the
+#' Similarity-Based entropy can't be interpolated of extrapolated as of the
 #' state of the art.
 #'
 #' @inheritParams check_divent_args
@@ -31,7 +31,6 @@
 #' ent_similarity(paracou_6_abd, q = 2)
 #' # gamma entropy
 #' ent_similarity(paracou_6_abd, q = 2, gamma = TRUE)
-#' 
 #' 
 #' @name ent_similarity
 NULL

@@ -92,7 +92,7 @@ If it is not, its size must equal the number of species.
 Then, the order of species is assumed to be the same as that of the
 \code{species_distribution}.
 
-Similarity-Based Entropy can't be interpolated of extrapolated as of the
+Similarity-Based entropy can't be interpolated of extrapolated as of the
 state of the art.
 }
 \examples{
@@ -100,7 +100,6 @@ state of the art.
 ent_similarity(paracou_6_abd, q = 2)
 # gamma entropy
 ent_similarity(paracou_6_abd, q = 2, gamma = TRUE)
-
 
 }
 \references{
