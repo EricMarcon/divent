@@ -104,8 +104,12 @@ div_part <- function(
   
   # Summarize
   div_metacommunity <- dplyr::bind_cols(
-    site = "metacommunity",
-    dplyr::bind_rows(div_gamma, div_beta, div_alpha)
+    site = "Metacommunity",
+    dplyr::bind_rows(
+      dplyr::select(div_gamma, -site), 
+      div_beta, 
+      div_alpha
+    )
   )
     
   # Site diversity
@@ -123,10 +127,13 @@ div_part <- function(
     check_arguments = FALSE
   )
   
-  return(
-    dplyr::bind_rows(
-      div_metacommunity, 
-      dplyr::bind_cols(scale = "community", div_sites)
-    )
+  # Bind everything
+  the_divpart <- dplyr::bind_rows(
+    div_metacommunity, 
+    dplyr::bind_cols(scale = "community", div_sites)
   )
+  # Weight of the metacommunity
+  the_divpart[the_divpart$scale == "gamma", "weight"] <- sum(abundances$weight)
+  
+  return(the_divpart)
 }
