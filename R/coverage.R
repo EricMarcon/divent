@@ -141,7 +141,7 @@ coverage.numeric <- function(
     
     ## Chao's estimator ----
     if (estimator == "Chao") {
-      the_coverage <- 1 - s_1 / sample_size * (1-chao_A(abd))
+      the_coverage <- 1 - s_1 / sample_size * (1- chao_A(abd))
       if (as_numeric) {
         return(the_coverage)
       } else {
