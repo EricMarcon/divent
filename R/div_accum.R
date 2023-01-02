@@ -49,7 +49,8 @@ ent_accum <- function(x, ...) {
 
 #' @rdname div_accum
 #'
-#' @param levels The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.
+#' @param levels The levels, i.e. the sample sizes of interpolation or 
+#' extrapolation: a vector of integer values.
 #' 
 #' @export
 ent_accum.numeric <- function(
@@ -61,6 +62,7 @@ ent_accum.numeric <- function(
     richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     n_simulations = 0,
     alpha = 0.05,
     show_progress = TRUE,
@@ -71,6 +73,7 @@ ent_accum.numeric <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (!is_integer_values(x)) {
@@ -140,6 +143,7 @@ ent_accum.numeric <- function(
       richness_estimator = richness_estimator, 
       jack_alpha  = 0.05, 
       jack_max = 10,
+      coverage_estimator = coverage_estimator,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
@@ -232,6 +236,7 @@ ent_accum.numeric <- function(
         richness_estimator = richness_estimator, 
         jack_alpha  = 0.05, 
         jack_max = 10,
+        coverage_estimator = coverage_estimator,
         as_numeric = TRUE,
         check_arguments = FALSE
       )
@@ -295,6 +300,7 @@ ent_accum.abundances <- function(
     richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     n_simulations = 0,
     alpha = 0.05,
     show_progress = TRUE,
@@ -305,6 +311,7 @@ ent_accum.abundances <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Set levels if needed
