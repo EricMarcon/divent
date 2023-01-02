@@ -1,13 +1,17 @@
-# divent 0.3-2
+# divent 0.3-3
 
 ## Features
 
 - Similarity and ordinariness of species.
+- Similarity-based diversity: `ent_similarity()` and `div_similarity()`
+
 
 ## TODO
+- `div_profile()` for phylogenetic and functional diversities.
 - `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
 - Check all species in div_phylo() are in the tree.
-- Check arguments of `probabilities.numeric()` everywhere.
+- Check arguments of `sample_coverage()` everywhere: include coverage_estimator.
+- Check arguments of `probabilities.numeric()` everywhere: include `coverage_estimator` and `q`.
 
 
 # divent 0.2-5
@@ -16,7 +20,7 @@
 
 - Data formats: 
     - phylo_divent (phylogenetic tree): `as_phylo_divent()`
-- Phylogenetic entropy: `ent_phylo()`
+- Phylogenetic diversity: `ent_phylo()` and `div_phylo()`
 - species names must be valid names
 
 

@@ -74,8 +74,6 @@ probabilities <- function(x, ...) {
 #' An alternative is "rarefy" to estimate the number of species such that the 
 #' entropy of the asymptotic distribution rarefied to the observed sample size equals
 #' the actual entropy of the data.
-#' @param coverage_estimator An estimator of sample coverage used by [coverage]:
-#' "ZhangHuang" (the default value), \code{"Chao"}, \code{"Turing"} or \code{"Good"}.
 #' @param q The order of diversity. Default is 0 for richness. 
 #' Used only to estimate asymptotic probability distributions when argument 
 #' `richness_estimator` is "rarefy". Then, the number of unobserved species is 

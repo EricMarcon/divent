@@ -190,11 +190,11 @@ A set of communities is built.
 
 
 The function `metacommunity()` creates a metacommunity.
-It can be plotted:
+To plot it, use argument `type = "Metacommunity` when plotting the `species_distribution`.
 
 ```{r MetaCommunityMC}
 (mc <- metacommunity(communities))
-plot(mc)
+plot(communities, type = "Metacommunity")
 ```
 
 Each shade of grey represents a species.
@@ -210,9 +210,6 @@ The `div_part` function calculates everything at once, for a given order of dive
 ```{r DivPart}
 div_part(paracou_6_abd, q = 1)
 ```
-
-### TODO:
-The $\alpha$ diversity of communities is `r round(p$TotalAlphaDiversity, 0)` effective species. $\gamma$ diversity of the meta-community is `r round(p$GammaDiversity, 0)` effective species. $\beta$ diversity is `r round(p$TotalBetaDiversity, 2)` effective communities, i.e. the two actual communities are as different from each other as `r round(p$TotalBetaDiversity, 2)` ones with equal weights and no species in common.
 
 
 # Full documentation

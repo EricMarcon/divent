@@ -42,6 +42,7 @@ is_species_distribution(x)
 
 \method{plot}{species_distribution}(
   x,
+  type = c("RAC", "Metacommunity"),
   ...,
   fit_rac = FALSE,
   distribution = c("lnorm", "lseries", "geom", "bstick"),
@@ -112,21 +113,30 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 
 \item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
 
-\item{fit_rac}{If \code{TRUE}, estimate a theoretical distribution and fit the data with it.}
+\item{type}{The type of plot. "RAC" (Rank-abundance curve, or Whittaker plot)
+or "Metacommunity" to represent species abundances of each community along
+with those of the metacommunity.}
+
+\item{fit_rac}{If \code{TRUE}, estimate a theoretical distribution and fit the data with it.
+RAC plot only.}
 
 \item{distribution}{The distribution of species abundances.
 May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
-"bstick" (broken stick).}
+"bstick" (broken stick).
+RAC plot only.}
 
-\item{ylog}{If \code{TRUE}, the Y-axis is in log-scale.}
+\item{ylog}{If \code{TRUE}, the Y-axis is in log-scale.
+RAC plot only.}
 
 \item{main}{The title of the plot.}
 
-\item{xlab}{The label of the X-axis.}
+\item{xlab}{The label of the X-axis.
+RAC plot only.}
 
 \item{ylab}{The  label of the Y-axis.}
 
-\item{palette}{The name of a color palette, recognized by \link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal}.}
+\item{palette}{The name of a color palette, recognized by \link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal}.
+RAC plot only.}
 
 \item{object}{An object of class \link{species_distribution}.}
 

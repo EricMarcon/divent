@@ -21,6 +21,7 @@ ent_accum(x, ...)
   richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   n_simulations = 0,
   alpha = 0.05,
   show_progress = TRUE,
@@ -37,6 +38,7 @@ ent_accum(x, ...)
   richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   n_simulations = 0,
   alpha = 0.05,
   show_progress = TRUE,
@@ -98,7 +100,8 @@ or an object of class \link{abundances}  or \link{probabilities}.}
 
 \item{q}{The order of diversity.}
 
-\item{levels}{The levels, i.e. the sample sizes of interpolation or extrapolation: a vector of integer values.}
+\item{levels}{The levels, i.e. the sample sizes of interpolation or
+extrapolation: a vector of integer values.}
 
 \item{probability_estimator}{A string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).

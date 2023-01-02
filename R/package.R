@@ -104,6 +104,7 @@ non_species_columns <- c(
 #' @param as_numeric If `TRUE`, a number or a numeric vector is returned rather than a tibble.
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
+#' @param coverage_estimator An estimator of sample coverage used by [coverage].
 #' @param distances A distance matrix.
 #' @param estimator An estimator of asymptotic entropy, diversity or richness.
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
@@ -227,6 +228,7 @@ check_divent_args <- function(
       )
     }
   }
+  # coverage_estimator is checked by match.arg()
   # estimator is checked by match.arg()
   # distances
   if (!is.na(names(args["distances"]))) {
