@@ -106,7 +106,7 @@ div_part <- function(
   div_metacommunity <- dplyr::bind_cols(
     site = "Metacommunity",
     dplyr::bind_rows(
-      dplyr::select(div_gamma, -site), 
+      dplyr::select(div_gamma, -.data$site), 
       div_beta, 
       div_alpha
     )
