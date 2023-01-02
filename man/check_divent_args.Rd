@@ -62,6 +62,8 @@ Used only for extrapolation.}
 
 \item{alpha}{The risk level, 5\% by default.}
 
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+
 \item{distances}{A distance matrix.}
 
 \item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}

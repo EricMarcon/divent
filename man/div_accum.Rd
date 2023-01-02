@@ -118,6 +118,8 @@ see \link{div_richness}. Used for interpolation and extrapolation.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
 
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+
 \item{n_simulations}{The number of simulations used to estimate the confidence envelope.}
 
 \item{alpha}{The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).}
