@@ -363,7 +363,7 @@ ent_shannon.numeric <- function(
         return(
           tibble::tibble_row(
             estimator = estimator, 
-            order = q,
+            order = 1,
             entropy = the_entropy
           )
         )  
@@ -398,38 +398,26 @@ ent_shannon.numeric <- function(
         ) 
       }
     }
-    if (estimator == "UnveilC") {
-      prob_unv <- probabilities.numeric(
-        abd,
-        estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = "Chao1", 
-        as_numeric = TRUE,
-        check_arguments = FALSE
-      )
-    }
-    if (estimator == "UnveiliC") {
-      prob_unv <- probabilities.numeric(
-        abd,
-        estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = "iChao1", 
-        as_numeric = TRUE,
-        check_arguments = FALSE
-      )
-    }
-    if (estimator == "UnveilJ") {
-      prob_unv <- probabilities.numeric(
-        abd,
-        estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = "jackknife", 
-        jack_max = jack_max, 
-        as_numeric = TRUE,
-        check_arguments = FALSE
-      )
-    }
+
     if (estimator == "UnveilC" | estimator == "UnveiliC" | estimator == "UnveilJ") {
+      # Unveil probabilities
+      prob_unv <- probabilities.numeric(
+        abd,
+        estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = switch(
+          estimator,
+          UnveilJ = "jackknife", 
+          UnveilC = "Chao1", 
+          UnveiliC = "iChao1"
+        ), 
+        jack_alpha = jack_alpha,
+        jack_max = jack_max,
+        q = 1,
+        as_numeric = TRUE,
+        check_arguments = FALSE
+      )
+      
       # Naive estimator applied to unveiled distribution
       the_entropy <- -sum(prob_unv * log(prob_unv))
       if (as_numeric) {
