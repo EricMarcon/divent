@@ -9,9 +9,6 @@
 ## TODO
 - `div_profile()` for phylogenetic and functional diversities.
 - `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
-- Check all species in div_phylo() are in the tree.
-- Check arguments of `sample_coverage()` everywhere: include coverage_estimator.
-- Check arguments of `probabilities.numeric()` everywhere: include `coverage_estimator` and `q`.
 - `div_profile.species_distribution(gamma = TRUE)`: add support for non-integer abundances.
 
 
