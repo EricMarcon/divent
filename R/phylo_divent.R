@@ -41,27 +41,23 @@ as_phylo_divent <- function(tree) {
     tree.phylo <- ape::as.phylo.hclust(tree.hclust)
     # Double edge.lengths to correct as.phylo.hclust
     tree.phylo$edge.length <- 2 * tree.phylo$edge.length
+  } else if (inherits(tree, "phylo")) {
+    tree.phylo <- tree
+    # Build an hclust object to use cutree later.
+    # Edge lengths are multiplied by 2 during the conversion. 
+    # Divide by 2 before that.
+    tree$edge.length <- tree$edge.length / 2
+    tree.hclust <- ape::as.hclust.phylo(tree)
+  } else if (inherits(tree, "hclust")) {
+    # Caution: Distances in hclust count full branch lengths between species,
+    # i.e. twice the ultramtetric distance
+    tree.hclust <- tree
+    # build a phylo object to use $droot later
+    tree.phylo <- ape::as.phylo.hclust(tree)
+    # Double edge.lengths to correct as.phylo.hclust
+    tree.phylo$edge.length <- 2 * tree.phylo$edge.length
   } else {
-    if (inherits(tree, "phylo")) {
-      tree.phylo <- tree
-      # Build an hclust object to use cutree later.
-      # Edge lengths are multiplied by 2 during the conversion. 
-      # Divide by 2 before that.
-      tree$edge.length <- tree$edge.length / 2
-      tree.hclust <- ape::as.hclust.phylo(tree)
-    } else {
-      if (inherits(tree, "hclust")) {
-        # Caution: Distances in hclust count full branch lengths between species,
-        # i.e. twice the ultramtetric distance
-        tree.hclust <- tree
-        # build a phylo object to use $droot later
-        tree.phylo <- ape::as.phylo.hclust(tree)
-        # Double edge.lengths to correct as.phylo.hclust
-        tree.phylo$edge.length <- 2 * tree.phylo$edge.length
-      } else {
-        stop("tree must be an object of class phylo, phylog or hclust")
-      }
-    }
+    stop("tree must be an object of class phylo, phylog or hclust")
   }
   
   # The tree must be ultrametric ----
