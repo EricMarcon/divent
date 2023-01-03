@@ -1,10 +1,10 @@
-# divent 0.3-4
+# divent 0.3-5
 
 ## Features
 
 - Similarity and ordinariness of species.
 - Similarity-based diversity: `ent_similarity()` and `div_similarity()`
-
+- Rao's quadratic entropy: `ent_rao()`.
 
 ## TODO
 - `div_profile()` for phylogenetic and functional diversities.
