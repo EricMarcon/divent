@@ -62,6 +62,7 @@ div_similarity.numeric <- function(
     jack_alpha  = 0.05, 
     jack_max = 10,
     sample_coverage = NULL,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -70,6 +71,7 @@ div_similarity.numeric <- function(
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
+  coverage_estimator <- match.arg(coverage_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   the_entropy <- ent_similarity.numeric(
@@ -110,6 +112,7 @@ div_similarity.species_distribution <- function(
     jack_alpha  = 0.05, 
     jack_max = 10,
     gamma = FALSE,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     ...,
     check_arguments = TRUE) {
   
@@ -117,6 +120,7 @@ div_similarity.species_distribution <- function(
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
+  coverage_estimator <- match.arg(coverage_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
@@ -130,6 +134,7 @@ div_similarity.species_distribution <- function(
       unveiling = unveiling,
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE
     )
     # Calculate diversity

@@ -59,8 +59,8 @@ ent_similarity.numeric <- function(
     unveiling = c("geometric", "uniform", "none"),
      jack_alpha  = 0.05, 
     jack_max = 10,
-    sample_coverage = NULL,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    sample_coverage = NULL,
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -390,6 +390,7 @@ ent_similarity.species_distribution <- function(
         unveiling = unveiling,
         jack_alpha  = jack_alpha,
         jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         as_numeric = FALSE
       )
     )
@@ -463,6 +464,7 @@ ent_gamma_similarity <- function(
     unveiling,
     jack_alpha,
     jack_max,
+    coverage_estimator,
     as_numeric) {
   
   # Build the metacommunity

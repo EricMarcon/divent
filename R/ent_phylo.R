@@ -64,6 +64,7 @@ ent_phylo.numeric <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -73,6 +74,7 @@ ent_phylo.numeric <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   tree <- as_phylo_divent(tree)
 
@@ -119,6 +121,7 @@ ent_phylo.species_distribution <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -128,6 +131,7 @@ ent_phylo.species_distribution <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   tree <- as_phylo_divent(tree)
   
@@ -177,7 +181,7 @@ ent_phylo.species_distribution <- function(
             richness_estimator = richness_estimator,
             jack_alpha  = jack_alpha, 
             jack_max = jack_max,
-            coverage_estimator = coverage_estimator,
+            coverage_estimator = coverage_estimator
           )
         }
       )
@@ -203,6 +207,7 @@ ent_phylo.species_distribution <- function(
             richness_estimator = richness_estimator,
             jack_alpha  = jack_alpha, 
             jack_max = jack_max,
+            coverage_estimator = coverage_estimator,
             # Obtain a vector.
             as_numeric = TRUE,
             check_arguments = FALSE
