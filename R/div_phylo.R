@@ -68,15 +68,24 @@ div_phylo.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    # Prepare the tree
+    tree <- as_phylo_divent(tree)
+    # Check species names
+    col_names <- colnames(x)
+    species_names <- col_names[!col_names %in% non_species_columns]
+    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+      stop("Some species are missing in the tree.")    
+    }
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  tree <- as_phylo_divent(tree)
-  
+
   the_entropy <- ent_phylo.numeric(
     x, 
     tree = tree,
@@ -125,15 +134,24 @@ div_phylo.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    # Prepare the tree
+    tree <- as_phylo_divent(tree)
+    # Check species names
+    col_names <- colnames(x)
+    species_names <- col_names[!col_names %in% non_species_columns]
+    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+      stop("Some species are missing in the tree.")    
+    }
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  tree <- as_phylo_divent(tree)
-  
+
   the_entropy <- ent_phylo.species_distribution(
     x,
     tree = tree,

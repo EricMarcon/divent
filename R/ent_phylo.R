@@ -69,14 +69,23 @@ ent_phylo.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    # Prepare the tree
+    tree <- as_phylo_divent(tree)
+    # Check species names
+    col_names <- colnames(x)
+    species_names <- col_names[!col_names %in% non_species_columns]
+    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+      stop("Some species are missing in the tree.")    
+    }
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  tree <- as_phylo_divent(tree)
 
   # Make a species_distribution
   species_distribution <- as_species_distribution(as.vector(x))
@@ -126,19 +135,24 @@ ent_phylo.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    # Prepare the tree
+    tree <- as_phylo_divent(tree)
+    # Check species names
+    col_names <- colnames(x)
+    species_names <- col_names[!col_names %in% non_species_columns]
+    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+      stop("Some species are missing in the tree.")    
+    }
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  tree <- as_phylo_divent(tree)
-  
-  # Species names
-  col_names <- colnames(x)
-  species_names <- col_names[!(col_names %in% non_species_columns)]
-  
+
   # Calculate abundances along the tree, that are a list of matrices
   phylo_abd <- sapply(
     # Each phylogenetic group yields an item of the list
@@ -146,7 +160,7 @@ ent_phylo.species_distribution <- function(
     function(group) {
       # Create a matrix with the abundances of groups in each community
       apply(
-        x[, !(colnames(x) %in% non_species_columns)], 
+        x[, !colnames(x) %in% non_species_columns], 
         # Each community yields a column of the matrix
         MARGIN = 1, 
         FUN = function(abd) {

@@ -64,12 +64,20 @@ ent_rao.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
-  estimator <- match.arg(estimator) 
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  if (!xor(is.null(distances), is.null(tree))) {
-    stop("Either 'distance' or 'tree' must be provided.")
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (!xor(is.null(distances), is.null(tree))) {
+      stop("Either 'distance' or 'tree' must be provided.")
+    }
+    # Check species names
+    col_names <- colnames(x)
+    species_names <- col_names[!col_names %in% non_species_columns]
+    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+      stop("Some species are missing in the tree.")    
+    }
   }
+  estimator <- match.arg(estimator) 
   
   # Calculate distances from tree
   if (is.null(distances)) {
@@ -182,13 +190,21 @@ ent_rao.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
-  estimator <- match.arg(estimator) 
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  if (!xor(is.null(distances), is.null(tree))) {
-    stop("Either 'distance' or 'tree' must be provided.")
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (!xor(is.null(distances), is.null(tree))) {
+      stop("Either 'distance' or 'tree' must be provided.")
+    }
+    # Check species names
+    col_names <- colnames(x)
+    species_names <- col_names[!col_names %in% non_species_columns]
+    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+      stop("Some species are missing in the tree.")    
+    }
   }
-  
+  estimator <- match.arg(estimator) 
+
   if (gamma) {
     # Build the metacommunity
     abd <- metacommunity(
@@ -215,7 +231,7 @@ ent_rao.species_distribution <- function(
     # Apply ent_rao.numeric() to each site
     ent_rao_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% non_species_columns)], 
+      x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
       FUN = ent_rao.numeric,
