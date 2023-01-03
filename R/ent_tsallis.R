@@ -668,7 +668,7 @@ ent_tsallis.species_distribution <- function(
   if (gamma) {
     return(
       ent_gamma.species_distribution(
-        distribution = x,
+        species_distribution = x,
         q = q,
         estimator = estimator,
         level = level, 
@@ -734,7 +734,7 @@ ent_tsallis.species_distribution <- function(
 #' @return A tibble with the estimator used and the estimated entropy.
 #' @noRd
 ent_gamma.species_distribution <- function(
-    distribution,
+    species_distribution,
     q,
     estimator,
     level,
@@ -748,7 +748,7 @@ ent_gamma.species_distribution <- function(
   
   # Build the metacommunity
   abd <- metacommunity(
-    distribution, 
+    species_distribution, 
     as_numeric = TRUE, 
     check_arguments = FALSE
   )
@@ -759,7 +759,11 @@ ent_gamma.species_distribution <- function(
     # Non-integer values in the metacommunity. 
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage.numeric(
-      colSums(distribution[, !(colnames(distribution) %in% non_species_columns)]),
+      colSums(
+        species_distribution[
+          , !(colnames(species_distribution) %in% non_species_columns)
+        ]
+      ),
       estimator = coverage_estimator,
       as_numeric = TRUE,
       check_arguments = FALSE

@@ -45,7 +45,7 @@ div_part <- function(
   # Gamma diversity ----
   # Calculate gamma entropy
   ent_gamma <- ent_gamma.species_distribution(
-    distribution = abundances,
+    species_distribution = abundances,
     q = q,
     estimator = estimator,
     level = level, 

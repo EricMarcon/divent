@@ -77,11 +77,11 @@ ent_phylo.numeric <- function(
   tree <- as_phylo_divent(tree)
 
   # Make a species_distribution
-  distribution <- as_species_distribution(as.vector(x))
+  species_distribution <- as_species_distribution(as.vector(x))
   
   # Entropy
   the_entropy <- ent_phylo.species_distribution(
-    distribution,
+    species_distribution,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -176,7 +176,8 @@ ent_phylo.species_distribution <- function(
             unveiling = unveiling,
             richness_estimator = richness_estimator,
             jack_alpha  = jack_alpha, 
-            jack_max = jack_max
+            jack_max = jack_max,
+            coverage_estimator = coverage_estimator,
           )
         }
       )
@@ -269,7 +270,7 @@ ent_gamma.matrix <- function(
     coverage_estimator) {
   
   # Build the species distribution
-  distribution <- species_distribution(
+  species_distribution <- species_distribution(
     t(abd),
     weights = weights,
     check_arguments = FALSE
@@ -278,7 +279,7 @@ ent_gamma.matrix <- function(
   # Call ent_gamma.species_distribution
   return(
     ent_gamma.species_distribution(
-      distribution,
+      species_distribution,
       q = q,
       estimator = estimator,
       level = level,

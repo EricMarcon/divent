@@ -457,7 +457,7 @@ div_richness.species_distribution <- function(
   if (gamma) {
     # Calculate gamma entropy of order 0
     ent_0 <- ent_gamma.species_distribution(
-      distribution = x,
+      species_distribution = x,
       q = 0,
       estimator = estimator,
       level = level, 

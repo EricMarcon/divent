@@ -246,7 +246,7 @@ ent_simpson.species_distribution <- function(
   if (gamma) {
     return(
       ent_gamma.species_distribution(
-        distribution = x,
+        species_distribution = x,
         q = 2,
         estimator = estimator,
         level = level, 
