@@ -27,7 +27,7 @@ div_similarity(x, similarities, q = 1, ...)
 
 \method{div_similarity}{species_distribution}(
   x,
-  similarities = diag(sum(!(colnames(x) \%in\% non_species_columns))),
+  similarities = diag(sum(!colnames(x) \%in\% non_species_columns)),
   q = 1,
   estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang", "UnveilC", "UnveiliC",
     "naive"),

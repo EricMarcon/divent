@@ -266,7 +266,7 @@ coverage.abundances <- function(
   # Apply coverage.numeric() to each site
   coverage_list <- apply(
     # Eliminate site and weight columns
-    x[, !(colnames(x) %in% non_species_columns)], 
+    x[, !colnames(x) %in% non_species_columns], 
     # Apply to each row
     MARGIN = 1,
     FUN = coverage.numeric,
@@ -388,7 +388,7 @@ coverage_to_size.abundances <- function(
   # Apply coverage_to_size.numeric() to each site
   size_list <- apply(
     # Eliminate site and weight columns
-    x[, !(colnames(x) %in% non_species_columns)], 
+    x[, !colnames(x) %in% non_species_columns], 
     # Apply to each row
     MARGIN = 1,
     FUN = coverage_to_size.numeric,

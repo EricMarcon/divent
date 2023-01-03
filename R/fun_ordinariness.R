@@ -29,7 +29,7 @@
 fun_ordinariness <- function (
     species_distribution,
     similarities = diag(
-      sum(!(colnames(species_distribution) %in% non_species_columns))
+      sum(!colnames(species_distribution) %in% non_species_columns)
     ),
     as_numeric = FALSE,
     check_arguments = TRUE) {
@@ -40,7 +40,7 @@ fun_ordinariness <- function (
   similarities <- similarities_checked(similarities, species_distribution)
   
   # Calculate species probabilities
-  is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
+  is_species_column <- !colnames(species_distribution) %in% non_species_columns
   prob <- probabilities(species_distribution)[, is_species_column]
   
   # Calculate ordinariness
@@ -87,7 +87,7 @@ similarities_checked <- function(
   
   # Get species names
   if (is_species_distribution(species_distribution)) {
-    is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
+    is_species_column <- !colnames(species_distribution) %in% non_species_columns
     species_names <- colnames(species_distribution)[is_species_column]
   } else if (is.vector(species_distribution)) {
     species_names <- names(species_distribution)

@@ -564,5 +564,5 @@ error_message <- function(message, argument, parent_function) {
 is_integer_values <- function (x) {
   x_int <- round(x)
   # Return TRUE if no value in x has been modified by rounding
-  return(!(any(abs(x_int - x) > sum(x) * .Machine$double.eps)))
+  return(!any(abs(x_int - x) > sum(x) * .Machine$double.eps))
 }

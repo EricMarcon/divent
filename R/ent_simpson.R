@@ -263,7 +263,7 @@ ent_simpson.species_distribution <- function(
     # Apply ent_simpson.numeric() to each site
     ent_simpson_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% non_species_columns)], 
+      x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
       FUN = ent_simpson.numeric,

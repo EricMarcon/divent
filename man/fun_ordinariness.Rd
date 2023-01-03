@@ -6,7 +6,7 @@
 \usage{
 fun_ordinariness(
   species_distribution,
-  similarities = diag(sum(!(colnames(species_distribution) \%in\% non_species_columns))),
+  similarities = diag(sum(!colnames(species_distribution) \%in\% non_species_columns)),
   as_numeric = FALSE,
   check_arguments = TRUE
 )

@@ -104,7 +104,7 @@ div_similarity.numeric <- function(
 #' @export
 div_similarity.species_distribution <- function(
     x, 
-    similarities = diag(sum(!(colnames(x) %in% non_species_columns))),
+    similarities = diag(sum(!colnames(x) %in% non_species_columns)),
     q = 1, 
     estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang", 
                   "UnveilC", "UnveiliC", "naive"),
@@ -151,7 +151,7 @@ div_similarity.species_distribution <- function(
     # Apply div_similarity.numeric() to each site
     div_similarity_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% non_species_columns)], 
+      x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
       FUN = div_similarity.numeric,

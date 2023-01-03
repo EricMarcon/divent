@@ -343,7 +343,7 @@ ent_similarity.numeric <- function(
 #' @export
 ent_similarity.species_distribution <- function(
     x, 
-    similarities = diag(sum(!(colnames(x) %in% non_species_columns))),
+    similarities = diag(sum(!colnames(x) %in% non_species_columns)),
     q = 1, 
     estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang", 
                   "UnveilC", "UnveiliC", "naive"),
@@ -365,7 +365,7 @@ ent_similarity.species_distribution <- function(
   similarities <- similarities_checked(similarities, x)
   
   # Check species names
-  is_species_column <- !(colnames(x) %in% non_species_columns)
+  is_species_column <- !colnames(x) %in% non_species_columns
   species_names <- colnames(x)[is_species_column]
   # Similarities may not be named
   if (is.null(colnames(similarities))) {
@@ -400,7 +400,7 @@ ent_similarity.species_distribution <- function(
     # Apply ent_similarity.numeric() to each site
     ent_similarity_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% non_species_columns)], 
+      x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
       FUN = ent_similarity.numeric,
@@ -484,7 +484,7 @@ ent_gamma_similarity <- function(
     sample_coverage <- coverage.numeric(
       colSums(
         species_distribution[
-          , !(colnames(species_distribution) %in% non_species_columns)
+          , !colnames(species_distribution) %in% non_species_columns
         ]
       ),
       estimator = coverage_estimator,

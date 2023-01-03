@@ -190,7 +190,7 @@ div_hill.species_distribution <- function(
     # Apply div_hill.numeric() to each site
     div_hill_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% non_species_columns)], 
+      x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
       FUN = div_hill.numeric,

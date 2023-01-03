@@ -34,7 +34,7 @@ metacommunity <- function(
   if (any(check_arguments)) check_divent_args()
   
   # Select species columns
-  species_columns <- !(colnames(abundances) %in% non_species_columns)
+  species_columns <- !colnames(abundances) %in% non_species_columns
   # Extract abundances
   species_abd <- as.matrix(abundances[, species_columns])
   sample_size <- sum(species_abd)

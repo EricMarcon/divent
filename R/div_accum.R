@@ -320,7 +320,7 @@ ent_accum.abundances <- function(
   if (is.null(levels)) {
     sample_size <- max(
       rowSums(
-        x[, !(colnames(x) %in% non_species_columns)]
+        x[, !colnames(x) %in% non_species_columns]
       )
     )
     levels <- seq_len(sample_size)
@@ -328,7 +328,7 @@ ent_accum.abundances <- function(
   # Apply ent_accum.numeric() to each site
   ent_accum_list <- apply(
     # Eliminate site and weight columns
-    x[, !(colnames(x) %in% non_species_columns)], 
+    x[, !colnames(x) %in% non_species_columns], 
     # Apply to each row
     MARGIN = 1,
     FUN = ent_accum.numeric,
@@ -457,7 +457,7 @@ div_accum.abundances <- function(
   if (is.null(levels)) {
     sample_size <- max(
       rowSums(
-        x[, !(colnames(x) %in% non_species_columns)]
+        x[, !colnames(x) %in% non_species_columns]
       )
     )
     levels <- seq_len(sample_size)
@@ -465,7 +465,7 @@ div_accum.abundances <- function(
   # Apply ent_accum.numeric() to each site
   div_accum_list <- apply(
     # Eliminate site and weight columns
-    x[, !(colnames(x) %in% non_species_columns)], 
+    x[, !colnames(x) %in% non_species_columns], 
     # Apply to each row
     MARGIN = 1,
     FUN = div_accum.numeric,
@@ -527,7 +527,7 @@ autoplot.accumulation <-  function(
     lwd = ggplot2::GeomLine$default_aes$linewidth){
   
   # Add a site column if needed
-  if (!("site" %in% colnames(object))) {
+  if (!"site" %in% colnames(object)) {
     object <- dplyr::mutate(object, site = "Unique site")
   }
 

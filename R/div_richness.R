@@ -480,7 +480,7 @@ div_richness.species_distribution <- function(
     # Apply div_richness.numeric() to each site
     div_richness_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% non_species_columns)], 
+      x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
       FUN = div_richness.numeric,

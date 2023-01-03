@@ -115,7 +115,7 @@ testthat::test_that(
     # The min value must be the number of observed species
     testthat::expect_equal(
       min(div_richness.dataframe$diversity),
-      sum(abundances[1, !(colnames(abundances) %in% non_species_columns)] > 0)
+      sum(abundances[1, !colnames(abundances) %in% non_species_columns] > 0)
     )
   }
 )

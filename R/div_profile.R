@@ -152,7 +152,7 @@ div_profile.numeric <- function(
         orders, 
         FUN = function(q) {
           div_hill.numeric(
-            communities[i, !(colnames(communities) %in% non_species_columns)], 
+            communities[i, !colnames(communities) %in% non_species_columns], 
             q = q,
             estimator = estimator,
             level = level, 
@@ -249,7 +249,7 @@ div_profile.species_distribution <- function(
     # Apply div_profile.numeric() to each site
     div_profile_list <- apply(
       # Eliminate site and weight columns
-      x[, !(colnames(x) %in% non_species_columns)], 
+      x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
       FUN = div_profile.numeric,
@@ -306,7 +306,7 @@ autoplot.profile <-  function(
     lwd = ggplot2::GeomLine$default_aes$linewidth){
   
   # Add a site column if needed
-  if (!("site" %in% colnames(object))) {
+  if (!"site" %in% colnames(object)) {
     object <- dplyr::mutate(object, site = "Unique site")
   }
   
