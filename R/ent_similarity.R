@@ -60,6 +60,7 @@ ent_similarity.numeric <- function(
      jack_alpha  = 0.05, 
     jack_max = 10,
     sample_coverage = NULL,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -68,6 +69,7 @@ ent_similarity.numeric <- function(
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Check that dimensions correspond
@@ -153,6 +155,7 @@ ent_similarity.numeric <- function(
     # Calculate sample coverage
     sample_coverage <- coverage.numeric(
       abd, 
+      estimator = coverage_estimator,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
@@ -197,6 +200,7 @@ ent_similarity.numeric <- function(
       ), 
       jack_alpha = jack_alpha,
       jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
       q = q,
       as_numeric = TRUE,
       check_arguments = FALSE
@@ -346,6 +350,7 @@ ent_similarity.species_distribution <- function(
     unveiling = c("geometric", "uniform", "none"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -354,6 +359,7 @@ ent_similarity.species_distribution <- function(
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Check species names
@@ -477,6 +483,7 @@ ent_gamma_similarity <- function(
           , !(colnames(species_distribution) %in% non_species_columns)
         ]
       ),
+      estimator = coverage_estimator,
       as_numeric = TRUE,
       check_arguments = FALSE
     )

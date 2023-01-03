@@ -70,12 +70,14 @@ rcommunity <- function(
     sd_lnorm = 1,
     prob_geom = 0.1,
     alpha_lseries = 40,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
 
   if (any(check_arguments)) check_divent_args()
   bootstrap <- match.arg(bootstrap) 
   distribution <- match.arg(distribution) 
-
+  coverage_estimator <- match.arg(coverage_estimator)
+  
   if (!is.null(prob) & !is.null(abd)) {
     stop("'prob' and 'abd' can't be both given.")
   }
@@ -120,6 +122,7 @@ rcommunity <- function(
         abd,
         estimator = "Chao2015",
         unveiling = "geometric",
+        coverage_estimator = coverage_estimator,
         as_numeric = TRUE,
         check_arguments = FALSE)
     }
@@ -128,6 +131,7 @@ rcommunity <- function(
         abd, 
         estimator = "Chao2013", 
         unveiling = "uniform", 
+        coverage_estimator = coverage_estimator,
         as_numeric = TRUE,
         check_arguments = FALSE)
     }

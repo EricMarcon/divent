@@ -206,6 +206,7 @@ ent_shannon.numeric <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         as_numeric = TRUE,
         check_arguments = FALSE
       )
@@ -416,6 +417,7 @@ ent_shannon.numeric <- function(
         ), 
         jack_alpha = jack_alpha,
         jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         q = 1,
         as_numeric = TRUE,
         check_arguments = FALSE
@@ -501,8 +503,10 @@ ent_shannon.numeric <- function(
         abd,
         estimator = probability_estimator,
         unveiling = unveiling,
-        richness_estimator = richness_estimator, 
-        jack_max = jack_max, 
+        richness_estimator = estimator, 
+        jack_alpha  = jack_alpha,
+        jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         q = 1,
         as_numeric = TRUE,
         check_arguments = FALSE

@@ -144,6 +144,7 @@ ent_accum.numeric <- function(
       jack_alpha  = 0.05, 
       jack_max = 10,
       coverage_estimator = coverage_estimator,
+      q = q,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
@@ -237,6 +238,7 @@ ent_accum.numeric <- function(
         jack_alpha  = 0.05, 
         jack_max = 10,
         coverage_estimator = coverage_estimator,
+        q = q,
         as_numeric = TRUE,
         check_arguments = FALSE
       )

@@ -171,6 +171,7 @@ div_richness.numeric <- function(
           estimator = probability_estimator, 
           unveiling = unveiling, 
           richness_estimator = "rarefy", 
+          coverage_estimator = coverage_estimator,
           q = 0, 
           check_arguments = FALSE
         )
@@ -398,6 +399,9 @@ div_richness.numeric <- function(
           estimator = probability_estimator, 
           unveiling = unveiling, 
           richness_estimator = estimator, 
+          jack_alpha  = jack_alpha,
+          jack_max = jack_max,
+          coverage_estimator = coverage_estimator,
           q = 0,
           as_numeric = TRUE,
           check_arguments = FALSE

@@ -326,6 +326,7 @@ ent_tsallis.numeric <- function(
     if (estimator == "ChaoShen" | estimator == "Marcon") {
       sample_coverage <- coverage.numeric(
         abd, 
+        estimator = coverage_estimator,
         as_numeric = TRUE,
         check_arguments = FALSE
       )
@@ -345,6 +346,8 @@ ent_tsallis.numeric <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
+        q = q,
         as_numeric = TRUE,
         check_arguments = FALSE
       )
@@ -425,38 +428,26 @@ ent_tsallis.numeric <- function(
         )  
       }
     }
-    if (estimator == "UnveilC") {
-      prob_unv <- probabilities.numeric(
-        abd,
-        estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = "Chao1", 
-        as_numeric = TRUE,
-        check_arguments = FALSE
-      )
-    }
-    if (estimator == "UnveiliC") {
-      prob_unv <- probabilities.numeric(
-        abd,
-        estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = "iChao1", 
-        as_numeric = TRUE,
-        check_arguments = FALSE
-      )
-    }
-    if (estimator == "UnveilJ") {
-      prob_unv <- probabilities.numeric(
-        abd,
-        estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = "jackknife", 
-        jack_max = jack_max, 
-        as_numeric = TRUE,
-        check_arguments = FALSE
-      )
-    }
     if (estimator == "UnveilC" | estimator == "UnveiliC" | estimator == "UnveilJ") {
+      # Unveil the probabilities
+      prob_unv <- probabilities.numeric(
+        abd,
+        estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = switch(
+          estimator,
+          UnveilJ = "jackknife", 
+          UnveilC = "Chao1", 
+          UnveiliC = "iChao1"
+        ), 
+        jack_alpha = jack_alpha,
+        jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
+        q = q,
+        as_numeric = TRUE,
+        check_arguments = FALSE
+      )
+      s_est <- length(prob_unv)
       # Naive estimator applied to unveiled distribution
       the_entropy <- -sum(prob_unv^q * ln_q(prob_unv, q))
       if (as_numeric) {
@@ -611,6 +602,7 @@ ent_tsallis.numeric <- function(
       unveiling = unveiling,
       richness_estimator = richness_estimator, 
       jack_max = jack_max, 
+      coverage_estimator = coverage_estimator,
       q = q,
       as_numeric = TRUE,
       check_arguments = FALSE
