@@ -34,8 +34,8 @@ coverage_to_size(x, ...)
 \method{coverage_to_size}{numeric}(
   x,
   sample_coverage,
-  as_numeric = FALSE,
   estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

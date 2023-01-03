@@ -1,4 +1,4 @@
-# divent 0.3-5
+# divent 0.3-6
 
 ## Features
 
@@ -12,6 +12,7 @@
 - Check all species in div_phylo() are in the tree.
 - Check arguments of `sample_coverage()` everywhere: include coverage_estimator.
 - Check arguments of `probabilities.numeric()` everywhere: include `coverage_estimator` and `q`.
+- `div_profile.species_distribution(gamma = TRUE)`: add support for non-integer abundances.
 
 
 # divent 0.2-5

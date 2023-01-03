@@ -19,6 +19,7 @@ ent_tsallis(x, q = 1, ...)
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   sample_coverage = NULL,
   as_numeric = FALSE,
   ...,
@@ -36,6 +37,7 @@ ent_tsallis(x, q = 1, ...)
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
   ...,
   check_arguments = TRUE
@@ -70,6 +72,8 @@ see \link{div_richness}. Used for interpolation and extrapolation.}
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
 
 \item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}

@@ -10,6 +10,7 @@ abd_freq_count(
   probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
   unveiling = c("none", "uniform", "geometric"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy"),
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   check_arguments = TRUE
 )
 }
@@ -32,6 +33,8 @@ Used only for extrapolation.}
 \item{richness_estimator}{A string containing an estimator recognized by
 \link{div_richness} to evaluate the total number of species in \link{probabilities}.
 Used only for extrapolation.}
+
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

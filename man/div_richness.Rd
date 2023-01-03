@@ -16,6 +16,7 @@ div_richness(x, ...)
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   as_numeric = FALSE,
   ...,
   check_arguments = TRUE
@@ -29,6 +30,7 @@ div_richness(x, ...)
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
   ...,
   check_arguments = TRUE
@@ -60,6 +62,8 @@ Used only by the estimator of richness "rarefy".}
 \item{unveiling}{A string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only by the estimator of richness "rarefy".}
+
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
 
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
