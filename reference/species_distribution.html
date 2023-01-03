@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -93,6 +93,7 @@
 <span><span class="co"># S3 method for species_distribution</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RAC"</span>, <span class="st">"Metacommunity"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  fit_rac <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lnorm"</span>, <span class="st">"lseries"</span>, <span class="st">"geom"</span>, <span class="st">"bstick"</span><span class="op">)</span>,</span>
@@ -182,18 +183,27 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 <dd><p>Additional arguments to be passed to <a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a>. Unused elsewhere.</p></dd>
 
 
+<dt>type</dt>
+<dd><p>The type of plot. "RAC" (Rank-abundance curve, or Whittaker plot)
+or "Metacommunity" to represent species abundances of each community along
+with those of the metacommunity.</p></dd>
+
+
 <dt>fit_rac</dt>
-<dd><p>If <code>TRUE</code>, estimate a theoretical distribution and fit the data with it.</p></dd>
+<dd><p>If <code>TRUE</code>, estimate a theoretical distribution and fit the data with it.
+RAC plot only.</p></dd>
 
 
 <dt>distribution</dt>
 <dd><p>The distribution of species abundances.
 May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
-"bstick" (broken stick).</p></dd>
+"bstick" (broken stick).
+RAC plot only.</p></dd>
 
 
 <dt>ylog</dt>
-<dd><p>If <code>TRUE</code>, the Y-axis is in log-scale.</p></dd>
+<dd><p>If <code>TRUE</code>, the Y-axis is in log-scale.
+RAC plot only.</p></dd>
 
 
 <dt>main</dt>
@@ -201,7 +211,8 @@ May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 
 
 <dt>xlab</dt>
-<dd><p>The label of the X-axis.</p></dd>
+<dd><p>The label of the X-axis.
+RAC plot only.</p></dd>
 
 
 <dt>ylab</dt>
@@ -209,7 +220,8 @@ May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 
 
 <dt>palette</dt>
-<dd><p>The name of a color palette, recognized by <a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">RColorBrewer::brewer.pal</a>.</p></dd>
+<dd><p>The name of a color palette, recognized by <a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">RColorBrewer::brewer.pal</a>.
+RAC plot only.</p></dd>
 
 
 <dt>object</dt>
