@@ -65,7 +65,7 @@ fun_ordinariness <- function (
 #' so that its elements are the same, in the same order.
 #'
 #' @param similarities A similarity matrix
-#' @param species_distribution A species distribution.
+#' @param species_distribution A species distribution, or a named vector.
 #'
 #' @return A similarity matrix that corresponds to the species distribution.
 #' @noRd
@@ -74,16 +74,28 @@ similarities_checked <- function(
     similarities,
     species_distribution) {
   
-  # Check species names
-  is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
-  species_names <- colnames(species_distribution)[is_species_column]
+  # No names needed
   if (is.null(colnames(similarities))) {
     # Similarities may not be named
     if (ncol(similarities) != length(species_names)) {
       stop("If the similarity matrix is not named, then its size must fit the number of species.")
+    } else {
+      # Do not change the similarities
+      return(similarities)
     }
-  } else if (length(setdiff(species_names, colnames(similarities))) != 0) {
-    # Stop if some species are not in the matrix
+  }
+  
+  # Get species names
+  if (is_species_distribution(species_distribution)) {
+    is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
+    species_names <- colnames(species_distribution)[is_species_column]
+  } else if (is.vector(species_distribution)) {
+    species_names <- names(species_distribution)
+  }
+
+  # Stop if some species are not in the matrix of similarities
+  if (length(species_names) == 0) stop("There are no species in the distribution")
+  if (length(setdiff(species_names, colnames(similarities))) != 0) {
     stop("Some species are missing in the similarity matrix.")    
   } 
   
