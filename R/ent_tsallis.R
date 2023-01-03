@@ -786,6 +786,10 @@ ent_gamma.species_distribution <- function(
       entropy = .data$diversity - 1, 
       .keep = "unused"
     )
+    # entropy must be a number if as_numeric = TRUE
+    if (as_numeric) {
+      the_entropy <- the_entropy$entropy
+    }
   } else if (q==1 & is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_shannon.numeric(
