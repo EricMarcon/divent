@@ -78,7 +78,7 @@ coverage.numeric <- function(
   # Eliminate zeros
   abd <- abd[abd > 0]
   # Calculate abundance distribution
-  abd_distribution <- tapply(abd, abd, length)
+  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
   # singletons. Convert named number to number.
   s_1 <- as.numeric(abd_distribution["1"])
   sample_size <- sum(abd)
@@ -316,7 +316,7 @@ coverage_to_size.numeric <- function(
   # Eliminate zeros
   abd <- abd[abd > 0]
   # Calculate abundance distribution
-  abd_distribution <- tapply(abd, abd, length)
+  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
   # Singletons. Convert named number to number.
   if (is.na(abd_distribution["1"])) {
     s_1 <- 0 
@@ -425,7 +425,7 @@ coverage_to_size.abundances <- function(
 chao_A <- function(abd) {
   
   # Calculate abundance distribution
-  abd_distribution <- tapply(abd, abd, length)
+  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
   s_1 <- as.numeric(abd_distribution["1"])
   s_2 <- as.numeric(abd_distribution["2"])
   sample_size <- sum(abd)

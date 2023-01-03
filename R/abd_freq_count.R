@@ -50,7 +50,7 @@ abd_freq_count <- function (
   # Eliminate 0
   abd_int <- abd_int[abd_int > 0]
   # Calculate abundance distribution
-  abd_distribution <- tapply(abd_int, abd_int, length)
+  abd_distribution <- tapply(abd_int, INDEX = abd_int, FUN = length)
   
   if (is.null(level)) {
     # No extrapolation. Prepare a two-column matrix ----
