@@ -196,6 +196,8 @@ ent_rao.species_distribution <- function(
     if (!xor(is.null(distances), is.null(tree))) {
       stop("Either 'distance' or 'tree' must be provided.")
     }
+    # Prepare the tree (may be NULL)
+    tree <- as_phylo_divent(tree)
     # Check species names
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
