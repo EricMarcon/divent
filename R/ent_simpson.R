@@ -62,6 +62,7 @@ ent_simpson.numeric <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     as_numeric  = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -71,6 +72,7 @@ ent_simpson.numeric <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Entropy of a vector of probabilities ----
@@ -160,6 +162,7 @@ ent_simpson.numeric <- function(
           richness_estimator = richness_estimator,
           jack_alpha  = jack_alpha, 
           jack_max = jack_max,
+          coverage_estimator = coverage_estimator,
           as_numeric = as_numeric,
           check_arguments = FALSE
         )
@@ -173,6 +176,7 @@ ent_simpson.numeric <- function(
     level <- coverage_to_size.numeric(
       abd, 
       sample_coverage = level,
+      estimator = coverage_estimator,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
@@ -226,6 +230,7 @@ ent_simpson.species_distribution <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -235,6 +240,7 @@ ent_simpson.species_distribution <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
@@ -249,6 +255,7 @@ ent_simpson.species_distribution <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha,
         jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         as_numeric = FALSE
       )
     )
@@ -268,6 +275,7 @@ ent_simpson.species_distribution <- function(
       richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha, 
       jack_max = jack_max, 
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE,
       check_arguments = FALSE
     )

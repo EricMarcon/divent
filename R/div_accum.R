@@ -338,6 +338,7 @@ ent_accum.abundances <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     n_simulations = n_simulations,
     alpha = alpha,
     show_progress = show_progress,
@@ -383,6 +384,7 @@ div_accum.numeric <- function(
     richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     n_simulations = 0,
     alpha = 0.05,
     show_progress = TRUE,
@@ -393,6 +395,7 @@ div_accum.numeric <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Accumulate entropy
@@ -405,6 +408,7 @@ div_accum.numeric <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     n_simulations = n_simulations,
     alpha = alpha,
     show_progress = show_progress,
@@ -433,6 +437,7 @@ div_accum.abundances <- function(
     richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     n_simulations = 0,
     alpha = 0.05,
     show_progress = TRUE,
@@ -443,6 +448,7 @@ div_accum.abundances <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Set levels if needed
@@ -469,6 +475,7 @@ div_accum.abundances <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     n_simulations = n_simulations,
     alpha = alpha,
     show_progress = show_progress,

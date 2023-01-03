@@ -31,6 +31,7 @@ div_part <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
  
   if (any(check_arguments)) check_divent_args()
@@ -38,6 +39,7 @@ div_part <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(abundances < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Gamma diversity ----

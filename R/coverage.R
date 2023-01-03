@@ -303,8 +303,8 @@ coverage_to_size <- function(x, ...) {
 coverage_to_size.numeric <- function(
     x, 
     sample_coverage,
-    as_numeric  = FALSE,
     estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    as_numeric  = FALSE,
     ...,
     check_arguments = TRUE) {
   

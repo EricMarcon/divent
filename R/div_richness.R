@@ -88,6 +88,7 @@ div_richness.numeric <- function(
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Diversity of a vector of probabilities ----
@@ -446,6 +447,7 @@ div_richness.species_distribution <- function(
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {

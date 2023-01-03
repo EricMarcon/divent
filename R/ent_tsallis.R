@@ -59,6 +59,7 @@ ent_tsallis.numeric <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     sample_coverage = NULL,
     as_numeric = FALSE,
     ...,
@@ -69,6 +70,7 @@ ent_tsallis.numeric <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   # Entropy of a vector of probabilities ----
@@ -243,6 +245,7 @@ ent_tsallis.numeric <- function(
           richness_estimator = richness_estimator,
           jack_alpha  = jack_alpha, 
           jack_max = jack_max,
+          coverage_estimator = coverage_estimator,
           as_numeric = as_numeric,
           check_arguments = FALSE
         )
@@ -556,6 +559,7 @@ ent_tsallis.numeric <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         as_numeric  = as_numeric,
         check_arguments = FALSE
       )
@@ -656,6 +660,7 @@ ent_tsallis.species_distribution <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -665,6 +670,7 @@ ent_tsallis.species_distribution <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (gamma) {
@@ -679,6 +685,7 @@ ent_tsallis.species_distribution <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha,
         jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         as_numeric = FALSE
       )
     )
@@ -699,6 +706,7 @@ ent_tsallis.species_distribution <- function(
       richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha, 
       jack_max = jack_max, 
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE,
       check_arguments = FALSE
     )
@@ -743,6 +751,7 @@ ent_gamma.species_distribution <- function(
     richness_estimator,
     jack_alpha,
     jack_max,
+    coverage_estimator,
     as_numeric) {
   
   # Build the metacommunity
@@ -759,6 +768,7 @@ ent_gamma.species_distribution <- function(
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage.numeric(
       colSums(distribution[, !(colnames(distribution) %in% non_species_columns)]),
+      estimator = coverage_estimator,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
@@ -803,6 +813,7 @@ ent_gamma.species_distribution <- function(
       richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
       as_numeric = as_numeric,
       check_arguments = FALSE
     )
@@ -817,6 +828,7 @@ ent_gamma.species_distribution <- function(
       richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
       as_numeric = as_numeric,
       check_arguments = FALSE
     )

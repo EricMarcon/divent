@@ -265,7 +265,8 @@ ent_gamma.matrix <- function(
     unveiling,
     richness_estimator,
     jack_alpha,
-    jack_max) {
+    jack_max,
+    coverage_estimator) {
   
   # Build the species distribution
   distribution <- species_distribution(
@@ -286,6 +287,7 @@ ent_gamma.matrix <- function(
       richness_estimator = richness_estimator,
       jack_alpha = jack_alpha,
       jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
       as_numeric = TRUE
     )
   )
