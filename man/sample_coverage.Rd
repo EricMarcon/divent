@@ -35,11 +35,18 @@ coverage_to_size(x, ...)
   x,
   sample_coverage,
   as_numeric = FALSE,
+  estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   ...,
   check_arguments = TRUE
 )
 
-\method{coverage_to_size}{abundances}(x, sample_coverage, ..., check_arguments = TRUE)
+\method{coverage_to_size}{abundances}(
+  x,
+  sample_coverage,
+  estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  ...,
+  check_arguments = TRUE
+)
 }
 \arguments{
 \item{x}{An object.}

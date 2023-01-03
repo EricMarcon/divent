@@ -66,7 +66,7 @@ coverage.numeric <- function(
     x, 
     estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     level = NULL, 
-    as_numeric  = FALSE,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -304,10 +304,12 @@ coverage_to_size.numeric <- function(
     x, 
     sample_coverage,
     as_numeric  = FALSE,
+    estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     ...,
     check_arguments = TRUE) {
   
   if (any(check_arguments)) check_divent_args()
+  estimator <- match.arg(estimator) 
   
   # Round values
   abd <- as.integer(round(x))
@@ -329,7 +331,12 @@ coverage_to_size.numeric <- function(
   }
   
   # Actual coverage
-  sample_coverage_actual <- coverage.numeric(abd, check_arguments = FALSE)$coverage
+  sample_coverage_actual <- coverage.numeric(
+    abd, 
+    estimator = estimator,
+    as_numeric = TRUE,
+    check_arguments = FALSE
+  )
   
   if (sample_coverage >= sample_coverage_actual) {
     # Extrapolation
@@ -371,10 +378,12 @@ coverage_to_size.numeric <- function(
 coverage_to_size.abundances <- function(
     x, 
     sample_coverage,
+    estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     ...,
     check_arguments = TRUE) {
   
   if (any(check_arguments)) check_divent_args()
+  estimator <- match.arg(estimator) 
   
   # Apply coverage_to_size.numeric() to each site
   size_list <- apply(
@@ -385,6 +394,8 @@ coverage_to_size.abundances <- function(
     FUN = coverage_to_size.numeric,
     # Arguments
     sample_coverage = sample_coverage,
+    estimator = estimator,
+    as_numeric = FALSE,
     check_arguments = FALSE
   )
   
