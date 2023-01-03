@@ -15,6 +15,7 @@ rcommunity(
   sd_lnorm = 1,
   prob_geom = 0.1,
   alpha_lseries = 40,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   check_arguments = TRUE
 )
 }
@@ -48,6 +49,8 @@ This is the standard deviation on the log scale.}
 of the geometric distribution.}
 
 \item{alpha_lseries}{Fisher's alpha in the log-series distribution.}
+
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

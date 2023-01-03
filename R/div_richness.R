@@ -466,6 +466,7 @@ div_richness.species_distribution <- function(
       richness_estimator = estimator,
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE
     )
     # Calculate diversity
