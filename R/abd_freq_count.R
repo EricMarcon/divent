@@ -29,6 +29,7 @@ abd_freq_count <- function (
     probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy"),
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
   
   if (any(check_arguments)) check_divent_args()
@@ -63,6 +64,7 @@ abd_freq_count <- function (
     if (level < 1) {
       level <- coverage_to_size.numeric(
         abd, 
+        coverage_estimator = coverage_estimator,
         sample_coverage = level,
         check_arguments = FALSE
       )

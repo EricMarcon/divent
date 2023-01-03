@@ -79,6 +79,7 @@ div_richness.numeric <- function(
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     as_numeric = FALSE,
     ..., 
     check_arguments = TRUE) {
@@ -335,6 +336,7 @@ div_richness.numeric <- function(
   if (level < 1) {
     level <- coverage_to_size.numeric(
       abd, 
+      coverage_estimator = coverage_estimator,
       sample_coverage = level,
       as_numeric = TRUE,
       check_arguments = FALSE
@@ -435,6 +437,7 @@ div_richness.species_distribution <- function(
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     ..., 
     check_arguments = TRUE) {
@@ -481,6 +484,7 @@ div_richness.species_distribution <- function(
       level = level, 
       probability_estimator = probability_estimator,
       unveiling = unveiling,
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE,
       check_arguments = FALSE
     )

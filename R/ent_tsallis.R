@@ -529,6 +529,7 @@ ent_tsallis.numeric <- function(
       level = level, 
       probability_estimator = probability_estimator,
       unveiling = unveiling,
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE,
       check_arguments = FALSE
     )
@@ -777,6 +778,7 @@ ent_gamma.species_distribution <- function(
       level = level, 
       probability_estimator = probability_estimator,
       unveiling = unveiling,
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE,
       check_arguments = FALSE
     )
