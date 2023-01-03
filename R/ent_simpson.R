@@ -119,6 +119,7 @@ ent_simpson.numeric <- function(
           return(
             tibble::tibble_row(
               estimator = "Single Species", 
+              order = 2,
               entropy = 0
             )
           )  
