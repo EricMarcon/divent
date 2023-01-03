@@ -37,23 +37,10 @@ fun_ordinariness <- function (
   if (any(check_arguments)) check_divent_args()
   
   # Check species names
-  is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
-  species_names <- colnames(species_distribution)[is_species_column]
-  # Similarities may not be named
-  if (is.null(colnames(similarities))) {
-    if (ncol(similarities) != length(species_names)) {
-      stop("If the similarity matrix is not named, then its size must fit the number of species.")
-    }
-  } else {
-    if (length(setdiff(species_names, colnames(similarities))) != 0) {
-      stop("Some species are missing in the similarity matrix.")    
-    } else {
-      # Filter and reorder the similarity matrix
-      similarities <- similarities[species_names, species_names]
-    }
-  }
+  similarities <- similarities_checked(similarities, species_distribution)
   
   # Calculate species probabilities
+  is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
   prob <- probabilities(species_distribution)[, is_species_column]
   
   # Calculate ordinariness
@@ -69,4 +56,37 @@ fun_ordinariness <- function (
       )
     )
   }
+}
+
+
+#' Check Similarity matrix
+#' 
+#' Verify that a similarity matrix fits a species distribution and filter it
+#' so that its elements are the same, in the same order.
+#'
+#' @param similarities A similarity matrix
+#' @param species_distribution A species distribution.
+#'
+#' @return A similarity matrix that corresponds to the species distribution.
+#' @noRd
+#'
+similarities_checked <- function(
+    similarities,
+    species_distribution) {
+  
+  # Check species names
+  is_species_column <- !(colnames(species_distribution) %in% non_species_columns)
+  species_names <- colnames(species_distribution)[is_species_column]
+  if (is.null(colnames(similarities))) {
+    # Similarities may not be named
+    if (ncol(similarities) != length(species_names)) {
+      stop("If the similarity matrix is not named, then its size must fit the number of species.")
+    }
+  } else if (length(setdiff(species_names, colnames(similarities))) != 0) {
+    # Stop if some species are not in the matrix
+    stop("Some species are missing in the similarity matrix.")    
+  } 
+  
+  # Filter and reorder the similarity matrix
+  return(similarities[species_names, species_names])
 }

@@ -73,6 +73,7 @@ div_similarity.numeric <- function(
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  similarities <- similarities_checked(similarities, x)
   
   the_entropy <- ent_similarity.numeric(
     x, 
@@ -122,6 +123,7 @@ div_similarity.species_distribution <- function(
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator) 
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  similarities <- similarities_checked(similarities, x)
   
   if (gamma) {
     # Calculate gamma entropy

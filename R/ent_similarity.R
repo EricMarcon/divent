@@ -71,6 +71,7 @@ ent_similarity.numeric <- function(
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  similarities <- similarities_checked(similarities, x)
   
   # Check that dimensions correspond
   if (length(x) != ncol(similarities)) {
@@ -361,6 +362,7 @@ ent_similarity.species_distribution <- function(
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  similarities <- similarities_checked(similarities, x)
   
   # Check species names
   is_species_column <- !(colnames(x) %in% non_species_columns)
