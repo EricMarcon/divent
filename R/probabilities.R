@@ -210,6 +210,8 @@ probabilities.numeric <- function(
       s_0 <- div_richness.numeric(
         abd, 
         estimator = "jackknife", 
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max, 
         as_numeric = TRUE, 
         check_arguments = FALSE
       ) - s_obs
@@ -244,6 +246,9 @@ probabilities.numeric <- function(
           estimator = richness_estimator, 
           jack_alpha = jack_alpha, 
           jack_max = jack_max,
+          probability_estimator = probability_estimator,
+          unveiling = unveiling,
+          coverage_estimator = coverage_estimator,
           as_numeric = TRUE, 
           check_arguments = FALSE
         )
