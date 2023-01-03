@@ -75,7 +75,12 @@ similarities_checked <- function(
     species_distribution) {
   
   # No names needed
-  if (is.null(colnames(similarities))) {
+  if (
+      # No names in the matrix
+      is.null(colnames(similarities)) | 
+      # No names in the distribution that may be a tibble or a vector
+      (is.null(colnames(species_distribution)) & is.null(names(species_distribution)))
+    ) {
     # Similarities may not be named
     if (ncol(similarities) != length(species_names)) {
       stop("If the similarity matrix is not named, then its size must fit the number of species.")
