@@ -46,9 +46,9 @@ fun_similarity <- function (
   }
   
   if (exponential) {
-    the_similarity <- 1 - distances / max(distances)
-  } else {
     the_similarity <- exp(-rate * distances)
+  } else {
+    the_similarity <- 1 - distances / max(distances)
   }
   
   class(the_similarity) <- c("similarity", class(the_similarity))
