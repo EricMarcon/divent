@@ -36,7 +36,7 @@ div_part <- function(
  
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(abundances < 0)) stop("Species probabilities or abundances must be positive.")
   }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
