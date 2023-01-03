@@ -87,7 +87,6 @@ ent_rao.numeric <- function(
   
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
-    if (!is.null(level)) stop("Entropy can't be estimated at a level without the abundance of species.")
     # Probabilities sum to 1, allowing rounding error
     the_entropy <- mean(distances %*% x)
     if (as_numeric) {
