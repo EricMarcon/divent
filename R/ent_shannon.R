@@ -503,7 +503,7 @@ ent_shannon.numeric <- function(
         abd,
         estimator = probability_estimator,
         unveiling = unveiling,
-        richness_estimator = estimator, 
+        richness_estimator = richness_estimator, 
         jack_alpha  = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
