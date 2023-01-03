@@ -246,7 +246,7 @@ probabilities.numeric <- function(
           estimator = richness_estimator, 
           jack_alpha = jack_alpha, 
           jack_max = jack_max,
-          probability_estimator = probability_estimator,
+          probability_estimator = estimator,
           unveiling = unveiling,
           coverage_estimator = coverage_estimator,
           as_numeric = TRUE, 
