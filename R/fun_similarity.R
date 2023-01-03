@@ -27,12 +27,14 @@ fun_similarity <- function (
     rate = 1,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
-  
-  # Names
-  if (xor(is.null(colnames(distances)), is.null(rownames(distances)))) {
-    stop("Row and column names must be identical in 'distances'.")
+  if (any(check_arguments)) {
+    check_divent_args()
+    # Names
+    if (xor(is.null(colnames(distances)), is.null(rownames(distances)))) {
+      stop("Row and column names must be identical in 'distances'.")
+    }
   }
+
   if (is.null(colnames(distances))) {
     ### Add default species names such as sp_1
     colnames(x) <- paste(

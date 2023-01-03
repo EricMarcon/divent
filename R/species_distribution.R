@@ -49,11 +49,13 @@ species_distribution <- function(
     check_arguments = TRUE) {
 
   # Check the data ----
-  if (any(check_arguments)) check_divent_args()
-  if (!is.numeric(x)) stop("'x' must be numeric")
-  if (length(dim(x)) > 2) stop("'x' may be a vector or a matrix")
-  if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
-  
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (!is.numeric(x)) stop("'x' must be numeric")
+    if (length(dim(x)) > 2) stop("'x' may be a vector or a matrix")
+    if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
+  }
+
   # Build a tibble from the data ----
   if (is.vector(x)) {
     ## Single distribution ----
@@ -517,7 +519,6 @@ ggplot2::autoplot
 
 #  Probabilities ----
 
-
 #' @rdname species_distribution
 #'
 #' @export
@@ -637,8 +638,12 @@ abundances <- function(
     weights = NULL, 
     check_arguments = TRUE) {
   
-  if (!is.numeric(x)) stop("'x' must be numeric")
-  if (any(x < 0)) stop("Species abundances must be positive.")
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (!is.numeric(x)) stop("'x' must be numeric")
+    if (any(x < 0)) stop("Species abundances must be positive.")
+  }
+
   if (round) {
     # Add 0.5 before changing mode to round rather than taking the floor
     x <- x + 0.5
@@ -649,12 +654,11 @@ abundances <- function(
     x,     
     names = names, 
     weights = weights, 
-    check_arguments = check_arguments
+    check_arguments = FALSE
   )
 
   class(abundances) <- c("abundances", class(abundances))
   return(abundances)    
-
 }
 
 #' @rdname species_distribution
@@ -674,9 +678,11 @@ as_abundances.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
-  if (any(x < 0)) stop("Species abundances must be positive.")
-  
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species abundances must be positive.")
+  }
+
   if (round) {
     x <- as.integer(round(x))
   }

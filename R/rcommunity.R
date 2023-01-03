@@ -73,15 +73,16 @@ rcommunity <- function(
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (!is.null(prob) & !is.null(abd)) {
+      stop("'prob' and 'abd' can't be both given.")
+    }
+  }
   bootstrap <- match.arg(bootstrap) 
   distribution <- match.arg(distribution) 
   coverage_estimator <- match.arg(coverage_estimator)
   
-  if (!is.null(prob) & !is.null(abd)) {
-    stop("'prob' and 'abd' can't be both given.")
-  }
-
   the_prob <- the_abd <- NULL
   
   # Generate a distribution (prob and abd are null) or use prob or build probabilities from abd

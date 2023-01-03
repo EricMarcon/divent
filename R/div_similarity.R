@@ -67,14 +67,16 @@ div_similarity.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    similarities <- similarities_checked(similarities, x)
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator) 
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  similarities <- similarities_checked(similarities, x)
-  
+
   the_entropy <- ent_similarity.numeric(
     x, 
     similarities = similarities,
@@ -117,14 +119,16 @@ div_similarity.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    similarities <- similarities_checked(similarities, x)
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator) 
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  similarities <- similarities_checked(similarities, x)
-  
+
   if (gamma) {
     # Calculate gamma entropy
     the_entropy <- ent_gamma_similarity(

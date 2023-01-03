@@ -101,14 +101,16 @@ div_hill.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   the_entropy <- ent_tsallis.numeric(
     x, 
     q = q, 
@@ -155,14 +157,16 @@ div_hill.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   if (gamma) {
     # Calculate gamma entropy
     the_entropy <- ent_gamma.species_distribution(

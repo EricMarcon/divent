@@ -73,14 +73,16 @@ div_profile.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   bootstrap <- match.arg(bootstrap)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   # Numeric vector, no simulation ----
   if (as_numeric) {
     if (n_simulations > 0) stop ("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
@@ -218,14 +220,16 @@ div_profile.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   bootstrap <- match.arg(bootstrap)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   if (gamma) {
     the_div_profile <- div_profile.numeric(
       metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),

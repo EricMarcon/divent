@@ -34,14 +34,16 @@ div_part <- function(
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
  
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(abundances < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   # Gamma diversity ----
   # Calculate gamma entropy
   ent_gamma <- ent_gamma.species_distribution(

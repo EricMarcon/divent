@@ -69,12 +69,14 @@ ent_accum.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator) 
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   
   if (!is_integer_values(x)) {
     warning(
@@ -309,13 +311,15 @@ ent_accum.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator) 
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   # Set levels if needed
   if (is.null(levels)) {
     sample_size <- max(
@@ -393,13 +397,15 @@ div_accum.numeric <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   # Accumulate entropy
   the_ent_accum <- ent_accum.numeric(
     x,
@@ -446,13 +452,15 @@ div_accum.abundances <- function(
     ...,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  
+
   # Set levels if needed
   if (is.null(levels)) {
     sample_size <- max(

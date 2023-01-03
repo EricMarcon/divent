@@ -34,11 +34,12 @@ fun_ordinariness <- function (
     as_numeric = FALSE,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
-  
-  # Check species names
-  similarities <- similarities_checked(similarities, species_distribution)
-  
+  if (any(check_arguments)) {
+    check_divent_args()
+    # Check species names
+    similarities <- similarities_checked(similarities, species_distribution)
+  }
+
   # Calculate species probabilities
   is_species_column <- !colnames(species_distribution) %in% non_species_columns
   prob <- probabilities(species_distribution)[, is_species_column]
