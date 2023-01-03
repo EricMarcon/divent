@@ -233,47 +233,49 @@ check_divent_args <- function(
   # distances
   if (!is.na(names(args["distances"]))) {
     distances <- eval(expression(distances), parent.frame())
-    if (!is.numeric(distances)) {
-      error_message(
-        "distances must be a numeric",
-        distances,
-        parent_function
-      )
-    }
-    if (!is.matrix(distances)) {
-      error_message(
-        "distances must be a matrix",
-        distances,
-        parent_function
-      )
-    }
-    if (nrow(distances) != ncol(distances)) {
-      error_message(
-        "distances must be a square matrix",
-        distances,
-        parent_function
-      )
-    }
-    if (!isSymmetric(distances)) {
-      error_message(
-        "distances must be a symmetric matrix",
-        distances,
-        parent_function
-      )
-    }
-    if (any(distances < 0)) {
-      error_message(
-        "distances must be positive",
-        distances,
-        parent_function
-      )
-    }
-    if (any(diag(distances != 0))) {
-      error_message(
-        "distances must be zero between a species and itself",
-        distances,
-        parent_function
-      )
+    if (!is.null(distances)) {
+      if (!is.numeric(distances)) {
+        error_message(
+          "distances must be a numeric",
+          distances,
+          parent_function
+        )
+      }
+      if (!is.matrix(distances)) {
+        error_message(
+          "distances must be a matrix",
+          distances,
+          parent_function
+        )
+      }
+      if (nrow(distances) != ncol(distances)) {
+        error_message(
+          "distances must be a square matrix",
+          distances,
+          parent_function
+        )
+      }
+      if (!isSymmetric(distances)) {
+        error_message(
+          "distances must be a symmetric matrix",
+          distances,
+          parent_function
+        )
+      }
+      if (any(distances < 0)) {
+        error_message(
+          "distances must be positive",
+          distances,
+          parent_function
+        )
+      }
+      if (any(diag(distances != 0))) {
+        error_message(
+          "distances must be zero between a species and itself",
+          distances,
+          parent_function
+        )
+      }
     }
   }
   # gamma
@@ -489,16 +491,18 @@ check_divent_args <- function(
   # tree
   if (!is.na(names(args["tree"]))) {
     tree <- eval(expression(tree), parent.frame())
-    if (
-        !inherits(tree, "phylo_divent") &
-        !inherits(tree, "phylo") &
-        !inherits(tree, "phylog") &
-        !inherits(tree, "hclust")) {
-      error_message(
-        "tree must be an object of class 'phylo_divent', 'phylo', 'phylog' or 'hclust'", 
-        tree, 
-        parent_function
-      )
+    if (!is.null(tree)) {
+      if (
+          !inherits(tree, "phylo_divent") &
+          !inherits(tree, "phylo") &
+          !inherits(tree, "phylog") &
+          !inherits(tree, "hclust")) {
+        error_message(
+          "tree must be an object of class 'phylo_divent', 'phylo', 'phylog' or 'hclust'", 
+          tree, 
+          parent_function
+        )
+      }
     }
   }
   # unveiling is checked by match.arg()
