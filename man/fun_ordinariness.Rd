@@ -40,6 +40,11 @@ Then, the order of species is assumed to be the same as that of the
 \examples{
 fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist))
 
+# Compare with probabilities
+probabilities(paracou_6_abd)
+# Decrease similarities so that ordinariness is close to probability
+fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist, rate = 100))
+
 }
 \references{
 \insertAllCited{}

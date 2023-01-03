@@ -19,6 +19,7 @@ div_similarity(x, similarities, q = 1, ...)
   jack_alpha = 0.05,
   jack_max = 10,
   sample_coverage = NULL,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   as_numeric = FALSE,
   ...,
   check_arguments = TRUE
@@ -35,6 +36,7 @@ div_similarity(x, similarities, q = 1, ...)
   jack_alpha = 0.05,
   jack_max = 10,
   gamma = FALSE,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   ...,
   check_arguments = TRUE
 )
@@ -68,6 +70,8 @@ Used only for extrapolation.}
 
 \item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}
+
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
 
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
