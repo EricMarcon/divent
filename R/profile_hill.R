@@ -144,7 +144,7 @@ profile_hill.numeric <- function(
     # Simulate communities
     communities <- rcommunity(
       n_simulations,
-      size = sum(abd_int),
+      abd = abd_int,
       bootstrap = bootstrap,
       check_arguments = FALSE
     )
@@ -211,7 +211,8 @@ profile_hill.species_distribution <- function(
     x, 
     orders = seq(from = 0, to = 2, by = 0.1), 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
+                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
+                  "naive"),
     level = NULL, 
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
