@@ -71,10 +71,21 @@ ent_rao.numeric <- function(
       stop("Either 'distance' or 'tree' must be provided.")
     }
     # Check species names
-    col_names <- colnames(x)
-    species_names <- col_names[!col_names %in% non_species_columns]
-    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")    
+    species_names <- colnames(x)
+    # Prepare the tree
+    tree <- as_phylo_divent(tree)
+    if (is.null(distances)) {
+      # Check species in the tree
+      if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+        stop("Some species are missing in the tree.")    
+      }
+    } else {
+      # Check species in the distance matrix
+      if (!is.null(colnames(distances))) {
+        if (length(setdiff(species_names, colnames(distances))) != 0) {
+          stop("Some species are missing in the distance matrix")    
+        }
+      }
     }
   }
   estimator <- match.arg(estimator) 
@@ -84,13 +95,20 @@ ent_rao.numeric <- function(
     tree <- as_phylo_divent(tree)
     distances <- as.matrix(stats::cophenetic(tree$hclust))
   }
-  # Check that dimensions correspond
-  if (length(x) != ncol(distances)) {
-    stop("The length of 'x' must be equal to the dimension of the distances.")
-  }
   # Normalize
   if (normalize) {
     distances <- distances / max(distances)
+  }
+  
+  if (is.null(colnames(distances))) {
+    # Check that dimensions correspond if the matrix is not named
+    # (then, species are assumed to be in the same order)
+    if (length(x) != ncol(distances)) {
+      stop("The length of 'x' must be equal to the dimension of the distances since the distance matrix does not provide the species names.")
+    }
+  } else {
+    # Reorder x
+    x <- x[colnames(distances)]
   }
   
   # Entropy of a vector of probabilities ----
@@ -196,13 +214,23 @@ ent_rao.species_distribution <- function(
     if (!xor(is.null(distances), is.null(tree))) {
       stop("Either 'distance' or 'tree' must be provided.")
     }
-    # Prepare the tree (may be NULL)
-    tree <- as_phylo_divent(tree)
     # Check species names
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
-    if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")    
+    # Prepare the tree
+    tree <- as_phylo_divent(tree)
+    if (is.null(distances)) {
+      # Check species in the tree
+      if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
+        stop("Some species are missing in the tree.")    
+      }
+    } else {
+      # Check species in the distance matrix
+      if (!is.null(colnames(distances))) {
+        if (length(setdiff(species_names, colnames(distances))) != 0) {
+          stop("Some species are missing in the distance matrix")    
+        }
+      }
     }
   }
   estimator <- match.arg(estimator) 
