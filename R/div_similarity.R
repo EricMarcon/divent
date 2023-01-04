@@ -61,8 +61,8 @@ div_similarity.numeric <- function(
     unveiling = c("geometric", "uniform", "none"),
     jack_alpha  = 0.05, 
     jack_max = 10,
-    sample_coverage = NULL,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    sample_coverage = NULL,
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
@@ -86,6 +86,7 @@ div_similarity.numeric <- function(
     unveiling = unveiling,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     sample_coverage = sample_coverage,
     as_numeric = FALSE,
     check_arguments = FALSE
@@ -114,8 +115,8 @@ div_similarity.species_distribution <- function(
     unveiling = c("geometric", "uniform", "none"),
     jack_alpha  = 0.05, 
     jack_max = 10,
-    gamma = FALSE,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    gamma = FALSE,
     ...,
     check_arguments = TRUE) {
   
