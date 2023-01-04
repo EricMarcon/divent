@@ -20,6 +20,7 @@ profile_hill(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   sample_coverage = NULL,
   as_numeric = FALSE,
   n_simulations = 0,
@@ -41,6 +42,7 @@ profile_hill(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
   richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
   n_simulations = 0,
   alpha = 0.05,
@@ -91,6 +93,8 @@ see \link{div_richness}. Used for interpolation and extrapolation.}
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
 
 \item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}

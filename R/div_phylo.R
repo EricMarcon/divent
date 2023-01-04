@@ -98,6 +98,7 @@ div_phylo.numeric <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     as_numeric = FALSE,
     check_arguments = FALSE
   )
@@ -164,6 +165,7 @@ div_phylo.species_distribution <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha,
     jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     gamma = gamma,
     check_arguments = FALSE
   )

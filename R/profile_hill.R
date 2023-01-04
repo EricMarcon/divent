@@ -1,6 +1,7 @@
 #' Diversity Profile of a Community
 #' 
-#' Calculate the diversity profile of a community, i.e. diversity against its order.
+#' Calculate the diversity profile of a community, i.e. diversity (Hill numbers) 
+#' against its order.
 #' 
 #' A bootstrap confidence interval can be produced by simulating communities 
 #' (their number is `n_simulations`) with [rcommunity] and calculating their profiles. 
@@ -14,7 +15,7 @@
 #' @param ... Unused.
 #'
 #' @examples
-#' div_profile(paracou_6_abd)
+#' profile_hill(paracou_6_abd)
 #'
 #' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
@@ -22,22 +23,22 @@
 #' @references
 #' \insertAllCited{}
 #' 
-#' @name div_profile
+#' @name profile_hill
 NULL
 
 
-#' @rdname div_profile
+#' @rdname profile_hill
 #'
 #' @export
-div_profile <- function(
+profile_hill <- function(
     x, 
     orders = seq(from = 0, to = 2, by = 0.1), 
     ...) {
-  UseMethod("div_profile")
+  UseMethod("profile_hill")
 }
 
 
-#' @rdname div_profile
+#' @rdname profile_hill
 #'
 #' @param orders The orders of diversity used to build the profile.
 #' @param estimator An estimator of entropy. 
@@ -52,7 +53,7 @@ div_profile <- function(
 #' \insertCite{Chao2015;textual}{divent}.
 #' 
 #' @export
-div_profile.numeric <- function(
+profile_hill.numeric <- function(
     x, 
     orders = seq(from = 0, to = 2, by = 0.1), 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
@@ -64,6 +65,7 @@ div_profile.numeric <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     sample_coverage = NULL,
     as_numeric = FALSE,
     n_simulations = 0,
@@ -81,12 +83,13 @@ div_profile.numeric <- function(
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
 
   # Numeric vector, no simulation ----
   if (as_numeric) {
     if (n_simulations > 0) stop ("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
-    the_div_profile <- vapply(
+    the_profile_hill <- vapply(
       orders,
       FUN = function(q) {
         div_hill.numeric(
@@ -99,17 +102,18 @@ div_profile.numeric <- function(
           richness_estimator = richness_estimator,
           jack_alpha  = jack_alpha, 
           jack_max = jack_max, 
+          coverage_estimator = coverage_estimator,
           as_numeric = TRUE,
           check_arguments = FALSE
         )
       },
       FUN.VALUE = 0
     )
-    return(the_div_profile)
+    return(the_profile_hill)
   } 
   
   # Regular output, simulations are allowed ----
-  the_div_profile <- lapply(
+  the_profile_hill <- lapply(
     orders,
     FUN = function(q) {
       div_hill.numeric(
@@ -122,13 +126,14 @@ div_profile.numeric <- function(
         richness_estimator = richness_estimator,
         jack_alpha  = jack_alpha, 
         jack_max = jack_max, 
+        coverage_estimator = coverage_estimator,
         as_numeric = FALSE,
         check_arguments = FALSE
       )
     }
   )
   # Make a tibble with the list
-  the_div_profile <- do.call(rbind.data.frame, the_div_profile)
+  the_profile_hill <- do.call(rbind.data.frame, the_profile_hill)
   
   if (n_simulations > 0) {
     # Simulations ----
@@ -146,7 +151,7 @@ div_profile.numeric <- function(
     # Prepare the progress bar
     pgb <- utils::txtProgressBar(min = 0, max = n_simulations)
     # Prepare the result matrix
-    div_profiles <- matrix(0, nrow = n_simulations, ncol = length(orders))
+    profile_hills <- matrix(0, nrow = n_simulations, ncol = length(orders))
     # Loops are required for the progress bar
     for (i in seq_len(n_simulations)) {
       # Parallelize. Do not allow more forks.
@@ -163,45 +168,46 @@ div_profile.numeric <- function(
             richness_estimator = richness_estimator,
             jack_alpha  = jack_alpha, 
             jack_max = jack_max, 
+            coverage_estimator = coverage_estimator,
             as_numeric = TRUE,
             check_arguments = FALSE
           )
         },
         mc.allow.recursive = FALSE
       )
-      div_profiles[i, ] <- simplify2array(profiles_list)
+      profile_hills[i, ] <- simplify2array(profiles_list)
       if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
     }
     close(pgb)
     # Recenter simulated values
-    div_means <- apply(div_profiles, 2, mean)
-    div_profiles <- t(
-      t(div_profiles) - div_means + the_div_profile$diversity
+    div_means <- apply(profile_hills, 2, mean)
+    profile_hills <- t(
+      t(profile_hills) - div_means + the_profile_hill$diversity
     )
     # Quantiles
     div_quantiles <- apply(
-      div_profiles, 
+      profile_hills, 
       MARGIN = 2, 
       FUN = stats::quantile,
       probs = c(alpha / 2, 1 - alpha / 2)
     )
     # Format the result 
-      the_div_profile <- tibble::tibble(
-        the_div_profile,
+      the_profile_hill <- tibble::tibble(
+        the_profile_hill,
         inf = div_quantiles[1, ],
         sup = div_quantiles[2, ]
       )
   }
-  class(the_div_profile) <- c("profile", class(the_div_profile))
+  class(the_profile_hill) <- c("profile", class(the_profile_hill))
   
-  return(the_div_profile)
+  return(the_profile_hill)
 }
 
 
-#' @rdname div_profile
+#' @rdname profile_hill
 #'
 #' @export
-div_profile.species_distribution <- function(
+profile_hill.species_distribution <- function(
     x, 
     orders = seq(from = 0, to = 2, by = 0.1), 
     estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
@@ -212,6 +218,7 @@ div_profile.species_distribution <- function(
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
     jack_alpha  = 0.05, 
     jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     n_simulations = 0,
     alpha = 0.05,
@@ -228,10 +235,11 @@ div_profile.species_distribution <- function(
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
 
   if (gamma) {
-    the_div_profile <- div_profile.numeric(
+    the_profile_hill <- profile_hill.numeric(
       metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
       # Arguments
       q = q,
@@ -242,6 +250,7 @@ div_profile.species_distribution <- function(
       richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha, 
       jack_max = jack_max, 
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE,
       n_simulations = n_simulations,
       alpha = alpha,
@@ -250,13 +259,13 @@ div_profile.species_distribution <- function(
       check_arguments = FALSE
     )
   } else {
-    # Apply div_profile.numeric() to each site
-    div_profile_list <- apply(
+    # Apply profile_hill.numeric() to each site
+    profile_hill_list <- apply(
       # Eliminate site and weight columns
       x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
       MARGIN = 1,
-      FUN = div_profile.numeric,
+      FUN = profile_hill.numeric,
       # Arguments
       orders = orders,
       estimator = estimator,
@@ -266,6 +275,7 @@ div_profile.species_distribution <- function(
       richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha, 
       jack_max = jack_max, 
+      coverage_estimator = coverage_estimator,
       as_numeric = FALSE,
       n_simulations = n_simulations,
       alpha = alpha,
@@ -274,19 +284,19 @@ div_profile.species_distribution <- function(
       check_arguments = FALSE
     )
     # Make a tibble with sites and profiles
-    the_div_profile <- tibble::tibble(
+    the_profile_hill <- tibble::tibble(
       site = rep(x$site, each = length(orders)),
       # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, div_profile_list)
+      do.call(rbind.data.frame, profile_hill_list)
     )
   }
-  class(the_div_profile) <- c("profile", class(the_div_profile))
+  class(the_profile_hill) <- c("profile", class(the_profile_hill))
   
-  return(the_div_profile)
+  return(the_profile_hill)
 }
 
 
-#' @rdname div_profile
+#' @rdname profile_hill
 #'
 #' @param object An object of class "profile".
 #' @param main The main title of the plot.
