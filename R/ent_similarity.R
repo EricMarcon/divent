@@ -57,7 +57,7 @@ ent_similarity.numeric <- function(
                   "UnveilC", "UnveiliC", "naive"),
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
-     jack_alpha  = 0.05, 
+    jack_alpha  = 0.05, 
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     sample_coverage = NULL,
