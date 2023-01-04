@@ -88,7 +88,7 @@ ent_phylo.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
 
   # Make a species_distribution
-  species_distribution <- as_species_distribution(as.vector(x))
+  species_distribution <- as_species_distribution(x)
   
   # Entropy
   the_entropy <- ent_phylo.species_distribution(
