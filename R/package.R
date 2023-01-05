@@ -91,6 +91,124 @@ non_species_columns <- c(
 # species_names: char vector with the species names of the community
 
 
+#' Abundance in a log-series
+#' 
+#' Abundance of a species in a logseries distribution of given 
+#' size and Fisher's alpha.
+#' 
+#' Adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
+#' 
+#' @param size The number of individuals in the community.
+#' @param alpha_lseries The value of Fisher's alpha.
+#'
+#' @return The number of individuals of the species.
+#' @noRd
+#' 
+abd_lseries <- function(size, alpha_lseries) {
+  # Fisher's x is log-series 1-theta
+  x <- size / (size + alpha_lseries)
+  # Draw a random number between 0 and 1
+  u <- stats::runif(1)
+  # k is the number of individuals to draw
+  k <- 1
+  # Calculate the probability at k=1
+  p <- -x / log(1 - x)
+  # Store it in the distribution function
+  p_cumulated <- p
+  # Repeat while the cumulated probability is below u
+  while (p_cumulated <= u) {
+    # Probability at k+1 obtained from that at k
+    p <- p * k * x / (k + 1)
+    # Increment k
+    k <- k + 1
+    # Increment the cumulated probability
+    p_cumulated <- p_cumulated + p
+  }
+  return(k)
+}
+
+
+#' Solve the beta Parameter of Chao et al. (2015)
+#'
+#' Utilities for [probabilities.numeric].
+#' 
+#' Code inspired from JADE function UndAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
+#' 
+#' @noRd
+#' 
+#' @param beta The parameter to solve.
+#' @param r The squared coverage deficit divided by the coverage deficit of order 2.
+#' @param i The sequence from 1 to the number of species.
+#'
+#' @return The value of the parameter beta to minimize.
+beta_solve <- function(beta, r, i) {
+  return(abs(sum(beta^i)^2 / sum((beta^i)^2) - r))
+}
+
+
+#' Chao's A
+#' 
+#' Helper for Chao's estimators.
+#' 
+#' A's formula \insertCite{@Chao2015@, eq. 6b}{divent}) depends on the presence
+#' of singletons and doubletons.
+#' 
+#' @param abd A vector of positive integers (not checked).
+#'
+#' @return The value of A.
+#' @noRd
+#'
+chao_A <- function(abd) {
+  
+  # Calculate abundance distribution
+  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
+  s_1 <- as.numeric(abd_distribution["1"])
+  s_2 <- as.numeric(abd_distribution["2"])
+  sample_size <- sum(abd)
+  
+  # Calculate A
+  if (is.na(s_1)) {
+    A <- 0
+  } else {
+    # Use Chao1 estimator to evaluate the number of unobserved species
+    if (is.na(s_2)) {
+      s_0 <- (sample_size - 1) * s_1 * (s_1 - 1) / 2 / sample_size
+    } else {
+      s_0 <- (sample_size - 1) * s_1^2 / 2 / sample_size / s_2
+    }
+    A <- 1 - sample_size * s_0 / (sample_size * s_0 + s_1)
+  }
+  
+  return(A)
+}
+
+
+#' Departure of actual sample coverage from target coverage
+#' 
+#' Helper for `coverage_2_size()`
+#' 
+#' @param size The size of the sample. Adjusted to minimize `delta()`.
+#' @param target_coverage The sample coverage to reach by adjusting size.
+#'
+#' @return The departure of actual sample coverage from target coverage.
+#' @noRd
+#'
+chao_delta <- function(
+    abd, 
+    size, 
+    target_coverage) {
+  abs(
+    coverage.numeric(
+      abd, 
+      estimator = "Chao", 
+      level = size, 
+      as_numeric = TRUE,
+      check_arguments = FALSE
+    ) - target_coverage
+  )
+}
+
+
 #' check_divent_args
 #'
 #' Checks the arguments of a function of the package divent
@@ -98,6 +216,9 @@ non_species_columns <- c(
 #' The function compares the arguments passed to its parent function to the type 
 #' they should be and performs some extra tests, *e.g.* probabilities must be positive and sum to 1. 
 #' It stops if an argument is not correct.
+#' 
+#' The function is always called without arguments.
+#' Its arguments exist only for documentation.
 #' 
 #' @param abundances An object of class [abundances].
 #' @param alpha The risk level, 5% by default.
@@ -532,17 +653,283 @@ check_divent_args <- function(
 }
 
 
+#' Gamma Entropy of a matrix Metacommunity
+#' 
+#' `abd` is assumed to be a matrix of abundances, lines are communities.
+#' `weights` are necessary for gamma diversity.
+#' 
+#' See `ent_gamma.species_distribution` for details.
+#'
+#' @param abd A matrix containing abundances or probabilities.
+#' 
+#' @return A number equal to gamma entropy.
+#' @noRd
+#' 
+ent_gamma.matrix <- function(
+    abd,
+    weights,
+    q,
+    estimator,
+    level,
+    probability_estimator,
+    unveiling,
+    richness_estimator,
+    jack_alpha,
+    jack_max,
+    coverage_estimator) {
+  
+  # Build the species distribution
+  species_distribution <- species_distribution(
+    t(abd),
+    weights = weights,
+    check_arguments = FALSE
+  )
+  
+  # Call ent_gamma.species_distribution
+  return(
+    ent_gamma.species_distribution(
+      species_distribution,
+      q = q,
+      estimator = estimator,
+      level = level,
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha = jack_alpha,
+      jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
+      as_numeric = TRUE
+    )
+  )
+}
+
+
+#' Similarity-Based Gamma entropy of a metacommunity
+#' 
+#' `species_distribution` is assumed to be a [species_distribution].
+#' 
+#' See `ent_gamma.species_distribution` for details.
+#' 
+#' @return A tibble with the estimator used and the estimated entropy.
+#' @noRd
+#' 
+ent_gamma_similarity <- function(
+    species_distribution,
+    similarities,
+    q,
+    estimator,
+    probability_estimator,
+    unveiling,
+    jack_alpha,
+    jack_max,
+    coverage_estimator,
+    as_numeric) {
+  
+  # Build the metacommunity
+  abd <- metacommunity(
+    species_distribution, 
+    as_numeric = TRUE, 
+    check_arguments = FALSE
+  )
+  if (is_integer_values(abd)) {
+    # Sample coverage is useless
+    sample_coverage <- NULL
+  } else {
+    # Non-integer values in the metacommunity. 
+    # Calculate the sample coverage and change the estimator.
+    sample_coverage <- coverage.numeric(
+      colSums(
+        species_distribution[
+          , !colnames(species_distribution) %in% non_species_columns
+        ]
+      ),
+      estimator = coverage_estimator,
+      as_numeric = TRUE,
+      check_arguments = FALSE
+    )
+    if (!estimator %in% c("Marcon", "ChaoShen")) {
+      estimator <- "Marcon"
+    }
+  }
+  
+  # Compute the entropy.
+  the_entropy <- ent_similarity.numeric(
+    abd,
+    similarities = similarities,
+    q = q,
+    estimator = estimator,
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    jack_alpha  = jack_alpha,
+    jack_max = jack_max,
+    sample_coverage = sample_coverage,
+    as_numeric = as_numeric,
+    check_arguments = FALSE
+  )
+  # Add the site column
+  if (!as_numeric) {
+    the_entropy <- dplyr::bind_cols(
+      site = "Metacommunity",
+      the_entropy
+    )
+  }
+  return(the_entropy)
+}
+
+
+
+#' Gamma entropy of a metacommunity
+#' 
+#' `distribution` is assumed to be a [species_distribution].
+#' 
+#' Build the metacommunity and check that abundances are integers.
+#' If they are not (due to weights of communities) then use a fallback estimator:
+#' "ChaoShen" requires the sample coverage of the assemblage of sites.
+#' "Grassberger" accepts non integer abundances.
+#' "Marcon" combines both.
+#' 
+#' `ent_tsallis.numeric` contains the only implementation of this estimation.
+#' i.e., `ent_shannon` can't be used but `ent_tsallis.numeric` 
+#' with `q=1` will work fine.
+#' 
+#' @param distribution An object of class `species_distribution`.
+#'
+#' @return A tibble with the estimator used and the estimated entropy.
+#' @noRd
+#' 
+ent_gamma.species_distribution <- function(
+    species_distribution,
+    q,
+    estimator,
+    level,
+    probability_estimator,
+    unveiling,
+    richness_estimator,
+    jack_alpha,
+    jack_max,
+    coverage_estimator,
+    as_numeric) {
+  
+  # Build the metacommunity
+  abd <- metacommunity(
+    species_distribution, 
+    as_numeric = TRUE, 
+    check_arguments = FALSE
+  )
+  if (is_integer_values(abd)) {
+    # Sample coverage is useless
+    sample_coverage <- NULL
+  } else {
+    # Non-integer values in the metacommunity. 
+    # Calculate the sample coverage and change the estimator.
+    sample_coverage <- coverage.numeric(
+      colSums(
+        species_distribution[
+          , !colnames(species_distribution) %in% non_species_columns
+        ]
+      ),
+      estimator = coverage_estimator,
+      as_numeric = TRUE,
+      check_arguments = FALSE
+    )
+    if (!estimator %in% c("Marcon", "ChaoShen")) {
+      estimator <- "Marcon"
+    }
+  }
+  
+  # Compute the entropy. Call the appropriate function for its estimators.
+  # Richness estimators are specific
+  if (q==0 & estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
+    the_diversity <- div_richness.numeric(
+      abd, 
+      estimator = estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      coverage_estimator = coverage_estimator,
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+    # Calculate entropy
+    the_entropy <- dplyr::mutate(
+      the_diversity, 
+      entropy = .data$diversity - 1, 
+      .keep = "unused"
+    )
+    # entropy must be a number if as_numeric = TRUE
+    if (as_numeric) {
+      the_entropy <- the_entropy$entropy
+    }
+  } else if (q==1 & is.null(sample_coverage)) {
+    # Non-integer values in the metacommunity are supported only by ent_tsallis
+    the_entropy <- ent_shannon.numeric(
+      abd,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
+      as_numeric = as_numeric,
+      check_arguments = FALSE
+    )
+  } else if (q==2 & is.null(sample_coverage)) {
+    # Non-integer values in the metacommunity are supported only by ent_tsallis
+    the_entropy <- ent_simpson.numeric(
+      abd,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
+      as_numeric = as_numeric,
+      check_arguments = FALSE
+    )
+  } else {
+    the_entropy <- ent_tsallis.numeric(
+      abd,
+      q = q,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
+      sample_coverage = sample_coverage,
+      as_numeric = as_numeric,
+      check_arguments = FALSE
+    )
+  }
+  # Add the site column
+  if (!as_numeric) {
+    the_entropy <- dplyr::bind_cols(
+      site = "Metacommunity",
+      the_entropy
+    )
+  }
+  return(the_entropy)
+}
+
+
 #' Error message
 #' 
-#' Utility for [check_divent_args]]
+#' Utility for [check_divent_args]
 #' 
-#' @noRd
-#'
 #' @param message The message to print.
 #' @param argument The function argument that did not pass the tests.
 #' @param parent_function The name of the function the argument was passed to.
 #'
 #' @return Nothing
+#' @noRd
+#' 
 error_message <- function(message, argument, parent_function) {
   cat(deparse(substitute(argument)), "cannot be:\n")
   print(utils::head(argument))
@@ -551,18 +938,258 @@ error_message <- function(message, argument, parent_function) {
 }
 
 
-#' Check values of a vector are integers
+#' Unobserved Species Distribution
+#'
+#' Utilities for [probabilities.numeric].
+#' 
+#' @param unveiling The unveiling method.
+#' @param prob_tuned The tuned distribution of probabilities.
+#' @param s_0 The number of unobserved species.
+#' @param sample_coverage The sample coverage. 
+#' @param coverage_deficit_2 The coverage deficit of order 2.
+#'
+#' @return The distribution of probabilities of unobserved species.
+#' @noRd
+#' 
+estimate_prob_s_0 <- function(
+    unveiling, 
+    prob_tuned, 
+    s_0, 
+    sample_coverage, 
+    coverage_deficit_2) {
+  
+  the_prob_s_0 <- NA
+  if (unveiling == "geometric") {
+    if (s_0 == 1) {
+      # A single unobserved species
+      the_prob_s_0 <- 1 - sample_coverage
+    } else {
+      r <- (1 - sample_coverage)^2 / coverage_deficit_2
+      i <- seq_len(s_0)
+      beta <-  tryCatch(
+        stats::optimize(
+          beta_solve, 
+          lower = (r - 1) / (r + 1), 
+          upper = 1, 
+          tol = 10 * .Machine$double.eps, 
+          r, 
+          i
+        )$min, 
+        error = function(e) {(r - 1) / (r + 1)}
+      )
+      alpha <- (1 - sample_coverage) / sum(beta^i)
+      the_prob_s_0 <- alpha * beta^i
+      # Sometimes fails when the distribution is very uneven (sometimes r < 1) 
+      # Then, fall back to the uniform distribution
+      if (any(is.na(the_prob_s_0)) | any(the_prob_s_0 <= 0)) {
+        unveiling <- "uniform"
+      }
+    }
+  }      
+  if (unveiling == "uniform") {
+    # Add s_0 unobserved species with equal probabilities
+    the_prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
+  }
+  if (any(is.na(the_prob_s_0))) {
+    warning("Unveiling method was not recognized")
+    return(NA)
+  } else {
+    names(the_prob_s_0) <- paste("Unobs_sp", seq_along(the_prob_s_0), sep = "_")
+    return(the_prob_s_0)
+  }         
+}
+
+
+#' Check Integers
 #' 
 #' Check that the values of a vector are integer, whatever their type.
 #' 
-#' @noRd
-#'
 #' @param x A numeric vector.
 #'
 #' @return `TRUE` if values are integers.
+#' @noRd
 #'
 is_integer_values <- function (x) {
   x_int <- round(x)
   # Return TRUE if no value in x has been modified by rounding
   return(!any(abs(x_int - x) > sum(x) * .Machine$double.eps))
+}
+
+
+#' Rarefaction Bias
+#' 
+#' Departure of the rarefied entropy from the target entropy.
+#'
+#' Utilities for [probabilities.numeric].
+#'
+#' @param s_0 The number of unobserved species.
+#' @param abd The abundances of species.
+#' @param prob_tuned The tuned distribution of probabilities.
+#' @param sample_coverage The sample coverage.
+#' @param coverage_deficit_2 The coverage deficit of order 2.
+#' @param q The order of entropy to fit.
+#' @param ent_target Target entropy.
+#'
+#' @return The departure of the rarefied entropy from the target entropy.
+#' @noRd
+#'
+rarefaction_bias <- function(
+    s_0,
+    abd, 
+    prob_tuned, 
+    sample_coverage, 
+    coverage_deficit_2, 
+    q, 
+    unveiling, 
+    ent_target) {
+  
+  abd <- abd[abd > 0]
+  sample_size <- sum(abd)
+  # Unobserved species
+  prob_s_0 <- estimate_prob_s_0(
+    unveiling, 
+    prob_tuned, 
+    s_0, 
+    sample_coverage, 
+    coverage_deficit_2
+  )
+  # Full distribution of probabilities
+  prob <- c(prob_tuned, prob_s_0)
+  # abundances_freq_count at level = sample_size
+  s_nu <- vapply(
+    seq_len(sample_size), 
+    function(nu) {
+      sum(
+        exp(
+          lchoose(sample_size, nu) + nu * log(prob) + 
+            (sample_size - nu) * log(1 - prob)
+        )
+      )
+    }, 
+    FUN.VALUE=0
+  )
+  # Get entropy at level=sample_size and calculate the bias
+  if (q == 1) {
+    the_ent_bias <- abs(
+      sum(
+        -seq_len(sample_size) / sample_size * 
+          log(seq_len(sample_size) / sample_size) * s_nu
+      ) 
+      - ent_target
+    )
+  } else {
+    the_ent_bias <- abs(
+      (sum((seq_len(sample_size)/sample_size)^q * s_nu) - 1) / (1 - q) 
+      - ent_target
+    )
+  }
+  return(the_ent_bias)
+}
+
+
+#' Check Similarity Matrix
+#' 
+#' Verify that a similarity matrix fits a species distribution and filter it
+#' so that its elements are the same, in the same order.
+#'
+#' @param similarities A similarity matrix
+#' @param species_distribution A species distribution, or a named vector.
+#'
+#' @return A similarity matrix that corresponds to the species distribution.
+#' @noRd
+#'
+similarities_checked <- function(
+    similarities,
+    species_distribution) {
+  
+  # No names needed
+  if (
+    # No names in the matrix
+    is.null(colnames(similarities)) | 
+    # No names in the distribution that may be a tibble or a vector
+    (is.null(colnames(species_distribution)) & is.null(names(species_distribution)))
+  ) {
+    # Similarities may not be named
+    if (ncol(similarities) != length(species_names)) {
+      stop("If the similarity matrix is not named, then its size must fit the number of species.")
+    } else {
+      # Do not change the similarities
+      return(similarities)
+    }
+  }
+  
+  # Get species names
+  if (is_species_distribution(species_distribution)) {
+    is_species_column <- !colnames(species_distribution) %in% non_species_columns
+    species_names <- colnames(species_distribution)[is_species_column]
+  } else if (is.vector(species_distribution)) {
+    species_names <- names(species_distribution)
+  }
+  
+  # Stop if some species are not in the matrix of similarities
+  if (length(species_names) == 0) stop("There are no species in the distribution")
+  if (length(setdiff(species_names, colnames(similarities))) != 0) {
+    stop("Some species are missing in the similarity matrix.")    
+  } 
+  
+  # Filter and reorder the similarity matrix
+  return(similarities[species_names, species_names])
+}
+
+
+
+#' Sum of Products Weighted by w_v
+#' 
+#' Utility for the Marcon-Zhang estimator of similarity-based entropy.
+#'
+#' @param species_index The species to consider (from 1 to `s_obs`)
+#' @param abd An vector of abundances.
+#' @param sample_size The sample size.
+#' @param w_v A weight.
+#' @param p_V_Ns An intermediate computation.
+#'
+#' @return A number.
+#' @noRd
+S_v <- function(
+    species_index,
+    abd,
+    sample_size,
+    w_v,
+    p_V_Ns
+) {
+  v_used <- seq_len(sample_size - abd[species_index])
+  return (sum(w_v[v_used] * p_V_Ns[v_used, species_index]))
+}
+
+#' Solve the theta parameter of Chao et al. (2015)
+#' 
+#' Utilities for [probabilities.numeric].
+#' 
+#' Code inspired from JADE function DetAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
+#' 
+#' @noRd
+#'
+#' @param theta The parameter to solve.
+#' @param prob A vector of probabilities (not checked).
+#' @param abd A vector of positive integers (not checked).
+#' @param sample_size The number of individuals in the sample.
+#' @param sample_coverage The sample coverage. 
+#' @param coverage_deficit_2 The coverage deficit of order 2.
+#'
+#' @return The value of the parameter theta to minimize.
+theta_solve <- function(
+    theta, 
+    prob, 
+    abd, 
+    sample_size, 
+    sample_coverage, 
+    coverage_deficit_2) {
+  
+  lambda <- (1 - sample_coverage) / sum(prob * exp(-theta * abd))
+  return(
+    abs(
+      sum((prob * (1 - lambda * exp(-theta * abd)))^2) - 
+        sum(choose(abd, 2) / choose(sample_size, 2)) + coverage_deficit_2
+    )
+  )
 }
