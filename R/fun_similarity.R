@@ -34,6 +34,11 @@ fun_similarity <- function (
       stop("Row and column names must be identical in 'distances'.")
     }
   }
+  
+  if (inherits(distances, "dist")) {
+    # dist objects are supported but the remainder assumes a matrix
+    distances <- as.matrix(distances)
+  }
 
   if (is.null(colnames(distances))) {
     ### Add default species names such as sp_1

@@ -105,7 +105,7 @@ non_species_columns <- c(
 #' @param check_arguments If `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param coverage_estimator An estimator of sample coverage used by [coverage].
-#' @param distances A distance matrix.
+#' @param distances A distance matrix or an object of class [stats::dist]
 #' @param estimator An estimator of asymptotic entropy, diversity or richness.
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
@@ -233,7 +233,7 @@ check_divent_args <- function(
   # distances
   if (!is.na(names(args["distances"]))) {
     distances <- eval(expression(distances), parent.frame())
-    if (!is.null(distances)) {
+    if (!is.null(distances) && !inherits(distances, "dist")) {
       if (!is.numeric(distances)) {
         error_message(
           "distances must be a numeric",
