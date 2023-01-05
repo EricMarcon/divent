@@ -68,7 +68,7 @@ ent_similarity.numeric <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-    similarities <- similarities_checked(similarities, x)
+    similarities <- checked_matrix(similarities, x)
   }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
@@ -336,5 +336,97 @@ ent_similarity.numeric <- function(
         entropy = the_entropy
       )
     )  
+  }
+}
+
+
+#' @rdname ent_similarity
+#'
+#' @export
+ent_similarity.species_distribution <- function(
+    x, 
+    similarities = diag(sum(!colnames(x) %in% non_species_columns)),
+    q = 1, 
+    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang", 
+                  "UnveilC", "UnveiliC", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    jack_alpha  = 0.05, 
+    jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    gamma = FALSE,
+    ...,
+    check_arguments = TRUE) {
+  
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    similarities <- checked_matrix(similarities, x)
+  }
+  estimator <- match.arg(estimator) 
+  probability_estimator <- match.arg(probability_estimator) 
+  unveiling <- match.arg(unveiling) 
+  coverage_estimator <- match.arg(coverage_estimator)
+  
+  # Check species names
+  is_species_column <- !colnames(x) %in% non_species_columns
+  species_names <- colnames(x)[is_species_column]
+  # Similarities may not be named
+  if (is.null(colnames(similarities))) {
+    if (ncol(similarities) != length(species_names)) {
+      stop("If the similarity matrix is not named, then its size must fit the number of species.")
+    }
+  } else {
+    if (length(setdiff(species_names, colnames(similarities))) != 0) {
+      stop("Some species are missing in the similarity matrix.")    
+    } else {
+      # Filter and reorder the similarity matrix
+      similarities <- similarities[species_names, species_names]
+    }
+  }
+  
+  if (gamma) {
+    return(
+      ent_gamma_similarity(
+        species_distribution = x,
+        similarities = similarities,
+        q = q,
+        estimator = estimator,
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        jack_alpha  = jack_alpha,
+        jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
+        as_numeric = FALSE
+      )
+    )
+  } else {
+    # Apply ent_similarity.numeric() to each site
+    ent_similarity_list <- apply(
+      # Eliminate site and weight columns
+      x[, !colnames(x) %in% non_species_columns], 
+      # Apply to each row
+      MARGIN = 1,
+      FUN = ent_similarity.numeric,
+      # Arguments
+      similarities = similarities,
+      q = q,
+      estimator = estimator,
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+    return(
+      # Make a tibble with site, estimator and entropy
+      tibble::tibble(
+        # Restore non-species columns
+        x[colnames(x) %in% non_species_columns],
+        # Coerce the list returned by apply into a dataframe
+        do.call(rbind.data.frame, ent_similarity_list)
+      )
+    )
   }
 }

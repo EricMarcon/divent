@@ -70,7 +70,7 @@ div_similarity.numeric <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-    similarities <- similarities_checked(similarities, x)
+    similarities <- checked_matrix(similarities, x)
   }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
@@ -123,7 +123,7 @@ div_similarity.species_distribution <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-    similarities <- similarities_checked(similarities, x)
+    similarities <- checked_matrix(similarities, x)
   }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 

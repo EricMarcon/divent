@@ -37,7 +37,7 @@ fun_ordinariness <- function (
   if (any(check_arguments)) {
     check_divent_args()
     # Check species names
-    similarities <- similarities_checked(similarities, species_distribution)
+    similarities <- checked_matrix(similarities, species_distribution)
   }
 
   # Calculate species probabilities
