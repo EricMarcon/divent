@@ -7,9 +7,9 @@
 #' 
 #' All species of the `species_distribution` must be found in the matrix of 
 #' `similarities` if it is named.
-#' If it is not, its size must equal the number of species.
+#' If it is not or if `x` is numeric, its size must equal the number of species.
 #' Then, the order of species is assumed to be the same as that of the
-#' `species_distribution`.
+#' `species_distribution` or its numeric equivalent.
 #' 
 #' Similarity-Based entropy can't be interpolated of extrapolated as of the
 #' state of the art.
@@ -361,30 +361,15 @@ ent_similarity.species_distribution <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-    similarities <- checked_matrix(similarities, x)
   }
   estimator <- match.arg(estimator) 
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator)
   
-  # Check species names
-  is_species_column <- !colnames(x) %in% non_species_columns
-  species_names <- colnames(x)[is_species_column]
-  # Similarities may not be named
-  if (is.null(colnames(similarities))) {
-    if (ncol(similarities) != length(species_names)) {
-      stop("If the similarity matrix is not named, then its size must fit the number of species.")
-    }
-  } else {
-    if (length(setdiff(species_names, colnames(similarities))) != 0) {
-      stop("Some species are missing in the similarity matrix.")    
-    } else {
-      # Filter and reorder the similarity matrix
-      similarities <- similarities[species_names, species_names]
-    }
-  }
-  
+  # Check species names and reorder the matrix to fit the names
+  similarities <- checked_matrix(similarities, x)
+
   if (gamma) {
     return(
       ent_gamma_similarity(

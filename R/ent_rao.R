@@ -9,6 +9,12 @@
 #' [ent_phylo] and [ent_similarity] with argument `q = 2` provide more estimators
 #' and allow estimating entropy at a chosen level.
 #'
+#' All species of the `species_distribution` must be found in the matrix of 
+#' `distances` if it is named.
+#' If it is not or if `x` is numeric, its size must equal the number of species.
+#' Then, the order of species is assumed to be the same as that of the
+#' `species_distribution` or its numeric equivalent.
+#' 
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
@@ -25,14 +31,8 @@
 #' # Similar to (but estimators are not the same) 
 #' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 #' 
-#' # Entropy of each community
+#' # Functional entropy
 #' ent_rao(paracou_6_abd, distances = paracou_6_fundist)
-#' # Similar to (but estimators are not the same) 
-#' ent_similarity(
-#'   paracou_6_abd, 
-#'   similarities = fun_similarity(paracou_6_fundist), 
-#'   q = 2
-#' )
 #' 
 #' # gamma entropy
 #' ent_rao(paracou_6_abd, tree = paracou_6_taxo, gamma = TRUE)
@@ -81,6 +81,10 @@ ent_rao.numeric <- function(
       }
     } else {
       # Check species in the distance matrix
+      if (inherits(distances, "dist")) {
+        # dist objects are supported but the remainder assumes a matrix
+        distances <- as.matrix(distances)
+      }
       if (!is.null(colnames(distances))) {
         if (length(setdiff(species_names, colnames(distances))) != 0) {
           stop("Some species are missing in the distance matrix")    
@@ -90,25 +94,17 @@ ent_rao.numeric <- function(
   }
   estimator <- match.arg(estimator) 
   
-  # Calculate distances from tree
+  # Prepare the distance matrix
   if (is.null(distances)) {
+    # Calculate distances from tree
     tree <- as_phylo_divent(tree)
     distances <- as.matrix(stats::cophenetic(tree$hclust))
   }
+  # Reorder the distance matrix
+  distances <- checked_matrix(distances, x)
   # Normalize
   if (normalize) {
     distances <- distances / max(distances)
-  }
-  
-  if (is.null(colnames(distances))) {
-    # Check that dimensions correspond if the matrix is not named
-    # (then, species are assumed to be in the same order)
-    if (length(x) != ncol(distances)) {
-      stop("The length of 'x' must be equal to the dimension of the distances since the distance matrix does not provide the species names.")
-    }
-  } else {
-    # Reorder x
-    x <- x[colnames(distances)]
   }
   
   # Entropy of a vector of probabilities ----
@@ -226,6 +222,10 @@ ent_rao.species_distribution <- function(
       }
     } else {
       # Check species in the distance matrix
+      if (inherits(distances, "dist")) {
+        # dist objects are supported but the remainder assumes a matrix
+        distances <- as.matrix(distances)
+      }
       if (!is.null(colnames(distances))) {
         if (length(setdiff(species_names, colnames(distances))) != 0) {
           stop("Some species are missing in the distance matrix")    
@@ -233,8 +233,13 @@ ent_rao.species_distribution <- function(
       }
     }
   }
-  estimator <- match.arg(estimator) 
-
+  estimator <- match.arg(estimator)
+  
+  if (!is.null(distances)) {
+    # Check species names and reorder the matrix to fit the names
+    distances <- checked_matrix(distances, x)
+  }
+    
   if (gamma) {
     # Build the metacommunity
     abd <- metacommunity(

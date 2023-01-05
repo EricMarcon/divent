@@ -660,7 +660,7 @@ check_divent_args <- function(
 #' 
 #' If species names are missing, just check the dimensions.
 #'
-#' @param sim_dist_matrix A similarity or distance matrix
+#' @param sim_dist_matrix A similarity or distance matrix, or a [stats::dist].
 #' @param species_distribution A species distribution, or a named vector.
 #'
 #' @return A similarity matrix that corresponds to the species distribution.
@@ -670,6 +670,11 @@ checked_matrix <- function(
     sim_dist_matrix,
     species_distribution) {
   
+  if (inherits(sim_dist_matrix, "dist")) {
+    # dist objects are supported but the remainder assumes a matrix
+    sim_dist_matrix <- as.matrix(sim_dist_matrix)
+  }
+  
   # No names needed
   if (
     # No names in the matrix
@@ -678,11 +683,11 @@ checked_matrix <- function(
     (is.null(colnames(species_distribution)) & is.null(names(species_distribution)))
   ) {
     # The matrix may not be named
-    if (ncol(sim_dist_matrix) != length(species_names)) {
-      stop("If the similarity matrix is not named, then its size must fit the number of species.")
-    } else {
+    if (ncol(sim_dist_matrix) == length(species_distribution)) {
       # Do not change the matrix
       return(sim_dist_matrix)
+    } else {
+      stop("If the similarity matrix is not named, then its size must fit the number of species.")
     }
   }
   
@@ -702,57 +707,6 @@ checked_matrix <- function(
   
   # Filter and reorder the similarity matrix
   return(sim_dist_matrix[species_names, species_names])
-}
-
-
-#' Gamma Entropy of a matrix Metacommunity
-#' 
-#' `abd` is assumed to be a matrix of abundances, lines are communities.
-#' `weights` are necessary for gamma diversity.
-#' 
-#' See `ent_gamma.species_distribution` for details.
-#'
-#' @param abd A matrix containing abundances or probabilities.
-#' 
-#' @return A number equal to gamma entropy.
-#' @noRd
-#' 
-ent_gamma.matrix <- function(
-    abd,
-    weights,
-    q,
-    estimator,
-    level,
-    probability_estimator,
-    unveiling,
-    richness_estimator,
-    jack_alpha,
-    jack_max,
-    coverage_estimator) {
-  
-  # Build the species distribution
-  species_distribution <- species_distribution(
-    t(abd),
-    weights = weights,
-    check_arguments = FALSE
-  )
-  
-  # Call ent_gamma.species_distribution
-  return(
-    ent_gamma.species_distribution(
-      species_distribution,
-      q = q,
-      estimator = estimator,
-      level = level,
-      probability_estimator = probability_estimator,
-      unveiling = unveiling,
-      richness_estimator = richness_estimator,
-      jack_alpha = jack_alpha,
-      jack_max = jack_max,
-      coverage_estimator = coverage_estimator,
-      as_numeric = TRUE
-    )
-  )
 }
 
 
@@ -1061,12 +1015,122 @@ estimate_prob_s_0 <- function(
 #' @return `TRUE` if values are integers.
 #' @noRd
 #'
-is_integer_values <- function (x) {
+is_integer_values <- function(x) {
   x_int <- round(x)
   # Return TRUE if no value in x has been modified by rounding
   return(!any(abs(x_int - x) > sum(x) * .Machine$double.eps))
 }
 
+
+#' Phylogenetic abundances
+#' 
+#' Calculate abundances of species and their ancestors along a phylogenetic tree.
+#' 
+#' @return A list of matrices. 
+#' Each matrix contains the abundances of species (in lines) of each community
+#' (in columns) in an interval of the tree.
+#' @noRd
+#'
+phylo_abd <- function(
+    abundances,
+    tree) {
+
+  # Calculate abundances along the tree, that are a list of matrices
+  sapply(
+    # Each phylogenetic group yields an item of the list
+    colnames(tree$phylo_groups), 
+    function(group) {
+      # Create a matrix with the abundances of groups in each community
+      apply(
+        abundances[, !colnames(abundances) %in% non_species_columns], 
+        # Each community yields a column of the matrix
+        MARGIN = 1, 
+        FUN = function(abd) {
+          tapply(
+            as.numeric(abd), 
+            # Each group yields a row of the matrix
+            INDEX = tree$phylo_groups[names(abd), group], 
+            FUN = sum
+          )
+        }
+      )
+    }, 
+    simplify = FALSE
+  )
+}
+  
+
+#' Phylogenetic entropies
+#' 
+#' Calculate entropies of a list of phylogenetic abundances (obtained by 
+#' [phylo_abd]).
+#' Each item of the list corresponds to a phylogenetic group, i.e. an interval
+#' of the tree (where the species do not change).
+#' 
+#' @param phylo_abd A list of matrices of abundance (caution: lines are species,
+#' columns are communities).
+#'
+#' @return A vector
+#'  
+#' @noRd
+#'
+phylo_entropy.phylo_abd <- function(
+    phylo_abd,
+    tree,
+    normalize,
+    # Arguments for ent_tsallis.numeric
+    q,
+    estimator,
+    level, 
+    probability_estimator,
+    unveiling,
+    richness_estimator,
+    jack_alpha, 
+    jack_max,
+    coverage_estimator) {
+ 
+  # Calculate entropy of each community in each group.
+  # simplify2array() makes a matrix with the list of vectors.
+  phylo_entropies <- simplify2array(
+    lapply(
+      # Calculate entropy in each item of the list, i.e. group.
+      # Obtain a list.
+      phylo_abd,
+      FUN = function(group) {
+        apply(
+          group,
+          # Calculate entropy of each column of the matrix, i.e. community.
+          MARGIN = 2,
+          FUN = ent_tsallis.numeric,
+          # Arguments
+          q = q,
+          estimator = estimator,
+          level = level, 
+          probability_estimator = probability_estimator,
+          unveiling = unveiling,
+          richness_estimator = richness_estimator,
+          jack_alpha  = jack_alpha, 
+          jack_max = jack_max,
+          coverage_estimator = coverage_estimator,
+          # Obtain a vector.
+          as_numeric = TRUE,
+          check_arguments = FALSE
+        )
+      }
+    )
+  )
+  # Should be a matrix, but simplify2array() makes a vector instead of a 1-col 
+  # matrix. Force a matrix.
+  if(is.vector(phylo_entropies)) {
+    phylo_entropies <- t(phylo_entropies)
+  }
+  
+  # Calculate the weighted mean of entropy and normalize
+  the_entropy <- as.numeric(tree$intervals %*% t(phylo_entropies))
+  if (normalize) the_entropy <- the_entropy / sum(tree$intervals)
+  
+  return(the_entropy)
+}
 
 #' Rarefaction Bias
 #' 
