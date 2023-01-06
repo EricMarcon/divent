@@ -45,6 +45,7 @@ non_species_columns <- c(
 #'
 #' @format An object of class [abundances], which is also a [tibble::tibble].
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
+#' @seealso [paracou_6_taxo], [paracou_6_fundist]
 "paracou_6_abd"
 
 
@@ -58,6 +59,7 @@ non_species_columns <- c(
 #'
 #' @format An object of class [ape::phylo], which is a phylogenetic tree.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
+#' @seealso [paracou_6_abd], [paracou_6_fundist]
 "paracou_6_taxo"
 
 
@@ -72,6 +74,7 @@ non_species_columns <- c(
 #'
 #' @format A matrix.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
+#' @seealso [paracou_6_abd], [paracou_6_taxo]
 "paracou_6_fundist"
 
 
@@ -1075,11 +1078,12 @@ phylo_abd <- function(
 #' @noRd
 #'
 phylo_entropy.phylo_abd <- function(
+    # Allow lapply along q
+    q,
     phylo_abd,
     tree,
     normalize,
-    # Arguments for ent_tsallis.numeric
-    q,
+    # Other arguments for ent_tsallis.numeric
     estimator,
     level, 
     probability_estimator,
