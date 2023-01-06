@@ -31,6 +31,8 @@ non_species_columns <- c(
   "comments"
 )
 
+
+
 #  Data ----
 #' Paracou plot 6
 #'
@@ -46,8 +48,8 @@ non_species_columns <- c(
 #' @format An object of class [abundances], which is also a [tibble::tibble].
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
 #' @seealso [paracou_6_taxo], [paracou_6_fundist]
+#' 
 "paracou_6_abd"
-
 
 #' Taxonomy of Paracou plot 6 species
 #'
@@ -60,6 +62,7 @@ non_species_columns <- c(
 #' @format An object of class [ape::phylo], which is a phylogenetic tree.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
 #' @seealso [paracou_6_abd], [paracou_6_fundist]
+#' 
 "paracou_6_taxo"
 
 
@@ -75,7 +78,32 @@ non_species_columns <- c(
 #' @format A matrix.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
 #' @seealso [paracou_6_abd], [paracou_6_taxo]
+#' 
 "paracou_6_fundist"
+
+
+#' Mock data
+#'
+#' A simple dataset to test diversity functions.
+#'
+#' `mock_3sp_abd` is a vector of abundance, `mock_3sp_dist` their distance 
+#' matrix and `mock_3sp_tree` their phylogenetic tree.
+#'
+#' @name mock_3sp
+#' @examples 
+#' mock_3sp_abd
+#' mock_3sp_dist
+#' plot(mock_3sp_tree)
+#' axis(2)
+#' 
+"mock_3sp_abd"
+
+#' @rdname  mock_3sp
+"mock_3sp_dist"
+
+#' @rdname  mock_3sp
+"mock_3sp_tree"
+
 
 
 #  Utilities ----
