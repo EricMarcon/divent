@@ -278,6 +278,8 @@ probabilities.numeric <- function(
     }
   }
   
+  # Eliminate zero-probabilities
+  the_prob <- the_prob[the_prob !=0]
   # Set the class and return ----
   if (as_numeric) {
     return(the_prob)
