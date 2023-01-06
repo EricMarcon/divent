@@ -21,4 +21,7 @@ Distances in the tree are 1 (different species of the same genus),
 \details{
 This dataset is from Paracou field station, French Guiana, managed by \href{https://www.cirad.fr}{Cirad}.
 }
+\seealso{
+\link{paracou_6_abd}, \link{paracou_6_fundist}
+}
 \keyword{datasets}

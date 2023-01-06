@@ -22,4 +22,7 @@ wood density, seed mass and 95th percentile of height. Gower's metric
 \details{
 This dataset is from Paracou field station, French Guiana, managed by \href{https://www.cirad.fr}{Cirad}.
 }
+\seealso{
+\link{paracou_6_abd}, \link{paracou_6_taxo}
+}
 \keyword{datasets}

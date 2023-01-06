@@ -24,4 +24,7 @@ Data are the number of trees above 10 cm diameter at breast height (DBH).
 \details{
 This dataset is from Paracou field station, French Guiana, managed by \href{https://www.cirad.fr}{Cirad}.
 }
+\seealso{
+\link{paracou_6_taxo}, \link{paracou_6_fundist}
+}
 \keyword{datasets}

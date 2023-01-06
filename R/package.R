@@ -85,9 +85,11 @@ non_species_columns <- c(
 #' Mock data
 #'
 #' A simple dataset to test diversity functions.
+#' It contains 3 species with their abundances, their distance matrix and
+#' their phylogenetic tree.
 #'
-#' `mock_3sp_abd` is a vector of abundance, `mock_3sp_dist` their distance 
-#' matrix and `mock_3sp_tree` their phylogenetic tree.
+#' @format `mock_3sp_abd` is a vector, `mock_3sp_dist` a matrix and 
+#' `mock_3sp_tree` an object of class [ape::phylo].
 #'
 #' @name mock_3sp
 #' @examples 

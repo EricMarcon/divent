@@ -7,7 +7,7 @@
 fun_similarity(distances, exponential = TRUE, rate = 1, check_arguments = TRUE)
 }
 \arguments{
-\item{distances}{A distance matrix.}
+\item{distances}{A distance matrix or an object of class \link[stats:dist]{stats::dist}}
 
 \item{exponential}{If \code{TRUE}, similarity is \eqn{e^{-r \delta}},
 where \eqn{r} is argument \code{rate}.

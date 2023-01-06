@@ -64,7 +64,7 @@ Used only for extrapolation.}
 
 \item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
 
-\item{distances}{A distance matrix.}
+\item{distances}{A distance matrix or an object of class \link[stats:dist]{stats::dist}}
 
 \item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 
@@ -92,5 +92,8 @@ Checks the arguments of a function of the package divent
 The function compares the arguments passed to its parent function to the type
 they should be and performs some extra tests, \emph{e.g.} probabilities must be positive and sum to 1.
 It stops if an argument is not correct.
+
+The function is always called without arguments.
+Its arguments exist only for documentation.
 }
 \keyword{internal}

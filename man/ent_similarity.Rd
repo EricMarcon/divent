@@ -92,9 +92,9 @@ Bias correction requires the number of individuals.
 \details{
 All species of the \code{species_distribution} must be found in the matrix of
 \code{similarities} if it is named.
-If it is not, its size must equal the number of species.
+If it is not or if \code{x} is numeric, its size must equal the number of species.
 Then, the order of species is assumed to be the same as that of the
-\code{species_distribution}.
+\code{species_distribution} or its numeric equivalent.
 
 Similarity-Based entropy can't be interpolated of extrapolated as of the
 state of the art.

@@ -36,7 +36,7 @@ or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{...}{Unused.}
 
-\item{distances}{A distance matrix.}
+\item{distances}{A distance matrix or an object of class \link[stats:dist]{stats::dist}}
 
 \item{tree}{An ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
@@ -65,6 +65,12 @@ incomplete sampling.
 Rao's entropy is phylogenetic or similarity-based entropy of order 2.
 \link{ent_phylo} and \link{ent_similarity} with argument \code{q = 2} provide more estimators
 and allow estimating entropy at a chosen level.
+
+All species of the \code{species_distribution} must be found in the matrix of
+\code{distances} if it is named.
+If it is not or if \code{x} is numeric, its size must equal the number of species.
+Then, the order of species is assumed to be the same as that of the
+\code{species_distribution} or its numeric equivalent.
 }
 \examples{
 # Entropy of each community
@@ -72,14 +78,8 @@ ent_rao(paracou_6_abd, tree = paracou_6_taxo)
 # Similar to (but estimators are not the same) 
 ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 
-# Entropy of each community
+# Functional entropy
 ent_rao(paracou_6_abd, distances = paracou_6_fundist)
-# Similar to (but estimators are not the same) 
-ent_similarity(
-  paracou_6_abd, 
-  similarities = fun_similarity(paracou_6_fundist), 
-  q = 2
-)
 
 # gamma entropy
 ent_rao(paracou_6_abd, tree = paracou_6_taxo, gamma = TRUE)
