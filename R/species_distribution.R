@@ -684,7 +684,9 @@ as_abundances.numeric <- function(
   }
 
   if (round) {
+    the_names <- names(x)
     x <- as.integer(round(x))
+    names(x) <- the_names
   }
 
   the_abundances <- as_species_distribution(x, check_arguments = FALSE)
