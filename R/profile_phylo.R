@@ -96,128 +96,37 @@ profile_phylo.numeric <- function(
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
-  
-  # Numeric vector, no simulation ----
-  if (as_numeric) {
-    if (n_simulations > 0) stop ("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
-    the_profile_phylo <- vapply(
-      orders,
-      FUN = function(q) {
-        div_phylo.numeric(
-          x,
-          tree = tree,
-          q = q,
-          normalize = normalize,
-          estimator = estimator,
-          level = level, 
-          probability_estimator = probability_estimator,
-          unveiling = unveiling,
-          richness_estimator = richness_estimator,
-          jack_alpha  = jack_alpha, 
-          jack_max = jack_max, 
-          coverage_estimator = coverage_estimator,
-          as_numeric = TRUE,
-          check_arguments = FALSE
-        )
-      },
-      FUN.VALUE = 0
-    )
-    return(the_profile_phylo)
-  } 
-  
-  # Regular output, simulations are allowed ----
-  the_profile_phylo <- lapply(
-    orders,
-    FUN = function(q) {
-      div_phylo.numeric(
-        x,
-        tree = tree,
-        q = q,
-        normalize = normalize,
-        estimator = estimator,
-        level = level, 
-        probability_estimator = probability_estimator,
-        unveiling = unveiling,
-        richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha, 
-        jack_max = jack_max, 
-        coverage_estimator = coverage_estimator,
-        as_numeric = FALSE,
-        check_arguments = FALSE
-      )
-    }
-  )
-  # Make a tibble with the list
-  the_profile_phylo <- do.call(rbind.data.frame, the_profile_phylo)
-  
-  if (n_simulations > 0) {
-    # Simulations ----
-    if (!is_integer_values(x)) {
-      warning("Evaluation of the confidence interval of community profiles requires integer abundances. They have been rounded.")
-    }
-    abd_int <- round(x)
-    # Simulate communities
-    communities <- rcommunity(
-      n_simulations,
-      abd = abd_int,
-      bootstrap = bootstrap,
-      check_arguments = FALSE
-    )
-    # Prepare the progress bar
-    pgb <- utils::txtProgressBar(min = 0, max = n_simulations)
-    # Prepare the result matrix
-    profile_phylos <- matrix(0, nrow = n_simulations, ncol = length(orders))
-    # Loops are required for the progress bar
-    for (i in seq_len(n_simulations)) {
-      # Parallelize. Do not allow more forks.
-      profiles_list <- parallel::mclapply(
-        orders, 
-        FUN = function(q) {
-          div_phylo.numeric(
-            communities[i, !colnames(communities) %in% non_species_columns], 
-            tree = tree,
-            q = q,
-            normalize = normalize,
-            estimator = estimator,
-            level = level, 
-            probability_estimator = probability_estimator,
-            unveiling = unveiling,
-            richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha, 
-            jack_max = jack_max, 
-            coverage_estimator = coverage_estimator,
-            as_numeric = TRUE,
-            check_arguments = FALSE
-          )
-        },
-        mc.allow.recursive = FALSE
-      )
-      profile_phylos[i, ] <- simplify2array(profiles_list)
-      if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
-    }
-    close(pgb)
-    # Recenter simulated values
-    div_means <- apply(profile_phylos, 2, mean)
-    profile_phylos <- t(
-      t(profile_phylos) - div_means + the_profile_phylo$diversity
-    )
-    # Quantiles
-    div_quantiles <- apply(
-      profile_phylos, 
-      MARGIN = 2, 
-      FUN = stats::quantile,
-      probs = c(alpha / 2, 1 - alpha / 2)
-    )
-    # Format the result 
-    the_profile_phylo <- tibble::tibble(
-      the_profile_phylo,
-      inf = div_quantiles[1, ],
-      sup = div_quantiles[2, ]
-    )
+  if (as_numeric && n_simulations > 0) {
+    stop ("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
   }
-  class(the_profile_phylo) <- c("profile", class(the_profile_phylo))
   
-  return(the_profile_phylo)
+  # Call the .species_distribution method
+  the_profile_phylo <- profile_phylo.species_distribution(
+    x = as_species_distribution.numeric(x), 
+    tree = tree, 
+    orders = orders, 
+    normalize = normalize,
+    estimator = estimator,
+    level = level, 
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    richness_estimator = richness_estimator,
+    jack_alpha  = jack_alpha, 
+    jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
+    gamma = FALSE,
+    n_simulations = n_simulations,
+    alpha = alpha,
+    bootstrap = bootstrap,
+    show_progress = show_progress,
+    check_arguments = FALSE
+  )
+    
+  if (as_numeric) {
+    return(the_profile_phylo$diversity)
+  } else {
+    return(the_profile_phylo)
+  }
 }
 
 
@@ -266,62 +175,195 @@ profile_phylo.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
   
+  # Calculate abundances along the tree, that are a list of matrices
+  the_phylo_abd <- phylo_abd(abundances = x, tree = tree)
+  
+  # Prepare an array to store diversity (3 dimensions: x, y, z)
+  # and simulated entropies (4 dimensions : x, y, z, t)
+  # x are tree intervals, y are communities, z are orders, 
+  # t are quantiles of simulations, inf and sup.
   if (gamma) {
-    the_profile_phylo <- profile_phylo.numeric(
-      metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
-      # Arguments
-      tree = tree,
-      q = q,
-      normalize = normalize,
-      estimator = estimator,
-      level = level, 
-      probability_estimator = probability_estimator,
-      unveiling = unveiling,
-      richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha, 
-      jack_max = jack_max, 
-      coverage_estimator = coverage_estimator,
-      as_numeric = FALSE,
-      n_simulations = n_simulations,
-      alpha = alpha,
-      bootstrap = bootstrap,
-      show_progress = show_progress,
-      check_arguments = FALSE
-    )
+    n_communities <- 1
   } else {
-    # Apply profile_phylo.numeric() to each site
-    profile_phylo_list <- apply(
-      # Eliminate site and weight columns
-      x[, !colnames(x) %in% non_species_columns], 
-      # Apply to each row
-      MARGIN = 1,
-      FUN = profile_phylo.numeric,
-      # Arguments
-      tree = tree,
-      orders = orders,
-      normalize = normalize,
-      level = level, 
-      probability_estimator = probability_estimator,
-      unveiling = unveiling,
-      richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha, 
-      jack_max = jack_max, 
-      coverage_estimator = coverage_estimator,
-      as_numeric = FALSE,
-      n_simulations = n_simulations,
-      alpha = alpha,
-      bootstrap = bootstrap,
-      show_progress = show_progress,
-      check_arguments = FALSE
-    )
-    # Make a tibble with sites and profiles
-    the_profile_phylo <- tibble::tibble(
-      site = rep(x$site, each = length(orders)),
-      # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, profile_phylo_list)
+    n_communities <- nrow(x)
+  }
+  ent_phylo_abd <- array(
+    dim = c(length(tree$intervals), nrow(x), length(orders))
+  )
+  if (n_simulations > 0) {
+    ent_phylo_sim <- array(
+      dim = c(length(tree$intervals), nrow(x), length(orders), 2)
     )
   }
-  class(the_profile_phylo) <- c("profile", class(the_profile_phylo))
   
+  # Prepare the progress bar
+  pgb <- utils::txtProgressBar(
+    min = 0, 
+    max = length(the_phylo_abd) * n_communities * length(orders)
+  )
+  
+  # Calculate entropy along the tree
+  for (x_interval in seq_along(the_phylo_abd)) {
+    # Intervals are items of the list
+    if (gamma) {
+      abd <- metacommunity(
+        the_phylo_abd[[x_interval]] # TODO : all arguments
+      )
+      # TODO : metacommunity.numeric. ! abd must be a column matrix
+    } else {
+      abd <- the_phylo_abd[[x_interval]]
+    }
+    for (y_community in seq_len(n_communities)) {
+      # Abundances are in columns: abd[, y_community]
+      if (n_simulations > 0) {
+        # Simulate communities
+        comm_sim <- rcommunity(
+          n_simulations,
+          abd = abd[, y_community],
+          bootstrap = bootstrap,
+          check_arguments = FALSE
+        )
+      }
+      for (z_order in seq_along(orders)) {
+        # Actual data
+        ent_phylo_abd[x_interval, y_community, z_order] <- ent_tsallis.numeric(
+          x = abd[, y_community],
+          q = orders[z_order],
+          estimator = estimator,
+          level = level, 
+          probability_estimator = probability_estimator,
+          unveiling = unveiling,
+          richness_estimator = richness_estimator,
+          jack_alpha  = jack_alpha, 
+          jack_max = jack_max, 
+          coverage_estimator = coverage_estimator,
+          as_numeric = TRUE,
+          check_arguments = FALSE
+        )
+        if (n_simulations > 0) {
+          # Simulated communities
+          ent_sim <- ent_tsallis.species_distribution(
+            x = comm_sim,
+            q = orders[z_order],
+            estimator = estimator,
+            level = level, 
+            probability_estimator = probability_estimator,
+            unveiling = unveiling,
+            richness_estimator = richness_estimator,
+            jack_alpha  = jack_alpha, 
+            jack_max = jack_max, 
+            coverage_estimator = coverage_estimator,
+            check_arguments = FALSE
+          )
+          # Quantiles, recentered
+          ent_phylo_sim[x_interval, y_community, z_order, ] <- stats::quantile(
+            ent_sim$entropy, 
+            probs = c(alpha / 2, 1 - alpha / 2)
+          ) - mean(ent_sim$entropy) + 
+            ent_phylo_abd[x_interval, y_community, z_order]
+          # Progress bar
+        }
+      }
+      if (show_progress & interactive()) {
+        utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
+      }
+    }
+  }
+  close(pgb)
+
+  # Average entropy
+  # Actual data
+  ent_community <- apply(
+    ent_phylo_abd,
+    MARGIN = 2:3,
+    FUN = stats::weighted.mean,
+    # Arguments
+    w = tree$intervals
+  )
+  if (!is.matrix(ent_community)) {
+    # With a single community, the_entropy is a numeric vector 
+    ent_community <- t(as.matrix(ent_community))
+  }
+  # Simulations
+  if (n_simulations > 0) {
+    ent_quantiles <- apply(
+      ent_phylo_sim,
+      MARGIN = 2:4,
+      FUN = stats::weighted.mean,
+      # Arguments
+      w = tree$intervals
+    )
+  }
+  
+  # Format the result
+  the_profile_phylo <- div.tibble(
+    ent.matrix = ent_community, 
+    x = x, 
+    orders = orders
+  )
+  if (n_simulations > 0) {
+    div_inf <- div.tibble(
+      ent.matrix = ent_quantiles[, , 1], 
+      x = x, 
+      orders = orders
+    )
+    div_sup <- div.tibble(
+      ent.matrix = ent_quantiles[, , 2], 
+      x = x, 
+      orders = orders
+    )
+    the_profile_phylo <- dplyr::bind_cols(
+      the_profile_phylo,
+      inf = div_inf$diversity,
+      sup = div_sup$diversity
+    )
+  }
+  
+  class(the_profile_phylo) <- c("profile", class(the_profile_phylo))
   return(the_profile_phylo)
+}
+
+
+#' Make a long tibble with a matrix
+#' 
+#' Utility for [profile_phylo.species_distribution]
+#'
+#' @param ent.matrix The matrix of entropies. 
+#' Rows are communities, columns are orders of diversity.
+#' @param x The species distribution.
+#' @param orders The orders of diversity
+#'
+#' @return A tibble. Columns are "site", "order" and "diversity".
+#' @noRd
+#'
+div.tibble <- function(ent.matrix, x, orders) {
+  
+  # Make a tibble with site names and entropies.
+  # Columns are orders of diversity
+  ent.tibble <- tibble::tibble(
+    site = x$site,
+    data.frame(ent.matrix)
+  )
+  colnames(ent.tibble)[-1] <- as.character(orders)
+  # Make a long tibble with an "order" column
+  ent.tibble <- tidyr::pivot_longer(
+    ent.tibble,
+    cols = !site,
+    names_to = "order",
+    names_transform = list(order = as.numeric),
+    values_to = "entropy"
+  )
+  # Calculate diversity
+  the_div.tibble <- dplyr::mutate(
+    ent.tibble, 
+    diversity = exp_q(.data$entropy, q = order),
+    .keep = "all"
+  )
+  # Eliminate the "entropy" column
+  the_div.tibble <- dplyr::select(
+    the_div.tibble,
+    -entropy
+  )
+  # Return
+  return(the_div.tibble)
 }
