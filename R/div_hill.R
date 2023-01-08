@@ -132,8 +132,13 @@ div_hill.numeric <- function(
     diversity = exp_q(.data$entropy, q = q),
     .keep = "unused"
   )
+  
   # return the diversity
-  return(the_diversity)
+  if (as_numeric) {
+    return(the_diversity$diversity)
+  } else {
+    return(the_diversity)
+  }
 }
 
 
