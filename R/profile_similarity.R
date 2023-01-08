@@ -36,7 +36,7 @@ NULL
 profile_similarity <- function(
     x, 
     similarities,
-    q = 1,
+    orders = seq(from = 0, to = 2, by = 0.1), 
     ...) {
   UseMethod("profile_similarity")
 }
@@ -165,10 +165,8 @@ profile_similarity.numeric <- function(
             similarities = similarities,
             q = q, 
             estimator = estimator,
-            level = level, 
             probability_estimator = probability_estimator,
             unveiling = unveiling,
-            richness_estimator = richness_estimator,
             jack_alpha  = jack_alpha, 
             jack_max = jack_max, 
             coverage_estimator = coverage_estimator,
@@ -273,7 +271,6 @@ profile_similarity.species_distribution <- function(
       orders = orders, 
       probability_estimator = probability_estimator,
       unveiling = unveiling,
-      richness_estimator = richness_estimator,
       jack_alpha  = jack_alpha, 
       jack_max = jack_max, 
       coverage_estimator = coverage_estimator,

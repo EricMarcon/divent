@@ -263,9 +263,9 @@ profile_phylo.species_distribution <- function(
             ent_phylo_abd[x_interval, y_community, z_order]
           # Progress bar
         }
-      }
-      if (show_progress & interactive()) {
-        utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
+        if (show_progress & interactive()) {
+          utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
+        }
       }
     }
   }
@@ -348,7 +348,7 @@ div.tibble <- function(ent.matrix, x, orders) {
   # Make a long tibble with an "order" column
   ent.tibble <- tidyr::pivot_longer(
     ent.tibble,
-    cols = !site,
+    cols = !.data$site,
     names_to = "order",
     names_transform = list(order = as.numeric),
     values_to = "entropy"
@@ -356,13 +356,13 @@ div.tibble <- function(ent.matrix, x, orders) {
   # Calculate diversity
   the_div.tibble <- dplyr::mutate(
     ent.tibble, 
-    diversity = exp_q(.data$entropy, q = order),
+    diversity = exp_q(.data$entropy, q = .data$order),
     .keep = "all"
   )
   # Eliminate the "entropy" column
   the_div.tibble <- dplyr::select(
     the_div.tibble,
-    -entropy
+    -.data$entropy
   )
   # Return
   return(the_div.tibble)
