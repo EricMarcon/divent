@@ -88,6 +88,7 @@ rcommunity <- function(
   # Generate a distribution (prob and abd are null) or use prob or build probabilities from abd
   if (is.null(prob) & is.null(abd)) {
     # Draw in a distribution
+    name <- distribution
     if (distribution == "lseries") {
       # Draw probabilities, except for logseries: draw abundances.
       the_abd <- t(
@@ -111,7 +112,10 @@ rcommunity <- function(
         bstick = c(cuts <- sort(stats::runif(species_number - 1)), 1) - c(0, cuts)
       )
     }
-  } 
+  } else {
+    # Simulation from a distribution
+    name <- ifelse(is.null(prob), "prob", "abd")
+  }
   if (!is.null(prob)) {
     # Probabilities are given
     the_prob <- prob[prob != 0]
@@ -151,7 +155,7 @@ rcommunity <- function(
     as_abundances.matrix(
       the_abd,
       names = paste(
-        distribution, 
+        name, 
         1:n,
         sep = "_"
       ),
