@@ -1,4 +1,4 @@
-# divent 0.3-6
+# divent 0.3-7
 
 ## Features
 
@@ -7,7 +7,6 @@
 - Rao's quadratic entropy: `ent_rao()`.
 
 ## TODO
-- `div_profile()` for phylogenetic and functional diversities.
 - `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
 - `div_profile.species_distribution(gamma = TRUE)`: add support for non-integer abundances.
 

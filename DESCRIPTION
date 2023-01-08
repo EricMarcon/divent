@@ -23,6 +23,7 @@ Imports:
   rlang,
   stats,
   tibble,
+  tidyr,
   vegan
 Suggests: 
   ade4,
