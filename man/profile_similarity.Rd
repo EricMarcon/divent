@@ -6,7 +6,12 @@
 \alias{profile_similarity.species_distribution}
 \title{Similarity-Based Diversity Profile of a Community}
 \usage{
-profile_similarity(x, similarities, q = 1, ...)
+profile_similarity(
+  x,
+  similarities,
+  orders = seq(from = 0, to = 2, by = 0.1),
+  ...
+)
 
 \method{profile_similarity}{numeric}(
   x,
@@ -57,11 +62,9 @@ or an object of class \link{abundances} or \link{probabilities}.}
 \item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.
 Its default value is the identity matrix.}
 
-\item{q}{The order of diversity.}
+\item{orders}{The orders of diversity used to build the profile.}
 
 \item{...}{Unused.}
-
-\item{orders}{The orders of diversity used to build the profile.}
 
 \item{estimator}{An estimator of entropy.}
 

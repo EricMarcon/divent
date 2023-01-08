@@ -27,10 +27,12 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' # Entropy of each community
-#' ent_similarity(paracou_6_abd, q = 2)
-#' # gamma entropy
-#' ent_similarity(paracou_6_abd, q = 2, gamma = TRUE)
+#' # Similarity matrix
+#' Z <- fun_similarity(paracou_6_fundist)
+#' # Diversity of each community
+#' ent_similarity(paracou_6_abd, similarities = Z, q = 2)
+#' # gamma diversity
+#' ent_similarity(paracou_6_abd, similarities = Z, q = 2, gamma = TRUE)
 #' 
 #' @name ent_similarity
 NULL

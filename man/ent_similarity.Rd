@@ -100,10 +100,12 @@ Similarity-Based entropy can't be interpolated of extrapolated as of the
 state of the art.
 }
 \examples{
-# Entropy of each community
-ent_similarity(paracou_6_abd, q = 2)
-# gamma entropy
-ent_similarity(paracou_6_abd, q = 2, gamma = TRUE)
+# Similarity matrix
+Z <- fun_similarity(paracou_6_fundist)
+# Diversity of each community
+ent_similarity(paracou_6_abd, similarities = Z, q = 2)
+# gamma diversity
+ent_similarity(paracou_6_abd, similarities = Z, q = 2, gamma = TRUE)
 
 }
 \references{

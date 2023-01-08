@@ -8,7 +8,8 @@
 \alias{mock_3sp_tree}
 \title{Mock data}
 \format{
-An object of class \code{integer} of length 3.
+\code{mock_3sp_abd} is a vector, \code{mock_3sp_dist} a matrix and
+\code{mock_3sp_tree} an object of class \link[ape:read.tree]{ape::phylo}.
 
 An object of class \code{dist} of length 3.
 
@@ -23,10 +24,8 @@ mock_3sp_tree
 }
 \description{
 A simple dataset to test diversity functions.
-}
-\details{
-\code{mock_3sp_abd} is a vector of abundance, \code{mock_3sp_dist} their distance
-matrix and \code{mock_3sp_tree} their phylogenetic tree.
+It contains 3 species with their abundances, their distance matrix and
+their phylogenetic tree.
 }
 \examples{
 mock_3sp_abd
