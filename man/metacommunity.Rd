@@ -31,6 +31,8 @@ a matrix of abundances with communities in rows and species in columns.}
 
 \item{name}{The name of the metacommunity}
 
+\item{...}{Unused.}
+
 \item{weights}{The weights of the sites of the species distributions.}
 
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
