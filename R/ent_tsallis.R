@@ -9,7 +9,7 @@
 #' Entropy can be estimated at a specified level of interpolation or 
 #' extrapolation, either a chosen sample size or sample coverage 
 #' \insertCite{Chao2014}{divent}, rather than its asymptotic value.
-#' See [ent_accum] for details.
+#' See [accum_tsallis] for details.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,

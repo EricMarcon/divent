@@ -99,7 +99,7 @@ More estimators can be found in the \strong{entropy} package.
 Entropy can be estimated at a specified level of interpolation or
 extrapolation, either a chosen sample size or sample coverage
 \insertCite{Chao2014}{divent}, rather than its asymptotic value.
-See \link{ent_accum} for details.
+See \link{accum_tsallis} for details.
 }
 \examples{
 # Entropy of each community

@@ -163,7 +163,8 @@ They generalize the classical Species Accumulation Curves (SAC) which are
 diversity accumulation of order \eqn{q=0}.
 }
 \examples{
-autoplot(accum_phylo_div(paracou_6_abd))
+# TODO
+# autoplot(accum_phylo_div(paracou_6_abd, tree = paracou_6_taxo))
 
 }
 \references{

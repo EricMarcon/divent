@@ -33,7 +33,8 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' autoplot(accum_phylo_div(paracou_6_abd))
+#' # TODO
+#' # autoplot(accum_phylo_div(paracou_6_abd, tree = paracou_6_taxo))
 #' 
 #' @name accum_phylo_div
 NULL

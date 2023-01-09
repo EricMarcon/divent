@@ -94,7 +94,7 @@ Simpson-specific estimator is from \insertCite{Lande1996;textual}{divent}.
 Entropy can be estimated at a specified level of interpolation or
 extrapolation, either a chosen sample size or sample coverage
 \insertCite{Chao2014}{divent}, rather than its asymptotic value.
-See \link{ent_accum} for details.
+See \link{accum_tsallis} for details.
 }
 \examples{
 # Entropy of each community
