@@ -212,7 +212,8 @@ profile_phylo.species_distribution <- function(
         as_numeric = TRUE,
         check_arguments = FALSE
       )
-      # TODO : metacommunity.numeric. ! abd must be a column matrix
+      # abd must be a one-column matrix
+      abd <- t(as.matrix(abd))
     } else {
       abd <- the_phylo_abd[[x_interval]]
     }

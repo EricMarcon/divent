@@ -19,7 +19,8 @@
 #' a matrix of abundances with communities in rows and species in columns.
 #' @param name The name of the metacommunity
 #'
-#' @return An object of class [abundances] with a single row.
+#' @return An object of class [abundances] with a single row or a named vector
+#' if `as_numeric = TRUE`.
 #' 
 #' @examples
 #' metacommunity(paracou_6_abd)
@@ -80,7 +81,8 @@ metacommunity.matrix <- function(
   }
   
   if (as_numeric) {
-    return(abd)
+    # Return a named vector
+    return(abd[1, ])
   } else {
     # Build the tibble
     the_metacommunity <- tibble::as_tibble(
