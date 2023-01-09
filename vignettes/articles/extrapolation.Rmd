@@ -162,7 +162,7 @@ Diversity profiles are usually asymptotic but they can be calculated at any cove
 
 ```{r}
 # Diversity at levels from 1 to twice the sample size
-div_profile(paracou_6_abd[1, ], level = paracou6_1_size * 1.5) %>% 
+profile_hill(paracou_6_abd[1, ], level = paracou6_1_size * 1.5) %>% 
   autoplot()
 ```
 
