@@ -1,4 +1,4 @@
-# divent 0.3-7
+# divent 0.3-8
 
 ## Features
 
@@ -7,8 +7,7 @@
 - Rao's quadratic entropy: `ent_rao()`.
 
 ## TODO
-- `div_profile` requires integer abundances for its confidence envelope but `gamma` argument is ignored.
-- `div_profile.species_distribution(gamma = TRUE)`: add support for non-integer abundances.
+- Check gamma = TRUE in div_ and ant_ functions, and in profile_ functions.
 
 
 # divent 0.2-5
