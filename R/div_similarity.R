@@ -130,55 +130,24 @@ div_similarity.species_distribution <- function(
   unveiling <- match.arg(unveiling) 
   coverage_estimator <- match.arg(coverage_estimator) 
 
-  if (gamma) {
-    # Calculate gamma entropy
-    the_entropy <- ent_gamma_similarity(
-      species_distribution = x,
-      similarities = similarities,
-      q = q,
-      estimator = estimator,
-      probability_estimator = probability_estimator,
-      unveiling = unveiling,
-      jack_alpha  = jack_alpha,
-      jack_max = jack_max,
-      coverage_estimator = coverage_estimator,
-      as_numeric = FALSE
-    )
-    # Calculate diversity
-    the_diversity <- dplyr::mutate(
-      the_entropy, 
-      diversity = exp_q(.data$entropy, q = q),
-      .keep = "unused"
-    )
-    # return the diversity
-    return(the_diversity)
-  } else {
-    # Apply div_similarity.numeric() to each site
-    div_similarity_list <- apply(
-      # Eliminate site and weight columns
-      x[, !colnames(x) %in% non_species_columns], 
-      # Apply to each row
-      MARGIN = 1,
-      FUN = div_similarity.numeric,
-      # Arguments
-      similarities = similarities,
-      q = q,
-      estimator = estimator,
-      probability_estimator = probability_estimator,
-      unveiling = unveiling,
-      jack_alpha  = jack_alpha, 
-      jack_max = jack_max, 
-      as_numeric = FALSE,
-      check_arguments = FALSE
-    )
-    return(
-      # Make a tibble with site, estimator and richness
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
-        do.call(rbind.data.frame, div_similarity_list)
-      )
-    )
-  }
+  the_entropy <- ent_similarity.species_distribution(
+    x, 
+    similarities = similarities,
+    q = q, 
+    estimator = estimator,
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    jack_alpha  = jack_alpha, 
+    jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
+    check_arguments = FALSE
+  )
+  # Calculate diversity
+  the_diversity <- dplyr::mutate(
+    the_entropy, 
+    diversity = exp_q(.data$entropy, q = q),
+    .keep = "unused"
+  )
+  
+  return(the_diversity)
 }

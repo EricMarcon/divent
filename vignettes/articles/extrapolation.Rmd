@@ -108,7 +108,7 @@ Continuity of the estimation of diversity around the actual sample size is guara
 
 ```{r}
 # Simpson diversity at levels from 0.9 to 1.1 times the sample size
-div_accum(
+accum_hill(
   paracou_6_abd[1, ],
   q = 2,
   levels = round(0.9 * paracou6_1_size):round(1.1 * paracou6_1_size)) %>% 

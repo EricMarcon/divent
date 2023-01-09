@@ -175,6 +175,6 @@ div_phylo.species_distribution <- function(
     diversity = exp_q(.data$entropy, q = q),
     .keep = "unused"
   )
-  # return the diversity
+
   return(the_diversity)
 }
