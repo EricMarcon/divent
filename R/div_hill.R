@@ -174,7 +174,7 @@ div_hill.species_distribution <- function(
 
   if (gamma) {
     # Calculate gamma entropy
-    the_entropy <- ent_gamma.species_distribution(
+    the_entropy <- ent_gamma_hill(
       species_distribution = x,
       q = q,
       estimator = estimator,

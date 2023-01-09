@@ -662,100 +662,25 @@ checked_matrix <- function(
 }
 
 
-#' Similarity-Based Gamma entropy of a metacommunity
-#' 
-#' `species_distribution` is assumed to be a [species_distribution].
-#' 
-#' See `ent_gamma.species_distribution` for details.
-#' 
-#' @return A tibble with the estimator used and the estimated entropy.
-#' @noRd
-#' 
-ent_gamma_similarity <- function(
-    species_distribution,
-    similarities,
-    q,
-    estimator,
-    probability_estimator,
-    unveiling,
-    jack_alpha,
-    jack_max,
-    coverage_estimator,
-    as_numeric) {
-  
-  # Build the metacommunity
-  abd <- metacommunity.abundances(
-    species_distribution, 
-    as_numeric = TRUE, 
-    check_arguments = FALSE
-  )
-  if (is_integer_values(abd)) {
-    # Sample coverage is useless
-    sample_coverage <- NULL
-  } else {
-    # Non-integer values in the metacommunity. 
-    # Calculate the sample coverage and change the estimator.
-    sample_coverage <- coverage.numeric(
-      colSums(
-        species_distribution[
-          , !colnames(species_distribution) %in% non_species_columns
-        ]
-      ),
-      estimator = coverage_estimator,
-      as_numeric = TRUE,
-      check_arguments = FALSE
-    )
-    if (!estimator %in% c("Marcon", "ChaoShen")) {
-      estimator <- "Marcon"
-    }
-  }
-  
-  # Compute the entropy.
-  the_entropy <- ent_similarity.numeric(
-    abd,
-    similarities = similarities,
-    q = q,
-    estimator = estimator,
-    probability_estimator = probability_estimator,
-    unveiling = unveiling,
-    jack_alpha  = jack_alpha,
-    jack_max = jack_max,
-    sample_coverage = sample_coverage,
-    as_numeric = as_numeric,
-    check_arguments = FALSE
-  )
-  # Add the site column
-  if (!as_numeric) {
-    the_entropy <- dplyr::bind_cols(
-      site = "Metacommunity",
-      the_entropy
-    )
-  }
-  return(the_entropy)
-}
-
-
-
 #' Gamma entropy of a metacommunity
 #' 
-#' `distribution` is assumed to be a [species_distribution].
-#' 
 #' Build the metacommunity and check that abundances are integers.
+#' 
 #' If they are not (due to weights of communities) then use a fallback estimator:
 #' "ChaoShen" requires the sample coverage of the assemblage of sites.
 #' "Grassberger" accepts non integer abundances.
 #' "Marcon" combines both.
 #' 
-#' `ent_tsallis.numeric` contains the only implementation of this estimation.
-#' i.e., `ent_shannon` can't be used but `ent_tsallis.numeric` 
+#' [ent_tsallis.numeric] contains the only implementation of this estimation.
+#' i.e., [ent_shannon] can't be used but [ent_tsallis.numeric] 
 #' with `q=1` will work fine.
 #' 
-#' @param distribution An object of class `species_distribution`.
+#' @param species_distribution An object of class [species_distribution].
 #'
 #' @return A tibble with the estimator used and the estimated entropy.
 #' @noRd
 #' 
-ent_gamma.species_distribution <- function(
+ent_gamma_hill <- function(
     species_distribution,
     q,
     estimator,
@@ -874,6 +799,84 @@ ent_gamma.species_distribution <- function(
     )
   }
   return(the_entropy)
+}
+
+
+#' Similarity-Based Gamma entropy of a metacommunity
+#' 
+#' Build the metacommunity and check that abundances are integers.
+#' 
+#' See [ent_gamma_hill] for details.
+#' @param species_distribution An object of class [species_distribution].
+#' 
+#' @return A tibble with the estimator used and the estimated entropy.
+#' @noRd
+#' 
+ent_gamma_similarity <- function(
+    species_distribution,
+    similarities,
+    q,
+    estimator,
+    probability_estimator,
+    unveiling,
+    jack_alpha,
+    jack_max,
+    coverage_estimator,
+    as_numeric) {
+  
+  # Build the metacommunity
+  abd <- metacommunity.abundances(
+    species_distribution, 
+    as_numeric = TRUE, 
+    check_arguments = FALSE
+  )
+  if (is_integer_values(abd)) {
+    # Sample coverage is useless
+    sample_coverage <- NULL
+  } else {
+    # Non-integer values in the metacommunity. 
+    # Calculate the sample coverage and change the estimator.
+    sample_coverage <- coverage.numeric(
+      colSums(
+        species_distribution[
+          , !colnames(species_distribution) %in% non_species_columns
+        ]
+      ),
+      estimator = coverage_estimator,
+      as_numeric = TRUE,
+      check_arguments = FALSE
+    )
+    if (!estimator %in% c("Marcon", "ChaoShen")) {
+      estimator <- "Marcon"
+    }
+  }
+  
+  # Compute the entropy.
+  the_entropy <- ent_similarity.numeric(
+    abd,
+    similarities = similarities,
+    q = q,
+    estimator = estimator,
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    jack_alpha  = jack_alpha,
+    jack_max = jack_max,
+    sample_coverage = sample_coverage,
+    as_numeric = as_numeric,
+    check_arguments = FALSE
+  )
+  
+  # Return
+  if (as_numeric) {
+    return(the_entropy)
+  } else {
+    return(
+      dplyr::bind_cols(
+        site = "Metacommunity",
+        the_entropy
+      )
+    )
+  }
 }
 
 

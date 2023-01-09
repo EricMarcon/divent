@@ -671,7 +671,7 @@ ent_tsallis.species_distribution <- function(
 
   if (gamma) {
     return(
-      ent_gamma.species_distribution(
+      ent_gamma_hill(
         species_distribution = x,
         q = q,
         estimator = estimator,

@@ -567,7 +567,7 @@ ent_shannon.species_distribution <- function(
 
   if (gamma) {
     return(
-      ent_gamma.species_distribution(
+      ent_gamma_hill(
         species_distribution = x,
         q = 1,
         estimator = estimator,
