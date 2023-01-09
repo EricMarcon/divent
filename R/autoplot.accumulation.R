@@ -4,7 +4,7 @@
 #' accumulation functions.
 #'
 #' @param object An object of class "accumulation".
-#' @param ... 
+#' @param ...  Unused.
 #' @param main The main title of the plot.
 #' @param xlab The label of the x-axis.
 #' @param ylab The label of the y-axis.

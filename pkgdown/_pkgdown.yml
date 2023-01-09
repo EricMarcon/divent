@@ -20,6 +20,9 @@ reference:
   - title: Entropy
     contents:
     - starts_with("ent_")
+  - title: Diversity accumulations
+    contents:
+    - starts_with("accum_")
   - title: Diversity profiles
     contents:
     - starts_with("profile_")
