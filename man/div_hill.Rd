@@ -135,7 +135,7 @@ Providing the \code{sample_coverage} argument allows applying the \code{ChaoShen
 Diversity can be estimated at a specified level of interpolation or
 extrapolation, either a chosen sample size or sample coverage
 \insertCite{Chao2014}{divent}, rather than its asymptotic value.
-See \link{div_accum} for details.
+See \link{accum_hill} for details.
 }
 \examples{
 # Diversity of each community

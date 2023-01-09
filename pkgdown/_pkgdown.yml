@@ -29,8 +29,14 @@ reference:
   - title: Functional features
     contents:
     - starts_with("fun_") 
-  - title: Other statistics from species distributions 
+  - title: Plots
     contents:
+    - starts_with("autoplot.") 
+    - starts_with("plot.") 
+  - title: Statistics from species distributions 
+    contents:
+    - abd_freq_count
+    - abd_species
     - fit_rac
     - sample_coverage
   - title: Classes
@@ -41,8 +47,6 @@ reference:
     - phylo_divent
   - title: Utilities
     contents:
-    - abd_freq_count
-    - abd_species
     - exp_q
     - ln_q
     - e_n_q

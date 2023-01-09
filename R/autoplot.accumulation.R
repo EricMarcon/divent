@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' # Species accumulation curve
-#' autoplot(div_accum(mock_3sp_abd))
+#' autoplot(accum_hill(mock_3sp_abd))
 #' 
 autoplot.accumulation <-  function(
     object, 

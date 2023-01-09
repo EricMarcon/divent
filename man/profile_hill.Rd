@@ -4,7 +4,6 @@
 \alias{profile_hill}
 \alias{profile_hill.numeric}
 \alias{profile_hill.species_distribution}
-\alias{autoplot.profile}
 \title{Diversity Profile of a Community}
 \usage{
 profile_hill(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
@@ -51,18 +50,6 @@ profile_hill(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
   ...,
   check_arguments = TRUE
 )
-
-\method{autoplot}{profile}(
-  object,
-  ...,
-  main = NULL,
-  xlab = "Order of Diversity",
-  ylab = "Diversity",
-  shade_color = "grey75",
-  alpha = 0.3,
-  lty = ggplot2::GeomLine$default_aes$linetype,
-  lwd = ggplot2::GeomLine$default_aes$linewidth
-)
 }
 \arguments{
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
@@ -103,7 +90,7 @@ Used to calculate the gamma diversity of meta-communities, see details.}
 
 \item{n_simulations}{The number of simulations used to estimate the confidence envelope of the profile.}
 
-\item{alpha}{The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).}
+\item{alpha}{The risk level, 5\% by default, of the confidence envelope of the profile.}
 
 \item{bootstrap}{The method used to obtain the probabilities to generate
 bootstrapped communities from observed abundances.
@@ -119,20 +106,6 @@ If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
 \item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
-
-\item{object}{An object of class "profile".}
-
-\item{main}{The main title of the plot.}
-
-\item{xlab}{The label of the x-axis.}
-
-\item{ylab}{The label of the y-axis.}
-
-\item{shade_color}{The color of the shaded confidence envelopes.}
-
-\item{lty}{The line type of the curves.}
-
-\item{lwd}{The line width of the curves.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated diversity at each order.

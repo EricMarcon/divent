@@ -128,12 +128,12 @@ The default arguments of all functions apply this strategy, except for Simpson's
 Diversity Accumulation Curves (DAC) are a generalization of the well-known Species Accumulation Curves (SAC).
 They represent diversity as a function of sample size.
 
-The `div_accum()` function allows to build them.
+The `accum_hill()` function allows to build them.
 A bootstrap confidence interval can be calculated around the estimated DAC by simulating random multinomial draws of the asymptotic distribution at each sample size.
 
-```{r}
+```{r accum_hill}
 # Diversity at levels from 1 to twice the sample size
-div_accum(
+accum_hill(
   paracou_6_abd[1, ], 
   q = 1, 
   levels = seq_len(1.1 * paracou6_1_size), 
