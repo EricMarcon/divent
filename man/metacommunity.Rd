@@ -2,19 +2,29 @@
 % Please edit documentation in R/metacommunity.R
 \name{metacommunity}
 \alias{metacommunity}
+\alias{metacommunity.matrix}
+\alias{metacommunity.abundances}
 \title{Aggregate communities into a metacommunity}
 \usage{
-metacommunity(
-  abundances,
+metacommunity(x, name = "metacommunity", ...)
+
+\method{metacommunity}{matrix}(
+  x,
   name = "metacommunity",
+  weights = rep(1, nrow(x)),
   as_numeric = FALSE,
   check_arguments = TRUE
 )
+
+\method{metacommunity}{abundances}(x, name = "metacommunity", check_arguments = TRUE)
 }
 \arguments{
-\item{abundances}{An object of class \link{abundances} that contains several communities.}
+\item{x}{An object of class \link{abundances} that contains several communities or
+a matrix of abundances with communities in rows and species in columns.}
 
 \item{name}{The name of the metacommunity}
+
+\item{weights}{The weights of the sites of the species distributions.}
 
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
@@ -41,6 +51,8 @@ of the sample coverage of each community allow "ChaoShen" and "Grassberger"
 estimators.
 }
 \examples{
+metacommunity(paracou_6_abd)
+
 metacommunity(paracou_6_abd)
 
 }

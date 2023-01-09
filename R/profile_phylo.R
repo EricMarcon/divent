@@ -206,8 +206,11 @@ profile_phylo.species_distribution <- function(
   for (x_interval in seq_along(the_phylo_abd)) {
     # Intervals are items of the list
     if (gamma) {
-      abd <- metacommunity(
-        the_phylo_abd[[x_interval]] # TODO : all arguments
+      abd <- metacommunity.matrix(
+        x = t(the_phylo_abd[[x_interval]]),
+        name = "metacommunity",
+        as_numeric = TRUE,
+        check_arguments = FALSE
       )
       # TODO : metacommunity.numeric. ! abd must be a column matrix
     } else {

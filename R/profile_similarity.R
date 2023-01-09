@@ -241,7 +241,11 @@ profile_similarity.species_distribution <- function(
   
   if (gamma) {
     the_profile_similarity <- profile_similarity.numeric(
-      metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
+      metacommunity.abundances(
+        x = x, 
+        as_numeric = TRUE, 
+        check_arguments = FALSE
+      ),
       # Arguments
       similarities = similarities,
       orders = orders, 

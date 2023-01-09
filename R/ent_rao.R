@@ -242,7 +242,7 @@ ent_rao.species_distribution <- function(
     
   if (gamma) {
     # Build the metacommunity
-    abd <- metacommunity(
+    abd <- metacommunity.abundances(
       x, 
       as_numeric = TRUE, 
       check_arguments = FALSE

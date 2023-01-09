@@ -241,7 +241,11 @@ profile_hill.species_distribution <- function(
 
   if (gamma) {
     the_profile_hill <- profile_hill.numeric(
-      metacommunity(x, as_numeric = TRUE, check_arguments = FALSE),
+      metacommunity.abundances(
+        x = x, 
+        as_numeric = TRUE, 
+        check_arguments = FALSE
+      ),
       # Arguments
       q = q,
       estimator = estimator,

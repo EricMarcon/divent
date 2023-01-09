@@ -765,7 +765,7 @@ ent_gamma_similarity <- function(
     as_numeric) {
   
   # Build the metacommunity
-  abd <- metacommunity(
+  abd <- metacommunity.abundances(
     species_distribution, 
     as_numeric = TRUE, 
     check_arguments = FALSE
@@ -850,7 +850,7 @@ ent_gamma.species_distribution <- function(
     as_numeric) {
   
   # Build the metacommunity
-  abd <- metacommunity(
+  abd <- metacommunity.abundances(
     species_distribution, 
     as_numeric = TRUE, 
     check_arguments = FALSE

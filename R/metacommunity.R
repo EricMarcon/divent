@@ -14,48 +14,114 @@
 #' of the sample coverage of each community allow "ChaoShen" and "Grassberger"
 #' estimators.
 #' 
-#'
 #' @inheritParams check_divent_args
-#' @param abundances An object of class [abundances] that contains several communities.
+#' @param x An object of class [abundances] that contains several communities or
+#' a matrix of abundances with communities in rows and species in columns.
 #' @param name The name of the metacommunity
 #'
 #' @return An object of class [abundances] with a single row.
+#' 
+#' @examples
+#' metacommunity(paracou_6_abd)
+#' 
+#' @name metacommunity
+NULL
+
+
+#' @rdname metacommunity
+#'
+#' @export
+metacommunity <- function(
+    x, 
+    name = "metacommunity",
+    ...) {
+  UseMethod("metacommunity")
+}
+
+
+#' @rdname metacommunity
 #' @export
 #'
 #' @examples
 #' metacommunity(paracou_6_abd)
 #' 
-metacommunity <- function(
-    abundances, 
+metacommunity.matrix <- function(
+    x, 
     name = "metacommunity",
+    weights = rep(1, nrow(x)),
     as_numeric = FALSE,
     check_arguments = TRUE) {
   
-  if (any(check_arguments)) check_divent_args()
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (length(weights != nrow(x))) {
+      stop ("The length of 'weights' must be the number of communities")
+    }
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
   
-  # Select species columns
-  species_columns <- !colnames(abundances) %in% non_species_columns
-  # Extract abundances
-  species_abd <- as.matrix(abundances[, species_columns])
-  sample_size <- sum(species_abd)
-  # Multiply them by weights and normalize so that 
+  # Sample size
+  sample_size <- sum(x)
+  # Multiply abundances by weights and normalize so that 
   # sample_size is the sum of sample sizes
-  abd <- abundances$weight %*% species_abd *
-    sample_size / as.numeric(abundances$weight %*% rowSums(species_abd))
+  abd <- weights %*% x * sample_size / as.numeric(weights %*% rowSums(x))
+  
+  # Species names
+  if (is.null(colnames(abd))) {
+    colnames(abd) <- paste(
+      "sp", 
+      formatC(
+        seq_along(weights), 
+        width = ceiling(log10(length(weights))), 
+        flag = "0"
+      ),
+      sep = "_"
+    )
+  }
+  
   if (as_numeric) {
-    return(as.numeric(abd))
+    return(abd)
   } else {
     # Build the tibble
     the_metacommunity <- tibble::as_tibble(
       cbind(
-        data.frame(site = name, weight = sample_size),
+        data.frame(site = name, weight = sum(weights)),
         as.data.frame(abd)
       )
     )
-    # Restore exact species names (spaces may have been transformed into "_")
-    colnames(the_metacommunity[, species_columns]) <- colnames(abundances[, species_columns])
     # Classes
     class(the_metacommunity) <- c("abundances", "species_distribution", class(the_metacommunity))
     return(the_metacommunity)
   }
+}
+
+
+#' @rdname metacommunity
+#' @export
+#'
+metacommunity.abundances <- function(
+    x, 
+    name = "metacommunity",
+    check_arguments = TRUE) {
+  
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
+  
+  # Select species columns
+  species_columns <- !colnames(x) %in% non_species_columns
+  # Extract abundances
+  species_abd <- as.matrix(x[, species_columns])
+  
+  # Call .matrix method
+  return(
+    metacommunity.matrix(
+      x = species_abd, 
+      name = "metacommunity",
+      weights = x$weight,
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+  )
 }
