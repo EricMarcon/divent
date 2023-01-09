@@ -1,4 +1,4 @@
-# divent 0.3-8
+# divent 0.3-9
 
 ## Features
 
@@ -7,7 +7,8 @@
 - Rao's quadratic entropy: `ent_rao()`.
 
 ## TODO
-- Check gamma = TRUE in div_ and ant_ functions, and in profile_ functions.
+- Check gamma = TRUE in div_ and ant_ functions, and in profile_ and accum_ functions.
+- ent_phylo.species_distribution(gamma = TRUE) not implemented
 
 
 # divent 0.2-5
@@ -33,6 +34,6 @@
 - Richness: `div_richness()`
 - Shannon's, Simpson's and Tsallis's entropies: `ent_shannon()`, `ent_simpson()`, `ent_tsallis()`
 - Hill numbers: `div_hill()`
-- Diversity accumulation: `div_accum()`
-- Diversity profiles: `div_profile()`
-- Diversity partitioning: `div_profile()`
+- Diversity accumulation: `accum_hill()`
+- Diversity profiles: `profile_hill()`
+- Diversity partitioning: `profile_hill()`
