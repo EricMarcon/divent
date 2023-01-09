@@ -105,7 +105,7 @@ accum_tsallis.numeric <- function(
   # Interpolation ----
   levels_interp <- levels[levels < sample_size]
   # Calculate entropy at each level
-  for(level in levels_interp) {
+  for (level in levels_interp) {
     # Calculate Entropy
     i <- which(levels == level)
     ent_level[i] <- ent_tsallis.numeric(
@@ -197,7 +197,7 @@ accum_tsallis.numeric <- function(
           if(show_progress & interactive()) utils::setTxtProgressBar(pgb, length(levels))
         } else {
           # General case: q is not 0, 1 or 2 ----
-          for(level in levels_extrap) {
+          for (level in levels_extrap) {
             # Abundance frequence count at level (Chao et al., 2014, eq. 5)
             s_nu <- vapply(
               seq_len(level), 
@@ -245,7 +245,7 @@ accum_tsallis.numeric <- function(
         check_arguments = FALSE
       )
     }
-    for(level in levels) {
+    for (level in levels) {
       # Generate simulated communities at each level
       communities <- stats::rmultinom(n_simulations, size = level, prob = prob_unv)
       # Probabilities
