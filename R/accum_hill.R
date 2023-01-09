@@ -426,8 +426,16 @@ accum_hill.numeric <- function(
   # Calculate diversity
   the_accum_hill <- dplyr::mutate(
     the_accum_tsallis,
-    diversity = exp_q(.data$entropy, q = q)
+    diversity = exp_q(.data$entropy, q = q),
+    .keep = "unused"
   )
+  if (n_simulations > 0) {
+    the_accum_hill <- dplyr::mutate(
+      the_accum_hill,
+      inf = exp_q(.data$inf, q = q),
+      sup = exp_q(.data$sup, q = q)
+    )
+  }
 
   return(the_accum_hill)
 }
