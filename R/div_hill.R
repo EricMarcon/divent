@@ -172,58 +172,26 @@ div_hill.species_distribution <- function(
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
 
-  if (gamma) {
-    # Calculate gamma entropy
-    the_entropy <- ent_gamma_hill(
-      species_distribution = x,
-      q = q,
-      estimator = estimator,
-      level = level, 
-      probability_estimator = probability_estimator,
-      unveiling = unveiling,
-      richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
-      jack_max = jack_max,
-      coverage_estimator = coverage_estimator,
-      as_numeric = FALSE
-    )
-    # Calculate diversity
-    the_diversity <- dplyr::mutate(
-      the_entropy, 
-      diversity = exp_q(.data$entropy, q = q),
-      .keep = "unused"
-    )
-    # return the diversity
-    return(the_diversity)
-  } else {
-    # Apply div_hill.numeric() to each site
-    div_hill_list <- apply(
-      # Eliminate site and weight columns
-      x[, !colnames(x) %in% non_species_columns], 
-      # Apply to each row
-      MARGIN = 1,
-      FUN = div_hill.numeric,
-      # Arguments
-      q = q,
-      estimator = estimator,
-      level = level, 
-      probability_estimator = probability_estimator,
-      unveiling = unveiling,
-      richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha, 
-      jack_max = jack_max, 
-      coverage_estimator = coverage_estimator,
-      as_numeric = FALSE,
-      check_arguments = FALSE
-    )
-    return(
-      # Make a tibble with site, estimator and richness
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
-        do.call(rbind.data.frame, div_hill_list)
-      )
-    )
-  }
+  the_entropy <- ent_tsallis.species_distribution(
+    x, 
+    q = q, 
+    estimator = estimator,
+    level = level, 
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    richness_estimator = richness_estimator,
+    jack_alpha  = jack_alpha, 
+    jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
+    gamma = gamma,
+    check_arguments = FALSE
+  )
+  # Calculate diversity
+  the_diversity <- dplyr::mutate(
+    the_entropy, 
+    diversity = exp_q(.data$entropy, q = q),
+    .keep = "unused"
+  )
+
+  return(the_diversity)
 }
