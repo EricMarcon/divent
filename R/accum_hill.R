@@ -19,7 +19,7 @@
 #' 
 #' "accumulation" objects can be plotted.
 #' They generalize the classical Species Accumulation Curves (SAC) which are 
-#' diversity accumulation of order $q=0$.
+#' diversity accumulation of order \eqn{q=0}.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,

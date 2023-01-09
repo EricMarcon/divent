@@ -143,7 +143,7 @@ accumulation joins the observed value at the sample size.
 
 "accumulation" objects can be plotted.
 They generalize the classical Species Accumulation Curves (SAC) which are
-diversity accumulation of order $q=0$.
+diversity accumulation of order \eqn{q=0}.
 }
 \examples{
 autoplot(accum_hill(paracou_6_abd))
