@@ -3,7 +3,7 @@
 #' Diversity and Entropy Accumulation Curves represent the accumulation of 
 #' entropy with respect to the sample size.
 #' 
-#' `div_accum()` or `ent_accum()` estimate the diversity or entropy accumulation 
+#' `accum_hill()` or `accum_tsallis()` estimate the diversity or entropy accumulation 
 #' curve of a distribution.
 #' See [ent_tsallis] for details about the computation of entropy at each level
 #' of interpolation and extrapolation.
@@ -33,27 +33,27 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' autoplot(div_accum(paracou_6_abd))
+#' autoplot(accum_hill(paracou_6_abd))
 #' 
-#' @name div_accum
+#' @name accum_hill
 NULL
 
 
-#' @rdname div_accum
+#' @rdname accum_hill
 #'
 #' @export
-ent_accum <- function(x, ...) {
-  UseMethod("ent_accum")
+accum_tsallis <- function(x, ...) {
+  UseMethod("accum_tsallis")
 }
 
 
-#' @rdname div_accum
+#' @rdname accum_hill
 #'
 #' @param levels The levels, i.e. the sample sizes of interpolation or 
 #' extrapolation: a vector of integer values.
 #' 
 #' @export
-ent_accum.numeric <- function(
+accum_tsallis.numeric <- function(
     x, 
     q = 0,
     levels = seq_len(sum(x)), 
@@ -272,7 +272,7 @@ ent_accum.numeric <- function(
 
   # Format the result ----
   if (n_simulations > 0) {
-    the_ent_accum <- tibble::tibble(
+    the_accum_tsallis <- tibble::tibble(
       level = levels,
       estimator = ent_estimator,
       entropy = ent_level,
@@ -280,22 +280,22 @@ ent_accum.numeric <- function(
       sup = ent_sim_quantiles[, 2]
     )
   } else {
-    the_ent_accum <- tibble::tibble(
+    the_accum_tsallis <- tibble::tibble(
       level = levels,
       estimator = ent_estimator,
       entropy = ent_level
     )
   }
-  class(the_ent_accum) <- c("accumulation", class(the_ent_accum))
+  class(the_accum_tsallis) <- c("accumulation", class(the_accum_tsallis))
   
-  return(the_ent_accum)
+  return(the_accum_tsallis)
 }
 
 
-#' @rdname div_accum
+#' @rdname accum_hill
 #'
 #' @export
-ent_accum.abundances <- function(
+accum_tsallis.abundances <- function(
     x,
     q = 0,
     levels = NULL, 
@@ -329,13 +329,13 @@ ent_accum.abundances <- function(
     )
     levels <- seq_len(sample_size)
   }
-  # Apply ent_accum.numeric() to each site
-  ent_accum_list <- apply(
+  # Apply accum_tsallis.numeric() to each site
+  accum_tsallis_list <- apply(
     # Eliminate site and weight columns
     x[, !colnames(x) %in% non_species_columns], 
     # Apply to each row
     MARGIN = 1,
-    FUN = ent_accum.numeric,
+    FUN = accum_tsallis.numeric,
     # Arguments
     q = q,
     levels = levels, 
@@ -359,29 +359,29 @@ ent_accum.abundances <- function(
   }
   
   # Make a tibble with site, level and entropy
-  the_ent_accum <- tibble::tibble(
+  the_accum_tsallis <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
     # Coerce the list returned by apply into a dataframe
-    do.call(rbind.data.frame, ent_accum_list)
+    do.call(rbind.data.frame, accum_tsallis_list)
   )
-  class(the_ent_accum) <- c("accumulation", class(the_ent_accum))
+  class(the_accum_tsallis) <- c("accumulation", class(the_accum_tsallis))
   
-  return(the_ent_accum)
+  return(the_accum_tsallis)
 }
 
 
-#' @rdname div_accum
+#' @rdname accum_hill
 #'
 #' @export
-div_accum <- function(x, ...) {
-  UseMethod("div_accum")
+accum_hill <- function(x, ...) {
+  UseMethod("accum_hill")
 }
 
 
-#' @rdname div_accum
+#' @rdname accum_hill
 #'
 #' @export
-div_accum.numeric <- function(
+accum_hill.numeric <- function(
     x, 
     q = 0,
     levels = seq_len(sum(x)), 
@@ -407,7 +407,7 @@ div_accum.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
 
   # Accumulate entropy
-  the_ent_accum <- ent_accum.numeric(
+  the_accum_tsallis <- accum_tsallis.numeric(
     x,
     q = q,
     levels = levels, 
@@ -424,19 +424,19 @@ div_accum.numeric <- function(
   )
   
   # Calculate diversity
-  the_div_accum <- dplyr::mutate(
-    the_ent_accum,
+  the_accum_hill <- dplyr::mutate(
+    the_accum_tsallis,
     diversity = exp_q(.data$entropy, q = q)
   )
 
-  return(the_div_accum)
+  return(the_accum_hill)
 }
 
 
-#' @rdname div_accum
+#' @rdname accum_hill
 #'
 #' @export
-div_accum.abundances <- function(
+accum_hill.abundances <- function(
     x,
     q = 0,
     levels = NULL, 
@@ -470,13 +470,13 @@ div_accum.abundances <- function(
     )
     levels <- seq_len(sample_size)
   }
-  # Apply ent_accum.numeric() to each site
-  div_accum_list <- apply(
+  # Apply accum_tsallis.numeric() to each site
+  accum_hill_list <- apply(
     # Eliminate site and weight columns
     x[, !colnames(x) %in% non_species_columns], 
     # Apply to each row
     MARGIN = 1,
-    FUN = div_accum.numeric,
+    FUN = accum_hill.numeric,
     # Arguments
     q = q,
     levels = levels, 
@@ -500,120 +500,12 @@ div_accum.abundances <- function(
   }
   
   # Make a tibble with site, level and diversity
-  the_div_accum <- tibble::tibble(
+  the_accum_hill <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
     # Coerce the list returned by apply into a dataframe
-    do.call(rbind.data.frame, div_accum_list)
+    do.call(rbind.data.frame, accum_hill_list)
   )
-  class(the_div_accum) <- c("accumulation", class(the_div_accum))
+  class(the_accum_hill) <- c("accumulation", class(the_accum_hill))
   
-  return(the_div_accum)
-}
-
-
-#' @rdname div_accum
-#'
-#' @param object An object of class "accumulation".
-#' @param main The main title of the plot.
-#' @param xlab The label of the x-axis.
-#' @param ylab The label of the y-axis.
-#' @param shade_color The color of the shaded confidence envelopes.
-#' @param alpha The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).
-#' @param lty The line type of the curves.
-#' @param lwd The line width of the curves.
-#'
-#' @export
-autoplot.accumulation <-  function(
-    object, 
-    ..., 
-    main = NULL,
-    xlab = "Sample Size",
-    ylab = NULL,
-    shade_color = "grey75",
-    alpha = 0.3,
-    lty = ggplot2::GeomLine$default_aes$linetype,
-    lwd = ggplot2::GeomLine$default_aes$linewidth){
-  
-  # Add a site column if needed
-  if (!"site" %in% colnames(object)) {
-    object <- dplyr::mutate(object, site = "Unique site")
-  }
-
-  # Build the plot
-  if ("diversity" %in% colnames(object)) {
-    the_plot <- ggplot2::ggplot(
-      object, 
-      ggplot2::aes(
-        x = .data$level, 
-        y = .data$diversity,
-        col = .data$site
-      )
-    )
-  } else {
-    the_plot <- ggplot2::ggplot(
-      object, 
-      ggplot2::aes(
-        x = .data$level, 
-        y = .data$entropy,
-        color = .data$site
-      )
-    )
-  }
-  
-  # Confidence envelope
-  if ("sup" %in% colnames(object) & "inf" %in% colnames(object)) {
-    the_plot <- the_plot +
-      ggplot2::geom_ribbon(
-        ggplot2::aes(
-          ymin = .data$inf, 
-          ymax = .data$sup,
-          lty = .data$site
-        ), 
-        fill = shade_color,
-        alpha = alpha,
-        col = shade_color 
-      )
-  }
-  
-  # y-axis label
-  if (is.null(ylab)) {
-    if ("diversity" %in% colnames(object)) {
-      ylab <- "Diversity"
-    } else {
-      ylab <- "Entropy"
-    }
-  }
-  
-  # Accumulations
-  the_plot <- the_plot +
-    ggplot2::geom_line(linetype = lty, linewidth = lwd) +
-    ggplot2::labs(title = main, x = xlab, y = ylab)
-  
-  # Actual value
-  actual <- dplyr::filter(object, .data$estimator == "Sample")
-  if (nrow(actual) > 0) {
-    if ("diversity" %in% colnames(object)) {
-      the_plot <- the_plot +
-        ggplot2::geom_hline(
-          data = actual, 
-          mapping = ggplot2::aes(yintercept = .data$diversity, color = .data$site), 
-          linetype = 2
-        )
-    } else {
-      the_plot <- the_plot +
-        ggplot2::geom_hline(
-          data = actual, 
-          mapping = ggplot2::aes(yintercept = .data$entropy, color = .data$site), 
-          linetype = 2
-        )
-    }
-    the_plot <- the_plot +
-      ggplot2::geom_vline(
-        data = actual, 
-        mapping = ggplot2::aes(xintercept = .data$level, color = .data$site), 
-        linetype = 2
-      ) 
-  }
-  
-  return(the_plot)
+  return(the_accum_hill)
 }
