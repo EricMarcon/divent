@@ -12,11 +12,16 @@ metacommunity(x, name = "metacommunity", ...)
   x,
   name = "metacommunity",
   weights = rep(1, nrow(x)),
-  as_numeric = FALSE,
+  as_numeric = TRUE,
   check_arguments = TRUE
 )
 
-\method{metacommunity}{abundances}(x, name = "metacommunity", check_arguments = TRUE)
+\method{metacommunity}{abundances}(
+  x,
+  name = "metacommunity",
+  as_numeric = FALSE,
+  check_arguments = TRUE
+)
 }
 \arguments{
 \item{x}{An object of class \link{abundances} that contains several communities or

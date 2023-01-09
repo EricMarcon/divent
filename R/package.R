@@ -124,61 +124,6 @@ non_species_columns <- c(
 # species_names: char vector with the species names of the community
 
 
-#' Abundance in a log-series
-#' 
-#' Abundance of a species in a logseries distribution of given 
-#' size and Fisher's alpha.
-#' 
-#' Adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
-#' 
-#' @param size The number of individuals in the community.
-#' @param alpha_lseries The value of Fisher's alpha.
-#'
-#' @return The number of individuals of the species.
-#' @noRd
-#' 
-abd_lseries <- function(size, alpha_lseries) {
-  # Fisher's x is log-series 1-theta
-  x <- size / (size + alpha_lseries)
-  # Draw a random number between 0 and 1
-  u <- stats::runif(1)
-  # k is the number of individuals to draw
-  k <- 1
-  # Calculate the probability at k=1
-  p <- -x / log(1 - x)
-  # Store it in the distribution function
-  p_cumulated <- p
-  # Repeat while the cumulated probability is below u
-  while (p_cumulated <= u) {
-    # Probability at k+1 obtained from that at k
-    p <- p * k * x / (k + 1)
-    # Increment k
-    k <- k + 1
-    # Increment the cumulated probability
-    p_cumulated <- p_cumulated + p
-  }
-  return(k)
-}
-
-
-#' Solve the beta Parameter of Chao et al. (2015)
-#'
-#' Utilities for [probabilities.numeric].
-#' 
-#' Code inspired from JADE function UndAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
-#' 
-#' @noRd
-#' 
-#' @param beta The parameter to solve.
-#' @param r The squared coverage deficit divided by the coverage deficit of order 2.
-#' @param i The sequence from 1 to the number of species.
-#'
-#' @return The value of the parameter beta to minimize.
-beta_solve <- function(beta, r, i) {
-  return(abs(sum(beta^i)^2 / sum((beta^i)^2) - r))
-}
-
-
 #' Chao's A
 #' 
 #' Helper for Chao's estimators.
@@ -186,7 +131,7 @@ beta_solve <- function(beta, r, i) {
 #' A's formula \insertCite{@Chao2015@, eq. 6b}{divent}) depends on the presence
 #' of singletons and doubletons.
 #' 
-#' @param abd A vector of positive integers (not checked).
+#' @param abd A vector of positive integers.
 #'
 #' @return The value of A.
 #' @noRd
@@ -213,32 +158,6 @@ chao_A <- function(abd) {
   }
   
   return(A)
-}
-
-
-#' Departure of actual sample coverage from target coverage
-#' 
-#' Helper for `coverage_2_size()`
-#' 
-#' @param size The size of the sample. Adjusted to minimize `delta()`.
-#' @param target_coverage The sample coverage to reach by adjusting size.
-#'
-#' @return The departure of actual sample coverage from target coverage.
-#' @noRd
-#'
-chao_delta <- function(
-    abd, 
-    size, 
-    target_coverage) {
-  abs(
-    coverage.numeric(
-      abd, 
-      estimator = "Chao", 
-      level = size, 
-      as_numeric = TRUE,
-      check_arguments = FALSE
-    ) - target_coverage
-  )
 }
 
 
@@ -977,68 +896,6 @@ error_message <- function(message, argument, parent_function) {
 }
 
 
-#' Unobserved Species Distribution
-#'
-#' Utilities for [probabilities.numeric].
-#' 
-#' @param unveiling The unveiling method.
-#' @param prob_tuned The tuned distribution of probabilities.
-#' @param s_0 The number of unobserved species.
-#' @param sample_coverage The sample coverage. 
-#' @param coverage_deficit_2 The coverage deficit of order 2.
-#'
-#' @return The distribution of probabilities of unobserved species.
-#' @noRd
-#' 
-estimate_prob_s_0 <- function(
-    unveiling, 
-    prob_tuned, 
-    s_0, 
-    sample_coverage, 
-    coverage_deficit_2) {
-  
-  the_prob_s_0 <- NA
-  if (unveiling == "geometric") {
-    if (s_0 == 1) {
-      # A single unobserved species
-      the_prob_s_0 <- 1 - sample_coverage
-    } else {
-      r <- (1 - sample_coverage)^2 / coverage_deficit_2
-      i <- seq_len(s_0)
-      beta <-  tryCatch(
-        stats::optimize(
-          beta_solve, 
-          lower = (r - 1) / (r + 1), 
-          upper = 1, 
-          tol = 10 * .Machine$double.eps, 
-          r, 
-          i
-        )$min, 
-        error = function(e) {(r - 1) / (r + 1)}
-      )
-      alpha <- (1 - sample_coverage) / sum(beta^i)
-      the_prob_s_0 <- alpha * beta^i
-      # Sometimes fails when the distribution is very uneven (sometimes r < 1) 
-      # Then, fall back to the uniform distribution
-      if (any(is.na(the_prob_s_0)) | any(the_prob_s_0 <= 0)) {
-        unveiling <- "uniform"
-      }
-    }
-  }      
-  if (unveiling == "uniform") {
-    # Add s_0 unobserved species with equal probabilities
-    the_prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
-  }
-  if (any(is.na(the_prob_s_0))) {
-    warning("Unveiling method was not recognized")
-    return(NA)
-  } else {
-    names(the_prob_s_0) <- paste("Unobs_sp", seq_along(the_prob_s_0), sep = "_")
-    return(the_prob_s_0)
-  }         
-}
-
-
 #' Check Integers
 #' 
 #' Check that the values of a vector are integer, whatever their type.
@@ -1164,131 +1021,4 @@ phylo_entropy.phylo_abd <- function(
   if (normalize) the_entropy <- the_entropy / sum(tree$intervals)
   
   return(the_entropy)
-}
-
-#' Rarefaction Bias
-#' 
-#' Departure of the rarefied entropy from the target entropy.
-#'
-#' Utilities for [probabilities.numeric].
-#'
-#' @param s_0 The number of unobserved species.
-#' @param abd The abundances of species.
-#' @param prob_tuned The tuned distribution of probabilities.
-#' @param sample_coverage The sample coverage.
-#' @param coverage_deficit_2 The coverage deficit of order 2.
-#' @param q The order of entropy to fit.
-#' @param ent_target Target entropy.
-#'
-#' @return The departure of the rarefied entropy from the target entropy.
-#' @noRd
-#'
-rarefaction_bias <- function(
-    s_0,
-    abd, 
-    prob_tuned, 
-    sample_coverage, 
-    coverage_deficit_2, 
-    q, 
-    unveiling, 
-    ent_target) {
-  
-  abd <- abd[abd > 0]
-  sample_size <- sum(abd)
-  # Unobserved species
-  prob_s_0 <- estimate_prob_s_0(
-    unveiling, 
-    prob_tuned, 
-    s_0, 
-    sample_coverage, 
-    coverage_deficit_2
-  )
-  # Full distribution of probabilities
-  prob <- c(prob_tuned, prob_s_0)
-  # abundances_freq_count at level = sample_size
-  s_nu <- vapply(
-    seq_len(sample_size), 
-    function(nu) {
-      sum(
-        exp(
-          lchoose(sample_size, nu) + nu * log(prob) + 
-            (sample_size - nu) * log(1 - prob)
-        )
-      )
-    }, 
-    FUN.VALUE=0
-  )
-  # Get entropy at level=sample_size and calculate the bias
-  if (q == 1) {
-    the_ent_bias <- abs(
-      sum(
-        -seq_len(sample_size) / sample_size * 
-          log(seq_len(sample_size) / sample_size) * s_nu
-      ) 
-      - ent_target
-    )
-  } else {
-    the_ent_bias <- abs(
-      (sum((seq_len(sample_size)/sample_size)^q * s_nu) - 1) / (1 - q) 
-      - ent_target
-    )
-  }
-  return(the_ent_bias)
-}
-
-
-#' Sum of Products Weighted by w_v
-#' 
-#' Utility for the Marcon-Zhang estimator of similarity-based entropy.
-#'
-#' @param species_index The species to consider (from 1 to `s_obs`)
-#' @param abd An vector of abundances.
-#' @param sample_size The sample size.
-#' @param w_v A weight.
-#' @param p_V_Ns An intermediate computation.
-#'
-#' @return A number.
-#' @noRd
-S_v <- function(
-    species_index,
-    abd,
-    sample_size,
-    w_v,
-    p_V_Ns
-) {
-  v_used <- seq_len(sample_size - abd[species_index])
-  return (sum(w_v[v_used] * p_V_Ns[v_used, species_index]))
-}
-
-#' Solve the theta parameter of Chao et al. (2015)
-#' 
-#' Utilities for [probabilities.numeric].
-#' 
-#' Code inspired from JADE function DetAbu(), http://esapubs.org/archive/ecol/E096/107/JADE.R
-#' 
-#' @noRd
-#'
-#' @param theta The parameter to solve.
-#' @param prob A vector of probabilities (not checked).
-#' @param abd A vector of positive integers (not checked).
-#' @param sample_size The number of individuals in the sample.
-#' @param sample_coverage The sample coverage. 
-#' @param coverage_deficit_2 The coverage deficit of order 2.
-#'
-#' @return The value of the parameter theta to minimize.
-theta_solve <- function(
-    theta, 
-    prob, 
-    abd, 
-    sample_size, 
-    sample_coverage, 
-    coverage_deficit_2) {
-  
-  lambda <- (1 - sample_coverage) / sum(prob * exp(-theta * abd))
-  return(
-    abs(
-      sum((prob * (1 - lambda * exp(-theta * abd)))^2) - 
-        sum(choose(abd, 2) / choose(sample_size, 2)) + coverage_deficit_2
-    )
-  )
 }

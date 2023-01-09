@@ -417,3 +417,27 @@ ent_similarity.species_distribution <- function(
     )
   }
 }
+
+
+#' Sum of Products Weighted by w_v
+#' 
+#' Utility for the Marcon-Zhang estimator of similarity-based entropy.
+#'
+#' @param species_index The species to consider (from 1 to `s_obs`)
+#' @param abd An vector of abundances.
+#' @param sample_size The sample size.
+#' @param w_v A weight.
+#' @param p_V_Ns An intermediate computation.
+#'
+#' @return A number.
+#' @noRd
+S_v <- function(
+    species_index,
+    abd,
+    sample_size,
+    w_v,
+    p_V_Ns
+) {
+  v_used <- seq_len(sample_size - abd[species_index])
+  return (sum(w_v[v_used] * p_V_Ns[v_used, species_index]))
+}

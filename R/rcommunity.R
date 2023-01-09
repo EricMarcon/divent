@@ -164,3 +164,40 @@ rcommunity <- function(
     )
   )
 }
+
+
+#' Abundance in a log-series
+#' 
+#' Abundance of a species in a logseries distribution of given 
+#' size and Fisher's alpha.
+#' 
+#' Adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
+#' 
+#' @param size The number of individuals in the community.
+#' @param alpha_lseries The value of Fisher's alpha.
+#'
+#' @return The number of individuals of the species.
+#' @noRd
+#' 
+abd_lseries <- function(size, alpha_lseries) {
+  # Fisher's x is log-series 1-theta
+  x <- size / (size + alpha_lseries)
+  # Draw a random number between 0 and 1
+  u <- stats::runif(1)
+  # k is the number of individuals to draw
+  k <- 1
+  # Calculate the probability at k=1
+  p <- -x / log(1 - x)
+  # Store it in the distribution function
+  p_cumulated <- p
+  # Repeat while the cumulated probability is below u
+  while (p_cumulated <= u) {
+    # Probability at k+1 obtained from that at k
+    p <- p * k * x / (k + 1)
+    # Increment k
+    k <- k + 1
+    # Increment the cumulated probability
+    p_cumulated <- p_cumulated + p
+  }
+  return(k)
+}

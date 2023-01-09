@@ -408,3 +408,29 @@ coverage_to_size.abundances <- function(
     )
   )
 }
+
+
+#' Departure of actual sample coverage from target coverage
+#' 
+#' Helper for [coverage_2_size].
+#' 
+#' @param size The size of the sample. Adjusted to minimize `delta()`.
+#' @param target_coverage The sample coverage to reach by adjusting size.
+#'
+#' @return The departure of actual sample coverage from target coverage.
+#' @noRd
+#'
+chao_delta <- function(
+    abd, 
+    size, 
+    target_coverage) {
+  abs(
+    coverage.numeric(
+      x = abd, 
+      estimator = "Chao", 
+      level = size, 
+      as_numeric = TRUE,
+      check_arguments = FALSE
+    ) - target_coverage
+  )
+}

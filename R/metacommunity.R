@@ -50,7 +50,7 @@ metacommunity.matrix <- function(
     x, 
     name = "metacommunity",
     weights = rep(1, nrow(x)),
-    as_numeric = FALSE,
+    as_numeric = TRUE,
     check_arguments = TRUE) {
   
   if (any(check_arguments)) {
@@ -104,6 +104,7 @@ metacommunity.matrix <- function(
 metacommunity.abundances <- function(
     x, 
     name = "metacommunity",
+    as_numeric = FALSE,
     check_arguments = TRUE) {
   
   if (any(check_arguments)) {
@@ -122,7 +123,7 @@ metacommunity.abundances <- function(
       x = species_abd, 
       name = "metacommunity",
       weights = x$weight,
-      as_numeric = FALSE,
+      as_numeric = as_numeric,
       check_arguments = FALSE
     )
   )
