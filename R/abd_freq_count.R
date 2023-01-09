@@ -28,7 +28,7 @@ abd_freq_count <- function (
     level = NULL, 
     probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
     unveiling = c("none", "uniform", "geometric"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
   
