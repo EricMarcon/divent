@@ -39,18 +39,18 @@
 #' coverage(paracou_6_abd)
 #' coverage_to_size(paracou_6_abd, sample_coverage = 0.9)
 #' 
-#' @name sample_coverage
+#' @name coverage
 NULL
 
 
-#' @rdname sample_coverage
+#' @rdname coverage
 #'
 #' @export
 coverage <- function(x, ...) {
   UseMethod("coverage")
 }
 
-#' @rdname sample_coverage
+#' @rdname coverage
 #' 
 #' @param estimator An estimator of the sample coverage.
 #' "ZhangHuang" is the most accurate but does not allow choosing a `level`. 
@@ -249,7 +249,7 @@ coverage.numeric <- function(
 }
 
 
-#' @rdname sample_coverage
+#' @rdname coverage
 #' 
 #' @export
 coverage.abundances <- function(
@@ -287,14 +287,14 @@ coverage.abundances <- function(
 }
   
   
-#' @rdname sample_coverage
+#' @rdname coverage
 #'
 #' @export
 coverage_to_size <- function(x, ...) {
   UseMethod("coverage_to_size")
 }
 
-#' @rdname sample_coverage
+#' @rdname coverage
 #'
 #' @param sample_coverage The target sample coverage.
 #'
@@ -371,7 +371,7 @@ coverage_to_size.numeric <- function(
 }
 
 
-#' @rdname sample_coverage
+#' @rdname coverage
 #' 
 #' @export
 coverage_to_size.abundances <- function(
