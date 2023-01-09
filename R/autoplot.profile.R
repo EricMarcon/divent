@@ -15,10 +15,11 @@
 #'
 #' @return A [ggplot2::ggplot] object.
 #' @export
-#' # Diversity profile curve
-#' autoplot(profile_hill(mock_3sp_abd))
 #'
 #' @examples
+#' # Diversity profile curve
+#' autoplot(profile_hill(mock_3sp_abd))
+#' 
 autoplot.profile <-  function(
     object, 
     ..., 
