@@ -18,6 +18,7 @@
 #' @param x An object of class [abundances] that contains several communities or
 #' a matrix of abundances with communities in rows and species in columns.
 #' @param name The name of the metacommunity
+#' @param ... Unused.
 #'
 #' @return An object of class [abundances] with a single row or a named vector
 #' if `as_numeric = TRUE`.
@@ -51,6 +52,7 @@ metacommunity.matrix <- function(
     name = "metacommunity",
     weights = rep(1, nrow(x)),
     as_numeric = TRUE,
+    ...,
     check_arguments = TRUE) {
   
   if (any(check_arguments)) {
@@ -105,6 +107,7 @@ metacommunity.abundances <- function(
     x, 
     name = "metacommunity",
     as_numeric = FALSE,
+    ...,
     check_arguments = TRUE) {
   
   if (any(check_arguments)) {

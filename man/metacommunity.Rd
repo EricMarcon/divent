@@ -13,6 +13,7 @@ metacommunity(x, name = "metacommunity", ...)
   name = "metacommunity",
   weights = rep(1, nrow(x)),
   as_numeric = TRUE,
+  ...,
   check_arguments = TRUE
 )
 
@@ -20,6 +21,7 @@ metacommunity(x, name = "metacommunity", ...)
   x,
   name = "metacommunity",
   as_numeric = FALSE,
+  ...,
   check_arguments = TRUE
 )
 }
