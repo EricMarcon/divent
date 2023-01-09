@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -321,7 +321,7 @@ diversity:</p>
 profile. Order 0 corresponds to richness, 1 to Shannon’s and 2 to
 Simpson’s diversities:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/div_profile.html">div_profile</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill.html">profile_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/div_profile-1.png" width="700"></p>
 <p>If an ultrametric dendrogram describing species phylogeny (here, a
 mere taxonomy with family, genus and species) is available, phylogenetic
@@ -357,10 +357,10 @@ Zhang, and Hérault 2014)</span> is available:</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 5</span></span></span>
 <span><span class="co">##   site      weight estimator order diversity</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       2      1.35</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       2      1.49</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ       2      1.48</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       2      1.50</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       2      1.31</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       2      1.33</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ       2      1.32</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       2      1.30</span></span></code></pre>
 <p>Profiles of phylogenetic diversity and similarity-based diversity are
 obtained the same way.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
@@ -419,8 +419,8 @@ the <code>species_distribution</code>.</p>
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/metacommunity.html">metacommunity</a></span><span class="op">(</span><span class="va">communities</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 6</span></span></span>
 <span><span class="co">##   site          weight  sp_1  sp_2  sp_3  sp_4</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> metacommunity    142  24.6  45.7  56.2  15.5</span></span></code></pre>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> metacommunity      4  24.6  45.7  56.2  15.5</span></span></code></pre>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">communities</span>, type <span class="op">=</span> <span class="st">"Metacommunity"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/MetaCommunityMC-1.png" width="700"></p>

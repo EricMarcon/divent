@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -80,6 +80,7 @@
 <span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
 <span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -128,6 +129,10 @@ see <a href="div_richness.html">div_richness</a>. Used for interpolation and ext
 
 <dt>jack_max</dt>
 <dd><p>The highest jackknife order allowed. Default is 10.</p></dd>
+
+
+<dt>coverage_estimator</dt>
+<dd><p>An estimator of sample coverage used by <a href="sample_coverage.html">coverage</a>.</p></dd>
 
 
 <dt>check_arguments</dt>

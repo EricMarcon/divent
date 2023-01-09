@@ -18,7 +18,7 @@ the abundances of the metacommunity."><meta property="og:image" content="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -71,22 +71,45 @@ the abundances of the metacommunity.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">metacommunity</span><span class="op">(</span></span>
-<span>  <span class="va">abundances</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">metacommunity</span><span class="op">(</span><span class="va">x</span>, name <span class="op">=</span> <span class="st">"metacommunity"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for matrix</span></span>
+<span><span class="fu">metacommunity</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"metacommunity"</span>,</span>
+<span>  weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  as_numeric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for abundances</span></span>
+<span><span class="fu">metacommunity</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"metacommunity"</span>,</span>
 <span>  as_numeric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>abundances</dt>
-<dd><p>An object of class <a href="species_distribution.html">abundances</a> that contains several communities.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>An object of class <a href="species_distribution.html">abundances</a> that contains several communities or
+a matrix of abundances with communities in rows and species in columns.</p></dd>
 
 
 <dt>name</dt>
 <dd><p>The name of the metacommunity</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Unused.</p></dd>
+
+
+<dt>weights</dt>
+<dd><p>The weights of the sites of the species distributions.</p></dd>
 
 
 <dt>as_numeric</dt>
@@ -102,7 +125,8 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
     <h2>Value</h2>
     
 
-<p>An object of class <a href="species_distribution.html">abundances</a> with a single row.</p>
+<p>An object of class <a href="species_distribution.html">abundances</a> with a single row or a named vector
+if <code>as_numeric = TRUE</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -122,8 +146,21 @@ estimators.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">metacommunity</span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 337</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site    weight Abare…¹ Abare…² Amaio…³ Amano…⁴ Amano…⁵ Ambel…⁶ Amphi…⁷ Andir…⁸</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> metaco…   <span style="text-decoration: underline;">3</span>541      10       4       2       1       2       4       3       7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> metaco…   6.25      10       4       2       1       2       4       3       7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 327 more variables: Apeiba_glabra &lt;dbl&gt;, Aspidosperma_album &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Aspidosperma_cruentum &lt;dbl&gt;, Aspidosperma_excelsum &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Bocoa_prouacensis &lt;dbl&gt;, Brosimum_guianense &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Brosimum_rubescens &lt;dbl&gt;, Brosimum_utile &lt;dbl&gt;, Carapa_surinamensis &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Caryocar_glabrum &lt;dbl&gt;, Casearia_decandra &lt;dbl&gt;, Casearia_javitensis &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Catostemma_fragrans &lt;dbl&gt;, Chaetocarpus_schomburgkianus &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Chaetocarpus_sp.1-CAY` &lt;dbl&gt;, Chaunochiton_kappleri &lt;dbl&gt;, …</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">metacommunity</span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 337</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site    weight Abare…¹ Abare…² Amaio…³ Amano…⁴ Amano…⁵ Ambel…⁶ Amphi…⁷ Andir…⁸</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> metaco…   6.25      10       4       2       1       2       4       3       7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 327 more variables: Apeiba_glabra &lt;dbl&gt;, Aspidosperma_album &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Aspidosperma_cruentum &lt;dbl&gt;, Aspidosperma_excelsum &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Bocoa_prouacensis &lt;dbl&gt;, Brosimum_guianense &lt;dbl&gt;,</span></span>

@@ -20,7 +20,7 @@ Bias correction requires the number of individuals."><meta property="og:image" c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -88,6 +88,7 @@ Bias correction requires the number of individuals.</p>
 <span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  sample_coverage <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  as_numeric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
@@ -97,7 +98,7 @@ Bias correction requires the number of individuals.</p>
 <span><span class="co"># S3 method for species_distribution</span></span>
 <span><span class="fu">ent_similarity</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  similarities <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">non_species_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  similarities <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">non_species_columns</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UnveilJ"</span>, <span class="st">"Max"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"MarconZhang"</span>, <span class="st">"UnveilC"</span>, <span class="st">"UnveiliC"</span>,</span>
 <span>    <span class="st">"naive"</span><span class="op">)</span>,</span>
@@ -105,6 +106,7 @@ Bias correction requires the number of individuals.</p>
 <span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  gamma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -157,6 +159,10 @@ Used only for extrapolation.</p></dd>
 <dd><p>The highest jackknife order allowed. Default is 10.</p></dd>
 
 
+<dt>coverage_estimator</dt>
+<dd><p>An estimator of sample coverage used by <a href="sample_coverage.html">coverage</a>.</p></dd>
+
+
 <dt>sample_coverage</dt>
 <dd><p>The sample coverage of <code>x</code> calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.</p></dd>
@@ -185,9 +191,9 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
     <h2>Details</h2>
     <p>All species of the <code>species_distribution</code> must be found in the matrix of
 <code>similarities</code> if it is named.
-If it is not, its size must equal the number of species.
+If it is not or if <code>x</code> is numeric, its size must equal the number of species.
 Then, the order of species is assumed to be the same as that of the
-<code>species_distribution</code>.</p>
+<code>species_distribution</code> or its numeric equivalent.</p>
 <p>Similarity-Based entropy can't be interpolated of extrapolated as of the
 state of the art.</p>
     </div>
@@ -198,21 +204,23 @@ state of the art.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Entropy of each community</span></span></span>
-<span class="r-in"><span><span class="fu">ent_similarity</span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Similarity matrix</span></span></span>
+<span class="r-in"><span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="fun_similarity.html">fun_similarity</a></span><span class="op">(</span><span class="va">paracou_6_fundist</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Diversity of each community</span></span></span>
+<span class="r-in"><span><span class="fu">ent_similarity</span><span class="op">(</span><span class="va">paracou_6_abd</span>, similarities <span class="op">=</span> <span class="va">Z</span>, q <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       2   0.978</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       2   0.979</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ       2   0.981</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       2   0.974</span>
-<span class="r-in"><span><span class="co"># gamma entropy</span></span></span>
-<span class="r-in"><span><span class="fu">ent_similarity</span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">2</span>, gamma <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       2   0.234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       2   0.248</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ       2   0.245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       2   0.228</span>
+<span class="r-in"><span><span class="co"># gamma diversity</span></span></span>
+<span class="r-in"><span><span class="fu">ent_similarity</span><span class="op">(</span><span class="va">paracou_6_abd</span>, similarities <span class="op">=</span> <span class="va">Z</span>, q <span class="op">=</span> <span class="fl">2</span>, gamma <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site          estimator order entropy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity UnveilJ       2   0.979</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity UnveilJ       2   0.237</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

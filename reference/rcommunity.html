@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -80,6 +80,7 @@
 <span>  sd_lnorm <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  prob_geom <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  alpha_lseries <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -137,6 +138,10 @@ of the geometric distribution.</p></dd>
 
 <dt>alpha_lseries</dt>
 <dd><p>Fisher's alpha in the log-series distribution.</p></dd>
+
+
+<dt>coverage_estimator</dt>
+<dd><p>An estimator of sample coverage used by <a href="sample_coverage.html">coverage</a>.</p></dd>
 
 
 <dt>check_arguments</dt>

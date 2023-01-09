@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -75,6 +75,7 @@
 <span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"naive"</span>, <span class="st">"Chao2013"</span>, <span class="st">"Chao2015"</span>, <span class="st">"ChaoShen"</span><span class="op">)</span>,</span>
 <span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"uniform"</span>, <span class="st">"geometric"</span><span class="op">)</span>,</span>
 <span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"rarefy"</span><span class="op">)</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -108,6 +109,10 @@ Used only for extrapolation.</p></dd>
 <dd><p>A string containing an estimator recognized by
 <a href="div_richness.html">div_richness</a> to evaluate the total number of species in <a href="probabilities.html">probabilities</a>.
 Used only for extrapolation.</p></dd>
+
+
+<dt>coverage_estimator</dt>
+<dd><p>An estimator of sample coverage used by <a href="sample_coverage.html">coverage</a>.</p></dd>
 
 
 <dt>check_arguments</dt>

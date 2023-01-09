@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -323,7 +323,7 @@ sampling level is poor.</p>
 at any coverage of sampling level.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Diversity at levels from 1 to twice the sample size</span></span>
-<span><span class="fu"><a href="../reference/div_profile.html">div_profile</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, level <span class="op">=</span> <span class="va">paracou6_1_size</span> <span class="op">*</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="../reference/profile_hill.html">profile_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, level <span class="op">=</span> <span class="va">paracou6_1_size</span> <span class="op">*</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="extrapolation_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Extrapolated diversity is estimated at each order such that it is
@@ -350,9 +350,9 @@ obtained by forcing argument <code>estimator = "ChaoJost"</code>.</p>
 <span><span class="co"># Extrapolated diversity of an example dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/iNEXT/man/estimateD.html" class="external-link">estimateD</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">Girdled</span>, level<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   Assemblage   m        Method Order.q        SC        qD    qD.LCL    qD.UCL</span></span>
-<span><span class="co">## 1       data 300 Extrapolation       0 0.9579518 33.317733 24.608236 42.027230</span></span>
-<span><span class="co">## 2       data 300 Extrapolation       1 0.9579518 12.869603 10.282337 15.456868</span></span>
-<span><span class="co">## 3       data 300 Extrapolation       2 0.9579518  7.983882  6.191608  9.776156</span></span></code></pre>
+<span><span class="co">## 1       data 300 Extrapolation       0 0.9579518 33.317733 25.804082 40.831384</span></span>
+<span><span class="co">## 2       data 300 Extrapolation       1 0.9579518 12.869603 10.314593 15.424612</span></span>
+<span><span class="co">## 3       data 300 Extrapolation       2 0.9579518  7.983882  5.993923  9.973841</span></span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Similar estimation by divent</span></span>
 <span><span class="fu"><a href="../reference/div_hill.html">div_hill</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">Girdled</span>, q <span class="op">=</span> <span class="fl">0</span>, level <span class="op">=</span> <span class="fl">300</span>, estimator <span class="op">=</span> <span class="st">"ChaoJost"</span><span class="op">)</span></span></code></pre></div>

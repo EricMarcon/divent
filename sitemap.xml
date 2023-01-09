@@ -46,9 +46,6 @@
     <loc>https://ericmarcon.github.io/entropart/reference/div_phylo.html</loc>
   </url>
   <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_profile.html</loc>
-  </url>
-  <url>
     <loc>https://ericmarcon.github.io/entropart/reference/div_richness.html</loc>
   </url>
   <url>
@@ -62,6 +59,9 @@
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/ent_phylo.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/ent_rao.html</loc>
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/ent_shannon.html</loc>
@@ -97,6 +97,9 @@
     <loc>https://ericmarcon.github.io/entropart/reference/metacommunity.html</loc>
   </url>
   <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/mock_3sp.html</loc>
+  </url>
+  <url>
     <loc>https://ericmarcon.github.io/entropart/reference/paracou_6_abd.html</loc>
   </url>
   <url>
@@ -110,6 +113,15 @@
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/probabilities.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/profile_hill.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/profile_phylo.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/profile_similarity.html</loc>
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/rcommunity.html</loc>
