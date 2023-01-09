@@ -85,6 +85,7 @@ div_part <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max, 
+    coverage_estimator = coverage_estimator,
     as_numeric = TRUE,
     check_arguments = FALSE
   )
@@ -128,6 +129,7 @@ div_part <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max, 
+    coverage_estimator = coverage_estimator,
     gamma = FALSE,
     check_arguments = FALSE
   )
