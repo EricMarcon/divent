@@ -120,7 +120,6 @@ coverage.numeric <- function(
     if (estimator == "ZhangHuang") {
       prob <- abd/sample_size
       if (any(prob >= .5)) {
-        warning ("Zhang-Huang's sample coverage cannot be estimated because one probability is over 1/2. Chao's estimator is returned.")
         estimator <- "Chao"
       } else {
         nu <- as.integer(names(abd_distribution))
