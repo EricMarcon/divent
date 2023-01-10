@@ -1,4 +1,4 @@
-#' Phylorgenetic Diversity Accumulation of a Community
+#' Phylogenetic Diversity Accumulation of a Community
 #' 
 #' Diversity and Entropy Accumulation Curves represent the accumulation of 
 #' entropy with respect to the sample size.
