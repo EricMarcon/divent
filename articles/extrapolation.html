@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -212,7 +212,7 @@ comparing the diversity of poorly-sampled communities: a lower sample
 coverage can be chosen to limit the uncertainty of estimation.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Actual sample coverage</span></span>
-<span><span class="fu"><a href="../reference/sample_coverage.html">coverage</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/coverage.html">coverage</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
 <span><span class="co">##   site      weight estimator  coverage</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -229,7 +229,7 @@ is converted internally into a sample size.</p>
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 Interpolation     1   471      67.6</span></span></code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Sample size corresponding to 90% coverage</span></span>
-<span><span class="fu"><a href="../reference/sample_coverage.html">coverage_to_size</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, sample_coverage <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/coverage.html">coverage_to_size</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, sample_coverage <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
 <span><span class="co">##   site      weight sample_coverage  size</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -249,7 +249,7 @@ unbiased estimators are used. Continuity of the estimation of diversity
 around the actual sample size is guaranteed.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Simpson diversity at levels from 0.9 to 1.1 times the sample size</span></span>
-<span><span class="fu"><a href="../reference/div_accum.html">div_accum</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="../reference/accum_hill.html">accum_hill</a></span><span class="op">(</span></span>
 <span>  <span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">0.9</span> <span class="op">*</span> <span class="va">paracou6_1_size</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">1.1</span> <span class="op">*</span> <span class="va">paracou6_1_size</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -273,20 +273,20 @@ is estimated directly without bias.</p>
 <p>Diversity Accumulation Curves (DAC) are a generalization of the
 well-known Species Accumulation Curves (SAC). They represent diversity
 as a function of sample size.</p>
-<p>The <code><a href="../reference/div_accum.html">div_accum()</a></code> function allows to build them. A
+<p>The <code><a href="../reference/accum_hill.html">accum_hill()</a></code> function allows to build them. A
 bootstrap confidence interval can be calculated around the estimated DAC
 by simulating random multinomial draws of the asymptotic distribution at
 each sample size.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Diversity at levels from 1 to twice the sample size</span></span>
-<span><span class="fu"><a href="../reference/div_accum.html">div_accum</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="../reference/accum_hill.html">accum_hill</a></span><span class="op">(</span></span>
 <span>  <span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, </span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">1.1</span> <span class="op">*</span> <span class="va">paracou6_1_size</span><span class="op">)</span>, </span>
 <span>  n_simulations <span class="op">=</span> <span class="fl">1000</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extrapolation_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="extrapolation_files/figure-html/accum_hill-1.png" width="700"></p>
 <p>To ensure continuity of the DAC around the actual sample, the
 asymptotic diversity is estimated by unveiling the asymptotic
 distribution, choosing the number of species such that the rarefied
@@ -325,7 +325,7 @@ at any coverage of sampling level.</p>
 <code class="sourceCode R"><span><span class="co"># Diversity at levels from 1 to twice the sample size</span></span>
 <span><span class="fu"><a href="../reference/profile_hill.html">profile_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, level <span class="op">=</span> <span class="va">paracou6_1_size</span> <span class="op">*</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extrapolation_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="extrapolation_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>Extrapolated diversity is estimated at each order such that it is
 continuous at the observed sample size.</p>
 </div>

@@ -18,7 +18,7 @@ against its order."><meta property="og:image" content="https://ericmarcon.github
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -116,19 +116,6 @@ against its order.</p>
 <span>  show_progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for profile</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  main <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  xlab <span class="op">=</span> <span class="st">"Order of Diversity"</span>,</span>
-<span>  ylab <span class="op">=</span> <span class="st">"Diversity"</span>,</span>
-<span>  shade_color <span class="op">=</span> <span class="st">"grey75"</span>,</span>
-<span>  alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span>  lty <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html" class="external-link">GeomLine</a></span><span class="op">$</span><span class="va">default_aes</span><span class="op">$</span><span class="va">linetype</span>,</span>
-<span>  lwd <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html" class="external-link">GeomLine</a></span><span class="op">$</span><span class="va">default_aes</span><span class="op">$</span><span class="va">linewidth</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -184,7 +171,7 @@ see <a href="div_richness.html">div_richness</a>. Used for interpolation and ext
 
 
 <dt>coverage_estimator</dt>
-<dd><p>An estimator of sample coverage used by <a href="sample_coverage.html">coverage</a>.</p></dd>
+<dd><p>An estimator of sample coverage used by <a href="coverage.html">coverage</a>.</p></dd>
 
 
 <dt>sample_coverage</dt>
@@ -201,7 +188,7 @@ Used to calculate the gamma diversity of meta-communities, see details.</p></dd>
 
 
 <dt>alpha</dt>
-<dd><p>The opacity of the confidence envelopes, between 0 (transparent) and 1 (opaque).</p></dd>
+<dd><p>The risk level, 5% by default, of the confidence envelope of the profile.</p></dd>
 
 
 <dt>bootstrap</dt>
@@ -228,34 +215,6 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 
 <dt>gamma</dt>
 <dd><p>If <code>TRUE</code>, \(\gamma\) diversity, i.e. diversity of the metacommunity, is computed.</p></dd>
-
-
-<dt>object</dt>
-<dd><p>An object of class "profile".</p></dd>
-
-
-<dt>main</dt>
-<dd><p>The main title of the plot.</p></dd>
-
-
-<dt>xlab</dt>
-<dd><p>The label of the x-axis.</p></dd>
-
-
-<dt>ylab</dt>
-<dd><p>The label of the y-axis.</p></dd>
-
-
-<dt>shade_color</dt>
-<dd><p>The color of the shaded confidence envelopes.</p></dd>
-
-
-<dt>lty</dt>
-<dd><p>The line type of the curves.</p></dd>
-
-
-<dt>lwd</dt>
-<dd><p>The line width of the curves.</p></dd>
 
 </dl></div>
     <div id="value">

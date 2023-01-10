@@ -31,10 +31,22 @@
     <loc>https://ericmarcon.github.io/entropart/reference/abd_species.html</loc>
   </url>
   <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/accum_hill.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/accum_phylo_div.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/autoplot.accumulation.html</loc>
+  </url>
+  <url>
+    <loc>https://ericmarcon.github.io/entropart/reference/autoplot.profile.html</loc>
+  </url>
+  <url>
     <loc>https://ericmarcon.github.io/entropart/reference/check_divent_args.html</loc>
   </url>
   <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_accum.html</loc>
+    <loc>https://ericmarcon.github.io/entropart/reference/coverage.html</loc>
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/div_hill.html</loc>
@@ -128,9 +140,6 @@
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/sample_coverage.html</loc>
   </url>
   <url>
     <loc>https://ericmarcon.github.io/entropart/reference/species_distribution.html</loc>

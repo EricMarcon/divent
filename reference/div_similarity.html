@@ -20,7 +20,7 @@ Bias correction requires the number of individuals."><meta property="og:image" c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@ Used only for extrapolation.</p></dd>
 
 
 <dt>coverage_estimator</dt>
-<dd><p>An estimator of sample coverage used by <a href="sample_coverage.html">coverage</a>.</p></dd>
+<dd><p>An estimator of sample coverage used by <a href="coverage.html">coverage</a>.</p></dd>
 
 
 <dt>sample_coverage</dt>
@@ -217,10 +217,13 @@ state of the art.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       2      1.30</span>
 <span class="r-in"><span><span class="co"># gamma diversity</span></span></span>
 <span class="r-in"><span><span class="fu">div_similarity</span><span class="op">(</span><span class="va">paracou_6_abd</span>, similarities <span class="op">=</span> <span class="va">Z</span>, q <span class="op">=</span> <span class="fl">2</span>, gamma <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site          estimator order diversity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity UnveilJ       2      1.31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order diversity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       2      1.31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       2      1.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ       2      1.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       2      1.30</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
