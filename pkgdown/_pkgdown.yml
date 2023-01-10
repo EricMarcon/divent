@@ -37,8 +37,8 @@ reference:
     contents:
     - abd_freq_count
     - abd_species
+    - coverage
     - fit_rac
-    - sample_coverage
   - title: Classes
     contents:
     - abundances
