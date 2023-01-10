@@ -7,8 +7,6 @@
 \alias{as_species_distribution.matrix}
 \alias{as_species_distribution.data.frame}
 \alias{is_species_distribution}
-\alias{plot.species_distribution}
-\alias{autoplot.species_distribution}
 \alias{as_probabilities}
 \alias{as_probabilities.numeric}
 \alias{as_probabilities.matrix}
@@ -39,32 +37,6 @@ as_species_distribution(x, ...)
 \method{as_species_distribution}{data.frame}(x, ..., check_arguments = TRUE)
 
 is_species_distribution(x)
-
-\method{plot}{species_distribution}(
-  x,
-  type = c("RAC", "Metacommunity"),
-  ...,
-  fit_rac = FALSE,
-  distribution = c("lnorm", "lseries", "geom", "bstick"),
-  ylog = "y",
-  main = NULL,
-  xlab = "Rank",
-  ylab = NULL,
-  palette = "Set1"
-)
-
-\method{autoplot}{species_distribution}(
-  object,
-  ...,
-  fit_rac = FALSE,
-  distribution = c("lnorm", "lseries", "geom", "bstick"),
-  ylog = TRUE,
-  main = NULL,
-  xlab = "Rank",
-  ylab = NULL,
-  pch = ggplot2::GeomPoint$default_aes$shape,
-  cex = ggplot2::GeomPoint$default_aes$size
-)
 
 as_probabilities(x, ...)
 
@@ -111,46 +83,17 @@ is_abundances(x)
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
-
-\item{type}{The type of plot. "RAC" (Rank-abundance curve, or Whittaker plot)
-or "Metacommunity" to represent species abundances of each community along
-with those of the metacommunity.}
-
-\item{fit_rac}{If \code{TRUE}, estimate a theoretical distribution and fit the data with it.
-RAC plot only.}
-
-\item{distribution}{The distribution of species abundances.
-May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
-"bstick" (broken stick).
-RAC plot only.}
-
-\item{ylog}{If \code{TRUE}, the Y-axis is in log-scale.
-RAC plot only.}
-
-\item{main}{The title of the plot.}
-
-\item{xlab}{The label of the X-axis.
-RAC plot only.}
-
-\item{ylab}{The  label of the Y-axis.}
-
-\item{palette}{The name of a color palette, recognized by \link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal}.
-RAC plot only.}
-
-\item{object}{An object of class \link{species_distribution}.}
-
-\item{pch}{The plotting characters. See \link[graphics:points]{graphics::points}.}
-
-\item{cex}{The character expansion (size) of the points. See \link[graphics:points]{graphics::points}.}
+\item{...}{Unused.}
 
 \item{round}{If \code{TRUE}, the values of \code{x} are converted to integers.}
 }
 \description{
-A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing species abundances or probabilities.
+A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing species abundances
+or probabilities.
 }
 \details{
-\code{species_distribution} objects include \code{abundances} and \code{probabilities} objects.
+\code{species_distribution} objects include \code{abundances} and \code{probabilities}
+objects.
 
 \code{as_species_distribution()}, \code{as_abundances()}  and \code{as_probabilities} format
 the numeric, matrix or dataframe \code{x} so that appropriate

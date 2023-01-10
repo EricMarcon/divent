@@ -13,6 +13,10 @@
 #' \insertAllCited{}
 NULL
 
+# Functions to reexport
+#' @export
+ggplot2::autoplot
+
 #  Initialization ----
 # Columns to ignore when computing species distributions 
 non_species_columns <- c(

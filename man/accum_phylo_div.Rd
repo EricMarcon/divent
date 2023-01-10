@@ -7,7 +7,7 @@
 \alias{accum_phylo_ent.abundances}
 \alias{accum_phylo_div.numeric}
 \alias{accum_phylo_div.abundances}
-\title{Phylorgenetic Diversity Accumulation of a Community}
+\title{Phylogenetic Diversity Accumulation of a Community}
 \usage{
 accum_phylo_ent(x, ...)
 

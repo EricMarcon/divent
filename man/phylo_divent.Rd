@@ -4,14 +4,11 @@
 \alias{phylo_divent}
 \alias{as_phylo_divent}
 \alias{is_phylo_divent}
-\alias{plot.phylo_divent}
 \title{Class phylo_divent}
 \usage{
 as_phylo_divent(tree)
 
 is_phylo_divent(x)
-
-\method{plot}{phylo_divent}(x, ...)
 }
 \arguments{
 \item{tree}{An ultrametric, phylogenetic tree.
@@ -19,7 +16,7 @@ May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo},
 
 \item{x}{An object of class "phylo_divent".}
 
-\item{...}{Arguments passed to \link[stats:dendrogram]{stats::plot.dendrogram}.}
+\item{...}{Unused.}
 }
 \value{
 \code{as_phylo_divent} returns a phylogenetic tree that is an object of
@@ -35,7 +32,8 @@ The conversion preprocesses the tree: it calculates cuts so that the tree
 can be reused efficiently by phylodiversity functions.
 }
 \examples{
-# Paracou plot 6 species taxonomy 
-plot(paracou_6_taxo, type="fan", show.tip.label=FALSE)
+# Paracou plot 6 species taxonomy
+tree <- as_phylo_divent(mock_3sp_tree)
+plot(tree)
 
 }

@@ -9,14 +9,15 @@
 #'
 #' @inheritParams check_divent_args
 #' @param x An object of class "phylo_divent".
-#' @param ... Arguments passed to [stats::plot.dendrogram].
+#' @param ... Unused.
 #'
 #' @return `as_phylo_divent` returns a phylogenetic tree that is an object of 
 #' class "phylo_divent".
 #'
 #' @examples
-#' # Paracou plot 6 species taxonomy 
-#' plot(paracou_6_taxo, type="fan", show.tip.label=FALSE)
+#' # Paracou plot 6 species taxonomy
+#' tree <- as_phylo_divent(mock_3sp_tree)
+#' plot(tree)
 #' 
 #' @name phylo_divent
 NULL
@@ -116,14 +117,4 @@ as_phylo_divent <- function(tree) {
 #' @export
 is_phylo_divent <- function (x) {
   inherits(x, "phylo_divent")
-}
-
-
-#' @rdname phylo_divent
-#'
-#' @importFrom graphics plot
-#' @export
-plot.phylo_divent <- function (x, ...) {  
-  # Plot the hclust object as a dendrogram
-    plot(stats::as.dendrogram(x$hclust), ...)
 }
