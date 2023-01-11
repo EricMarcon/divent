@@ -15,8 +15,6 @@ is_phylo_divent(x)
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
 \item{x}{An object of class "phylo_divent".}
-
-\item{...}{Unused.}
 }
 \value{
 \code{as_phylo_divent} returns a phylogenetic tree that is an object of

@@ -9,7 +9,6 @@
 #'
 #' @inheritParams check_divent_args
 #' @param x An object of class "phylo_divent".
-#' @param ... Unused.
 #'
 #' @return `as_phylo_divent` returns a phylogenetic tree that is an object of 
 #' class "phylo_divent".

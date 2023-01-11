@@ -7,7 +7,7 @@
 \method{plot}{phylo_divent}(x, ...)
 }
 \arguments{
-\item{x}{}
+\item{x}{An object of class "phylo_divent".}
 
 \item{...}{Arguments passed to \link[stats:dendrogram]{stats::plot.dendrogram}.}
 }
@@ -18,6 +18,6 @@ phylogenetic trees.
 \examples{
 # Paracou plot 6 species taxonomy
 tree <- as_phylo_divent(paracou_6_taxo)
-plot(tree, type="fan", show.tip.label=FALSE)
+plot(tree, leaflab = "none")
 
 }
