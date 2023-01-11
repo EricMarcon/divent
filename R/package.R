@@ -985,40 +985,72 @@ phylo_entropy.phylo_abd <- function(
     richness_estimator,
     jack_alpha, 
     jack_max,
-    coverage_estimator) {
+    coverage_estimator,
+    gamma) {
  
-  # Calculate entropy of each community in each group.
-  # simplify2array() makes a matrix with the list of vectors.
-  phylo_entropies <- simplify2array(
-    lapply(
-      # Calculate entropy in each item of the list, i.e. group.
-      # Obtain a list.
-      phylo_abd,
-      FUN = function(group) {
-        apply(
-          group,
-          # Calculate entropy of each column of the matrix, i.e. community.
-          MARGIN = 2,
-          FUN = ent_tsallis.numeric,
-          # Arguments
-          q = q,
-          estimator = estimator,
-          level = level, 
-          probability_estimator = probability_estimator,
-          unveiling = unveiling,
-          richness_estimator = richness_estimator,
-          jack_alpha  = jack_alpha, 
-          jack_max = jack_max,
-          coverage_estimator = coverage_estimator,
-          # Obtain a vector.
-          as_numeric = TRUE,
-          check_arguments = FALSE
-        )
-      }
+  if (gamma) {
+    # Calculate gamma entropy of each group.
+    # simplify2array() makes a vector with the list of numbers.
+    phylo_entropies <- simplify2array(
+      lapply(
+        # Calculate entropy in each item of the list, i.e. group.
+        # Obtain a list.
+        phylo_abd,
+        FUN = function(group) {
+          ent_tsallis.species_distribution(
+            as_abundances(t(group)),
+            q = q,
+            estimator = estimator,
+            level = level, 
+            probability_estimator = probability_estimator,
+            unveiling = unveiling,
+            richness_estimator = richness_estimator,
+            jack_alpha  = jack_alpha, 
+            jack_max = jack_max,
+            coverage_estimator = coverage_estimator,
+            gamma = TRUE,
+            # Obtain a vector.
+            as_numeric = TRUE,
+            check_arguments = FALSE
+          )$entropy
+        }
+      )
     )
-  )
+    
+  } else {
+    # Calculate entropy of each community in each group.
+    # simplify2array() makes a matrix with the list of vectors.
+    phylo_entropies <- simplify2array(
+      lapply(
+        # Calculate entropy in each item of the list, i.e. group.
+        # Obtain a list.
+        phylo_abd,
+        FUN = function(group) {
+          apply(
+            group,
+            # Calculate entropy of each column of the matrix, i.e. community.
+            MARGIN = 2,
+            FUN = ent_tsallis.numeric,
+            # Arguments
+            q = q,
+            estimator = estimator,
+            level = level, 
+            probability_estimator = probability_estimator,
+            unveiling = unveiling,
+            richness_estimator = richness_estimator,
+            jack_alpha  = jack_alpha, 
+            jack_max = jack_max,
+            coverage_estimator = coverage_estimator,
+            # Obtain a vector.
+            as_numeric = TRUE,
+            check_arguments = FALSE
+          )
+        }
+      )
+    )
+  }
   # Should be a matrix, but simplify2array() makes a vector instead of a 1-col 
-  # matrix. Force a matrix.
+  # matrix and gamma entropy is a vector. Force a matrix.
   if(is.vector(phylo_entropies)) {
     phylo_entropies <- t(phylo_entropies)
   }

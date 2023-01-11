@@ -155,12 +155,8 @@ ent_phylo.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   
   # Calculate abundances along the tree, that are a list of matrices
-  if (gamma) {
-    the_phylo_abd <- phylo_abd(abundances = metacommunity(x), tree = tree)
-  } else {
-    the_phylo_abd <- phylo_abd(abundances = x, tree = tree)
-  }
-  
+  the_phylo_abd <- phylo_abd(abundances = x, tree = tree)
+
   # Calculate the entropy
   the_entropy <- phylo_entropy.phylo_abd(
     phylo_abd = the_phylo_abd,
@@ -175,7 +171,8 @@ ent_phylo.species_distribution <- function(
     richness_estimator = richness_estimator,
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
-    coverage_estimator = coverage_estimator
+    coverage_estimator = coverage_estimator,
+    gamma = gamma
   )
   
   # Return
