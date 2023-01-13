@@ -967,7 +967,7 @@ phylo_abd <- function(
 #' @param phylo_abd A list of matrices of abundance (caution: lines are species,
 #' columns are communities).
 #'
-#' @return A vector
+#' @return A vector. Each item is the entropy of a community.
 #'  
 #' @noRd
 #'
