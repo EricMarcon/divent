@@ -102,7 +102,7 @@ profile_phylo.numeric <- function(
   
   # Call the .species_distribution method
   the_profile_phylo <- profile_phylo.species_distribution(
-    x = as_species_distribution.numeric(x), 
+    x = as_species_distribution.numeric(x, check_arguments = FALSE), 
     tree = tree, 
     orders = orders, 
     normalize = normalize,
@@ -178,9 +178,11 @@ profile_phylo.species_distribution <- function(
   # Calculate abundances along the tree, that are a list of matrices
   the_phylo_abd <- phylo_abd(abundances = x, tree = tree)
   
-  # Prepare an array to store diversity (3 dimensions: x, y, z)
+  # Prepare arrays to store entropy (3 dimensions: x, y, z)
   # and simulated entropies (4 dimensions : x, y, z, t)
   # x are tree intervals, y are communities, z are orders, 
+  # t are simulations.
+  # Add an array to store simulation envelopes, where
   # t are quantiles of simulations, inf and sup.
   if (gamma) {
     n_communities <- 1
@@ -192,6 +194,9 @@ profile_phylo.species_distribution <- function(
   )
   if (n_simulations > 0) {
     ent_phylo_sim <- array(
+      dim = c(length(tree$intervals), nrow(x), length(orders), n_simulations)
+    )
+    ent_phylo_envelope <- array(
       dim = c(length(tree$intervals), nrow(x), length(orders), 2)
     )
   }
@@ -199,39 +204,70 @@ profile_phylo.species_distribution <- function(
   # Prepare the progress bar
   pgb <- utils::txtProgressBar(
     min = 0, 
-    max = length(the_phylo_abd) * n_communities * length(orders)
+    max = length(the_phylo_abd) * length(orders)
   )
   
   # Calculate entropy along the tree
   for (x_interval in seq_along(the_phylo_abd)) {
-    # Intervals are items of the list
-    if (gamma) {
-      abd <- metacommunity.matrix(
-        x = t(the_phylo_abd[[x_interval]]),
-        name = "metacommunity",
-        as_numeric = TRUE,
-        check_arguments = FALSE
+    if (n_simulations > 0) {
+      # Simulate communities
+      comm_sim.list <- apply(
+        # Produce a list of abundances, each of them contains n_simulations of
+        # a community
+        the_phylo_abd[[x_interval]],
+        MARGIN = 2,
+        FUN = function(abd) {
+          rcommunity(
+            n = n_simulations,
+            abd = abd,
+            bootstrap = bootstrap,
+            check_arguments = FALSE
+          )
+        }
       )
-      # abd must be a one-column matrix
-      abd <- t(as.matrix(abd))
-    } else {
-      abd <- the_phylo_abd[[x_interval]]
-    }
-    for (y_community in seq_len(n_communities)) {
-      # Abundances are in columns: abd[, y_community]
-      if (n_simulations > 0) {
-        # Simulate communities
-        comm_sim <- rcommunity(
-          n_simulations,
-          abd = abd[, y_community],
-          bootstrap = bootstrap,
-          check_arguments = FALSE
-        )
+      # Prepare an array to store simulated abd. Rows are species, columns are
+      # communities (same structure as groups of the_phylo_abd), z are simulations
+      # Max number of species in simulated communities
+      sp_sim <- max(vapply(comm_sim.list, dim, c(0L,0L))[2,])
+      comm_sim <- array(
+        data = 0,
+        dim = c(sp_sim, length(comm_sim.list), n_simulations)
+      )
+      # Move the simulations from the list to the array
+      for (simulation in seq_len(n_simulations)) {
+        for (community in seq_along(comm_sim.list)) {
+          # Number of species in the simulation 
+          # (= number of columns - 2 for site and weight)
+          sp_sim <- dim(comm_sim.list[[community]])[2] - 2
+          # Pick a simulation. Store simulated species, let extra cols = 0
+          comm_sim[1:sp_sim, community, simulation] <- as.numeric(
+            # Corresponding item in the list, remove site and weight
+            comm_sim.list[[community]][simulation, -(1:2)]
+          )
+        }
       }
-      for (z_order in seq_along(orders)) {
-        # Actual data
-        ent_phylo_abd[x_interval, y_community, z_order] <- ent_tsallis.numeric(
-          x = abd[, y_community],
+    }
+    for (z_order in seq_along(orders)) {
+      # Actual data
+      ent_phylo_abd[x_interval, , z_order] <- ent_tsallis.species_distribution(
+        x = as_abundances(t(the_phylo_abd[[x_interval]])),
+        q = orders[z_order],
+        estimator = estimator,
+        level = level, 
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = richness_estimator,
+        jack_alpha  = jack_alpha, 
+        jack_max = jack_max, 
+        coverage_estimator = coverage_estimator,
+        gamma = gamma,
+        check_arguments = FALSE
+      )$entropy
+      
+      for (t_simulation in seq_len(n_simulations)) {
+        # Entropy of simulated communities
+        ent_phylo_sim[x_interval, , z_order, t_simulation] <- ent_tsallis.species_distribution(
+          x = as_abundances(t(comm_sim[, , t_simulation])),
           q = orders[z_order],
           estimator = estimator,
           level = level, 
@@ -241,35 +277,24 @@ profile_phylo.species_distribution <- function(
           jack_alpha  = jack_alpha, 
           jack_max = jack_max, 
           coverage_estimator = coverage_estimator,
-          as_numeric = TRUE,
+          gamma = gamma,
           check_arguments = FALSE
-        )
-        if (n_simulations > 0) {
-          # Simulated communities
-          ent_sim <- ent_tsallis.species_distribution(
-            x = comm_sim,
-            q = orders[z_order],
-            estimator = estimator,
-            level = level, 
-            probability_estimator = probability_estimator,
-            unveiling = unveiling,
-            richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha, 
-            jack_max = jack_max, 
-            coverage_estimator = coverage_estimator,
-            check_arguments = FALSE
-          )
+        )$entropy
+      }
+      if (n_simulations > 0) {
+        for (y_community in seq_len(n_communities)) {
           # Quantiles, recentered
-          ent_phylo_sim[x_interval, y_community, z_order, ] <- stats::quantile(
-            ent_sim$entropy, 
-            probs = c(alpha / 2, 1 - alpha / 2)
-          ) - mean(ent_sim$entropy) + 
+          ent_phylo_envelope[x_interval, y_community, z_order, ] <- stats::quantile(
+            ent_phylo_sim[x_interval, y_community, z_order, ], 
+            probs = c(alpha / 2, 1 - alpha / 2),
+            na.rm = TRUE
+          ) - mean(ent_phylo_sim[x_interval, y_community, z_order, ]) + 
             ent_phylo_abd[x_interval, y_community, z_order]
-          # Progress bar
         }
-        if (show_progress & interactive()) {
-          utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
-        }
+      }
+      # Progress bar
+      if (show_progress & interactive()) {
+        utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
       }
     }
   }
@@ -284,14 +309,10 @@ profile_phylo.species_distribution <- function(
     # Arguments
     w = tree$intervals
   )
-  if (!is.matrix(ent_community)) {
-    # With a single community, the_entropy is a numeric vector 
-    ent_community <- t(as.matrix(ent_community))
-  }
   # Simulations
   if (n_simulations > 0) {
     ent_quantiles <- apply(
-      ent_phylo_sim,
+      ent_phylo_envelope,
       MARGIN = 2:4,
       FUN = stats::weighted.mean,
       # Arguments
@@ -342,6 +363,10 @@ profile_phylo.species_distribution <- function(
 #'
 div.tibble <- function(ent.matrix, x, orders) {
   
+  if (!is.matrix(ent.matrix)) {
+    # ent.matrix may be a numeric vector (single community / min and max)
+    ent.matrix <- t(as.matrix(ent.matrix))
+  }
   # Make a tibble with site names and entropies.
   # Columns are orders of diversity
   ent.tibble <- tibble::tibble(
