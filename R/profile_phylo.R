@@ -202,10 +202,12 @@ profile_phylo.species_distribution <- function(
   }
   
   # Prepare the progress bar
-  pgb <- utils::txtProgressBar(
-    min = 0, 
-    max = length(the_phylo_abd) * length(orders)
-  )
+  if (show_progress & interactive()) {
+    pgb <- utils::txtProgressBar(
+      min = 0, 
+      max = length(the_phylo_abd) * length(orders)
+    )
+  }
   
   # Calculate entropy along the tree
   for (x_interval in seq_along(the_phylo_abd)) {
@@ -298,7 +300,8 @@ profile_phylo.species_distribution <- function(
       }
     }
   }
-  close(pgb)
+
+  if (show_progress & interactive()) close(pgb)
 
   # Average entropy
   # Actual data
