@@ -98,7 +98,9 @@ accum_tsallis.numeric <- function(
   ent_level <- numeric(length(levels))
   ent_estimator <- character(length(levels))
   # Prepare the progress bar
-  pgb <- utils::txtProgressBar(min = 0, max = length(levels))
+  if (show_progress & interactive()) {
+    pgb <- utils::txtProgressBar(min = 0, max = length(levels))
+  }
   # i must be initialized if the accumulation contains extrapolation only
   i <- 0
   
@@ -268,7 +270,7 @@ accum_tsallis.numeric <- function(
       if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
     }
   }
-  close(pgb)
+  if (show_progress & interactive()) close(pgb)
 
   # Format the result ----
   if (n_simulations > 0) {
