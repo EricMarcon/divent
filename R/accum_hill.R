@@ -135,7 +135,7 @@ accum_tsallis.numeric <- function(
   }
   
   # Extrapolation ----
-  # Don't use ent_sallis for speed: probability extrapolation should be run once only.
+  # Don't use ent_tsallis for speed: probability extrapolation should be run once only.
   levels_extrap <- levels[levels > sample_size]
   prob_unv <- NULL
   if (length(levels_extrap) > 0) {

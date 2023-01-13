@@ -349,7 +349,7 @@ profile_phylo.species_distribution <- function(
 }
 
 
-#' Make a long tibble with a matrix
+#' Make a long tibble of diversity with a matrix of entropy
 #' 
 #' Utility for [profile_phylo.species_distribution]
 #'
