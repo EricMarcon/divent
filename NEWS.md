@@ -1,4 +1,4 @@
-# divent 0.3-9
+# divent 0.3-10
 
 ## Features
 
@@ -7,8 +7,7 @@
 - Rao's quadratic entropy: `ent_rao()`.
 
 ## TODO
-- Check gamma = TRUE in div_ and ant_ functions, and in profile_ and accum_ functions.
-- ent_phylo.species_distribution(gamma = TRUE) not implemented
+- Check gamma in accum_ent_phylo() functions.
 
 
 # divent 0.2-5
