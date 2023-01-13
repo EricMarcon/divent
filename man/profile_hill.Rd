@@ -123,7 +123,7 @@ rare species of the actual community may have abundance zero in simulated commun
 Simulated diversity values are recentered so that their mean is that of the actual community.
 }
 \examples{
-profile_hill(paracou_6_abd)
+autoplot(profile_hill(paracou_6_abd))
 
 }
 \references{
