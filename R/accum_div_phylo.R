@@ -229,7 +229,6 @@ accum_ent_phylo.abundances <- function(
           rcommunity(
             n = n_simulations,
             abd = abd,
-            bootstrap = bootstrap,
             check_arguments = FALSE
           )
         }
