@@ -182,9 +182,6 @@ accum_ent_phylo.abundances <- function(
     the_phylo_abd <- phylo_abd(abundances = x, tree = tree)
   }
   
-  # Calculate abundances along the tree, that are a list of matrices
-  the_phylo_abd <- phylo_abd(abundances = x, tree = tree)
-  
   # Prepare arrays to store entropy (3 dimensions: x, y, z)
   # and simulated entropies (4 dimensions : x, y, z, t)
   # x are tree intervals, y are communities, z are levels, 
@@ -207,13 +204,13 @@ accum_ent_phylo.abundances <- function(
       dim = c(length(tree$intervals), nrow(x), length(levels), 2)
     )
   }
-  
   # Prepare the progress bar
   if (show_progress & interactive()) {
     pgb <- utils::txtProgressBar(
       min = 0, 
-      max = length(the_phylo_abd) * n_communities
+      max = 1 + (length(the_phylo_abd) * n_communities) * (1 + n_simulations)
     )
+    utils::setTxtProgressBar(pgb, 1)
   }
   
   # Calculate entropy along the tree
@@ -292,6 +289,10 @@ accum_ent_phylo.abundances <- function(
           show_progress = FALSE,
           check_arguments = FALSE
         )$entropy
+        # Progress bar
+        if (show_progress & interactive()) {
+          utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
+        }
       }
       if (n_simulations > 0) {
         for (y_community in seq_len(n_communities)) {
