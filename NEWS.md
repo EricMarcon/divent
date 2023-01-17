@@ -1,4 +1,4 @@
-# divent 0.3-10
+# divent 0.3-11
 
 ## Features
 
@@ -7,7 +7,7 @@
 - Rao's quadratic entropy: `ent_rao()`.
 
 ## TODO
-- Check gamma in accum_ent_phylo() functions.
+- Check gamma in accum_() functions.
 
 
 # divent 0.2-5

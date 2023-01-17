@@ -118,13 +118,6 @@ ln_q(d2, q = 2)
 exp_q(e2, q = 2)
 ```
 
-Diversity can be plotted against its order to provide a diversity profile. 
-Order 0 corresponds to richness, 1 to Shannon's and 2 to Simpson's diversities:
-
-```{r div_profile}
-profile_hill(paracou_6_abd) %>% autoplot
-```
-
 If an ultrametric dendrogram describing species phylogeny (here, a mere taxonomy with family, genus and species) is available, phylogenetic entropy and diversity [@Marcon2014b] can be calculated:
 
 ```{r PhyloDiversity}
@@ -134,7 +127,7 @@ div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
 Recall that all those functions can be applied to a numeric vector containing abundances, without having to build an object of class `abundances`.
 
 ```{r DivVector}
-# Richness of a community of 10 species, each of them with 100 individuals
+# Richness of a community of 100 species, each of them with 10 individuals
 div_richness(rep(10, 100))
 ```
 
@@ -147,10 +140,57 @@ Z <- fun_similarity(paracou_6_fundist)
 div_similarity(paracou_6_abd, similarities = Z, q = 2)
 ```
 
+## Diversity profiles
+
+Diversity can be plotted against its order to provide a diversity profile. 
+Order 0 corresponds to richness, 1 to Shannon's and 2 to Simpson's diversities:
+
+```{r div_profile}
+profile_hill(paracou_6_abd) %>% autoplot
+```
+
 Profiles of phylogenetic diversity and similarity-based diversity are obtained the same way.
 
 ```{r PDiversityProfile}
-# TODO
+profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>% autoplot
+# Similarity matrix
+Z <- fun_similarity(paracou_6_fundist)
+profile_similarity(paracou_6_abd, similarities = Z) %>% autoplot
+```
+
+## Diversity accumulation
+
+Diversity can be interpolated or extrapolated to arbitrary sampling levels.
+
+```{r div_level}
+# Estimate the diversity of 1000 individuals
+div_hill(paracou_6_abd, q = 1, level = 1000)
+```
+
+The sampling level can be a sample coverage, that is converted to the equivalent number of individuals.
+
+```{r div_coverage}
+# Estimate the diversity at 80% coverage
+div_hill(paracou_6_abd, q = 1, level = 0.8)
+```
+
+Diversity accumulation curves are available.
+
+```{r accum_hill}
+accum_hill(paracou_6_abd[1, ], q = 1, levels = 1:2000) %>% autoplot()
+```
+Phylogenetic diversity can be addressed the same way.
+Confidence intervals of the estimation can be computed, taking into account sampling variability.
+
+```{r accum_div_phylo}
+accum_div_phylo(
+  paracou_6_abd[1, ],
+  tree = paracou_6_taxo,
+  q = 1, 
+  levels = 1:2000, 
+  n_simulations = 100
+) %>% 
+  autoplot()
 ```
 
 # Estimating the diversity of a meta-community
@@ -212,6 +252,11 @@ The `div_part` function calculates everything at once, for a given order of dive
 div_part(paracou_6_abd, q = 1)
 ```
 
+An alternative is the `gamma` argument of all diversity estimation function to obtain $\gamma$ diversity instead of the diversity of each community.
+
+```{r gamma}
+div_hill(paracou_6_abd, q = 1, gamma = TRUE)
+```
 
 # Full documentation
 
