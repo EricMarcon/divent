@@ -6,30 +6,48 @@
 \usage{
 check_divent_args(
   abundances = NULL,
+  alpha = NULL,
   as_numeric = NULL,
   check_arguments = NULL,
+  coverage_estimator = NULL,
+  distances = NULL,
   estimator = NULL,
+  gamma = NULL,
   jack_alpha = NULL,
   jack_max = NULL,
   level = NULL,
   n_simulations = NULL,
+  normalize = NULL,
   probability_estimator = NULL,
   q = NULL,
+  rate = NULL,
   richness_estimator = NULL,
   sample_coverage = NULL,
   show_progress = NULL,
-  unveiling = NULL
+  similarities = NULL,
+  species_distribution = NULL,
+  tree = NULL,
+  unveiling = NULL,
+  weights = NULL
 )
 }
 \arguments{
 \item{abundances}{An object of class \link{abundances}.}
+
+\item{alpha}{The risk level, 5\% by default.}
 
 \item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
+\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+
+\item{distances}{A distance matrix or an object of class \link[stats:dist]{stats::dist}}
+
 \item{estimator}{An estimator of asymptotic entropy, diversity or richness.}
+
+\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
@@ -42,11 +60,15 @@ If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
 
 \item{n_simulations}{The number of simulations used to estimate the confidence envelope.}
 
+\item{normalize}{If \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
+
 \item{probability_estimator}{A string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
 
 \item{q}{The order of diversity.}
+
+\item{rate}{The decay rate of the exponential similarity.}
 
 \item{richness_estimator}{An estimator of richness to evaluate the total number of species,
 see \link{div_richness}. Used for interpolation and extrapolation.}
@@ -56,22 +78,6 @@ Used to calculate the gamma diversity of meta-communities, see details.}
 
 \item{show_progress}{If TRUE, a progress bar is shown during long computations.}
 
-\item{unveiling}{A string containing one of the possible unveiling methods
-to estimate the probabilities of the unobserved species (see \link{probabilities}).
-Used only for extrapolation.}
-
-\item{alpha}{The risk level, 5\% by default.}
-
-\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
-
-\item{distances}{A distance matrix or an object of class \link[stats:dist]{stats::dist}}
-
-\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
-
-\item{normalize}{If \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
-
-\item{rate}{The decay rate of the exponential similarity.}
-
 \item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.
 Its default value is the identity matrix.}
 
@@ -79,6 +85,10 @@ Its default value is the identity matrix.}
 
 \item{tree}{An ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+
+\item{unveiling}{A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see \link{probabilities}).
+Used only for extrapolation.}
 
 \item{weights}{The weights of the sites of the species distributions.}
 }

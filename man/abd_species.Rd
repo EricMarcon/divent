@@ -23,6 +23,7 @@ Utilities for community abundances (objects of class "abundances").
 \details{
 \code{abd_species()} returns a tibble containing the species abundance columns only,
 to simplify numeric operations.
+\code{prob_species()} returns the same tibble but values are probabilities.
 
 \code{abd_sum()} returns the sample sizes of the communities.
 }

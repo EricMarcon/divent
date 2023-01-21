@@ -39,6 +39,7 @@ reference:
     - abd_species
     - coverage
     - fit_rac
+    - prob_species
   - title: Classes
     contents:
     - abundances

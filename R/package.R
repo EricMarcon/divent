@@ -221,19 +221,29 @@ chao_A <- function(abd) {
 #' 
 check_divent_args <- function(
     abundances = NULL,
+    alpha = NULL,
     as_numeric = NULL,
     check_arguments = NULL,
+    coverage_estimator = NULL,
+    distances = NULL,
     estimator = NULL,
+    gamma = NULL,
     jack_alpha = NULL,
     jack_max = NULL,
     level = NULL,
     n_simulations = NULL,
+    normalize = NULL,
     probability_estimator = NULL,
     q = NULL,
+    rate = NULL,
     richness_estimator = NULL,
     sample_coverage = NULL,
     show_progress = NULL,
-    unveiling = NULL) {
+    similarities = NULL,
+    species_distribution = NULL,
+    tree = NULL,
+    unveiling = NULL,
+    weights = NULL) {
 
   # Verify that the package is attached
   if (!"divent" %in% .packages()) {

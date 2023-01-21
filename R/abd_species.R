@@ -61,7 +61,7 @@ abd_sum <- function(
 }
 
 
-#' @rdname prob_species
+#' @rdname abd_species
 #'
 #' @export
 prob_species <- function(
