@@ -4,6 +4,7 @@
 #' 
 #' `abd_species()` returns a tibble containing the species abundance columns only,
 #' to simplify numeric operations.
+#' `prob_species()` returns the same tibble but values are probabilities.
 #' 
 #' `abd_sum()` returns the sample sizes of the communities.
 #'
@@ -57,4 +58,31 @@ abd_sum <- function(
       )
     )
   }
+}
+
+
+#' @rdname prob_species
+#'
+#' @export
+prob_species <- function(
+    species_distribution, 
+    check_arguments = TRUE) {
+  
+  if (any(check_arguments)) check_divent_args()
+  
+  abundances <- species_distribution[
+    , 
+    !colnames(species_distribution) %in% non_species_columns
+  ]
+  sample_sizes <- rowSums(abundances)
+  # Divide each column by sample_sizes
+  return(
+    dplyr::mutate(
+      abundances,
+      dplyr::across(
+        dplyr::everything(),
+        ~ .x / sample_sizes
+      )
+    )
+  )
 }
