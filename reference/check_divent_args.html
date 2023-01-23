@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
       </span>
     </div>
 
@@ -71,19 +71,29 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_divent_args</span><span class="op">(</span></span>
 <span>  abundances <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  as_numeric <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  distances <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  estimator <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  gamma <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  jack_alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  jack_max <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  level <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_simulations <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  normalize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  probability_estimator <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  q <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  richness_estimator <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sample_coverage <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_progress <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  unveiling <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  similarities <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  species_distribution <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tree <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  unveiling <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,6 +101,10 @@
     <h2>Arguments</h2>
     <dl><dt>abundances</dt>
 <dd><p>An object of class <a href="species_distribution.html">abundances</a>.</p></dd>
+
+
+<dt>alpha</dt>
+<dd><p>The risk level, 5% by default.</p></dd>
 
 
 <dt>as_numeric</dt>
@@ -102,8 +116,20 @@
 Should be set to <code>FALSE</code> to save time when the arguments have been checked elsewhere.</p></dd>
 
 
+<dt>coverage_estimator</dt>
+<dd><p>An estimator of sample coverage used by <a href="coverage.html">coverage</a>.</p></dd>
+
+
+<dt>distances</dt>
+<dd><p>A distance matrix or an object of class <a href="https://rdrr.io/r/stats/dist.html" class="external-link">stats::dist</a></p></dd>
+
+
 <dt>estimator</dt>
 <dd><p>An estimator of asymptotic entropy, diversity or richness.</p></dd>
+
+
+<dt>gamma</dt>
+<dd><p>If <code>TRUE</code>, \(\gamma\) diversity, i.e. diversity of the metacommunity, is computed.</p></dd>
 
 
 <dt>jack_alpha</dt>
@@ -125,6 +151,10 @@ If not <code>NULL</code>, the asymptotic <code>estimator</code> is ignored.</p><
 <dd><p>The number of simulations used to estimate the confidence envelope.</p></dd>
 
 
+<dt>normalize</dt>
+<dd><p>If <code>TRUE</code>, phylogenetic is normalized: the height of the tree is set to 1.</p></dd>
+
+
 <dt>probability_estimator</dt>
 <dd><p>A string containing one of the possible estimators
 of the probability distribution (see <a href="probabilities.html">probabilities</a>).
@@ -133,6 +163,10 @@ Used only for extrapolation.</p></dd>
 
 <dt>q</dt>
 <dd><p>The order of diversity.</p></dd>
+
+
+<dt>rate</dt>
+<dd><p>The decay rate of the exponential similarity.</p></dd>
 
 
 <dt>richness_estimator</dt>
@@ -149,36 +183,6 @@ Used to calculate the gamma diversity of meta-communities, see details.</p></dd>
 <dd><p>If TRUE, a progress bar is shown during long computations.</p></dd>
 
 
-<dt>unveiling</dt>
-<dd><p>A string containing one of the possible unveiling methods
-to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
-Used only for extrapolation.</p></dd>
-
-
-<dt>alpha</dt>
-<dd><p>The risk level, 5% by default.</p></dd>
-
-
-<dt>coverage_estimator</dt>
-<dd><p>An estimator of sample coverage used by <a href="coverage.html">coverage</a>.</p></dd>
-
-
-<dt>distances</dt>
-<dd><p>A distance matrix or an object of class <a href="https://rdrr.io/r/stats/dist.html" class="external-link">stats::dist</a></p></dd>
-
-
-<dt>gamma</dt>
-<dd><p>If <code>TRUE</code>, \(\gamma\) diversity, i.e. diversity of the metacommunity, is computed.</p></dd>
-
-
-<dt>normalize</dt>
-<dd><p>If <code>TRUE</code>, phylogenetic is normalized: the height of the tree is set to 1.</p></dd>
-
-
-<dt>rate</dt>
-<dd><p>The decay rate of the exponential similarity.</p></dd>
-
-
 <dt>similarities</dt>
 <dd><p>A similarity matrix, that can be obtained by <a href="fun_similarity.html">fun_similarity</a>.
 Its default value is the identity matrix.</p></dd>
@@ -191,6 +195,12 @@ Its default value is the identity matrix.</p></dd>
 <dt>tree</dt>
 <dd><p>An ultrametric, phylogenetic tree.
 May be an object of class <a href="phylo_divent.html">phylo_divent</a>, <a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a>, <a href="https://rdrr.io/pkg/ade4/man/phylog.html" class="external-link">ade4::phylog</a> or <a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust</a>.</p></dd>
+
+
+<dt>unveiling</dt>
+<dd><p>A string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
+Used only for extrapolation.</p></dd>
 
 
 <dt>weights</dt>

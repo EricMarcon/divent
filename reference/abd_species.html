@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
       </span>
     </div>
 
@@ -71,7 +71,9 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">abd_species</span><span class="op">(</span><span class="va">abundances</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">abd_sum</span><span class="op">(</span><span class="va">abundances</span>, as_numeric <span class="op">=</span> <span class="cn">FALSE</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">abd_sum</span><span class="op">(</span><span class="va">abundances</span>, as_numeric <span class="op">=</span> <span class="cn">FALSE</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">prob_species</span><span class="op">(</span><span class="va">species_distribution</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -88,11 +90,16 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 <dt>as_numeric</dt>
 <dd><p>If <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
 
+
+<dt>species_distribution</dt>
+<dd><p>An object of class <a href="species_distribution.html">species_distribution</a>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p><code>abd_species()</code> returns a tibble containing the species abundance columns only,
-to simplify numeric operations.</p>
+to simplify numeric operations.
+<code>prob_species()</code> returns the same tibble but values are probabilities.</p>
 <p><code>abd_sum()</code> returns the sample sizes of the communities.</p>
     </div>
 
