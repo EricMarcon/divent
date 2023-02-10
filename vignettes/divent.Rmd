@@ -177,8 +177,15 @@ div_hill(paracou_6_abd, q = 1, level = 0.8)
 Diversity accumulation curves are available.
 
 ```{r accum_hill}
-accum_hill(paracou_6_abd[1, ], q = 1, levels = 1:2000) %>% autoplot()
+accum_hill(
+  paracou_6_abd[1, ], 
+  q = 1, 
+  levels = 1:500,
+  n_simulations = 100
+  ) %>% 
+  autoplot()
 ```
+
 Phylogenetic diversity can be addressed the same way.
 Confidence intervals of the estimation can be computed, taking into account sampling variability.
 
@@ -187,8 +194,7 @@ accum_div_phylo(
   paracou_6_abd[1, ],
   tree = paracou_6_taxo,
   q = 1, 
-  levels = 1:2000, 
-  n_simulations = 10
+  levels = 1:2000
 ) %>% 
   autoplot()
 ```
@@ -212,10 +218,9 @@ Example:
 # Abundances of three communities with four species
 (abd <- matrix(
   c(
-    10,  0, 25,
-    10, 20, 15,
-    10, 35,  0,
-    10,  5,  2
+    10,  0, 25, 10, 
+    20, 15, 10, 35, 
+     0, 10,  5,  2
   ),
   ncol = 4
 ))

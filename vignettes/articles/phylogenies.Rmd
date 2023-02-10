@@ -6,7 +6,7 @@ output:
     toc_float: yes
 bibliography: ../../inst/REFERENCES.bib
 vignette: >
-  %\VignetteIndexEntry{Phylogenies in entropart}
+  %\VignetteIndexEntry{Phylogenies in divent}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
