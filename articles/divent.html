@@ -60,6 +60,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/arguments.html">Common Arguments of divent Functions</a>
+    </li>
+    <li>
       <a href="../articles/extrapolation.html">Asymptotic Estimation, Interpolation and Extrapolation </a>
     </li>
     <li>
@@ -405,9 +408,15 @@ equivalent number of individuals.</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 Interpolation     1   303      60.5</span></span></code></pre>
 <p>Diversity accumulation curves are available.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/accum_hill.html">accum_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, q <span class="op">=</span> <span class="fl">1</span>, levels <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2000</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="divent_files/figure-html/accum_hill-1.png" width="700">
-Phylogenetic diversity can be addressed the same way. Confidence
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/accum_hill.html">accum_hill</a></span><span class="op">(</span></span>
+<span>  <span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, </span>
+<span>  q <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>  levels <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">500</span>,</span>
+<span>  n_simulations <span class="op">=</span> <span class="fl">100</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="divent_files/figure-html/accum_hill-1.png" width="700"></p>
+<p>Phylogenetic diversity can be addressed the same way. Confidence
 intervals of the estimation can be computed, taking into account
 sampling variability.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
@@ -415,8 +424,7 @@ sampling variability.</p>
 <span>  <span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>,</span>
 <span>  tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>  levels <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2000</span>, </span>
-<span>  n_simulations <span class="op">=</span> <span class="fl">10</span></span>
+<span>  levels <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2000</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/accum_div_phylo-1.png" width="700"></p>
@@ -444,10 +452,9 @@ diversity.</p>
 <code class="sourceCode R"><span><span class="co"># Abundances of three communities with four species</span></span>
 <span><span class="op">(</span><span class="va">abd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="fl">10</span>,  <span class="fl">0</span>, <span class="fl">25</span>,</span>
-<span>    <span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">15</span>,</span>
-<span>    <span class="fl">10</span>, <span class="fl">35</span>,  <span class="fl">0</span>,</span>
-<span>    <span class="fl">10</span>,  <span class="fl">5</span>,  <span class="fl">2</span></span>
+<span>    <span class="fl">10</span>,  <span class="fl">0</span>, <span class="fl">25</span>, <span class="fl">10</span>, </span>
+<span>    <span class="fl">20</span>, <span class="fl">15</span>, <span class="fl">10</span>, <span class="fl">35</span>, </span>
+<span>     <span class="fl">0</span>, <span class="fl">10</span>,  <span class="fl">5</span>,  <span class="fl">2</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="fl">4</span></span>
 <span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
