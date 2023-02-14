@@ -25,7 +25,7 @@ Phylogenetic or functional diversity [@Marcon2014b] can be estimated, considerin
 Similarity-based diversity [@Leinster2012] can be used to estimate [@Marcon2014e] functional diversity from a similarity or dissimilarity matrix between species without requiring building a dendrogram and thus preserving the topology of species  [@Pavoine2005a; @Podani2007].
 
 The classical diversity estimators (Shannon and Simpson entropy) can be found in many R packages. 
-Bias correction is rarely available except in the _EntropyEstimation_ [@Cao2014] package which provides the Zhang and Grabchak's estimators of entropy and diversity and their asymptotic variance (not included in _entropart_).
+Bias correction is rarely available except in the _EntropyEstimation_ [@Cao2014] package which provides the Zhang and Grabchak's estimators of entropy and diversity and their asymptotic variance (not included in _divent_).
 
 
 # Estimating the diversity of a community
@@ -63,7 +63,7 @@ The `rcommunity` function allows drawing random communities, e.g. a log-normal o
 
 ```{r rcommunity}
 rc <- rcommunity(1, size = 10000, distribution = "lnorm")
-autoplot(rc, fit_rac = TRUE, distribution="lnorm")
+autoplot(rc, fit_rac = TRUE, distribution = "lnorm")
 ```
 
 The Whittaker plot (rank-abundance curve) of a random log-normal distribution of 10000 individuals simulated with default parameter ($\sigma = 1$) is produced.
@@ -182,7 +182,7 @@ accum_hill(
   q = 1, 
   levels = 1:500,
   n_simulations = 100
-  ) %>% 
+) %>% 
   autoplot()
 ```
 
@@ -198,6 +198,7 @@ accum_div_phylo(
 ) %>% 
   autoplot()
 ```
+
 
 # Estimating the diversity of a meta-community
 
