@@ -133,7 +133,7 @@ be found in many R packages. Bias correction is rarely available except
 in the <em>EntropyEstimation</em> <span class="citation">(Cao and
 Grabchak 2014)</span> package which provides the Zhang and Grabchak’s
 estimators of entropy and diversity and their asymptotic variance (not
-included in <em>entropart</em>).</p>
+included in <em>divent</em>).</p>
 <div class="section level2">
 <h2 id="estimating-the-diversity-of-a-community">Estimating the diversity of a community<a class="anchor" aria-label="anchor" href="#estimating-the-diversity-of-a-community"></a>
 </h2>
@@ -194,7 +194,7 @@ communities, e.g. a log-normal one <span class="citation">(Preston
 1948)</span>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rcommunity.html">rcommunity</a></span><span class="op">(</span><span class="fl">1</span>, size <span class="op">=</span> <span class="fl">10000</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">rc</span>, fit_rac <span class="op">=</span> <span class="cn">TRUE</span>, distribution<span class="op">=</span><span class="st">"lnorm"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">rc</span>, fit_rac <span class="op">=</span> <span class="cn">TRUE</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/rcommunity-1.png" width="700"></p>
 <p>The Whittaker plot (rank-abundance curve) of a random log-normal
 distribution of 10000 individuals simulated with default parameter
@@ -413,7 +413,7 @@ equivalent number of individuals.</p>
 <span>  q <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>  levels <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">500</span>,</span>
 <span>  n_simulations <span class="op">=</span> <span class="fl">100</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/accum_hill-1.png" width="700"></p>
 <p>Phylogenetic diversity can be addressed the same way. Confidence
