@@ -5,13 +5,11 @@
 #' 
 #' This package is a reboot of the **entropart** package \insertCite{Marcon2014c}{divent}.
 #'
-#' @name divent
-#' @docType package
 #' @importFrom Rdpack reprompt
 #' 
 #' @references
 #' \insertAllCited{}
-NULL
+"_PACKAGE"
 
 # Functions to reexport
 #' @export
