@@ -79,7 +79,7 @@ distribution: either lognormal ("lnorm")  \insertCite{Preston1948}{divent}
 with given standard deviation (\code{sd_lnorm}; note that the mean is actually
 a normalizing constant. Its values is set equal to 0 for the simulation of
 the normal distribution of unnormalized log-abundances), log-series ("lseries")
-\insertCite{Fisher1943}{divent} with parameter \code{alpha_lseries}, geometric
+\insertCite{Fisher1943}{divent} with parameter \code{alpha}, geometric
 ("geom") one \insertCite{Motomura1932}{divent} with parameter \code{prob_geom},
 or broken stick ("bstick") \insertCite{MacArthur1957}{divent}.
 The number of simulated species is fixed by \code{species_number}, except for

@@ -132,7 +132,7 @@ curve of a distribution.
 See \link{ent_tsallis} for details about the computation of entropy at each level
 of interpolation and extrapolation.
 
-In accumulation curves, extrapolation if done by estimating the asymptotic
+In accumulation curves, extrapolation is done by estimating the asymptotic
 distribution of the community and estimating entropy at different levels
 by interpolation.
 

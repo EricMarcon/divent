@@ -19,7 +19,7 @@
 #' with given standard deviation (`sd_lnorm`; note that the mean is actually 
 #' a normalizing constant. Its values is set equal to 0 for the simulation of 
 #' the normal distribution of unnormalized log-abundances), log-series ("lseries")
-#' \insertCite{Fisher1943}{divent} with parameter `alpha_lseries`, geometric 
+#' \insertCite{Fisher1943}{divent} with parameter `alpha`, geometric 
 #' ("geom") one \insertCite{Motomura1932}{divent} with parameter `prob_geom`, 
 #' or broken stick ("bstick") \insertCite{MacArthur1957}{divent}. 
 #' The number of simulated species is fixed by `species_number`, except for 
