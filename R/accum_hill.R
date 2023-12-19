@@ -99,7 +99,7 @@ accum_tsallis.numeric <- function(
   ent_estimator <- character(length(levels))
   # Prepare the progress bar
   if (show_progress & interactive()) {
-    pgb <- utils::txtProgressBar(min = 0, max = length(levels))
+    cli::cli_progress_bar("Running estimations", total = length(levels))
   }
   # i must be initialized if the accumulation contains extrapolation only
   i <- 0
@@ -118,7 +118,7 @@ accum_tsallis.numeric <- function(
       check_arguments = FALSE
     )
     ent_estimator[i] <- "Interpolation"
-    if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
+    if (show_progress & interactive()) cli::cli_progress_update(set = i)
   }
   
   # level == Sample Size ----
@@ -131,7 +131,7 @@ accum_tsallis.numeric <- function(
       check_arguments = FALSE
     )
     ent_estimator[i] <- "Sample"
-    if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
+    if (show_progress & interactive()) cli::cli_progress_update(set = i)
   }
   
   # Extrapolation ----
@@ -167,7 +167,9 @@ accum_tsallis.numeric <- function(
         ent_level[(i + 1):length(levels)] <- s_obs - 1
       }
       ent_estimator[(i + 1):length(levels)] <- richness_estimator
-      if(show_progress & interactive()) utils::setTxtProgressBar(pgb, length(levels))
+      if(show_progress & interactive()) {
+        cli::cli_progress_bar("Running estimations", total = length(levels))
+      }
     } else {
       ## Shannon ----
       if (q == 1) {
@@ -179,7 +181,9 @@ accum_tsallis.numeric <- function(
         ent_level[(i+1):length(levels)] <- sample_size / levels_extrap * ent_obs + 
           (levels_extrap - sample_size) / levels_extrap * ent_est
         ent_estimator[(i + 1):length(levels)] <- richness_estimator
-        if(show_progress & interactive()) utils::setTxtProgressBar(pgb, length(levels))
+        if(show_progress & interactive()) {
+          cli::cli_progress_bar("Running estimations", total = length(levels))
+        }
       } else {
         ## Simpson ----
         if (q == 2) {
@@ -196,7 +200,9 @@ accum_tsallis.numeric <- function(
               (1 - 1 / levels_extrap) * sum(abd * (abd - 1)) / sample_size / (sample_size - 1)
           }
           ent_estimator[(i + 1):length(levels)] <- "Chao2014"
-          if(show_progress & interactive()) utils::setTxtProgressBar(pgb, length(levels))
+          if(show_progress & interactive()) {
+            cli::cli_progress_bar("Running estimations", total = length(levels))
+          }
         } else {
           # General case: q is not 0, 1 or 2 ----
           for (level in levels_extrap) {
@@ -216,7 +222,7 @@ accum_tsallis.numeric <- function(
             i <- which(levels == level)
             ent_level[i] <- (sum((seq_len(level) / level)^q * s_nu) - 1) / (1 - q)
             ent_estimator[i] <- richness_estimator
-            if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
+            if (show_progress & interactive()) cli::cli_progress_update(set = i)
           }
         }
       }
@@ -232,6 +238,9 @@ accum_tsallis.numeric <- function(
   if (n_simulations > 0) {
     # Prepare the result matrix
     ent_sim_quantiles <- matrix(0, nrow = length(levels), ncol = 2)
+    if(show_progress & interactive()) {
+      cli::cli_progress_bar("Running simulations", total = length(levels))
+    }
     if (is.null(prob_unv)) {
       # Unveil the full distribution if not done before
       prob_unv <- probabilities.numeric(
@@ -251,7 +260,7 @@ accum_tsallis.numeric <- function(
       # Generate simulated communities at each level
       communities <- stats::rmultinom(n_simulations, size = level, prob = prob_unv)
       # Probabilities
-      communities <- communities/level
+      communities <- communities / level
       # Calculate entropy
       ent_sim <- apply(
         communities, 
@@ -267,10 +276,9 @@ accum_tsallis.numeric <- function(
         ent_sim, 
         probs = c(alpha / 2, 1 - alpha / 2)
       )
-      if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
+      if (show_progress & interactive()) cli::cli_progress_update(set = i)
     }
   }
-  if (show_progress & interactive()) close(pgb)
 
   # Format the result ----
   if (n_simulations > 0) {

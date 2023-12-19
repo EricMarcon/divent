@@ -151,9 +151,11 @@ profile_similarity.numeric <- function(
       check_arguments = FALSE
     )
     # Prepare the progress bar
-    pgb <- utils::txtProgressBar(min = 0, max = n_simulations)
+    if (show_progress & interactive()) {
+      cli::cli_progress_bar("Running simulations", total = n_simulations)
+    }
     # Prepare the result matrix
-    profile_similaritys <- matrix(0, nrow = n_simulations, ncol = length(orders))
+    profile_similarities <- matrix(0, nrow = n_simulations, ncol = length(orders))
     # Loops are required for the progress bar
     for (i in seq_len(n_simulations)) {
       # Parallelize. Do not allow more forks.
@@ -177,18 +179,17 @@ profile_similarity.numeric <- function(
         },
         mc.allow.recursive = FALSE
       )
-      profile_similaritys[i, ] <- simplify2array(profiles_list)
-      if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
+      profile_similarities[i, ] <- simplify2array(profiles_list)
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
-    close(pgb)
     # Recenter simulated values
-    div_means <- apply(profile_similaritys, 2, mean)
-    profile_similaritys <- t(
-      t(profile_similaritys) - div_means + the_profile_similarity$diversity
+    div_means <- apply(profile_similarities, 2, mean)
+    profile_similarities <- t(
+      t(profile_similarities) - div_means + the_profile_similarity$diversity
     )
     # Quantiles
     div_quantiles <- apply(
-      profile_similaritys, 
+      profile_similarities, 
       MARGIN = 2, 
       FUN = stats::quantile,
       probs = c(alpha / 2, 1 - alpha / 2)

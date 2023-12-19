@@ -149,7 +149,9 @@ profile_hill.numeric <- function(
       check_arguments = FALSE
     )
     # Prepare the progress bar
-    pgb <- utils::txtProgressBar(min = 0, max = n_simulations)
+    if (show_progress & interactive()) {
+      cli::cli_progress_bar("Running simulations", total = n_simulations)
+    }
     # Prepare the result matrix
     profile_hills <- matrix(0, nrow = n_simulations, ncol = length(orders))
     # Loops are required for the progress bar
@@ -176,9 +178,8 @@ profile_hill.numeric <- function(
         mc.allow.recursive = FALSE
       )
       profile_hills[i, ] <- simplify2array(profiles_list)
-      if (show_progress & interactive()) utils::setTxtProgressBar(pgb, i)
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
-    close(pgb)
     # Recenter simulated values
     div_means <- apply(profile_hills, 2, mean)
     profile_hills <- t(
