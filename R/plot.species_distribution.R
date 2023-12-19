@@ -208,11 +208,8 @@ autoplot.species_distribution <- function(
   
   # Prepare the plot
   the_plot <- ggplot2::ggplot() +
-    ggplot2::scale_x_continuous(
-      # X-axis starts at 0.01 to avoid the 0 X-label.
-      limits = c(0.01, s_obs_max), 
-      expand = c(0, 0)
-    ) +
+    # Make X axis start at 1
+    ggplot2::scale_x_continuous(labels = rlang::as_function(~ .x + 1)) +
     ggplot2::labs(title = main, x = xlab, y = ylab)
   
   # Prepare the data to plot
