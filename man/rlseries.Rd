@@ -11,7 +11,7 @@ rlseries(n, size, alpha, show_progress = TRUE, check_arguments = TRUE)
 
 \item{size}{The size of the distribution.}
 
-\item{alpha}{Fisher's $\alpha$.}
+\item{alpha}{Fisher's \eqn{\alpha}.}
 
 \item{show_progress}{If TRUE, a progress bar is shown during long computations.}
 

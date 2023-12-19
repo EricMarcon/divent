@@ -14,7 +14,7 @@
 #' @inheritParams check_divent_args
 #' @param n Number of observations.
 #' @param size The size of the distribution.
-#' @param alpha Fisher's $\alpha$.
+#' @param alpha Fisher's \eqn{\alpha}.
 #'
 #' @return A numeric vector with the random values drawn from the log-series distribution.
 #' @export
