@@ -16,6 +16,7 @@ Imports:
   ape,
   cli,
   dplyr,
+  dbmss,
   ggplot2,
   graphics,
   EntropyEstimation,

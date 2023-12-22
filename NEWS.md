@@ -1,10 +1,11 @@
-# divent 0.3-15
+# divent 0.3-16
 
 ## Features
 
 - Similarity and ordinariness of species.
 - Similarity-based diversity: `ent_similarity()` and `div_similarity()`
 - Rao's quadratic entropy: `ent_rao()`.
+- paracou_6_wmppp dataset.
 
 ## TODO
 - Check gamma in accum_() functions.
