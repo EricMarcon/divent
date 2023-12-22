@@ -41,17 +41,23 @@ non_species_columns <- c(
 #' A community assembly.
 #' It contains number of trees per species of the plot #6 of Paracou.
 #' The plot covers 6.25 ha of tropical rainforest, divided into 4 equally-sized subplots.
-#' Each line of the tibble is a subplot. 
-#' The "site" column contains the subplot number, "weight" contains its area and all others columns contain a species.
+#' 
+#' In `paracou_6_abd` (a tibble), the "site" column contains the subplot number, "weight" contains its area and all others columns contain a species.
 #' Data are the number of trees above 10 cm diameter at breast height (DBH).
+#' 
+#' In `paracou_6_wmppp` (a point pattern), the point type is tree species and the point weight is their basal area, in square centimeters.
 #' 
 #' This dataset is from Paracou field station, French Guiana, managed by [Cirad](https://www.cirad.fr).
 #'
-#' @format An object of class [abundances], which is also a [tibble::tibble].
+#' @format `paracou_6_abd` is an object of class [abundances], which is also a [tibble::tibble].
+#' Each line of the tibble is a subplot. 
+#' `paracou_6_wmppp` is a [dbmss::wmppp] object, i.e. a weighted, marked planar point pattern.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
 #' @seealso [paracou_6_taxo], [paracou_6_fundist]
-#' 
+#' @name paracou_6
 "paracou_6_abd"
+"paracou_6_wmppp"
+
 
 #' Taxonomy of Paracou plot 6 species
 #'
@@ -82,6 +88,7 @@ non_species_columns <- c(
 #' @seealso [paracou_6_abd], [paracou_6_taxo]
 #' 
 "paracou_6_fundist"
+
 
 
 #' Mock data
