@@ -61,6 +61,8 @@ non_species_columns <- c(
 #' @seealso [paracou_6_taxo], [paracou_6_fundist]
 #' @name paracou_6
 "paracou_6_abd"
+
+#' @rdname paracou_6
 "paracou_6_wmppp"
 
 

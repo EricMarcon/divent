@@ -4,17 +4,22 @@
 \name{paracou_6}
 \alias{paracou_6}
 \alias{paracou_6_abd}
+\alias{paracou_6_wmppp}
 \title{Paracou plot 6}
 \format{
 \code{paracou_6_abd} is an object of class \link{abundances}, which is also a \link[tibble:tibble]{tibble::tibble}.
 Each line of the tibble is a subplot.
 \code{paracou_6_wmppp} is a \link[dbmss:wmppp]{dbmss::wmppp} object, i.e. a weighted, marked planar point pattern.
+
+An object of class \code{wmppp} (inherits from \code{ppp}) of length 6.
 }
 \source{
 Permanent data census of Paracou: \url{https://paracou.cirad.fr/}
 }
 \usage{
 paracou_6_abd
+
+paracou_6_wmppp
 }
 \description{
 A community assembly.
