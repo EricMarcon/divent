@@ -18,7 +18,7 @@ or probabilities."><meta property="og:image" content="https://ericmarcon.github.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.16</span>
       </span>
     </div>
 
@@ -134,13 +134,22 @@ or probabilities.</p>
 <span><span class="co"># S3 method for data.frame</span></span>
 <span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">is_abundances</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">is_abundances</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for species_distribution</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">x</span>, use.names <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for species_distribution</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="va">x</span>, use.names <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for species_distribution</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span>, use.names <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>An object.</p></dd>
+<dd><p>an object.</p></dd>
 
 
 <dt>names</dt>
@@ -163,6 +172,11 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 <dt>round</dt>
 <dd><p>If <code>TRUE</code>, the values of <code>x</code> are converted to integers.</p></dd>
 
+
+<dt>use.names</dt>
+<dd><p>If <code>TRUE</code>, the names of the <code>species_distribution</code> are kept
+in the matrix or vector they are converted to.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -176,6 +190,12 @@ Abundance values are rounded (by default) to the nearest integer.</p>
 <p><code>as_probabilities()</code> normalizes the vector <code>x</code> so that it sums to 1. It gives
 the same output as <code><a href="probabilities.html">probabilities()</a></code> with <code>estimator = "naive"</code>.</p>
 <p><code>species_distribution</code> objects objects can be plotted by <a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a> and <a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a>.</p>
+<p><code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> and its synonymous <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> return a numeric vector
+that contains species abundances or probabilities of a single-row
+<code>species_distribution</code>.
+<code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> returns a numeric matrix if the <code>species_distribution</code> contains
+several rows.
+These are methods of the generic functions for class <code>species_distribution</code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
