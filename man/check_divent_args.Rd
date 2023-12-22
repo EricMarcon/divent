@@ -91,6 +91,9 @@ to estimate the probabilities of the unobserved species (see \link{probabilities
 Used only for extrapolation.}
 
 \item{weights}{The weights of the sites of the species distributions.}
+
+\item{use.names}{if \code{TRUE}, the names of the \code{species_distribution} are kept
+in the matrix or vector they are converted to.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.

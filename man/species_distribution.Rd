@@ -18,6 +18,9 @@
 \alias{as_abundances.matrix}
 \alias{as_abundances.data.frame}
 \alias{is_abundances}
+\alias{as.matrix.species_distribution}
+\alias{as.double.species_distribution}
+\alias{as.numeric.species_distribution}
 \title{Species Distributions}
 \usage{
 species_distribution(x, names = NULL, weights = NULL, check_arguments = TRUE)
@@ -72,9 +75,15 @@ as_abundances(x, ...)
 \method{as_abundances}{data.frame}(x, ..., check_arguments = TRUE)
 
 is_abundances(x)
+
+\method{as.matrix}{species_distribution}(x, use.names = TRUE, ...)
+
+\method{as.double}{species_distribution}(x, use.names = TRUE, ...)
+
+\method{as.numeric}{species_distribution}(x, use.names = TRUE, ...)
 }
 \arguments{
-\item{x}{An object.}
+\item{x}{an object.}
 
 \item{names}{The names of the species distributions.}
 
@@ -86,6 +95,9 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 \item{...}{Unused.}
 
 \item{round}{If \code{TRUE}, the values of \code{x} are converted to integers.}
+
+\item{use.names}{If \code{TRUE}, the names of the \code{species_distribution} are kept
+in the matrix or vector they are converted to.}
 }
 \description{
 A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing species abundances
@@ -105,6 +117,13 @@ Abundance values are rounded (by default) to the nearest integer.
 the same output as \code{probabilities()} with \code{estimator = "naive"}.
 
 \code{species_distribution} objects objects can be plotted by \link{plot} and \link{autoplot}.
+
+\code{as.double()} and its synonymous \code{as.numeric()} return a numeric vector
+that contains species abundances or probabilities of a single-row
+\code{species_distribution}.
+\code{as.matrix()} returns a numeric matrix if the \code{species_distribution} contains
+several rows.
+These are methods of the generic functions for class \code{species_distribution}.
 }
 \examples{
 # Paracou data is a tibble

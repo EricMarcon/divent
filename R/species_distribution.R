@@ -16,9 +16,16 @@
 #' the same output as `probabilities()` with `estimator = "naive"`.
 #' 
 #' `species_distribution` objects objects can be plotted by [plot] and [autoplot].
+#' 
+#' `as.double()` and its synonymous `as.numeric()` return a numeric vector 
+#' that contains species abundances or probabilities of a single-row 
+#' `species_distribution`. 
+#' `as.matrix()` returns a numeric matrix if the `species_distribution` contains 
+#' several rows.
+#' These are methods of the generic functions for class `species_distribution`.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object.
+#' @param x an object.
 #' @param ... Unused.
 #' 
 #' @references
@@ -471,4 +478,43 @@ as_abundances.data.frame <- function(
 #' @export
 is_abundances <- function(x) {
   inherits(x, "abundances")
+}
+
+
+#' @rdname species_distribution
+#' 
+#' @param use.names If `TRUE`, the names of the `species_distribution` are kept 
+#' in the matrix or vector they are converted to.
+#' 
+#' @export
+as.matrix.species_distribution <- function(x, use.names = TRUE, ...) {
+  # Delete co
+  the_matrix <- as.matrix.data.frame(x[, !colnames(x) %in% non_species_columns])
+  if (!use.names) {
+    rownames(the_matrix) <- colnames(the_matrix) <- NULL
+  }
+  return(the_matrix)
+}
+
+
+#' @rdname species_distribution
+#' 
+#' @export
+as.double.species_distribution <- function(x, use.names = TRUE, ...) {
+  if (nrow(x) > 1) {
+    warning("The species_distribution object contains several rows. as.matrix() is used.")
+    return(as.matrix.species_distribution(x, use.names, ...))
+  } else {
+    is_species_column <- !colnames(x) %in% non_species_columns
+    the_vector <- unlist(x[1, is_species_column], use.names = use.names)
+    return(the_vector) 
+  }
+}
+
+
+#' @rdname species_distribution
+#' 
+#' @export
+as.numeric.species_distribution <- function(x, use.names = TRUE, ...) {
+  return(as.double.species_distribution(x, use.names, ...))
 }

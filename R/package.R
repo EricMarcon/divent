@@ -11,9 +11,13 @@
 #' \insertAllCited{}
 "_PACKAGE"
 
+
 # Functions to reexport
 #' @export
 ggplot2::autoplot
+base::as.numeric
+base::as.matrix
+
 
 #  Initialization ----
 # Columns to ignore when computing species distributions 
@@ -36,6 +40,7 @@ non_species_columns <- c(
 
 
 #  Data ----
+
 #' Paracou plot 6
 #'
 #' A community assembly.
@@ -216,6 +221,8 @@ chao_A <- function(abd) {
 #' @param unveiling A string containing one of the possible unveiling methods 
 #' to estimate the probabilities of the unobserved species (see [probabilities]).
 #' Used only for extrapolation.
+#' @param use.names if `TRUE`, the names of the `species_distribution` are kept 
+#' in the matrix or vector they are converted to.
 #' @param weights The weights of the sites of the species distributions.
 #'
 #' @return Returns `TRUE` or stops if a problem is detected.
