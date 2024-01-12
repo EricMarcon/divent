@@ -65,13 +65,6 @@ div_hurlbert.numeric <- function(
     check_arguments = FALSE
   )
   # Calculate diversity
-  
-  # Find the effective number of species numerically
-  f <- function(D, S, k) D * (1 - (1 - 1 / D)^k) - S
-  Dk <- stats::uniroot(f, c(1, 1E+7), S = Sk, k = k)
-  diversity <- Dk$root
-  
-  
   the_diversity <- dplyr::mutate(
     the_entropy, 
     diversity = hurlbert_ent2div(.data$entropy, k = k),
