@@ -1,3 +1,10 @@
+# divent 0.4-0
+
+## Features
+
+- Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
+
+
 # divent 0.3-16
 
 ## Features

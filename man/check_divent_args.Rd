@@ -15,6 +15,7 @@ check_divent_args(
   gamma = NULL,
   jack_alpha = NULL,
   jack_max = NULL,
+  k = NULL,
   level = NULL,
   n_simulations = NULL,
   normalize = NULL,
@@ -52,6 +53,8 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 \item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
 
 \item{jack_max}{The highest jackknife order allowed. Default is 10.}
+
+\item{k}{The order of Hurlbert's diversity.}
 
 \item{level}{The level of interpolation or extrapolation.
 It may be a sample size (an integer) or a sample coverage

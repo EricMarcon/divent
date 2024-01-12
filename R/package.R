@@ -199,6 +199,7 @@ chao_A <- function(abd) {
 #' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
 #' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
 #' @param jack_max The highest jackknife order allowed. Default is 10.
+#' @param k The order of Hurlbert's diversity.
 #' @param level The level of interpolation or extrapolation. 
 #' It may be a sample size (an integer) or a sample coverage 
 #' (a number between 0 and 1).
@@ -244,6 +245,7 @@ check_divent_args <- function(
     gamma = NULL,
     jack_alpha = NULL,
     jack_max = NULL,
+    k = NULL,
     level = NULL,
     n_simulations = NULL,
     normalize = NULL,
@@ -422,6 +424,31 @@ check_divent_args <- function(
       error_message(
         "jack_max must be between 1 and 10",
         jack_max,
+        parent_function
+      )
+    }
+  }
+  # k
+  if (!is.na(names(args["k"]))) {
+    k <- eval(expression(k), parent.frame())
+    if (!is.numeric(k) | length(k) != 1) {
+      error_message(
+        "k must be a number.", 
+        k, 
+        parent_function
+      )
+    }
+    if (any(k < 1)) {
+      error_message(
+        "k must be positive",
+        k,
+        parent_function
+      )
+    }
+    if (any(!is_integer_values(k))) {
+      error_message(
+        "k must be an integer",
+        k,
         parent_function
       )
     }
@@ -924,6 +951,38 @@ error_message <- function(message, argument, parent_function) {
   print(utils::head(argument))
   cat(paste(paste("Error in ", parent_function, ":"), message, "\n"))
   stop("Check the function arguments.", call. = FALSE)
+}
+
+
+#' Compute Hurlbert's diversity from its entropy
+#' 
+#' Find the effective number of species numerically
+#'
+#' @param hurlbert_entropy The entropy.
+#' @param k The order of entropy.
+#'
+#' @return Hurlbert's effective number of species.
+#' @noRd
+#' 
+hurlbert_ent2div <- function(hurlbert_entropy, k) {
+  # Relation between diversity and entropy
+  # (D for diversity, S for entropy, k is the parameter)
+  f <- function(D, S, k) {D * (1 - (1 - 1 / D)^k) - S}
+  # Minimize it
+  return(
+    vapply(
+      hurlbert_entropy, 
+      FUN = function(S) {
+        stats::uniroot(
+          f = f, 
+          interval = c(1, 1E+7), 
+          S = S, 
+          k = k
+        )$root
+      },
+      FUN.VALUE = 0
+    )
+  )
 }
 
 
