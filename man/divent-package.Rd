@@ -17,6 +17,7 @@ This package is a reboot of the \strong{entropart} package \insertCite{Marcon201
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://ericmarcon.github.io/divent}
   \item \url{https://github.com/EricMarcon/divent}
   \item Report bugs at \url{https://github.com/EricMarcon/divent/issues}
 }
