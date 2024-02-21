@@ -7,7 +7,7 @@ Authors@R: c(
     )
 Description: Measurement and partitioning of diversity, based on Tsallis entropy, following Marcon and Herault (2015) <doi:10.18637/jss.v067.i08>.
   'divent' provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
-URL: https://github.com/EricMarcon/divent
+URL: https://ericmarcon.github.io/divent, https://github.com/EricMarcon/divent
 BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
 Depends: 
