@@ -510,3 +510,40 @@ div_richness.species_distribution <- function(
     ) 
   }
 }
+
+
+#' @rdname div_richness
+#'
+#' @export
+div_richness.wmppp <- function(
+    x, 
+    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10, 
+    level = NULL, 
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    as_numeric = FALSE,
+    ..., 
+    check_arguments = TRUE) {
+  
+  # Table counts the number of individuals per species.
+  abd <- as.numeric(table(x$marks$PointType))
+  # Call div_richness.numeric()
+  return(
+    div_richness.numeric(
+      abd,
+      estimator = estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      coverage_estimator = coverage_estimator,
+      as_numeric = FALSE,
+      ...,
+      check_arguments = as_numeric
+    )
+  )
+}
