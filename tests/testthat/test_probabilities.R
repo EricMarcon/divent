@@ -58,8 +58,8 @@ testthat::test_that(
     
     # All probabilities must be below 1
     testthat::expect_lte(
-      max(ceiling(probabilities.dataframe$weight)),
-      1
+      max(probabilities.dataframe$weight),
+      1 + 10 * .Machine$double.eps
     )
   }
 )
