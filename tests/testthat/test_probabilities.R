@@ -57,9 +57,9 @@ testthat::test_that(
     probabilities.dataframe <- dplyr::bind_rows(probabilities.list)
     
     # All probabilities must be below 1
-    testthat::expect_gte(
-      1,
+    testthat::expect_lte(
       max(probabilities.dataframe$weight),
+      1
     )
   }
 )
