@@ -28,6 +28,7 @@ check_divent_args(
   similarities = NULL,
   species_distribution = NULL,
   tree = NULL,
+  use.names = NULL,
   unveiling = NULL,
   weights = NULL
 )
@@ -89,14 +90,14 @@ Its default value is the identity matrix.}
 \item{tree}{An ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
+\item{use.names}{if \code{TRUE}, the names of the \code{species_distribution} are kept
+in the matrix or vector they are converted to.}
+
 \item{unveiling}{A string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only for extrapolation.}
 
 \item{weights}{The weights of the sites of the species distributions.}
-
-\item{use.names}{if \code{TRUE}, the names of the \code{species_distribution} are kept
-in the matrix or vector they are converted to.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.
