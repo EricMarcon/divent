@@ -258,6 +258,7 @@ check_divent_args <- function(
     similarities = NULL,
     species_distribution = NULL,
     tree = NULL,
+    use.names = NULL,
     unveiling = NULL,
     weights = NULL) {
 

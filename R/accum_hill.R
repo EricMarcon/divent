@@ -33,7 +33,8 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' autoplot(accum_hill(paracou_6_abd))
+#' # Paracou 6 subplot 1
+#' autoplot(accum_hill(paracou_6_abd[1, ]))
 #' 
 #' @name accum_hill
 NULL
