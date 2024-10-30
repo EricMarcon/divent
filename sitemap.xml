@@ -1,165 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/404.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/articles/arguments.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/articles/divent.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/articles/extrapolation.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/articles/phylogenies.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/abd_freq_count.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/abd_species.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/accum_div_phylo.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/accum_hill.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/autoplot.accumulation.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/autoplot.profile.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/check_divent_args.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/coverage.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_hill.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_hurlbert.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_part.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_phylo.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_richness.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/div_similarity.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/divent-package.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/e_n_q.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ent_hurlbert.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ent_phylo.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ent_rao.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ent_shannon.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ent_similarity.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ent_simpson.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ent_tsallis.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/exp_q.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/fit_rac.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/fun_ordinariness.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/fun_similarity.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/ln_q.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/metacommunity.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/mock_3sp.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/paracou_6.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/paracou_6_fundist.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/paracou_6_taxo.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/phylo_divent.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/plot.phylo_divent.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/plot.species_distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/probabilities.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/profile_hill.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/profile_phylo.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/profile_similarity.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/rcommunity.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/rlseries.html</loc>
-  </url>
-  <url>
-    <loc>https://ericmarcon.github.io/entropart/reference/species_distribution.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://ericmarcon.github.io/entropart/404.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/articles/arguments.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/articles/divent.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/articles/extrapolation.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/articles/index.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/articles/phylogenies.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/authors.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/index.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/news/index.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/abd_freq_count.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/abd_species.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/accum_div_phylo.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/accum_hill.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/autoplot.accumulation.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/autoplot.profile.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/check_divent_args.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/coverage.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/div_hill.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/div_hurlbert.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/div_part.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/div_phylo.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/div_richness.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/div_similarity.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/divent-package.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/e_n_q.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ent_hurlbert.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ent_phylo.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ent_rao.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ent_shannon.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ent_similarity.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ent_simpson.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ent_tsallis.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/exp_q.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/fit_rac.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/fun_ordinariness.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/fun_similarity.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/index.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/ln_q.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/metacommunity.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/mock_3sp.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/paracou_6.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/paracou_6_fundist.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/paracou_6_taxo.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/phylo_divent.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/plot.phylo_divent.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/plot.species_distribution.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/probabilities.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/profile_hill.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/profile_phylo.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/profile_similarity.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/rcommunity.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/reexports.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/rlseries.html</loc></url>
+<url><loc>https://ericmarcon.github.io/entropart/reference/species_distribution.html</loc></url>
 </urlset>
+
