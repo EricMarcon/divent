@@ -4,7 +4,6 @@
 \alias{div_richness}
 \alias{div_richness.numeric}
 \alias{div_richness.species_distribution}
-\alias{div_richness.wmppp}
 \title{Number of Species of a Community}
 \usage{
 div_richness(x, ...)
@@ -33,20 +32,6 @@ div_richness(x, ...)
   unveiling = c("geometric", "uniform", "none"),
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
-  ...,
-  check_arguments = TRUE
-)
-
-\method{div_richness}{wmppp}(
-  x,
-  estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-  jack_alpha = 0.05,
-  jack_max = 10,
-  level = NULL,
-  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-  unveiling = c("geometric", "uniform", "none"),
-  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
