@@ -1,6 +1,7 @@
 # Combine all parameters
 testthat::test_that(
   "No estimator fails", {
+    testthat::skip_on_cran()
     # Simulate communities systematically
     rcommunity.list <- lapply(
       # All distributions
@@ -41,6 +42,7 @@ abd <- abd_species(paracou_6_abd[1, ])
 
 testthat::test_that(
   "No estimator fails", {
+    testthat::skip_on_cran()
     # Simulate communities systematically
     rcommunity.list <- lapply(
       # All distributions

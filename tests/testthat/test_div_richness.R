@@ -4,8 +4,7 @@
 abd <- abd_species(paracou_6_abd[1, ])
 
 testthat::test_that(
-  "Naive estimator is correct", 
-  {
+  "Naive estimator is correct", {
     testthat::skip_on_cran()
     # Naive
     testthat::expect_equal(
@@ -25,8 +24,7 @@ testthat::test_that(
 divent <- div_richness(abd, estimator = "jackknife")
 species <- SPECIES::jackknife(as.matrix(abd_freq_count(abd)))
 testthat::test_that(
-  "Jacknife estimator is equal to that of SPECIES", 
-  {
+  "Jacknife estimator is equal to that of SPECIES", {
     testthat::skip_on_cran()
     testthat::expect_equal(
       divent$diversity,
@@ -67,6 +65,7 @@ abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
   "No estimator fails", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     div_richness.list <- lapply(
       # All estimators
@@ -127,6 +126,7 @@ levels <- c(sample_size / 2, round(sample_size * 1.5))
 
 testthat::test_that(
   "No estimator fails during interpolation and extrapolation", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     div_richness.list <- lapply(
       # All estimators
