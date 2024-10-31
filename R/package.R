@@ -177,6 +177,32 @@ chao_A <- function(abd) {
 }
 
 
+#' as_named_vector.wmppp
+#' 
+#' Counts the number of points of a `wmppp` object and returns a named vector.
+#' Names are the point types. 
+#' This is equivalent to `as.numeric(table(X$marks$PointType))` but `table()`
+#' looses the names.
+#'
+#' @param X a [dbmss::wmppp] object, i.e. a weighted, marked planar point pattern.
+#'
+#' @return A named vector with the number of points by type.
+#' @noRd
+#'
+as_named_vector.wmppp <- function(X){
+  # Count the number of points by type
+  X$marks |>
+    dplyr::group_by(PointType) |>
+    dplyr::summarize(count = n()) ->
+    X_count
+  # Make a numeric vector
+  # This is equivalent to as.numeric(table(X$marks$PointType))
+  the_vector <- X_count$count
+  # Add the names
+  names(the_vector) <- X_count$PointType
+  return(the_vector)
+}
+
 #' check_divent_args
 #'
 #' Checks the arguments of a function of the package divent
