@@ -612,3 +612,44 @@ ent_shannon.species_distribution <- function(
     )
   }
 }
+
+
+#' @rdname ent_shannon
+#'
+#' @export
+ent_shannon.wmppp <- function(
+    x, 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Grassberger2003", "Holste", "Miller", "Schurmann", "ZhangHz"),
+    level = NULL, 
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    as_numeric  = FALSE,
+    ...,
+    check_arguments = TRUE) {
+  
+  # Table counts the number of individuals per species.
+  abd <- as.numeric(table(x$marks$PointType))
+  # Call the numeric method
+  return(
+    ent_shannon.numeric(
+      abd,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      coverage_estimator = coverage_estimator,
+      as_numeric = as_numeric,
+      ...,
+      check_arguments = check_arguments
+    )
+  )
+}

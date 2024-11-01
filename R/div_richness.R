@@ -530,7 +530,7 @@ div_richness.wmppp <- function(
   
   # Table counts the number of individuals per species.
   abd <- as.numeric(table(x$marks$PointType))
-  # Call div_richness.numeric()
+  # Call the numeric method
   return(
     div_richness.numeric(
       abd,
@@ -541,9 +541,9 @@ div_richness.wmppp <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       coverage_estimator = coverage_estimator,
-      as_numeric = FALSE,
+      as_numeric = as_numeric,
       ...,
-      check_arguments = as_numeric
+      check_arguments = check_arguments
     )
   )
 }
