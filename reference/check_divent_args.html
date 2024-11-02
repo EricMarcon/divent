@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4-3</span>
       </span>
     </div>
 
@@ -96,6 +96,7 @@
 <span>  similarities <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  species_distribution <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tree <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unveiling <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  weights <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -207,6 +208,11 @@ Its default value is the identity matrix.</p></dd>
 May be an object of class <a href="phylo_divent.html">phylo_divent</a>, <a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a>, <a href="https://rdrr.io/pkg/ade4/man/phylog.html" class="external-link">ade4::phylog</a> or <a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust</a>.</p></dd>
 
 
+<dt id="arg-use-names">use.names<a class="anchor" aria-label="anchor" href="#arg-use-names"></a></dt>
+<dd><p>if <code>TRUE</code>, the names of the <code>species_distribution</code> are kept
+in the matrix or vector they are converted to.</p></dd>
+
+
 <dt id="arg-unveiling">unveiling<a class="anchor" aria-label="anchor" href="#arg-unveiling"></a></dt>
 <dd><p>A string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
@@ -215,11 +221,6 @@ Used only for extrapolation.</p></dd>
 
 <dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
 <dd><p>The weights of the sites of the species distributions.</p></dd>
-
-
-<dt id="arg-use-names">use.names<a class="anchor" aria-label="anchor" href="#arg-use-names"></a></dt>
-<dd><p>if <code>TRUE</code>, the names of the <code>species_distribution</code> are kept
-in the matrix or vector they are converted to.</p></dd>
 
 </dl></div>
     <div id="value">
