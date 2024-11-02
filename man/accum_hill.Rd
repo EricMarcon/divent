@@ -146,7 +146,8 @@ They generalize the classical Species Accumulation Curves (SAC) which are
 diversity accumulation of order \eqn{q=0}.
 }
 \examples{
-autoplot(accum_hill(paracou_6_abd))
+# Paracou 6 subplot 1
+autoplot(accum_hill(paracou_6_abd[1, ]))
 
 }
 \references{

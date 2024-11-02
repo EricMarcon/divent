@@ -7,6 +7,7 @@ orders <- (0:6) / 2
 
 testthat::test_that(
   "No estimator fails", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     div_similarity.list <- lapply(
       # All estimators

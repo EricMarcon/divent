@@ -3,6 +3,7 @@ abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
   "No estimator fails", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     probabilities.list <- lapply(
       # All estimators

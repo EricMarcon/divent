@@ -32,8 +32,8 @@ testthat::test_that(
 abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
-  "No estimator fails", 
-  {
+  "No estimator fails", {
+    testthat::skip_on_cran()
     # Estimate coverage systematically
     coverage.list <- lapply(
       # All estimators
@@ -66,8 +66,8 @@ sample_size <- abd_sum(abundances, as_numeric = TRUE)
 levels <- c(sample_size / 2, round(sample_size * 1.5))
 
 testthat::test_that(
-  "No estimator fails during interpolation and extrapolation", 
-  {
+  "No estimator fails during interpolation and extrapolation", {
+    testthat::skip_on_cran()
     # Estimate coverage systematically
     coverage.list <- lapply(
       # All estimators

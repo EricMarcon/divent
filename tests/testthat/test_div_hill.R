@@ -5,6 +5,7 @@ orders <- (0:6) / 2
 
 testthat::test_that(
   "No estimator fails", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     div_hill.list <- lapply(
       # All estimators
@@ -80,6 +81,7 @@ levels <- c(0.7, round(sample_size * 1.5))
 
 testthat::test_that(
   "No estimator fails during interpolation and extrapolation", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     div_hill.list <- lapply(
       # All probability estimators

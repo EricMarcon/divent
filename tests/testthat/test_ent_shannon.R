@@ -3,6 +3,7 @@ abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
   "No estimator fails", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     ent_shannon.list <- lapply(
       # All estimators
@@ -62,6 +63,7 @@ levels <- c(sample_size / 2, round(sample_size * 1.5))
 
 testthat::test_that(
   "No estimator fails during interpolation and extrapolation", {
+    testthat::skip_on_cran()
     # Estimate diversity systematically
     ent_shannon.list <- lapply(
       # All probability estimators
