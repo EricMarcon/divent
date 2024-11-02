@@ -192,8 +192,8 @@ chao_A <- function(abd) {
 as_named_vector.wmppp <- function(X){
   # Count the number of points by type
   X$marks |>
-    dplyr::group_by(PointType) |>
-    dplyr::summarize(count = n()) ->
+    dplyr::group_by(.data$PointType) |>
+    dplyr::summarize(count = dplyr::n()) ->
     X_count
   # Make a numeric vector
   # This is equivalent to as.numeric(table(X$marks$PointType))
