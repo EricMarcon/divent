@@ -1,7 +1,8 @@
 on:
   push:
     branches:
-      - ['master', 'main']
+      - master
+      - version_0.5
 
 name: R-CMD-check
 
