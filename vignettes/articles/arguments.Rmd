@@ -28,9 +28,15 @@ Asymptotic entropy and diversity are calculated according to the chosen estimato
 
 ## `level`
 
-`level` allows estimating entropy or diversity at a chosen level, that may be a number of individuals (at least 1) of a sample coverage (between 0 and 1) that is first converted to a number of indidivuals by `coverage_to_size()`.
+`level` allows estimating entropy or diversity at a chosen level, that may be a number of individuals (at least 1) of a sample coverage (between 0 and 1) that is first converted to a number of individuals by `coverage_to_size()`.
 
 If `level` is not `NULL`, `estimator` is ignored.
+
+## `sample_coverage`
+
+To estimate $\gamma$ diversity, the size of a metacommunity is unknown so it has to be set according to a rule which does not ensure that its abundances are integer values. 
+Then, classical bias-correction methods do not apply. 
+Providing the sample_coverage argument allows applying the ChaoShen and Grassberger estimators to estimate quite well the entropy.
 
 
 # Unveiling
