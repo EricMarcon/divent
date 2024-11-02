@@ -4,6 +4,7 @@
 \alias{div_hurlbert}
 \alias{div_hurlbert.numeric}
 \alias{div_hurlbert.species_distribution}
+\alias{div_hurlbert.wmppp}
 \title{Hurlbert Diversity of a Community}
 \usage{
 div_hurlbert(x, k = 1, ...)
@@ -21,6 +22,15 @@ div_hurlbert(x, k = 1, ...)
   x,
   k = 2,
   estimator = c("Hurlbert", "naive"),
+  ...,
+  check_arguments = TRUE
+)
+
+\method{div_hurlbert}{wmppp}(
+  x,
+  k = 2,
+  estimator = c("Hurlbert", "naive"),
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

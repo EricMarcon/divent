@@ -4,6 +4,7 @@
 \alias{ent_shannon}
 \alias{ent_shannon.numeric}
 \alias{ent_shannon.species_distribution}
+\alias{ent_shannon.wmppp}
 \title{Shannon's Entropy of a Community}
 \usage{
 ent_shannon(x, ...)
@@ -38,6 +39,23 @@ ent_shannon(x, ...)
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
+  ...,
+  check_arguments = TRUE
+)
+
+\method{ent_shannon}{wmppp}(
+  x,
+  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Grassberger2003",
+    "Holste", "Miller", "Schurmann", "ZhangHz"),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
