@@ -20,7 +20,7 @@
 #' \insertAllCited{}
 #'
 #' @examples
-#' curve(ln_q( 1/ x, q = 0), 0, 1, lty = 2, ylab = "Logarithm", ylim = c(0, 10))
+#' curve(ln_q(1/ x, q = 0), 0, 1, lty = 2, ylab = "Logarithm", ylim = c(0, 10))
 #' curve(log(1 / x), 0, 1, lty = 1, n =1E4, add = TRUE)
 #' curve(ln_q(1 / x, q = 2), 0, 1, lty = 3, add = TRUE)
 #' legend("topright", 
