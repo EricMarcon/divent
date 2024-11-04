@@ -136,7 +136,7 @@ a geometric distribution of the probabilities of unobserved species.
 The number of unobserved species is estimated by the Chao1 estimator (\code{UnveilC}),
 following \insertCite{Chao2014c;textual}{divent}, or by the iChao1 (\code{UnveiliC})
 or the jackknife (\code{UnveilJ}).
-The \code{UnveilJ} correction often has a lower bias but a greater variance
+The \code{UnveilJ} estimator often has a lower bias but a greater variance
 \insertCite{Marcon2015a}{divent}.
 It is a good first choice thanks to the versatility of the jackknife
 estimator of richness.
@@ -149,7 +149,7 @@ To estimate \eqn{\gamma} diversity, the size of a metacommunity (see
 not ensure that its abundances are integer values.
 Then, classical bias-correction methods do not apply.
 Providing the \code{sample_coverage} argument allows applying the \code{ChaoShen} and
-\code{Grassberger} corrections to estimate quite well the entropy.
+\code{Grassberger} estimators to estimate quite well the entropy.
 
 Diversity can be estimated at a specified level of interpolation or
 extrapolation, either a chosen sample size or sample coverage
