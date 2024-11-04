@@ -27,7 +27,7 @@
 #' The number of unobserved species is estimated by the Chao1 estimator (`UnveilC`), 
 #' following \insertCite{Chao2014c;textual}{divent}, or by the iChao1 (`UnveiliC`)
 #' or the jackknife (`UnveilJ`).
-#' The `UnveilJ` correction often has a lower bias but a greater variance 
+#' The `UnveilJ` estimator often has a lower bias but a greater variance 
 #' \insertCite{Marcon2015a}{divent}.
 #' It is a good first choice thanks to the versatility of the jackknife 
 #' estimator of richness.
@@ -40,7 +40,7 @@
 #' not ensure that its abundances are integer values.
 #' Then, classical bias-correction methods do not apply. 
 #' Providing the `sample_coverage` argument allows applying the `ChaoShen` and
-#' `Grassberger` corrections to estimate quite well the entropy.
+#' `Grassberger` estimators to estimate quite well the entropy.
 #' 
 #' Diversity can be estimated at a specified level of interpolation or 
 #' extrapolation, either a chosen sample size or sample coverage 

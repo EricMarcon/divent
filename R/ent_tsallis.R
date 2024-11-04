@@ -152,7 +152,7 @@ ent_tsallis.numeric <- function(
       cp <- sample_coverage * abd / sample_size
       chao_shen <- -sum(cp^q * ln_q(cp, q = q) /(1 - (1 - cp)^sample_size))
       if (estimator == "Marcon") {
-        # Calculate Grassberger's correction
+        # Calculate Grassberger's estimator
         if (q == 1) {
           grassberger <- sum(
             abd / sample_size * (log(sample_size) - digamma(abd) - 

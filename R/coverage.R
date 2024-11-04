@@ -103,7 +103,7 @@ coverage.numeric <- function(
     
     ## Singletons only: coverage=0 ----
     if (s_1 == sample_size) {
-      warning ("Sample coverage is 0, most bias corrections will return NaN.")
+      warning ("Sample coverage is 0, most estimators will return NaN.")
       if (as_numeric) {
         return(0)
       } else {

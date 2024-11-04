@@ -4,7 +4,7 @@
 #' Several estimators are available to deal with incomplete sampling.
 #' 
 #' Bias correction requires the number of individuals. 
-#' Chao's correction techniques are from \insertCite{Chao2014;textual}{divent} 
+#' Chao's estimation techniques are from \insertCite{Chao2014;textual}{divent} 
 #' and \insertCite{Chiu2014a;textual}{divent}. 
 #' The Jackknife estimator is calculated by a straight adaptation of the code 
 #' by Ji-Ping Wang (jackknife in package **SPECIES**). 
