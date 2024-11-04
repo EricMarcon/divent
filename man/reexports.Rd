@@ -12,8 +12,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
+  \item{base}{\code{\link[base]{plot}}}
 
-  \item{graphics}{\code{\link[graphics:plot.default]{plot}}}
+  \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 }}
 
