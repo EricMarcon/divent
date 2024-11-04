@@ -2,12 +2,12 @@
 #' 
 #' Utilities for community abundances (objects of class "abundances").
 #' 
-#' `abd_species()` returns a tibble containing the species abundance columns only,
+#' @returns `abd_species()` returns a tibble containing the species abundance columns only,
 #' to simplify numeric operations.
+#' 
 #' `prob_species()` returns the same tibble but values are probabilities.
 #' 
-#' `abd_sum()` returns the sample sizes of the communities.
-#'
+#' `abd_sum()` returns the sample sizes of the communities in a numeric vector.
 #' @inheritParams check_divent_args
 #'
 #' @examples

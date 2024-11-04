@@ -99,9 +99,25 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 \item{use.names}{If \code{TRUE}, the names of the \code{species_distribution} are kept
 in the matrix or vector they are converted to.}
 }
+\value{
+An object of classes "species_distribution" and "abundances" or "probabilities".
+
+\code{as.double()} and its synonymous \code{as.numeric()} return a numeric vector
+that contains species abundances or probabilities of a single-row
+\code{species_distribution}.
+\code{as.matrix()} returns a numeric matrix if the \code{species_distribution} contains
+several rows.
+These are methods of the generic functions for class \code{species_distribution}.
+}
 \description{
 A Species Distribution is a \link[tibble:tibble]{tibble::tibble} containing species abundances
 or probabilities.
+Rows of the tibble are communities and column are species.
+Values are either abundances or probabilities.
+Special columns contain the site names, and their weights
+(e.g. their area or number of individuals):
+their names must be "site" and "weight".
+All other column names are considered as species names.
 }
 \details{
 \code{species_distribution} objects include \code{abundances} and \code{probabilities}
@@ -117,13 +133,6 @@ Abundance values are rounded (by default) to the nearest integer.
 the same output as \code{probabilities()} with \code{estimator = "naive"}.
 
 \code{species_distribution} objects objects can be plotted by \link{plot} and \link{autoplot}.
-
-\code{as.double()} and its synonymous \code{as.numeric()} return a numeric vector
-that contains species abundances or probabilities of a single-row
-\code{species_distribution}.
-\code{as.matrix()} returns a numeric matrix if the \code{species_distribution} contains
-several rows.
-These are methods of the generic functions for class \code{species_distribution}.
 }
 \examples{
 # Paracou data is a tibble

@@ -22,15 +22,16 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 
 \item{species_distribution}{An object of class \link{species_distribution}.}
 }
-\description{
-Utilities for community abundances (objects of class "abundances").
-}
-\details{
+\value{
 \code{abd_species()} returns a tibble containing the species abundance columns only,
 to simplify numeric operations.
+
 \code{prob_species()} returns the same tibble but values are probabilities.
 
-\code{abd_sum()} returns the sample sizes of the communities.
+\code{abd_sum()} returns the sample sizes of the communities in a numeric vector.
+}
+\description{
+Utilities for community abundances (objects of class "abundances").
 }
 \examples{
 abd_species(paracou_6_abd)

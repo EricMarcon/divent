@@ -76,6 +76,10 @@ at the observed sample size equals the actual entropy of the data.}
 \item{check_arguments}{If \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
+\value{
+An object of class "probabilities", which is a \link{species_distribution}
+or a numeric vector with argument \code{as_numeric = TRUE}.
+}
 \description{
 Estimate actual probabilities of species from a sample
 }

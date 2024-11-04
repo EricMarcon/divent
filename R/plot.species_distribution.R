@@ -29,6 +29,8 @@ NULL
 #' @param palette The name of a color palette, recognized by [RColorBrewer::brewer.pal].
 #' RAC plot only.
 #'
+#' @returns `NULL`. Called for side effects.
+#' 
 #' @importFrom graphics plot
 #' @export
 plot.species_distribution <- function(
