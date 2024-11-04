@@ -11,7 +11,7 @@ URL: https://ericmarcon.github.io/divent/, https://github.com/EricMarcon/divent
 BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
 Depends: 
-  R (>= 3.5)
+  R (>= 4.1)
 Imports:
   ape,
   cli,
