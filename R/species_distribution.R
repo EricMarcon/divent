@@ -2,6 +2,13 @@
 #' 
 #' A Species Distribution is a [tibble::tibble] containing species abundances 
 #' or probabilities.
+
+#' Rows of the tibble are communities and column are species. 
+#' Values are either abundances or probabilities. 
+#' Special columns contain the site names, and their weights 
+#' (e.g. their area or number of individuals):
+#' their names must be "site" and "weight". 
+#' All other column names are considered as species names.
 #' 
 #' `species_distribution` objects include `abundances` and `probabilities` 
 #' objects.
@@ -22,6 +29,12 @@
 #' the same output as `probabilities()` with `estimator = "naive"`.
 #' 
 #' `species_distribution` objects objects can be plotted by [plot] and [autoplot].
+#'
+#' @inheritParams check_divent_args
+#' @param x an object.
+#' @param ... Unused.
+
+#' @returns An object of classes "species_distribution" and "abundances" or "probabilities".
 #' 
 #' `as.double()` and its synonymous `as.numeric()` return a numeric vector 
 #' that contains species abundances or probabilities of a single-row 
@@ -29,10 +42,6 @@
 #' `as.matrix()` returns a numeric matrix if the `species_distribution` contains 
 #' several rows.
 #' These are methods of the generic functions for class `species_distribution`.
-#'
-#' @inheritParams check_divent_args
-#' @param x an object.
-#' @param ... Unused.
 #' 
 #' @references
 #' \insertAllCited{}

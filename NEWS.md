@@ -1,8 +1,9 @@
-# divent 0.4-99.9002
+# divent 0.4-99.9003
 
 ## Features
 
 - Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
+- Methods for 
 
 
 # divent 0.3-16

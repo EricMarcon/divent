@@ -28,6 +28,9 @@
 #' 
 #' @param ... Unused.
 #' 
+#' @returns An object of class "probabilities", which is a [species_distribution] 
+#' or a numeric vector with argument `as_numeric = TRUE`.
+#' 
 #' @references
 #' \insertAllCited{}
 #' 

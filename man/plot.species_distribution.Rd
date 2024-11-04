@@ -67,6 +67,9 @@ RAC plot only.}
 
 \item{cex}{The character expansion (size) of the points. See \link[graphics:points]{graphics::points}.}
 }
+\value{
+\code{NULL}. Called for side effects.
+}
 \description{
 Plot objects of class "species_distribution" produced by
 \link{species_distribution} and similar functions.

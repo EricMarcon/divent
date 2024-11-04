@@ -11,6 +11,9 @@
 
 \item{...}{Arguments passed to \link[stats:dendrogram]{stats::plot.dendrogram}.}
 }
+\value{
+\code{NULL}. Called for side effects.
+}
 \description{
 Plot objects of class "phylo_divent" produced by \link{as_phylo_divent}, that are
 phylogenetic trees.
