@@ -17,7 +17,7 @@
 #' @examples
 #' profile_phylo(paracou_6_abd, tree = paracou_6_taxo)
 #'
-#' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
+#' @returns A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
 #' 
 #' @references
@@ -361,7 +361,7 @@ profile_phylo.species_distribution <- function(
 #' @param x The species distribution.
 #' @param orders The orders of diversity
 #'
-#' @return A tibble. Columns are "site", "order" and "diversity".
+#' @returns A tibble. Columns are "site", "order" and "diversity".
 #' @noRd
 #'
 div.tibble <- function(ent.matrix, x, orders) {

@@ -21,7 +21,7 @@
 #' `similarities` matrix: species are assumed to be in the same order.
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated entropy.
+#' @returns A tibble with the site names, the estimators used and the estimated entropy.
 #'
 #' @references
 #' \insertAllCited{}
@@ -429,7 +429,7 @@ ent_similarity.species_distribution <- function(
 #' @param w_v A weight.
 #' @param p_V_Ns An intermediate computation.
 #'
-#' @return A number.
+#' @returns A number.
 #' @noRd
 S_v <- function(
     species_index,

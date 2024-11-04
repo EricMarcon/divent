@@ -51,7 +51,7 @@
 #' of the geometric distribution.
 #' @param alpha_lseries Fisher's alpha in the log-series distribution.
 #'
-#' @return An object of class [abundances].
+#' @returns An object of class [abundances].
 #' @export
 #'
 #' @examples
@@ -176,7 +176,7 @@ rcommunity <- function(
 #' @param size The number of individuals in the community.
 #' @param alpha_lseries The value of Fisher's alpha.
 #'
-#' @return The number of individuals of the species.
+#' @returns The number of individuals of the species.
 #' @noRd
 #' 
 abd_lseries <- function(size, alpha_lseries) {

@@ -11,7 +11,7 @@
 #' where \eqn{r} is argument `rate`.
 #' If `FALSE`, it is \eqn{1 - \delta / \max(\delta)}.
 #'
-#' @return A similarity matrix.
+#' @returns A similarity matrix.
 #' @export
 #'
 #' @references

@@ -20,7 +20,7 @@
 #' @param name The name of the metacommunity
 #' @param ... Unused.
 #'
-#' @return An object of class [abundances] with a single row or a named vector
+#' @returns An object of class [abundances] with a single row or a named vector
 #' if `as_numeric = TRUE`.
 #' 
 #' @examples

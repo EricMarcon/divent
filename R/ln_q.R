@@ -13,7 +13,7 @@
 #' @param x A numeric vector or array.
 #' @param q A number.
 #'
-#' @return A vector of the same length as `x` containing the transformed values.
+#' @returns A vector of the same length as `x` containing the transformed values.
 #' @export
 #'  
 #' @references

@@ -13,7 +13,7 @@
 #' @param lty The line type of the curves.
 #' @param lwd The line width of the curves.
 #'
-#' @return A [ggplot2::ggplot] object.
+#' @returns A [ggplot2::ggplot] object.
 #' @export
 #'
 #' @examples

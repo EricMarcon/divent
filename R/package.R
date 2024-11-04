@@ -43,7 +43,7 @@ base::as.matrix
 #' @param windowFill the color used to fill the windows in point maps.
 #' @param alpha the opacity of the confidence envelope (in function values) or the points (in maps), between 0 and 1.
 #'
-#' @return A [ggplot2::ggplot].
+#' @returns A [ggplot2::ggplot].
 #' @export
 #'
 #' @examples
@@ -218,7 +218,7 @@ non_species_columns <- c(
 #' 
 #' @param abd A vector of positive integers.
 #'
-#' @return The value of A.
+#' @returns The value of A.
 #' @noRd
 #'
 chao_A <- function(abd) {
@@ -255,7 +255,7 @@ chao_A <- function(abd) {
 #'
 #' @param X a [dbmss::wmppp] object, i.e. a weighted, marked planar point pattern.
 #'
-#' @return A named vector with the number of points by type.
+#' @returns A named vector with the number of points by type.
 #' @noRd
 #'
 as_named_vector.wmppp <- function(X){
@@ -323,7 +323,7 @@ as_named_vector.wmppp <- function(X){
 #' in the matrix or vector they are converted to.
 #' @param weights The weights of the sites of the species distributions.
 #'
-#' @return Returns `TRUE` or stops if a problem is detected.
+#' @returns Returns `TRUE` or stops if a problem is detected.
 #' 
 #' @export
 #'
@@ -766,7 +766,7 @@ check_divent_args <- function(
 #' @param sim_dist_matrix A similarity or distance matrix, or a [stats::dist].
 #' @param species_distribution A species distribution, or a named vector.
 #'
-#' @return A similarity matrix that corresponds to the species distribution.
+#' @returns A similarity matrix that corresponds to the species distribution.
 #' @noRd
 #'
 checked_matrix <- function(
@@ -828,7 +828,7 @@ checked_matrix <- function(
 #' 
 #' @param species_distribution An object of class [species_distribution].
 #'
-#' @return A tibble with the estimator used and the estimated entropy.
+#' @returns A tibble with the estimator used and the estimated entropy.
 #' @noRd
 #' 
 ent_gamma_hill <- function(
@@ -960,7 +960,7 @@ ent_gamma_hill <- function(
 #' See [ent_gamma_hill] for details.
 #' @param species_distribution An object of class [species_distribution].
 #' 
-#' @return A tibble with the estimator used and the estimated entropy.
+#' @returns A tibble with the estimator used and the estimated entropy.
 #' @noRd
 #' 
 ent_gamma_similarity <- function(
@@ -1039,7 +1039,7 @@ ent_gamma_similarity <- function(
 #' @param argument The function argument that did not pass the tests.
 #' @param parent_function The name of the function the argument was passed to.
 #'
-#' @return Nothing
+#' @returns Nothing. Used for side effects.
 #' @noRd
 #' 
 error_message <- function(message, argument, parent_function) {
@@ -1057,7 +1057,7 @@ error_message <- function(message, argument, parent_function) {
 #' @param hurlbert_entropy The entropy.
 #' @param k The order of entropy.
 #'
-#' @return Hurlbert's effective number of species.
+#' @returns Hurlbert's effective number of species.
 #' @noRd
 #' 
 hurlbert_ent2div <- function(hurlbert_entropy, k) {
@@ -1088,7 +1088,7 @@ hurlbert_ent2div <- function(hurlbert_entropy, k) {
 #' 
 #' @param x A numeric vector.
 #'
-#' @return `TRUE` if values are integers.
+#' @returns `TRUE` if values are integers.
 #' @noRd
 #'
 is_integer_values <- function(x) {
@@ -1102,7 +1102,7 @@ is_integer_values <- function(x) {
 #' 
 #' Calculate abundances of species and their ancestors along a phylogenetic tree.
 #' 
-#' @return A list of matrices. 
+#' @returns A list of matrices. 
 #' Each matrix contains the abundances of species (in lines) of each community
 #' (in columns) in an interval of the tree.
 #' @noRd
@@ -1146,7 +1146,7 @@ phylo_abd <- function(
 #' @param phylo_abd A list of matrices of abundance (caution: lines are species,
 #' columns are communities).
 #'
-#' @return A vector. Each item is the entropy of a community.
+#' @returns A vector. Each item is the entropy of a community.
 #'  
 #' @noRd
 #'

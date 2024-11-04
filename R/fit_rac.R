@@ -15,7 +15,7 @@
 #' @param x An object
 #' @param ... Unused.
 #'
-#' @return A tibble with the sites and the estimated distribution parameters.
+#' @returns A tibble with the sites and the estimated distribution parameters.
 #' 
 #' @references
 #' \insertAllCited{}

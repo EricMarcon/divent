@@ -360,7 +360,7 @@ probabilities.abundances <- function(
 #' @param r The squared coverage deficit divided by the coverage deficit of order 2.
 #' @param i The sequence from 1 to the number of species.
 #'
-#' @return The value of the parameter beta to minimize.
+#' @returns The value of the parameter beta to minimize.
 beta_solve <- function(beta, r, i) {
   return(abs(sum(beta^i)^2 / sum((beta^i)^2) - r))
 }
@@ -376,7 +376,7 @@ beta_solve <- function(beta, r, i) {
 #' @param sample_coverage The sample coverage. 
 #' @param coverage_deficit_2 The coverage deficit of order 2.
 #'
-#' @return The distribution of probabilities of unobserved species.
+#' @returns The distribution of probabilities of unobserved species.
 #' @noRd
 #' 
 estimate_prob_s_0 <- function(
@@ -442,7 +442,7 @@ estimate_prob_s_0 <- function(
 #' @param q The order of entropy to fit.
 #' @param ent_target Target entropy.
 #'
-#' @return The departure of the rarefied entropy from the target entropy.
+#' @returns The departure of the rarefied entropy from the target entropy.
 #' @noRd
 #'
 rarefaction_bias <- function(
@@ -514,7 +514,7 @@ rarefaction_bias <- function(
 #' @param sample_coverage The sample coverage. 
 #' @param coverage_deficit_2 The coverage deficit of order 2.
 #'
-#' @return The value of the parameter theta to minimize.
+#' @returns The value of the parameter theta to minimize.
 theta_solve <- function(
     theta, 
     prob, 

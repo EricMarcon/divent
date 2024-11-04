@@ -13,7 +13,7 @@
 #' @param n A positive integer vector.
 #' @param q A positive number.
 #'
-#' @return A vector of the same length as n containing the transformed values.
+#' @returns A vector of the same length as n containing the transformed values.
 #' @export
 #' 
 #' @references

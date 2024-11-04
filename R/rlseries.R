@@ -16,7 +16,7 @@
 #' @param size The size of the distribution.
 #' @param alpha Fisher's \eqn{\alpha}.
 #'
-#' @return A numeric vector with the random values drawn from the log-series distribution.
+#' @returns A numeric vector with the random values drawn from the log-series distribution.
 #' @export
 #'
 #' @references

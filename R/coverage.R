@@ -26,7 +26,7 @@
 #' @param x An object.
 #' @param ... Unused.
 #' 
-#' @return `coverage()` returns a named number equal to the calculated sample coverage.
+#' @returns `coverage()` returns a named number equal to the calculated sample coverage.
 #' The name is that of the estimator used.
 #' 
 #' `coverage_to_size()` returns a number equal to the sample size corresponding
@@ -417,7 +417,7 @@ coverage_to_size.abundances <- function(
 #' @param size The size of the sample. Adjusted to minimize `delta()`.
 #' @param target_coverage The sample coverage to reach by adjusting size.
 #'
-#' @return The departure of actual sample coverage from target coverage.
+#' @returns The departure of actual sample coverage from target coverage.
 #' @noRd
 #'
 chao_delta <- function(
