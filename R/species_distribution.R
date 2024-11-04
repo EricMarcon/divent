@@ -7,7 +7,7 @@
 #' objects.
 #' 
 #' `species_distribution()` creates a `species_distribution` object from a vector 
-#' or a  matrix or a dataframe.
+#' or a matrix or a dataframe.
 #' 
 #' `as_species_distribution()`, `as_abundances()` and `as_probabilities` format 
 #' the numeric, matrix or dataframe `x` so that appropriate 
@@ -16,7 +16,7 @@
 #' Abundance values are rounded (by default) to the nearest integer.
 #' They also accept a [dbmss::wmppp] objects, 
 #' i.e. a weighted, marked planar point pattern and count the abundances of 
-#' point types. 
+#' point types, and character vectors.
 #' 
 #' `as_probabilities()` normalizes the vector `x` so that it sums to 1. It gives
 #' the same output as `probabilities()` with `estimator = "naive"`.
@@ -45,6 +45,8 @@
 #' is_species_distribution(paracou_6_abd)
 #' # Whittaker plot fitted by a log-normal distribution
 #' autoplot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
+#' # Character vectors
+#' as_abundances(c("A", "C", "B", "C"))
 #' 
 #' @name species_distribution
 NULL
@@ -251,10 +253,31 @@ as_species_distribution.wmppp <- function(
     x,
     ..., 
     check_arguments = TRUE) {
-
+  
   return(
     species_distribution(
       as_named_vector.wmppp(x),
+      check_arguments = check_arguments
+    )
+  )
+}
+
+
+#' @rdname species_distribution
+#'
+#' @export
+as_species_distribution.character <- function(
+    x,
+    ..., 
+    check_arguments = TRUE) {
+  
+  if (!is.vector(x)) {
+    stop("Only character vectors can be converted to species distributions")
+  }
+  # Count the number of items by type
+  return(
+    species_distribution(
+      as_named_vector.character(x),
       check_arguments = check_arguments
     )
   )
@@ -379,6 +402,24 @@ as_probabilities.wmppp <- function(
   
   the_probabilities <- as_species_distribution(
     as_named_vector.wmppp(x),
+    check_arguments = check_arguments
+  )
+  
+  class(the_probabilities) <- c("probabilities", class(the_probabilities))
+  return(the_probabilities)
+}
+
+
+#' @rdname species_distribution
+#'
+#' @export
+as_probabilities.character <- function(
+    x,
+    ..., 
+    check_arguments = TRUE) {
+  
+  the_probabilities <- as_species_distribution(
+    as_named_vector.character(x),
     check_arguments = check_arguments
   )
   
@@ -524,6 +565,24 @@ as_abundances.wmppp <- function(
   
   the_abundances <- as_species_distribution(
     as_named_vector.wmppp(x),
+    check_arguments = check_arguments
+  )
+  
+  class(the_abundances) <- c("abundances", class(the_abundances))
+  return(the_abundances)
+}
+
+
+#' @rdname species_distribution
+#' 
+#' @export
+as_abundances.character <- function(
+    x,
+    ...,
+    check_arguments = TRUE) {
+  
+  the_abundances <- as_species_distribution(
+    as_named_vector.character(x),
     check_arguments = check_arguments
   )
   

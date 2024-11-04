@@ -246,6 +246,30 @@ chao_A <- function(abd) {
 }
 
 
+
+
+#' as_named_vector.character
+#' 
+#' Counts the number of points of a `character` vector and returns a named vector.
+#' Names are the items of the character vector. 
+#' This is equivalent to `as.numeric(table(x))` but `table()`
+#' looses the names.
+#'
+#' @param x a character vector.
+#'
+#' @returns A named vector with the number of items by name.
+#' @noRd
+#'
+as_named_vector.character <- function(x){
+  # Count the number of items. Returns a 1D array, not a vector.
+  the_array <- tapply(x, x, length)
+  the_vector <- as.vector(the_array)
+  # Add the names
+  names(the_vector) <- names(the_array) 
+  return(the_vector)
+}
+
+
 #' as_named_vector.wmppp
 #' 
 #' Counts the number of points of a `wmppp` object and returns a named vector.
@@ -260,16 +284,7 @@ chao_A <- function(abd) {
 #'
 as_named_vector.wmppp <- function(X){
   # Count the number of points by type
-  X$marks |>
-    dplyr::group_by(.data$PointType) |>
-    dplyr::summarize(count = dplyr::n()) ->
-    X_count
-  # Make a numeric vector
-  # This is equivalent to as.numeric(table(X$marks$PointType))
-  the_vector <- X_count$count
-  # Add the names
-  names(the_vector) <- X_count$PointType
-  return(the_vector)
+  return(as_named_vector.character(X$marks$PointType))
 }
 
 #' check_divent_args
