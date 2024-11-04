@@ -62,5 +62,9 @@ The default is \code{NULL} to display the full description of functions.}
 A \link[ggplot2:ggplot]{ggplot2::ggplot}.
 }
 \description{
-Coded in the dbmss package.
+This method is from the dbmss package. See \link[dbmss:autoplot]{dbmss::autoplot.wmppp}.
+}
+\examples{
+autoplot(paracou_6_wmppp)
+
 }

@@ -20,7 +20,7 @@ base::as.matrix
 
 #' ggplot method to plot wmppp objects
 #' 
-#' Coded in the dbmss package.
+#' This method is from the dbmss package. See [dbmss::autoplot.wmppp].
 #'
 #' @param object an object to be plotted.
 #' @param ... extra arguments, currently unused.
@@ -44,9 +44,11 @@ base::as.matrix
 #' @param alpha the opacity of the confidence envelope (in function values) or the points (in maps), between 0 and 1.
 #'
 #' @return A [ggplot2::ggplot].
-#' @nord
+#' @export
 #'
 #' @examples
+#' autoplot(paracou_6_wmppp)
+#' 
 autoplot.wmppp <- function(
     object, 
     ..., 
