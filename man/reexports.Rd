@@ -11,11 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-<<<<<<< HEAD
-=======
-  \item{base}{\code{\link[base]{plot}}}
-
->>>>>>> e57985df2e52c1426574e4899e7877ca73bab8ac
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 }}
 
