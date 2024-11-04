@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="divent">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="../deps/MathJax-3.2.2/tex-chtml.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="divent">
 <meta name="robots" content="noindex">
 </head>
 <body>
@@ -168,8 +168,7 @@ communities, e.g. a log-normal one <span class="citation">(Preston
 <p><img src="divent_files/figure-html/rcommunity-1.png" width="700"></p>
 <p>The Whittaker plot (rank-abundance curve) of a random log-normal
 distribution of 10000 individuals simulated with default parameter
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1</annotation></semantics></math>)
-is produced.</p>
+(<span class="math inline">\(\sigma = 1\)</span>) is produced.</p>
 </div>
 <div class="section level3">
 <h3 id="diversity-estimation">Diversity estimation<a class="anchor" aria-label="anchor" href="#diversity-estimation"></a>
@@ -251,11 +250,8 @@ the non-linearity of the indices:</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 ChaoJost      1    4.50</span></span></code></pre>
 <p>The best available estimator is chosen by default: its name is
 returned.</p>
-<p>Those indices are special cases of the Tsallis entropy <span class="citation">(1988)</span> or order
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>
-(respectively
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">q=0,1,2</annotation></semantics></math>
-for richness, Shannon, Simpson):</p>
+<p>Those indices are special cases of the Tsallis entropy <span class="citation">(1988)</span> or order <span class="math inline">\(q\)</span> (respectively <span class="math inline">\(q=0,1,2\)</span> for richness, Shannon,
+Simpson):</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ent_tsallis.html">ent_tsallis</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 5</span></span></span>
@@ -279,11 +275,9 @@ numbers or simply diversity <span class="citation">(Jost
 <span><span class="co">## <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       1     113. </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ       1     105. </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       1      94.6</span></span></code></pre>
-<p>Diversity is the deformed exponential of order
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>
-of entropy, and entropy is the deformed logarithm of of order
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>
-of diversity:</p>
+<p>Diversity is the deformed exponential of order <span class="math inline">\(q\)</span> of entropy, and entropy is the deformed
+logarithm of of order <span class="math inline">\(q\)</span> of
+diversity:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/div_hill.html">div_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">$</span><span class="va">diversity</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 42.28417 44.58777 48.83999 36.01687</span></span></code></pre>
@@ -470,19 +464,13 @@ weight.</p>
 <h3 id="diversity-estimation-1">Diversity estimation<a class="anchor" aria-label="anchor" href="#diversity-estimation-1"></a>
 </h3>
 <p>High level functions allow computing diversity of all communities
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
-diversity), of the meta-community
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
-diversity), and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
-diversity, i.e. the number of effective communities (the number of
-communities with equal weights and no common species that would yield
-the observed
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
-diversity).</p>
+(<span class="math inline">\(\alpha\)</span> diversity), of the
+meta-community (<span class="math inline">\(\gamma\)</span> diversity),
+and <span class="math inline">\(\beta\)</span> diversity, i.e. the
+number of effective communities (the number of communities with equal
+weights and no common species that would yield the observed <span class="math inline">\(\beta\)</span> diversity).</p>
 <p>The <code>div_part</code> function calculates everything at once, for
-a given order of diversity
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>:</p>
+a given order of diversity <span class="math inline">\(q\)</span>:</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/div_part.html">div_part</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 7 × 6</span></span></span>
@@ -496,9 +484,8 @@ a given order of diversity
 <span><span class="co">## <span style="color: #BCBCBC;">6</span> subplot_3     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1    105.     1.56</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">7</span> subplot_4     community <span style="color: #949494;">"</span>UnveilJ<span style="color: #949494;">"</span>     1     94.6    1.56</span></span></code></pre>
 <p>An alternative is the <code>gamma</code> argument of all diversity
-estimation function to obtain
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
-diversity instead of the diversity of each community.</p>
+estimation function to obtain <span class="math inline">\(\gamma\)</span> diversity instead of the diversity
+of each community.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/div_hill.html">div_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">1</span>, gamma <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>

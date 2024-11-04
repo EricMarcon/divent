@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Phylogenies in divent">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="../deps/MathJax-3.2.2/tex-chtml.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Phylogenies in divent">
 <meta name="robots" content="noindex">
 </head>
 <body>
@@ -165,14 +165,9 @@ be identical to other phylogenies.</p>
 <p>Edge lengths are not stored directly in <code>phylog</code> objects.
 The <code>$droot</code> component keeps distances from tips to root. The
 <code>$Wdist</code> component is a <code>dist</code> (half a distance
-matrix without the zero-diagonal) whose values are
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>s</mi><mo>,</mo><mi>t</mi></mrow></msub><mo>=</mo><msqrt><mrow><mn>2</mn><msubsup><mi>δ</mi><mrow><mi>s</mi><mo>,</mo><mi>t</mi></mrow><mn>2</mn></msubsup></mrow></msqrt></mrow><annotation encoding="application/x-tex">d_{s,t}=\sqrt{2 \delta_{s,t}^2}</annotation></semantics></math>,
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>δ</mi><mrow><mi>s</mi><mo>,</mo><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">\delta_{s,t}</annotation></semantics></math>
-is the distance between species
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>
-ant
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.</p>
+matrix without the zero-diagonal) whose values are <span class="math inline">\(d_{s,t}=\sqrt{2 \delta_{s,t}^2}\)</span>, where
+<span class="math inline">\(\delta_{s,t}\)</span> is the distance
+between species <span class="math inline">\(s\)</span> ant <span class="math inline">\(t\)</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tree.phylog</span><span class="op">$</span><span class="va">droot</span></span></code></pre></div>
 <pre><code><span><span class="co">##    C    A    B Int1 Root </span></span>

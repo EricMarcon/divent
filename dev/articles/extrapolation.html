@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Asymptotic Estimation, Interpolation and Extrapolation ">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="../deps/MathJax-3.2.2/tex-chtml.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Asymptotic Estimation, Interpolation and Extrapolation ">
 <meta name="robots" content="noindex">
 </head>
 <body>
@@ -236,9 +236,8 @@ adjusted iteratively until the rarefied entropy equals the actual
 sample’s entropy, ensuring continuity between interpolation and
 extrapolation.</p>
 <p>The default arguments of all functions apply this strategy, except
-for Simpson’s diversity
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">q=2</annotation></semantics></math>)
-that is estimated directly without bias.</p>
+for Simpson’s diversity (<span class="math inline">\(q=2\)</span>) that
+is estimated directly without bias.</p>
 </div>
 <div class="section level2">
 <h2 id="diversity-accumulation">Diversity accumulation<a class="anchor" aria-label="anchor" href="#diversity-accumulation"></a>
@@ -315,12 +314,8 @@ asymptotic richness such that the entropy of the asymptotic distribution
 rarefied to the observed sample size equals the observed entropy of the
 data. This approach allows consistent estimation of extrapolated
 diversity at integer and non-integer orders, thus allowing consistent
-diversity profiles without discontinuities at
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">q=0</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">q=1</annotation></semantics></math>.
-The results of <em>iNEXT</em> can be obtained by forcing argument
-<code>estimator = "ChaoJost"</code>.</p>
+diversity profiles without discontinuities at <span class="math inline">\(q=0\)</span> and <span class="math inline">\(q=1\)</span>. The results of <em>iNEXT</em> can be
+obtained by forcing argument <code>estimator = "ChaoJost"</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://chao.stat.nthu.edu.tw/wordpress/software_download/" class="external-link">"iNEXT"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span></span>
@@ -368,10 +363,10 @@ The results of <em>iNEXT</em> can be obtained by forcing argument
 by default.</p>
 <p>Last, confidence intervals of diversity accumulation assume normality
 in <em>iNEXT</em>: estimation variance is estimated by bootstrap and the
-confidence interval is defined as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>±</mo><mn>1.96</mn></mrow><annotation encoding="application/x-tex">\pm 1.96</annotation></semantics></math>
-times the standard deviation. In <em>divent</em>, confidence intervals
-are built directly from the quantiles of bootstrapped estimations.</p>
+confidence interval is defined as <span class="math inline">\(\pm
+1.96\)</span> times the standard deviation. In <em>divent</em>,
+confidence intervals are built directly from the quantiles of
+bootstrapped estimations.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
