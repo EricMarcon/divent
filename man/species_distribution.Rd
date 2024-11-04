@@ -170,6 +170,3 @@ autoplot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
 as_abundances(c("A", "C", "B", "C"))
 
 }
-\references{
-\insertAllCited{}
-}

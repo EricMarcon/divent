@@ -108,6 +108,3 @@ div_similarity(paracou_6_abd, similarities = Z, q = 2)
 div_similarity(paracou_6_abd, similarities = Z, q = 2, gamma = TRUE)
 
 }
-\references{
-\insertAllCited{}
-}
