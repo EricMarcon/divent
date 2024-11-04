@@ -29,7 +29,6 @@ NULL
 #' @param palette The name of a color palette, recognized by [RColorBrewer::brewer.pal].
 #' RAC plot only.
 #'
-#' @importFrom base plot
 #' @export
 plot.species_distribution <- function(
     x, 
@@ -165,8 +164,6 @@ plot.species_distribution <- function(
   }
   
 }
-#' @export
-base::plot
 
 
 #' @rdname plot.species_distribution

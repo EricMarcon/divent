@@ -6,7 +6,6 @@
 #' @param x An object of class "phylo_divent".
 #' @param ... Arguments passed to [stats::plot.dendrogram].
 #'
-#' @importFrom base plot
 #' @export
 #'
 #' @examples
