@@ -36,7 +36,7 @@ Community data is:
 
 - either a numeric vector containing abundances of species (the number of individual of each species) or their probabilities (the proportion of individuals of each species, summing to 1).
 This format is convenient when a single community is considered.
-- or a dataframe whose lines are communities and column are species. 
+- or a dataframe whose rows are communities and column are species. 
 Its values are either abundances or probabilities. 
 Special columns contain the site names, and their weights (e.g. their area or number of individuals).
 
