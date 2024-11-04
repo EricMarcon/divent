@@ -18,7 +18,7 @@ number of species from abundance or probability data."><meta property="og:image"
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.4-99.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.4-99.9001</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@ a geometric distribution of the probabilities of unobserved species.
 The number of unobserved species is estimated by the Chao1 estimator (<code>UnveilC</code>),
 following Chao2014c;textualdivent, or by the iChao1 (<code>UnveiliC</code>)
 or the jackknife (<code>UnveilJ</code>).
-The <code>UnveilJ</code> correction often has a lower bias but a greater variance
+The <code>UnveilJ</code> estimator often has a lower bias but a greater variance
 Marcon2015adivent.
 It is a good first choice thanks to the versatility of the jackknife
 estimator of richness.</p>
@@ -245,7 +245,7 @@ Holste1998;textualdivent are rarely used.</p>
 not ensure that its abundances are integer values.
 Then, classical bias-correction methods do not apply.
 Providing the <code>sample_coverage</code> argument allows applying the <code>ChaoShen</code> and
-<code>Grassberger</code> corrections to estimate quite well the entropy.</p>
+<code>Grassberger</code> estimators to estimate quite well the entropy.</p>
 <p>Diversity can be estimated at a specified level of interpolation or
 extrapolation, either a chosen sample size or sample coverage
 Chao2014divent, rather than its asymptotic value.

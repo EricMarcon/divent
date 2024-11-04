@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">divent</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.4-99.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.4-99.9001</span>
       </span>
     </div>
 
@@ -110,6 +110,13 @@ here.</p>
 <h2 id="asymptotic-or-interpolated-extrapolated-diversity">Asymptotic or interpolated / extrapolated diversity<a class="anchor" aria-label="anchor" href="#asymptotic-or-interpolated-extrapolated-diversity"></a>
 </h2>
 <div class="section level3">
+<h3 id="q">
+<code>q</code><a class="anchor" aria-label="anchor" href="#q"></a>
+</h3>
+<p>This argument sets the order of diversity to estimate, e.g. 0 for
+richness, 1 for Shannon’s and 2 for Simpson’s entropies.</p>
+</div>
+<div class="section level3">
 <h3 id="estimator">
 <code>estimator</code><a class="anchor" aria-label="anchor" href="#estimator"></a>
 </h3>
@@ -144,7 +151,7 @@ Grassberger estimators to estimate quite well the entropy.</p>
 <div class="section level2">
 <h2 id="unveiling">Unveiling<a class="anchor" aria-label="anchor" href="#unveiling"></a>
 </h2>
-<p>The unveiled estimators, whose names start with <code>Unveil</code>,
+<p>The unveiled estimators, whose names start with <code>unveil</code>,
 rely on the estimation of the distribution of probabilities of the
 species (i.e. the probability for an individual to belong to each
 species). They require several arguments, that are ignored if another
@@ -195,6 +202,39 @@ found.</p>
 </h3>
 <p>Unveiling is based on the estimation of the sample coverage. Its
 estimator can be chosen.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="general-arguments">General arguments<a class="anchor" aria-label="anchor" href="#general-arguments"></a>
+</h2>
+<div class="section level3">
+<h3 id="alpha">
+<code>alpha</code><a class="anchor" aria-label="anchor" href="#alpha"></a>
+</h3>
+<p>The risk level of tests or confidence intervals.</p>
+</div>
+<div class="section level3">
+<h3 id="as_numeric">
+<code>as_numeric</code><a class="anchor" aria-label="anchor" href="#as_numeric"></a>
+</h3>
+<p>Diversity and entropy functions return a tibble with detailed
+information about the estimation. When applied to a single community,
+they can return a number instead of a one-line tibble with the argument
+<code>as_numeric = TRUE</code>.</p>
+</div>
+<div class="section level3">
+<h3 id="check_arguments">
+<code>check_arguments</code><a class="anchor" aria-label="anchor" href="#check_arguments"></a>
+</h3>
+<p>Most functions of the package check their arguments, e.g. that
+<code>alpha</code>, the risk level, is between 0 and 1. To save time,
+<code>check_arguments = FALSE</code> skips the checks.</p>
+</div>
+<div class="section level3">
+<h3 id="n_simulations">
+<code>n_simulations</code><a class="anchor" aria-label="anchor" href="#n_simulations"></a>
+</h3>
+<p>The number of simulations run to estimate confidence intervals.</p>
 </div>
 </div>
   </div>
