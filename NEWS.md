@@ -3,7 +3,7 @@
 ## Features
 
 - Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
-- Methods for 
+- `species_distribution` methods for `wmppp` and `character` objects.
 
 
 # divent 0.3-16
