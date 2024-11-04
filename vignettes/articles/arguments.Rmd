@@ -21,6 +21,10 @@ They are explained here.
 
 # Asymptotic or interpolated / extrapolated diversity
 
+## `q`
+
+This argument sets the order of diversity to estimate, e.g. 0 for richness, 1 for Shannon's and 2 for Simpson's entropies.
+
 ## `estimator`
 
 Each function comes with several estimators that correspond to the state of the art.
@@ -41,7 +45,7 @@ Providing the sample_coverage argument allows applying the ChaoShen and Grassber
 
 # Unveiling
 
-The unveiled estimators, whose names start with `Unveil`, rely on the estimation of the distribution of probabilities of the species (i.e. the probability for an individual to belong to each species).
+The unveiled estimators, whose names start with `unveil`, rely on the estimation of the distribution of probabilities of the species (i.e. the probability for an individual to belong to each species).
 They require several arguments, that are ignored if another estimator is chosen.
 
 ## `probability_estimator`
@@ -69,3 +73,29 @@ If the estimate of order $k+1$ is out of the confidence interval of the estimate
 
 Unveiling is based on the estimation of the sample coverage.
 Its estimator can be chosen.
+
+
+# General arguments
+
+## `alpha`
+
+The risk level of tests or confidence intervals.
+
+
+## `as_numeric`
+
+Diversity and entropy functions return a tibble with detailed information about the estimation.
+When applied to a single community, they can return a number instead of a one-line tibble with the argument `as_numeric = TRUE`.
+
+## `check_arguments`
+
+Most functions of the package check their arguments, e.g. that `alpha`, the risk level, is between 0 and 1.
+To save time, `check_arguments = FALSE` skips the checks.
+
+## `n_simulations`
+
+The number of simulations run to estimate confidence intervals.
+
+
+
+
