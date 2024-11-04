@@ -2,7 +2,8 @@ url: https://ericmarcon.github.io/divent/
 
 template:
   bootstrap: 5
-  
+  math-rendering: mathjax
+
 development:
   mode: auto
 
