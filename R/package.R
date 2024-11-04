@@ -948,9 +948,9 @@ ent_gamma_similarity <- function(
 #' @noRd
 #' 
 error_message <- function(message, argument, parent_function) {
-  cat(deparse(substitute(argument)), "cannot be:\n")
-  print(utils::head(argument))
-  cat(paste(paste("Error in ", parent_function, ":"), message, "\n"))
+  message(deparse(substitute(argument)), " cannot be:", appendLF = TRUE)
+  message(utils::head(argument))
+  message("In function ", parent_function, ": ", message)
   stop("Check the function arguments.", call. = FALSE)
 }
 
