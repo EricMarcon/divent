@@ -12,11 +12,78 @@
 "_PACKAGE"
 
 
-# Functions to reexport
+# Functions to reexport ----
 #' @export
 ggplot2::autoplot
 base::as.numeric
 base::as.matrix
+
+#' ggplot method to plot wmppp objects
+#' 
+#' Coded in the dbmss package.
+#'
+#' @param object an object to be plotted.
+#' @param ... extra arguments, currently unused.
+#' @param show.window if `TRUE`, the borders of the window containing the points are shown on the point map.
+#' @param MaxPointTypes the maximum number of different point types to show. 
+#' If the point set contains more of them, the less frequent ones are gathered as "Other". 
+#' This number must be limited for readability and not to exceed the number of colors offered by the palette.
+#' @param Other the name of the point types gathered as "Other"
+#' @param main the title of the plot.
+#' @param xlab the X-axis label.
+#' @param ylab the Y-axis label.
+#' @param LegendLabels a vector of characters. 
+#' The first two items describe the observed and null-hypothesis curves, the third and last item the confidence interval.
+#' To be used only in plots with two curves (typically observed and expected values).
+#' The default is `NULL` to display the full description of functions.
+#' @param labelSize the guide of the point size legend in point maps, i.e. what the `PointSize` mark represents. 
+#' @param labelColor the guide of the point color legend in point maps, i.e. what the `PointType` mark represents. 
+#' @param palette The color palette used to display point types in maps. See [ggplot2::scale_colour_brewer].
+#' @param windowColor the color used to draw the limits of the windows in point maps. 
+#' @param windowFill the color used to fill the windows in point maps.
+#' @param alpha the opacity of the confidence envelope (in function values) or the points (in maps), between 0 and 1.
+#'
+#' @return A [ggplot2::ggplot].
+#' @nord
+#'
+#' @examples
+autoplot.wmppp <- function(
+    object, 
+    ..., 
+    show.window = TRUE, 
+    MaxPointTypes = 6, 
+    Other = "Other",
+    main = NULL, 
+    xlab = NULL, 
+    ylab = NULL, 
+    LegendLabels = NULL, 
+    labelSize = "Weight", 
+    labelColor = "Type", 
+    palette="Set1",
+    windowColor = "black", 
+    windowFill = "transparent", 
+    alpha = 1) {
+  
+  return(
+    dbmss:::autoplot.wmppp(
+      object = object, 
+      ..., 
+      show.window = show.window, 
+      MaxPointTypes = 6, 
+      Other = Other,
+      main = main, 
+      xlab = xlab, 
+      ylab = ylab, 
+      LegendLabels = LegendLabels, 
+      labelSize = labelSize, 
+      labelColor = labelColor, 
+      palette = palette,
+      windowColor = windowColor, 
+      windowFill = windowFill, 
+      alpha = alpha
+    )
+  )
+}
 
 
 #  Initialization ----
