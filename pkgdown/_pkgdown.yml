@@ -1,5 +1,8 @@
-url: https://ericmarcon.github.io/entropart
+url: https://ericmarcon.github.io/divent/
 
+template:
+  bootstrap: 5
+  
 development:
   mode: auto
 
