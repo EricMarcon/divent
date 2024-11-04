@@ -52,6 +52,10 @@
 #' @param alpha_lseries Fisher's alpha in the log-series distribution.
 #'
 #' @returns An object of class [abundances].
+#' 
+#' @references
+#' \insertAllCited{}
+#' 
 #' @export
 #'
 #' @examples

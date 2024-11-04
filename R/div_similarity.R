@@ -23,9 +23,6 @@
 #'
 #' @returns A tibble with the site names, the estimators used and the estimated diversity.
 #'
-#' @references
-#' \insertAllCited{}
-#' 
 #' @examples
 #' # Similarity matrix
 #' Z <- fun_similarity(paracou_6_fundist)

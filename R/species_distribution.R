@@ -43,9 +43,6 @@
 #' several rows.
 #' These are methods of the generic functions for class `species_distribution`.
 #' 
-#' @references
-#' \insertAllCited{}
-#' 
 #' @examples
 #' # Paracou data is a tibble
 #' paracou_6_abd

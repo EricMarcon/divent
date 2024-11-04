@@ -21,6 +21,9 @@
 #' the second one the number of species observed this number of times.
 #' @export
 #'
+#' @references
+#' \insertAllCited{}
+#' 
 #' @examples
 #' abd_freq_count(paracou_6_abd[1, -(1:2)])
 abd_freq_count <- function (

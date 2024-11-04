@@ -162,6 +162,8 @@ non_species_columns <- c(
 #' @format A matrix.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
 #' @seealso [paracou_6_abd], [paracou_6_taxo]
+#' @references
+#' \insertAllCited{}
 #' 
 "paracou_6_fundist"
 
@@ -219,6 +221,9 @@ non_species_columns <- c(
 #' @param abd A vector of positive integers.
 #'
 #' @returns The value of A.
+#' @references
+#' \insertAllCited{}
+#' 
 #' @noRd
 #'
 chao_A <- function(abd) {
