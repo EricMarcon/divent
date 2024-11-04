@@ -5,7 +5,7 @@ testthat::test_that(
     # Singletons only
     testthat::expect_warning(
       coverage(rep(1,5)), 
-      "Sample coverage is 0, most bias corrections will return NaN.", 
+      "Sample coverage is 0, most estimators will return NaN.", 
       ignore.case = TRUE
     )
   }
