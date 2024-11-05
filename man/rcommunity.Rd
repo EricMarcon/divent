@@ -95,3 +95,6 @@ abundances <- rcommunity(n = 1, size = 1E5,
   species_number = 300, distribution = "lnorm")
 autoplot(abundances)
 }
+\references{
+\insertAllCited{}
+}

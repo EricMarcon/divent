@@ -59,3 +59,6 @@ of \insertCite{Chao2014}{divent}.
 \examples{
 abd_freq_count(paracou_6_abd[1, -(1:2)])
 }
+\references{
+\insertAllCited{}
+}

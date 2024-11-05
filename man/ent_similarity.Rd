@@ -108,6 +108,3 @@ ent_similarity(paracou_6_abd, similarities = Z, q = 2)
 ent_similarity(paracou_6_abd, similarities = Z, q = 2, gamma = TRUE)
 
 }
-\references{
-\insertAllCited{}
-}
