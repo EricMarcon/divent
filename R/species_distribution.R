@@ -23,7 +23,7 @@
 #' Abundance values are rounded (by default) to the nearest integer.
 #' They also accept a [dbmss::wmppp] objects, 
 #' i.e. a weighted, marked planar point pattern and count the abundances of 
-#' point types, and character vectors.
+#' point types, character and factor objects.
 #' 
 #' `as_probabilities()` normalizes the vector `x` so that it sums to 1. It gives
 #' the same output as `probabilities()` with `estimator = "naive"`.
@@ -277,13 +277,29 @@ as_species_distribution.character <- function(
     ..., 
     check_arguments = TRUE) {
   
-  if (!is.vector(x)) {
-    stop("Only character vectors can be converted to species distributions")
-  }
   # Count the number of items by type
   return(
     species_distribution(
       as_named_vector.character(x),
+      check_arguments = check_arguments
+    )
+  )
+}
+
+
+#' @rdname species_distribution
+#'
+#' @export
+as_species_distribution.factor <- function(
+    x,
+    ..., 
+    check_arguments = TRUE) {
+  
+  # Count the number of items by type
+  return(
+    species_distribution(
+      # tapply keep factors' names 
+      tapply(x, x, length) ,
       check_arguments = check_arguments
     )
   )
@@ -426,6 +442,25 @@ as_probabilities.character <- function(
   
   the_probabilities <- as_species_distribution(
     as_named_vector.character(x),
+    check_arguments = check_arguments
+  )
+  
+  class(the_probabilities) <- c("probabilities", class(the_probabilities))
+  return(the_probabilities)
+}
+
+
+#' @rdname species_distribution
+#'
+#' @export
+as_probabilities.factor <- function(
+    x,
+    ..., 
+    check_arguments = TRUE) {
+  
+  the_probabilities <- as_species_distribution(
+    # tapply keep factors' names 
+    tapply(x, x, length) ,
     check_arguments = check_arguments
   )
   
@@ -600,10 +635,31 @@ as_abundances.character <- function(
 #' @rdname species_distribution
 #' 
 #' @export
+as_abundances.factor <- function(
+    x,
+    ...,
+    check_arguments = TRUE) {
+  
+  the_abundances <- as_species_distribution(
+    # tapply keep factors' names 
+    tapply(x, x, length) ,
+    check_arguments = check_arguments
+  )
+  
+  class(the_abundances) <- c("abundances", class(the_abundances))
+  return(the_abundances)
+}
+
+
+#' @rdname species_distribution
+#' 
+#' @export
 is_abundances <- function(x) {
   inherits(x, "abundances")
 }
 
+
+#  Opposite conversions ----
 
 #' @rdname species_distribution
 #' 
