@@ -1,8 +1,9 @@
-# divent 0.4-99.9003
+# divent 0.4-99.9004
 
 ## Features
 
 - Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
+- Spatially explicit Simpson's entropy
 - `species_distribution` methods for `wmppp` and `character` objects.
 
 

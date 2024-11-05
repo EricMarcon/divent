@@ -303,45 +303,54 @@ as_named_vector.wmppp <- function(X){
 #' The function is always called without arguments.
 #' Its arguments exist only for documentation.
 #' 
-#' @param abundances An object of class [abundances].
-#' @param alpha The risk level, 5% by default.
-#' @param as_numeric If `TRUE`, a number or a numeric vector is returned rather than a tibble.
-#' @param check_arguments If `TRUE`, the function arguments are verified.
+#' @param abundances an object of class [abundances].
+#' @param alpha the risk level, 5% by default.
+#' @param as_numeric if `TRUE`, a number or a numeric vector is returned rather than a tibble.
+#' @param check_arguments if `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
-#' @param coverage_estimator An estimator of sample coverage used by [coverage].
-#' @param distances A distance matrix or an object of class [stats::dist]
-#' @param estimator An estimator of asymptotic entropy, diversity or richness.
-#' @param gamma If `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
-#' @param jack_alpha The risk level, 5% by default, used to optimize the jackknife order.
-#' @param jack_max The highest jackknife order allowed. Default is 10.
-#' @param k The order of Hurlbert's diversity.
-#' @param level The level of interpolation or extrapolation. 
+#' @param correction the edge-effect correction to apply when estimating
+#' the number of neighbors or the K function with [spatstat.explore::Kest].
+#' Default is "isotropic".
+#' @param coverage_estimator an estimator of sample coverage used by [coverage].
+#' @param distances a distance matrix or an object of class [stats::dist]
+#' @param estimator an estimator of asymptotic entropy, diversity or richness.
+#' @param gamma if `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
+#' @param global if `TRUE`, a global envelope sensu \insertCite{Duranton2005}{divent} is calculated.
+#' @param jack_alpha the risk level, 5% by default, used to optimize the jackknife order.
+#' @param jack_max the highest jackknife order allowed. Default is 10.
+#' @param k the order of Hurlbert's diversity.
+#' @param level the level of interpolation or extrapolation. 
 #' It may be a sample size (an integer) or a sample coverage 
 #' (a number between 0 and 1).
 #' If not `NULL`, the asymptotic `estimator` is ignored.
-#' @param n_simulations The number of simulations used to estimate the confidence envelope.
-#' @param normalize If `TRUE`, phylogenetic is normalized: the height of the tree is set to 1.
-#' @param probability_estimator A string containing one of the possible estimators
+#' @param n_simulations the number of simulations used to estimate the confidence envelope.
+#' @param normalize if `TRUE`, phylogenetic is normalized: the height of the tree is set to 1.
+#' @param probability_estimator a string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
-#' @param q The order of diversity.
-#' @param rate The decay rate of the exponential similarity.
-#' @param richness_estimator An estimator of richness to evaluate the total number of species,
-#' see [div_richness]. Used for interpolation and extrapolation.
-#' @param sample_coverage The sample coverage of `x` calculated elsewhere. 
+#' @param q the order of diversity.
+#' @param r a vector of distances. 
+#' If `NULL` accumulation is along `n`, 
+#' else neighbors are accumulated in circles of radius `r`.
+#' @param rate the decay rate of the exponential similarity.
+#' @param richness_estimator an estimator of richness to evaluate the total number of species,
+#' see [div_richness]. used for interpolation and extrapolation.
+#' @param sample_coverage the sample coverage of `x` calculated elsewhere. 
 #' Used to calculate the gamma diversity of meta-communities, see details. 
-#' @param show_progress If TRUE, a progress bar is shown during long computations. 
-#' @param similarities A similarity matrix, that can be obtained by [fun_similarity].
+#' @param show_progress if TRUE, a progress bar is shown during long computations. 
+#' @param similarities a similarity matrix, that can be obtained by [fun_similarity].
 #' Its default value is the identity matrix.
-#' @param species_distribution An object of class [species_distribution].
-#' @param tree An ultrametric, phylogenetic tree.
+#' @param species_distribution an object of class [species_distribution].
+#' @param tree an ultrametric, phylogenetic tree.
 #' May be an object of class [phylo_divent], [ape::phylo], [ade4::phylog] or [stats::hclust]. 
-#' @param unveiling A string containing one of the possible unveiling methods 
+#' @param unveiling a string containing one of the possible unveiling methods 
 #' to estimate the probabilities of the unobserved species (see [probabilities]).
 #' Used only for extrapolation.
 #' @param use.names if `TRUE`, the names of the `species_distribution` are kept 
 #' in the matrix or vector they are converted to.
-#' @param weights The weights of the sites of the species distributions.
+#' @param weights the weights of the sites of the species distributions.
+#' @param X a spatialized community 
+#' (A [dbmss::wmppp] object with `PointType` values as species names.)
 #'
 #' @returns Returns `TRUE` or stops if a problem is detected.
 #' 
@@ -447,6 +456,7 @@ check_divent_args <- function(
       )
     }
   }
+  # correction is checked by match.arg()
   # coverage_estimator is checked by match.arg()
   # estimator is checked by match.arg()
   # distances
@@ -504,6 +514,17 @@ check_divent_args <- function(
       error_message(
         "gamma must be TRUE or FALSE", 
         gamma, 
+        parent_function
+      )
+    }
+  }
+  # global
+  if (!is.na(names(args["global"]))) {
+    global <- eval(expression(global), parent.frame())
+    if (!is.logical(global) | length(global) != 1) {
+      error_message(
+        "global must be TRUE or FALSE", 
+        global, 
         parent_function
       )
     }
@@ -629,6 +650,40 @@ check_divent_args <- function(
         q, 
         parent_function
       )
+    }
+  }
+  # r
+  if (!is.na(names(args["r"]))) {
+    r <- eval(expression(r), parent.frame())
+    if (!is.null(r)) {
+      if (!is.numeric(r) && !is.vector(r)) {
+        error_message(
+          "r must be a numeric vector", 
+          r, 
+          parent_function
+        )
+      }
+      if (length(r) < 2) {
+        error_message(
+          paster("r has length", length(r.seq), "but it should be at least 2)"), 
+          r, 
+          parent_function
+        )
+      }
+      if (r[1] != 0) {
+        error_message(
+          "The first r value must be 0", 
+          r, 
+          parent_function
+        )
+      }
+      if (any(diff(r) <= 0)) {
+        error_message(
+          "Successive values of r must be increasing", 
+          r, 
+          parent_function
+        )
+      }
     }
   }
   # rate
@@ -765,6 +820,18 @@ check_divent_args <- function(
         error_message(
           "weights must be positive",
           weights,
+          parent_function
+        )
+      }
+    }
+  }
+  if (!is.na(names(args["X"]))) {
+    X <- eval(expression(X), parent.frame())
+    if (!is.null(X)) {
+      if (!inherits(X, "wmppp")) {
+        error_message(
+          "X must be an object of class 'wmppp'", 
+          X, 
           parent_function
         )
       }
@@ -1067,6 +1134,27 @@ error_message <- function(message, argument, parent_function) {
   message(utils::head(argument))
   message("In function ", parent_function, ": ", message)
   stop("Check the function arguments.", call. = FALSE)
+}
+
+
+#' Extract a column from an fv object
+#' according to an edge-effect correction
+#'
+#' @param fv the function value object, see [spatstat.explore::fv.object].
+#' @param correction the edge-effect correction: 
+#' "isotropic", "translate" or "none"
+#'
+#' @returns a vector with the function values
+#' @noRd
+#'
+#' @examples
+correction_fv <- function(fv, correction) {
+  switch(
+    correction,
+    "isotropic" = fv$iso,
+    "translate" = fv$trans,
+    "none" = fv$un
+  )
 }
 
 
