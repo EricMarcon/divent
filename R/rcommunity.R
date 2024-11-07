@@ -33,7 +33,16 @@
 #' Log-normal, log-series and broken-stick distributions are stochastic. 
 #' The geometric distribution is completely determined by its parameters.
 #' 
-#' Spatialized communities include the location of individuals in a window.
+#' Spatialized communities include the location of individuals in a window, 
+#' in a a [dbmss::wmppp] object.
+#' Several point processes are available, namely binomial (points are uniformly
+#' distributed in the window) and \insertCite{Thomas1949;textual}{divent}, which
+#' is clustered.
+#' 
+#' Point weights, that may be for instance the size of the trees in a forest
+#' community, can be uniform, follow a Weibull or a negative exponential distribution.
+#' The latter describe well the diameter distribution of trees in a forest
+#' \insertCite{Rennolls1985;Turner2004}{divent}.
 #'
 #' @inheritParams check_divent_args
 #' @param n The number of communities to draw.
@@ -177,13 +186,14 @@ rcommunity <- function(
 #' "Thomas" for a clustered point pattern with parameters `scale` and `mu`.
 #' @param thomas_scale In Thomas point patterns, the standard deviation of random displacement 
 #' (along each coordinate axis) of a point from its cluster center.
-#' @param mu In Thomas point patterns, the mean number of points per cluster.
+#' @param thomas_mu In Thomas point patterns, the mean number of points per cluster.
 #' The intensity of the Poisson process of cluster centers is calculated as 
-#' the number of points (`size`) per area divided by `mu`.
-#' @param win The window containing the point pattern. It is an [spatstat.geom::owin] object.
+#' the number of points (`size`) per area divided by `thomas_mu`.
+#' @param win The window containing the point pattern. 
+#' It is an [spatstat.geom::owin] object.
+#' Default is a 1x1 square.
 #' @param species_names A vector of characters or of factors containing the possible species names.
-#' @param weight_distribution The distribution of point weights, 
-#' that may be for instance the size of the trees in a forest community.
+#' @param weight_distribution The distribution of point weights.
 #' By default, all weight are 1.
 #' May be "uniform" for a uniform distribution between `w_min` and `w_max`, 
 #' "weibull" with parameters `w_min`, `weibull_scale` and `shape` or
@@ -221,7 +231,7 @@ rspcommunity <- function(
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     spatial = c("Binomial", "Thomas"), 
     thomas_scale = 0.2, 
-    mu = 10,
+    thomas_mu = 10,
     win = spatstat.geom::owin(),
     species_names = NULL,
     weight_distribution = c("Uniform", "Weibull", "Exponential"),
@@ -323,9 +333,9 @@ rspcommunity <- function(
       for (s in 1:species_number) {
         the_ppp_s <- spatstat.random::rThomas(
           kappa = the_communities[i, is_species_column][s] / 
-            spatstat.geom::area.owin(win) / mu, 
+            spatstat.geom::area.owin(win) / thomas_mu, 
           scale = thomas_scale,
-          mu = mu, 
+          mu = thomas_mu, 
           win = win
         )
         # Associate species and points
