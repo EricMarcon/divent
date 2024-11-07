@@ -62,9 +62,9 @@ divided by the sample size.}
 
 \item{level}{The level of interpolation or extrapolation, i.e. an abundance.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
 \item{sample_coverage}{The target sample coverage.}

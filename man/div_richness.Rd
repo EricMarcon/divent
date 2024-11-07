@@ -60,9 +60,9 @@ The metacommunity if built by combining the community abundances with respect to
 
 \item{estimator}{An estimator of richness to evaluate the total number of species.}
 
-\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+\item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
 
-\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+\item{jack_max}{the highest jackknife order allowed. Default is 10.}
 
 \item{level}{The level of interpolation or extrapolation.
 It may be a sample size (an integer) or a sample coverage
@@ -78,14 +78,14 @@ Used only by the estimator of richness "rarefy".}
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only by the estimator of richness "rarefy".}
 
-\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+\item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
+\item{gamma}{if \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated numbers of species.

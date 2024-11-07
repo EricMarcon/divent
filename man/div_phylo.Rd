@@ -50,45 +50,45 @@ div_phylo(x, tree, q = 1, ...)
 \item{x}{An object, that may be a numeric vector containing abundances
 or probabilities, or an object of class \link{abundances} or \link{probabilities}.}
 
-\item{tree}{An ultrametric, phylogenetic tree.
+\item{tree}{an ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
-\item{q}{The order of diversity.}
+\item{q}{the order of diversity.}
 
 \item{...}{Unused.}
 
-\item{normalize}{If \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
+\item{normalize}{if \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
 
 \item{estimator}{An estimator of asymptotic diversity.}
 
-\item{level}{The level of interpolation or extrapolation.
+\item{level}{the level of interpolation or extrapolation.
 It may be a sample size (an integer) or a sample coverage
 (a number between 0 and 1).
 If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
 
-\item{probability_estimator}{A string containing one of the possible estimators
+\item{probability_estimator}{a string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
 
-\item{unveiling}{A string containing one of the possible unveiling methods
+\item{unveiling}{a string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only for extrapolation.}
 
-\item{richness_estimator}{An estimator of richness to evaluate the total number of species,
-see \link{div_richness}. Used for interpolation and extrapolation.}
+\item{richness_estimator}{an estimator of richness to evaluate the total number of species,
+see \link{div_richness}. used for interpolation and extrapolation.}
 
-\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+\item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
 
-\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+\item{jack_max}{the highest jackknife order allowed. Default is 10.}
 
-\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+\item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
+\item{gamma}{if \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated

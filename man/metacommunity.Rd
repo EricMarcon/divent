@@ -33,11 +33,11 @@ a matrix of abundances with communities in rows and species in columns.}
 
 \item{...}{Unused.}
 
-\item{weights}{The weights of the sites of the species distributions.}
+\item{weights}{the weights of the sites of the species distributions.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{

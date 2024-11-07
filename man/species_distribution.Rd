@@ -114,9 +114,9 @@ is_abundances(x)
 
 \item{names}{The names of the species distributions.}
 
-\item{weights}{The weights of the sites of the species distributions.}
+\item{weights}{the weights of the sites of the species distributions.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
 \item{...}{Unused.}

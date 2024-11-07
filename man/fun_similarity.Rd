@@ -7,15 +7,15 @@
 fun_similarity(distances, exponential = TRUE, rate = 1, check_arguments = TRUE)
 }
 \arguments{
-\item{distances}{A distance matrix or an object of class \link[stats:dist]{stats::dist}}
+\item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}}
 
 \item{exponential}{If \code{TRUE}, similarity is \eqn{e^{-r \delta}},
 where \eqn{r} is argument \code{rate}.
 If \code{FALSE}, it is \eqn{1 - \delta / \max(\delta)}.}
 
-\item{rate}{The decay rate of the exponential similarity.}
+\item{rate}{the decay rate of the exponential similarity.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{

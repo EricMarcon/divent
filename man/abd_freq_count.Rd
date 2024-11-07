@@ -17,16 +17,16 @@ abd_freq_count(
 \arguments{
 \item{abd}{A numeric vector containing species abundances.}
 
-\item{level}{The level of interpolation or extrapolation.
+\item{level}{the level of interpolation or extrapolation.
 It may be a sample size (an integer) or a sample coverage
 (a number between 0 and 1).
 If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
 
-\item{probability_estimator}{A string containing one of the possible estimators
+\item{probability_estimator}{a string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
 
-\item{unveiling}{A string containing one of the possible unveiling methods
+\item{unveiling}{a string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only for extrapolation.}
 
@@ -34,9 +34,9 @@ Used only for extrapolation.}
 \link{div_richness} to evaluate the total number of species in \link{probabilities}.
 Used only for extrapolation.}
 
-\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+\item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{

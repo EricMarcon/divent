@@ -47,38 +47,38 @@ or an object of class \link{abundances} or \link{probabilities}.
 If it is a numeric vector, then its length must equal the dimensions of the
 \code{similarities} matrix: species are assumed to be in the same order.}
 
-\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.
+\item{similarities}{a similarity matrix, that can be obtained by \link{fun_similarity}.
 Its default value is the identity matrix.}
 
-\item{q}{The order of diversity.}
+\item{q}{the order of diversity.}
 
 \item{...}{Unused.}
 
 \item{estimator}{An estimator of entropy.}
 
-\item{probability_estimator}{A string containing one of the possible estimators
+\item{probability_estimator}{a string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
 
-\item{unveiling}{A string containing one of the possible unveiling methods
+\item{unveiling}{a string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only for extrapolation.}
 
-\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+\item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
 
-\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+\item{jack_max}{the highest jackknife order allowed. Default is 10.}
 
-\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+\item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
-\item{sample_coverage}{The sample coverage of \code{x} calculated elsewhere.
+\item{sample_coverage}{the sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{gamma}{If \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
+\item{gamma}{if \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 }
 \value{
 A tibble with the site names, the estimators used and the estimated entropy.
