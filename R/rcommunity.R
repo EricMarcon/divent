@@ -55,7 +55,7 @@
 #' This is the standard deviation on the log scale.
 #' @param prob_geom The proportion of resources taken by successive species 
 #' of the geometric distribution.
-#' @param alpha Fisher's $\alpha$ in the log-series distribution.
+#' @param alpha Fisher's \eqn{\alpha} in the log-series distribution.
 #' 
 #' @name rcommunity
 #' @references
