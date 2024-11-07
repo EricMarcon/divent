@@ -75,6 +75,8 @@ This is the standard deviation on the log scale.}
 \item{prob_geom}{The proportion of resources taken by successive species
 of the geometric distribution.}
 
+\item{fisher_alpha}{Fisher's \eqn{\alpha} in the log-series distribution.}
+
 \item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
@@ -112,8 +114,6 @@ May be "uniform" for a uniform distribution between \code{w_min} and \code{w_max
 \item{weibull_scale}{The scale parameter in a Weibull distribution.}
 
 \item{weibull_shape}{The shape parameter in a Weibull distribution.}
-
-\item{alpha}{Fisher's $\alpha$ in the log-series distribution.}
 }
 \value{
 \code{rcommunity()} returns an object of class \link{abundances}.
@@ -165,8 +165,8 @@ Spatialized communities include the location of individuals in a window.
 abundances <- rcommunity(n = 1, size = 1E5, 
   species_number = 300, distribution = "lnorm")
 autoplot(abundances)
-sp_community <- rspCommunity(1, size = 30, species_number = 5)
-autoplot(sp_community)
+X <- rspcommunity(1, size = 30, species_number = 5)
+autoplot(X)
 
 }
 \references{

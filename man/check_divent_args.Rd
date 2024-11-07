@@ -9,10 +9,12 @@ check_divent_args(
   alpha = NULL,
   as_numeric = NULL,
   check_arguments = NULL,
+  correction = NULL,
   coverage_estimator = NULL,
   distances = NULL,
   estimator = NULL,
   gamma = NULL,
+  global = NULL,
   jack_alpha = NULL,
   jack_max = NULL,
   k = NULL,
@@ -21,6 +23,7 @@ check_divent_args(
   normalize = NULL,
   probability_estimator = NULL,
   q = NULL,
+  r = NULL,
   rate = NULL,
   richness_estimator = NULL,
   sample_coverage = NULL,
@@ -30,7 +33,8 @@ check_divent_args(
   tree = NULL,
   use.names = NULL,
   unveiling = NULL,
-  weights = NULL
+  weights = NULL,
+  X = NULL
 )
 }
 \arguments{
@@ -43,6 +47,10 @@ check_divent_args(
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
+\item{correction}{the edge-effect correction to apply when estimating
+the number of neighbors or the K function with \link[spatstat.explore:Kest]{spatstat.explore::Kest}.
+Default is "isotropic".}
+
 \item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
 \item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}}
@@ -50,6 +58,8 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 \item{estimator}{an estimator of asymptotic entropy, diversity or richness.}
 
 \item{gamma}{if \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
+
+\item{global}{if \code{TRUE}, a global envelope sensu \insertCite{Duranton2005}{divent} is calculated.}
 
 \item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
 
@@ -71,6 +81,10 @@ of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
 
 \item{q}{the order of diversity.}
+
+\item{r}{a vector of distances.
+If \code{NULL} accumulation is along \code{n},
+else neighbors are accumulated in circles of radius \code{r}.}
 
 \item{rate}{the decay rate of the exponential similarity.}
 
@@ -98,16 +112,6 @@ to estimate the probabilities of the unobserved species (see \link{probabilities
 Used only for extrapolation.}
 
 \item{weights}{the weights of the sites of the species distributions.}
-
-\item{correction}{the edge-effect correction to apply when estimating
-the number of neighbors or the K function with \link[spatstat.explore:Kest]{spatstat.explore::Kest}.
-Default is "isotropic".}
-
-\item{global}{if \code{TRUE}, a global envelope sensu \insertCite{Duranton2005}{divent} is calculated.}
-
-\item{r}{a vector of distances.
-If \code{NULL} accumulation is along \code{n},
-else neighbors are accumulated in circles of radius \code{r}.}
 
 \item{X}{a spatialized community
 (A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
