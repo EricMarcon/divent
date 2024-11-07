@@ -21,7 +21,7 @@ NULL
 #'
 #' @examples
 #' # Generate a random community
-#' X <- rspcommunity(1, size = 1000, S = 3)
+#' X <- rspcommunity(1, size = 1000, species_number = 3)
 #' # Calculate the entropy and plot it
 #' autoplot(ent_sp_simpson(X))
 #' 
@@ -132,7 +132,7 @@ ent_sp_simpson <- function(
 #'
 #' @examples
 #' # Generate a random community
-#' X <- rspcommunity(1, size = 1000, S = 3)
+#' X <- rspcommunity(1, size = 1000, species_number = 3)
 #' # Calculate the entropy and plot it
 #' autoplot(ent_sp_simpsonEnvelope(X, n_simulations = 10))
 #' 
@@ -142,7 +142,7 @@ ent_sp_simpsonEnvelope <- function(
     n_simulations = 100,
     alpha = 0.05, 
     correction = c("isotropic", "translate", "none"),
-    simulation_type = c("Random Position", "RandomLabeling"), 
+    simulation_type = c("RandomPosition", "RandomLabeling"), 
     global = FALSE, 
     check_arguments = TRUE) {
     

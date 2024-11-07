@@ -204,8 +204,8 @@ rcommunity <- function(
 #' @references
 #' \insertAllCited{}
 #' @examples
-#' sp_community <- rspCommunity(1, size = 30, species_number = 5)
-#' autoplot(sp_community)
+#' X <- rspcommunity(1, size = 30, species_number = 5)
+#' autoplot(X)
 #' 
 rspcommunity <- function(
     n,
