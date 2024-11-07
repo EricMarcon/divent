@@ -1147,7 +1147,6 @@ error_message <- function(message, argument, parent_function) {
 #' @returns a vector with the function values
 #' @noRd
 #'
-#' @examples
 correction_fv <- function(fv, correction) {
   switch(
     correction,
