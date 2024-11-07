@@ -21,9 +21,9 @@ NULL
 #'
 #' @examples
 #' # Generate a random community
-#' community_sp <- rcommunity_sp(1, size = 1000, S = 3)
+#' X <- rspcommunity(1, size = 1000, S = 3)
 #' # Calculate the entropy and plot it
-#' autoplot(ent_sp_simpson(community_sp))
+#' autoplot(ent_sp_simpson(X))
 #' 
 ent_sp_simpson <- function(
     X, 
@@ -132,7 +132,7 @@ ent_sp_simpson <- function(
 #'
 #' @examples
 #' # Generate a random community
-#' community_sp <- rcommunity_sp(1, size = 1000, S = 3)
+#' X <- rspcommunity(1, size = 1000, S = 3)
 #' # Calculate the entropy and plot it
 #' autoplot(ent_sp_simpsonEnvelope(X, n_simulations = 10))
 #' 
