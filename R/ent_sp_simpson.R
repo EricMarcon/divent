@@ -113,7 +113,7 @@ ent_sp_simpson <- function(
     desc = desc, 
     unitname = X$window$unit, 
     fname = "Simpson's Entropy")
-  spatstat.explore::fvnames(S, ".") <- colnames(Shi.df)[-1]
+  spatstat.explore::fvnames(the_entropy, ".") <- colnames(Shi.df)[-1]
   return (the_entropy)
 }
 
