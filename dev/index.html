@@ -68,10 +68,32 @@
 <img src="logo.png" class="logo" alt=""><h1 id="diversity-measures-based-on-entropy">Diversity measures based on Entropy<a class="anchor" aria-label="anchor" href="#diversity-measures-based-on-entropy"></a>
 </h1>
 </div>
-<p><img src="https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg" alt="stability-wip"><img src="https://github.com/EricMarcon/divent/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"><a href="https://app.codecov.io/github/EricMarcon/divent" class="external-link"><img src="https://codecov.io/github/EricMarcon/divent/branch/master/graphs/badge.svg" alt="codecov"></a> <a href="https://www.codefactor.io/repository/github/ericmarcon/divent/overview/master" class="external-link"><img src="https://www.codefactor.io/repository/github/ericmarcon/divent/badge/master" alt="CodeFactor"></a></p>
+<p><img src="https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg" alt="stability-wip"><img src="https://github.com/EricMarcon/divent/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"><a href="https://app.codecov.io/github/EricMarcon/divent" class="external-link"><img src="https://codecov.io/github/EricMarcon/divent/branch/master/graphs/badge.svg" alt="codecov"></a> <a href="https://www.codefactor.io/repository/github/ericmarcon/divent/overview/master" class="external-link"><img src="https://www.codefactor.io/repository/github/ericmarcon/divent/badge/master" alt="CodeFactor"></a> <a href="https://CRAN.r-project.org/package=divent" class="external-link"><img src="https://www.r-pkg.org/badges/version/divent" alt="CRAN version"></a> <a href="https://CRAN.R-project.org/package=divent" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/divent"></a> <a href="https://CRAN.R-project.org/package=divent" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/divent"></a></p>
 <p><strong>divent</strong> is an R package that provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.</p>
 <p>It is a reboot of the package <strong>entropart</strong> to make it tidy, easier to use and optimize the code that has been added along years of research.</p>
+<div class="section level2">
+<h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
+</h2>
+<p>In the divent package, individuals of different <em>species</em> are counted in several <em>communities</em> which may (or not) be agregated to define a <em>metacommunity</em>. In the metacommunity, the probability to find a species in the weighted average of probabilities in communities. This is a naming convention, which may correspond to plots in a forest inventory or any data organized the same way.</p>
+<p>Basic functions allow computing diversity of a community. Calculate entropies such as Shannon’s, Simpson’s, or Hurlbert’s and explicit diversity (i.e. effective number of species), aka Hill numbers. By default, the best available estimator of diversity will be used, according to the data.</p>
+<p>Communities can be simulated and plotted.</p>
+<p>Phylogenetic entropy and diversity can be calculated if a phylogenetic (or functional), ultrametric tree is provided, with the state-of-the-art estimation-bias correction. Similarity-based diversity is calculated, based on a similarity matrix.</p>
+<p>The diversity of a metacommunity, i.e. <span class="math inline">\(\gamma\)</span> diversity, can be partitioned into <span class="math inline">\(\alpha\)</span> (that of communities) and <span class="math inline">\(\beta\)</span> diversities.</p>
 </div>
+</div>
+<div class="section level1">
+<h1 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
+</h1>
+<p>A quick <a href="https://ericmarcon.github.io/divent/articles/divent.html">introduction</a> is in <code><a href="articles/divent.html">vignette("divent")</a></code>.</p>
+<p>A full documentation is available online, in the “Articles” section of the web site of the vignette.</p>
+<p>The <a href="https://EricMarcon.github.io/divent/dev/" class="external-link">documentation of the development version</a> is also available.</p>
+<div class="section level2">
+<h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h2>
+<p>Marcon, E. and Herault, B. (2015). entropart: An R Package to Measure and Partition Diversity. <em>Journal of Statistical Software</em>. 67(8): 1-26.</p>
+</div>
+</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
