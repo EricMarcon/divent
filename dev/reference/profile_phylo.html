@@ -9,7 +9,7 @@ against its order."><meta property="og:image" content="https://ericmarcon.github
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,7 +110,7 @@ or an object of class <a href="species_distribution.html">abundances</a> or <a h
 
 
 <dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
-<dd><p>An ultrametric, phylogenetic tree.
+<dd><p>an ultrametric, phylogenetic tree.
 May be an object of class <a href="phylo_divent.html">phylo_divent</a>, <a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a>, <a href="https://rdrr.io/pkg/ade4/man/phylog.html" class="external-link">ade4::phylog</a> or <a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust</a>.</p></dd>
 
 
@@ -123,7 +123,7 @@ May be an object of class <a href="phylo_divent.html">phylo_divent</a>, <a href=
 
 
 <dt id="arg-normalize">normalize<a class="anchor" aria-label="anchor" href="#arg-normalize"></a></dt>
-<dd><p>If <code>TRUE</code>, phylogenetic is normalized: the height of the tree is set to 1.</p></dd>
+<dd><p>if <code>TRUE</code>, phylogenetic is normalized: the height of the tree is set to 1.</p></dd>
 
 
 <dt id="arg-estimator">estimator<a class="anchor" aria-label="anchor" href="#arg-estimator"></a></dt>
@@ -131,48 +131,48 @@ May be an object of class <a href="phylo_divent.html">phylo_divent</a>, <a href=
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
-<dd><p>The level of interpolation or extrapolation.
+<dd><p>the level of interpolation or extrapolation.
 It may be a sample size (an integer) or a sample coverage
 (a number between 0 and 1).
 If not <code>NULL</code>, the asymptotic <code>estimator</code> is ignored.</p></dd>
 
 
 <dt id="arg-probability-estimator">probability_estimator<a class="anchor" aria-label="anchor" href="#arg-probability-estimator"></a></dt>
-<dd><p>A string containing one of the possible estimators
+<dd><p>a string containing one of the possible estimators
 of the probability distribution (see <a href="probabilities.html">probabilities</a>).
 Used only for extrapolation.</p></dd>
 
 
 <dt id="arg-unveiling">unveiling<a class="anchor" aria-label="anchor" href="#arg-unveiling"></a></dt>
-<dd><p>A string containing one of the possible unveiling methods
+<dd><p>a string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
 Used only for extrapolation.</p></dd>
 
 
 <dt id="arg-richness-estimator">richness_estimator<a class="anchor" aria-label="anchor" href="#arg-richness-estimator"></a></dt>
-<dd><p>An estimator of richness to evaluate the total number of species,
-see <a href="div_richness.html">div_richness</a>. Used for interpolation and extrapolation.</p></dd>
+<dd><p>an estimator of richness to evaluate the total number of species,
+see <a href="div_richness.html">div_richness</a>. used for interpolation and extrapolation.</p></dd>
 
 
 <dt id="arg-jack-alpha">jack_alpha<a class="anchor" aria-label="anchor" href="#arg-jack-alpha"></a></dt>
-<dd><p>The risk level, 5% by default, used to optimize the jackknife order.</p></dd>
+<dd><p>the risk level, 5% by default, used to optimize the jackknife order.</p></dd>
 
 
 <dt id="arg-jack-max">jack_max<a class="anchor" aria-label="anchor" href="#arg-jack-max"></a></dt>
-<dd><p>The highest jackknife order allowed. Default is 10.</p></dd>
+<dd><p>the highest jackknife order allowed. Default is 10.</p></dd>
 
 
 <dt id="arg-coverage-estimator">coverage_estimator<a class="anchor" aria-label="anchor" href="#arg-coverage-estimator"></a></dt>
-<dd><p>An estimator of sample coverage used by <a href="coverage.html">coverage</a>.</p></dd>
+<dd><p>an estimator of sample coverage used by <a href="coverage.html">coverage</a>.</p></dd>
 
 
 <dt id="arg-sample-coverage">sample_coverage<a class="anchor" aria-label="anchor" href="#arg-sample-coverage"></a></dt>
-<dd><p>The sample coverage of <code>x</code> calculated elsewhere.
+<dd><p>the sample coverage of <code>x</code> calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.</p></dd>
 
 
 <dt id="arg-as-numeric">as_numeric<a class="anchor" aria-label="anchor" href="#arg-as-numeric"></a></dt>
-<dd><p>If <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
+<dd><p>if <code>TRUE</code>, a number or a numeric vector is returned rather than a tibble.</p></dd>
 
 
 <dt id="arg-n-simulations">n_simulations<a class="anchor" aria-label="anchor" href="#arg-n-simulations"></a></dt>
@@ -194,16 +194,16 @@ Chao2015;textualdivent.</p></dd>
 
 
 <dt id="arg-show-progress">show_progress<a class="anchor" aria-label="anchor" href="#arg-show-progress"></a></dt>
-<dd><p>If TRUE, a progress bar is shown during long computations.</p></dd>
+<dd><p>if TRUE, a progress bar is shown during long computations.</p></dd>
 
 
 <dt id="arg-check-arguments">check_arguments<a class="anchor" aria-label="anchor" href="#arg-check-arguments"></a></dt>
-<dd><p>If <code>TRUE</code>, the function arguments are verified.
+<dd><p>if <code>TRUE</code>, the function arguments are verified.
 Should be set to <code>FALSE</code> to save time when the arguments have been checked elsewhere.</p></dd>
 
 
 <dt id="arg-gamma">gamma<a class="anchor" aria-label="anchor" href="#arg-gamma"></a></dt>
-<dd><p>If <code>TRUE</code>, \(\gamma\) diversity, i.e. diversity of the metacommunity, is computed.</p></dd>
+<dd><p>if <code>TRUE</code>, \(\gamma\) diversity, i.e. diversity of the metacommunity, is computed.</p></dd>
 
 </dl></div>
     <div class="section level2">
