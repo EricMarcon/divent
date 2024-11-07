@@ -28,8 +28,8 @@
 #' alpha <- 40
 #' species_number <- -alpha * log(alpha / (size + alpha))
 #' abundances <- rlseries(species_number, size = 1E5, alpha = 40)
-#' # rCommunity() may be a better choice
-#' autoplot(rcommunity(n = 1, size = 1E4, alpha = 40, distribution = "lseries"))
+#' # rcommunity() may be a better choice here
+#' autoplot(rcommunity(1, size = 1E4, alpha = 40, distribution = "lseries"))
 rlseries <- function(
     n, 
     size, 

@@ -18,7 +18,7 @@ It is a reboot of the _entropart_ package, following the tidyverse manifest and 
 This is a short introduction to its use.
 
 The package allows estimating biodiversity according to the framework based on HCDT entropy, the correction of its estimation-bias [@Grassberger1988; @Chao2003; @Chao2015] and its transformation into equivalent numbers of species [@Hill1973; @Jost2006; @Marcon2014a].
-Estimation of diversity at arbitrary levels of sampling, requiring interpolation or extrapolation [@Chao2014] is available
+Estimation of diversity at arbitrary levels of sampling, requiring interpolation or extrapolation [@Chao2014] is available.
 
 Phylogenetic or functional diversity [@Marcon2014b] can be estimated, considering phyloentropy as the average species-neutral diversity over slices of a phylogenetic or functional tree [@Pavoine2009]. 
 
