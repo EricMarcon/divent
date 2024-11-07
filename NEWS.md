@@ -2,10 +2,16 @@
 
 ## Features
 
-- Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
 - Spatially explicit Simpson's entropy: `ent_sp_simpson()` and `ent_sp_simpsonEnvelope()`
 - Spatially explicit random communities: `rspcommunity()`
 - `species_distribution` methods for `wmppp` and `character` objects.
+
+
+# divent 0.4-4
+
+## Features
+
+- Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
 
 
 # divent 0.3-16
@@ -16,9 +22,6 @@
 - Similarity-based diversity: `ent_similarity()` and `div_similarity()`
 - Rao's quadratic entropy: `ent_rao()`.
 - paracou_6_wmppp dataset.
-
-## TODO
-- Check gamma in accum_() functions.
 
 
 # divent 0.2-5
