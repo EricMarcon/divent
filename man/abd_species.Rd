@@ -13,14 +13,14 @@ abd_sum(abundances, as_numeric = FALSE, check_arguments = TRUE)
 prob_species(species_distribution, check_arguments = TRUE)
 }
 \arguments{
-\item{abundances}{An object of class \link{abundances}.}
+\item{abundances}{an object of class \link{abundances}.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{species_distribution}{An object of class \link{species_distribution}.}
+\item{species_distribution}{an object of class \link{species_distribution}.}
 }
 \value{
 \code{abd_species()} returns a tibble containing the species abundance columns only,

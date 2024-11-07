@@ -31,7 +31,6 @@ NULL
 #'
 #' @returns `NULL`. Called for side effects.
 #' 
-#' @importFrom graphics plot
 #' @export
 plot.species_distribution <- function(
     x, 
@@ -64,7 +63,7 @@ plot.species_distribution <- function(
     s_obs_max <- max(rowSums(abundances > 0))
     
     # Prepare the plot: X and Y ranges
-    graphics::plot(
+    base::plot(
       x = 1:s_obs_max,
       y = seq(from = 1, to = max(abundances), length.out = s_obs_max),
       type = "n",
@@ -167,8 +166,6 @@ plot.species_distribution <- function(
   }
   
 }
-#' @export
-graphics::plot
 
 
 #' @rdname plot.species_distribution

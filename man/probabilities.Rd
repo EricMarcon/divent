@@ -59,11 +59,11 @@ An alternative is "rarefy" to estimate the number of species such that the
 entropy of the asymptotic distribution rarefied to the observed sample size equals
 the actual entropy of the data.}
 
-\item{jack_alpha}{The risk level, 5\% by default, used to optimize the jackknife order.}
+\item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
 
-\item{jack_max}{The highest jackknife order allowed. Default is 10.}
+\item{jack_max}{the highest jackknife order allowed. Default is 10.}
 
-\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+\item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
 \item{q}{The order of diversity. Default is 0 for richness.
 Used only to estimate asymptotic probability distributions when argument
@@ -71,9 +71,9 @@ Used only to estimate asymptotic probability distributions when argument
 fitted so that the entropy of order q of the asymptotic probability distribution
 at the observed sample size equals the actual entropy of the data.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{

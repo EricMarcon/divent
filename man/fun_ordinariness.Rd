@@ -12,14 +12,14 @@ fun_ordinariness(
 )
 }
 \arguments{
-\item{species_distribution}{An object of class \link{species_distribution}.}
+\item{species_distribution}{an object of class \link{species_distribution}.}
 
-\item{similarities}{A similarity matrix, that can be obtained by \link{fun_similarity}.
+\item{similarities}{a similarity matrix, that can be obtained by \link{fun_similarity}.
 Its default value is the identity matrix.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{

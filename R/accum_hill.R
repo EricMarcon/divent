@@ -26,7 +26,7 @@
 #' or an object of class [abundances]  or [probabilities].
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the accumulated entropy
+#' @returns A tibble with the site names, the estimators used and the accumulated entropy
 #' or diversity at each level of sampling effort.
 #'
 #' @references

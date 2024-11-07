@@ -8,7 +8,6 @@
 #'
 #' @returns `NULL`. Called for side effects.
 #' 
-#' @importFrom graphics plot
 #' @export
 #'
 #' @examples

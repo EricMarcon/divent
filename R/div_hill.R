@@ -27,7 +27,7 @@
 #' The number of unobserved species is estimated by the Chao1 estimator (`UnveilC`), 
 #' following \insertCite{Chao2014c;textual}{divent}, or by the iChao1 (`UnveiliC`)
 #' or the jackknife (`UnveilJ`).
-#' The `UnveilJ` correction often has a lower bias but a greater variance 
+#' The `UnveilJ` estimator often has a lower bias but a greater variance 
 #' \insertCite{Marcon2015a}{divent}.
 #' It is a good first choice thanks to the versatility of the jackknife 
 #' estimator of richness.
@@ -40,7 +40,7 @@
 #' not ensure that its abundances are integer values.
 #' Then, classical bias-correction methods do not apply. 
 #' Providing the `sample_coverage` argument allows applying the `ChaoShen` and
-#' `Grassberger` corrections to estimate quite well the entropy.
+#' `Grassberger` estimators to estimate quite well the entropy.
 #' 
 #' Diversity can be estimated at a specified level of interpolation or 
 #' extrapolation, either a chosen sample size or sample coverage 
@@ -52,7 +52,7 @@
 #' or an object of class [abundances]  or [probabilities].
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated diversity.
+#' @returns A tibble with the site names, the estimators used and the estimated diversity.
 #'
 #' @references
 #' \insertAllCited{}
@@ -194,4 +194,49 @@ div_hill.species_distribution <- function(
   )
 
   return(the_diversity)
+}
+
+
+#' @rdname div_hill
+#'
+#' @export
+div_hill.wmppp  <- function(
+    x, 
+    q = 1, 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Holste"),
+    level = NULL, 
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    sample_coverage = NULL,
+    as_numeric = FALSE,
+    ...,
+    check_arguments = TRUE) {
+  
+  # Table counts the number of individuals per species.
+  abd <- as.numeric(table(x$marks$PointType))
+  # Call the numeric method
+  return(
+    div_hill.numeric(
+      abd,
+      q = q,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
+      sample_coverage = sample_coverage,
+      as_numeric = as_numeric,
+      ...,
+      check_arguments = check_arguments
+    )
+  )
 }

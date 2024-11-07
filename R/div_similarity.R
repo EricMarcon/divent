@@ -21,11 +21,8 @@
 #' `similarities` matrix: species are assumed to be in the same order.
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated diversity.
+#' @returns A tibble with the site names, the estimators used and the estimated diversity.
 #'
-#' @references
-#' \insertAllCited{}
-#' 
 #' @examples
 #' # Similarity matrix
 #' Z <- fun_similarity(paracou_6_fundist)

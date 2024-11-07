@@ -17,7 +17,7 @@
 #' @examples
 #' autoplot(profile_hill(paracou_6_abd))
 #'
-#' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
+#' @returns A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
 #' 
 #' @references

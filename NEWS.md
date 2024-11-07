@@ -1,8 +1,11 @@
-# divent 0.4-4
+# divent 0.4-99.9005
 
 ## Features
 
 - Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
+- Spatially explicit Simpson's entropy: `ent_sp_simpson()` and `ent_sp_simpsonEnvelope()`
+- Spatially explicit random communities: `rspcommunity()`
+- `species_distribution` methods for `wmppp` and `character` objects.
 
 
 # divent 0.3-16

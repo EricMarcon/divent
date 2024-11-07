@@ -20,7 +20,7 @@
 #' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated entropy.
+#' @returns A tibble with the site names, the estimators used and the estimated entropy.
 #'
 #' @references
 #' \insertAllCited{}

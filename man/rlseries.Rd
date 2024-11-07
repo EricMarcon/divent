@@ -4,18 +4,18 @@
 \alias{rlseries}
 \title{Log-Series Distribution}
 \usage{
-rlseries(n, size, alpha, show_progress = TRUE, check_arguments = TRUE)
+rlseries(n, size, fisher_alpha, show_progress = TRUE, check_arguments = TRUE)
 }
 \arguments{
 \item{n}{Number of observations.}
 
 \item{size}{The size of the distribution.}
 
-\item{alpha}{Fisher's \eqn{\alpha}.}
+\item{fisher_alpha}{Fisher's \eqn{\alpha}.}
 
-\item{show_progress}{If TRUE, a progress bar is shown during long computations.}
+\item{show_progress}{if TRUE, a progress bar is shown during long computations.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
@@ -37,11 +37,11 @@ then an error is raised.
 \examples{
 # Generate a community made of 10000 individuals with alpha=40
 size <- 1E4
-alpha <- 40
-species_number <- -alpha * log(alpha / (size + alpha))
-abundances <- rlseries(species_number, size = 1E5, alpha = 40)
-# rCommunity() may be a better choice
-autoplot(rcommunity(n = 1, size = 1E4, alpha = 40, distribution = "lseries"))
+fisher_alpha <- 40
+species_number <- fisher_alpha * log(1 + size / fisher_alpha)
+abundances <- rlseries(species_number, size = 1E5, fisher_alpha = 40)
+# rcommunity() may be a better choice here
+autoplot(rcommunity(1, size = 1E4, fisher_alpha = 40, distribution = "lseries"))
 }
 \references{
 \insertAllCited{}

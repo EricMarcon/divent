@@ -16,7 +16,7 @@
 #' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated entropy.
+#' @returns A tibble with the site names, the estimators used and the estimated entropy.
 #'
 #' @references
 #' \insertAllCited{}
@@ -152,7 +152,7 @@ ent_tsallis.numeric <- function(
       cp <- sample_coverage * abd / sample_size
       chao_shen <- -sum(cp^q * ln_q(cp, q = q) /(1 - (1 - cp)^sample_size))
       if (estimator == "Marcon") {
-        # Calculate Grassberger's correction
+        # Calculate Grassberger's estimator
         if (q == 1) {
           grassberger <- sum(
             abd / sample_size * (log(sample_size) - digamma(abd) - 
@@ -716,4 +716,49 @@ ent_tsallis.species_distribution <- function(
       )
     )
   }
+}
+
+
+#' @rdname ent_tsallis
+#'
+#' @export
+ent_tsallis.wmppp <- function(
+    x, 
+    q = 1, 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Holste"),
+    level = NULL, 
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    sample_coverage = NULL,
+    as_numeric = FALSE,
+    ...,
+    check_arguments = TRUE) {
+  
+  # Table counts the number of individuals per species.
+  abd <- as.numeric(table(x$marks$PointType))
+  # Call the numeric method
+  return(
+    ent_tsallis.numeric(
+      abd,
+      q = q,
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      coverage_estimator = coverage_estimator,
+      sample_coverage = sample_coverage,
+      as_numeric = as_numeric,
+      ...,
+      check_arguments = check_arguments
+    )
+  )
 }

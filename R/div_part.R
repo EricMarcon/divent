@@ -11,7 +11,7 @@
 #' @inheritParams check_divent_args
 #' @param estimator An estimator of diversity.
 #'
-#' @return A tibble with diversity values at each scale.
+#' @returns A tibble with diversity values at each scale.
 #' @export
 #' 
 #' @references

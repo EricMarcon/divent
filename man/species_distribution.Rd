@@ -6,17 +6,26 @@
 \alias{as_species_distribution.numeric}
 \alias{as_species_distribution.matrix}
 \alias{as_species_distribution.data.frame}
+\alias{as_species_distribution.wmppp}
+\alias{as_species_distribution.character}
+\alias{as_species_distribution.factor}
 \alias{is_species_distribution}
 \alias{as_probabilities}
 \alias{as_probabilities.numeric}
 \alias{as_probabilities.matrix}
 \alias{as_probabilities.data.frame}
+\alias{as_probabilities.wmppp}
+\alias{as_probabilities.character}
+\alias{as_probabilities.factor}
 \alias{is_probabilities}
 \alias{abundances}
 \alias{as_abundances}
 \alias{as_abundances.numeric}
 \alias{as_abundances.matrix}
 \alias{as_abundances.data.frame}
+\alias{as_abundances.wmppp}
+\alias{as_abundances.character}
+\alias{as_abundances.factor}
 \alias{is_abundances}
 \alias{as.matrix.species_distribution}
 \alias{as.double.species_distribution}
@@ -39,6 +48,12 @@ as_species_distribution(x, ...)
 
 \method{as_species_distribution}{data.frame}(x, ..., check_arguments = TRUE)
 
+\method{as_species_distribution}{wmppp}(x, ..., check_arguments = TRUE)
+
+\method{as_species_distribution}{character}(x, ..., check_arguments = TRUE)
+
+\method{as_species_distribution}{factor}(x, ..., check_arguments = TRUE)
+
 is_species_distribution(x)
 
 as_probabilities(x, ...)
@@ -48,6 +63,12 @@ as_probabilities(x, ...)
 \method{as_probabilities}{matrix}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 \method{as_probabilities}{data.frame}(x, ..., check_arguments = TRUE)
+
+\method{as_probabilities}{wmppp}(x, ..., check_arguments = TRUE)
+
+\method{as_probabilities}{character}(x, ..., check_arguments = TRUE)
+
+\method{as_probabilities}{factor}(x, ..., check_arguments = TRUE)
 
 is_probabilities(x)
 
@@ -74,6 +95,12 @@ as_abundances(x, ...)
 
 \method{as_abundances}{data.frame}(x, ..., check_arguments = TRUE)
 
+\method{as_abundances}{wmppp}(x, ..., check_arguments = TRUE)
+
+\method{as_abundances}{character}(x, ..., check_arguments = TRUE)
+
+\method{as_abundances}{factor}(x, ..., check_arguments = TRUE)
+
 is_abundances(x)
 
 \method{as.matrix}{species_distribution}(x, use.names = TRUE, ...)
@@ -87,9 +114,9 @@ is_abundances(x)
 
 \item{names}{The names of the species distributions.}
 
-\item{weights}{The weights of the sites of the species distributions.}
+\item{weights}{the weights of the sites of the species distributions.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
 \item{...}{Unused.}
@@ -123,11 +150,17 @@ All other column names are considered as species names.
 \code{species_distribution} objects include \code{abundances} and \code{probabilities}
 objects.
 
-\code{as_species_distribution()}, \code{as_abundances()}  and \code{as_probabilities} format
+\code{species_distribution()} creates a \code{species_distribution} object from a vector
+or a matrix or a dataframe.
+
+\code{as_species_distribution()}, \code{as_abundances()} and \code{as_probabilities} format
 the numeric, matrix or dataframe \code{x} so that appropriate
 versions of community functions (generic methods such as \link{plot} or
 \link{div_richness}) are applied.
 Abundance values are rounded (by default) to the nearest integer.
+They also accept a \link[dbmss:wmppp]{dbmss::wmppp} objects,
+i.e. a weighted, marked planar point pattern and count the abundances of
+point types, character and factor objects.
 
 \code{as_probabilities()} normalizes the vector \code{x} so that it sums to 1. It gives
 the same output as \code{probabilities()} with \code{estimator = "naive"}.
@@ -142,8 +175,7 @@ class(paracou_6_abd)
 is_species_distribution(paracou_6_abd)
 # Whittaker plot fitted by a log-normal distribution
 autoplot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
+# Character vectors
+as_abundances(c("A", "C", "B", "C"))
 
-}
-\references{
-\insertAllCited{}
 }

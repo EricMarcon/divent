@@ -10,7 +10,7 @@
 #' @inheritParams check_divent_args
 #' @param x An object of class "phylo_divent".
 #'
-#' @return `as_phylo_divent` returns a phylogenetic tree that is an object of 
+#' @returns `as_phylo_divent` returns a phylogenetic tree that is an object of 
 #' class "phylo_divent".
 #'
 #' @examples

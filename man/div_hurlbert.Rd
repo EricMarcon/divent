@@ -4,6 +4,7 @@
 \alias{div_hurlbert}
 \alias{div_hurlbert.numeric}
 \alias{div_hurlbert.species_distribution}
+\alias{div_hurlbert.wmppp}
 \title{Hurlbert Diversity of a Community}
 \usage{
 div_hurlbert(x, k = 1, ...)
@@ -24,20 +25,29 @@ div_hurlbert(x, k = 1, ...)
   ...,
   check_arguments = TRUE
 )
+
+\method{div_hurlbert}{wmppp}(
+  x,
+  k = 2,
+  estimator = c("Hurlbert", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+)
 }
 \arguments{
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
 or an object of class \link{abundances}  or \link{probabilities}.}
 
-\item{k}{The order of Hurlbert's diversity.}
+\item{k}{the order of Hurlbert's diversity.}
 
 \item{...}{Unused.}
 
 \item{estimator}{An estimator of asymptotic diversity.}
 
-\item{as_numeric}{If \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
+\item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{

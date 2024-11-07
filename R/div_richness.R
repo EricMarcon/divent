@@ -4,7 +4,7 @@
 #' Several estimators are available to deal with incomplete sampling.
 #' 
 #' Bias correction requires the number of individuals. 
-#' Chao's correction techniques are from \insertCite{Chao2014;textual}{divent} 
+#' Chao's estimation techniques are from \insertCite{Chao2014;textual}{divent} 
 #' and \insertCite{Chiu2014a;textual}{divent}. 
 #' The Jackknife estimator is calculated by a straight adaptation of the code 
 #' by Ji-Ping Wang (jackknife in package **SPECIES**). 
@@ -29,7 +29,7 @@
 #' @param ... Unused.
 #' The metacommunity if built by combining the community abundances with respect to their weight.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated numbers of species.
+#' @returns A tibble with the site names, the estimators used and the estimated numbers of species.
 #'
 #' @references
 #' \insertAllCited{}
@@ -509,4 +509,41 @@ div_richness.species_distribution <- function(
       )
     ) 
   }
+}
+
+
+#' @rdname div_richness
+#'
+#' @export
+div_richness.wmppp <- function(
+    x, 
+    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+    jack_alpha  = 0.05, 
+    jack_max = 10, 
+    level = NULL, 
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    as_numeric = FALSE,
+    ..., 
+    check_arguments = TRUE) {
+  
+  # Table counts the number of individuals per species.
+  abd <- as.numeric(table(x$marks$PointType))
+  # Call the numeric method
+  return(
+    div_richness.numeric(
+      abd,
+      estimator = estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max, 
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      coverage_estimator = coverage_estimator,
+      as_numeric = as_numeric,
+      ...,
+      check_arguments = check_arguments
+    )
+  )
 }

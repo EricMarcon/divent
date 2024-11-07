@@ -20,7 +20,7 @@
 #' # Profile
 #' profile_similarity(paracou_6_abd, similarities = Z, q = 2)
 #'
-#' @return A tibble with the site names, the estimators used and the estimated diversity at each order.
+#' @returns A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
 #' 
 #' @references

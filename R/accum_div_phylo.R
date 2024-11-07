@@ -26,7 +26,7 @@
 #' or an object of class [abundances]  or [probabilities].
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the accumulated entropy
+#' @returns A tibble with the site names, the estimators used and the accumulated entropy
 #' or diversity at each level of sampling effort.
 #'
 #' @references
@@ -550,7 +550,7 @@ accum_div_phylo.abundances <- function(
 #' @param x The species distribution.
 #' @param levels The levels of interpolation and extrapolation.
 #'
-#' @return A tibble. Columns are "site", "level" and "entropy".
+#' @returns A tibble. Columns are "site", "level" and "entropy".
 #' @noRd
 #'
 ent.tibble <- function(ent.matrix, x, levels) {

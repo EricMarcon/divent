@@ -17,10 +17,13 @@
 #' [div_richness] to evaluate the total number of species in [probabilities]. 
 #' Used only for extrapolation.
 #'
-#' @return A two-column tibble. The first column contains the number of observations, 
+#' @returns A two-column tibble. The first column contains the number of observations, 
 #' the second one the number of species observed this number of times.
 #' @export
 #'
+#' @references
+#' \insertAllCited{}
+#' 
 #' @examples
 #' abd_freq_count(paracou_6_abd[1, -(1:2)])
 abd_freq_count <- function (

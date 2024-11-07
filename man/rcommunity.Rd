@@ -2,6 +2,7 @@
 % Please edit documentation in R/rcommunity.R
 \name{rcommunity}
 \alias{rcommunity}
+\alias{rspcommunity}
 \title{Random communities}
 \usage{
 rcommunity(
@@ -14,8 +15,34 @@ rcommunity(
   distribution = c("lnorm", "lseries", "geom", "bstick"),
   sd_lnorm = 1,
   prob_geom = 0.1,
-  alpha_lseries = 40,
+  fisher_alpha = 40,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  check_arguments = TRUE
+)
+
+rspcommunity(
+  n,
+  size = sum(abd),
+  prob = NULL,
+  abd = NULL,
+  bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
+  species_number = 300,
+  distribution = c("lnorm", "lseries", "geom", "bstick"),
+  sd_lnorm = 1,
+  prob_geom = 0.1,
+  fisher_alpha = 40,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  spatial = c("Binomial", "Thomas"),
+  thomas_scale = 0.2,
+  mu = 10,
+  win = spatstat.geom::owin(),
+  species_names = NULL,
+  weight_distribution = c("Uniform", "Weibull", "Exponential"),
+  w_min = 1,
+  w_max = 1,
+  w_mean = 20,
+  weibull_scale = 20,
+  weibull_shape = 2,
   check_arguments = TRUE
 )
 }
@@ -45,21 +72,60 @@ May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 \item{sd_lnorm}{The simulated log-normal distribution standard deviation.
 This is the standard deviation on the log scale.}
 
-\item{prob_geom}{The proportion of ressources taken by successive species
+\item{prob_geom}{The proportion of resources taken by successive species
 of the geometric distribution.}
 
-\item{alpha_lseries}{Fisher's alpha in the log-series distribution.}
+\item{fisher_alpha}{Fisher's \eqn{\alpha} in the log-series distribution.}
 
-\item{coverage_estimator}{An estimator of sample coverage used by \link{coverage}.}
+\item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
-\item{check_arguments}{If \code{TRUE}, the function arguments are verified.
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+
+\item{spatial}{The spatial distribution of points.
+May be "Binomial" (a completely random point pattern except for its fixed number of points) or
+"Thomas" for a clustered point pattern with parameters \code{scale} and \code{mu}.}
+
+\item{thomas_scale}{In Thomas point patterns, the standard deviation of random displacement
+(along each coordinate axis) of a point from its cluster center.}
+
+\item{mu}{In Thomas point patterns, the mean number of points per cluster.
+The intensity of the Poisson process of cluster centers is calculated as
+the number of points (\code{size}) per area divided by \code{mu}.}
+
+\item{win}{The window containing the point pattern. It is an \link[spatstat.geom:owin]{spatstat.geom::owin} object.}
+
+\item{species_names}{A vector of characters or of factors containing the possible species names.}
+
+\item{weight_distribution}{The distribution of point weights,
+that may be for instance the size of the trees in a forest community.
+By default, all weight are 1.
+May be "uniform" for a uniform distribution between \code{w_min} and \code{w_max},
+"weibull" with parameters \code{w_min}, \code{weibull_scale} and \code{shape} or
+"exponential" with parameter \code{w_mean}.}
+
+\item{w_min}{The minimum weight in a uniform or Weibull distribution.}
+
+\item{w_max}{The maximum weight in a uniform distribution.}
+
+\item{w_mean}{The mean weight in an exponential distribution
+(i.e. the negative of the inverse of the decay rate).}
+
+\item{weibull_scale}{The scale parameter in a Weibull distribution.}
+
+\item{weibull_shape}{The shape parameter in a Weibull distribution.}
 }
 \value{
-An object of class \link{abundances}.
+\code{rcommunity()} returns an object of class \link{abundances}.
+
+\code{rspcommunity()} returns either a spatialized community,
+which is a \link[dbmss:wmppp]{dbmss::wmppp} object , with \code{PointType}
+values as species names if \code{n}=1 or an object of class ppplist
+(see \link[spatstat.geom:solist]{spatstat.geom::solist})  if \code{n}>1.
 }
 \description{
-Draw random communities according to a probability distribution.
+\code{rcommunity()} draws random communities according to a probability distribution.
+\code{rspcommunity()} extends it by spatializing the random communities.
 }
 \details{
 Communities of fixed \code{size} are drawn in a multinomial distribution according
@@ -77,21 +143,34 @@ species follow a geometric distribution.
 Alternatively, the probabilities may be drawn following a classical
 distribution: either lognormal ("lnorm")  \insertCite{Preston1948}{divent}
 with given standard deviation (\code{sd_lnorm}; note that the mean is actually
-a normalizing constant. Its values is set equal to 0 for the simulation of
+a normalizing constant. Its value is set equal to 0 for the simulation of
 the normal distribution of unnormalized log-abundances), log-series ("lseries")
 \insertCite{Fisher1943}{divent} with parameter \code{alpha}, geometric
-("geom") one \insertCite{Motomura1932}{divent} with parameter \code{prob_geom},
+("geom") \insertCite{Motomura1932}{divent} with parameter \code{prob_geom},
 or broken stick ("bstick") \insertCite{MacArthur1957}{divent}.
 The number of simulated species is fixed by \code{species_number}, except for
-"lseries" where it is obtained from \code{alpha_lseries} and \code{size}:
-\eqn{S=\alpha \ln(1 + size / \alpha)}.
+"lseries" where it is obtained from \code{alpha} and \code{size}:
+\eqn{S = \alpha \ln(1 + size / \alpha)}.
+Note that the probabilities are drawn once only.
+If the number of communities to draw, \code{n}, is greater than 1, then they are
+drawn in a multinomial distribution following these probabilities.
 
 Log-normal, log-series and broken-stick distributions are stochastic.
 The geometric distribution is completely determined by its parameters.
+
+Spatialized communities include the location of individuals in a window.
 }
 \examples{
 # Generate a community made of 100000 individuals among 300 species and fit it
 abundances <- rcommunity(n = 1, size = 1E5, 
   species_number = 300, distribution = "lnorm")
 autoplot(abundances)
+X <- rspcommunity(1, size = 30, species_number = 5)
+autoplot(X)
+
+}
+\references{
+\insertAllCited{}
+
+\insertAllCited{}
 }

@@ -18,7 +18,7 @@
 #' or an object of class [abundances]  or [probabilities].
 #' @param ... Unused.
 #'
-#' @return A tibble with the site names, the estimators used and the estimated diversity.
+#' @returns A tibble with the site names, the estimators used and the estimated diversity.
 #'
 #' @references
 #' \insertAllCited{}
@@ -110,4 +110,31 @@ div_hurlbert.species_distribution <- function(
   )
 
   return(the_diversity)
+}
+
+
+#' @rdname div_hurlbert
+#'
+#' @export
+div_hurlbert.wmppp <- function(
+    x, 
+    k = 2, 
+    estimator = c("Hurlbert", "naive"),
+    as_numeric = FALSE,
+    ...,
+    check_arguments = TRUE) {
+
+  # Table counts the number of individuals per species.
+  abd <- as.numeric(table(x$marks$PointType))
+  # Call the numeric method
+  return(
+    div_hurlbert.numeric(
+      abd, 
+      k = k, 
+      estimator = estimator,
+      as_numeric = as_numeric,
+      ...,
+      check_arguments = check_arguments
+    )
+  )
 }
