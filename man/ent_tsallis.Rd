@@ -4,7 +4,6 @@
 \alias{ent_tsallis}
 \alias{ent_tsallis.numeric}
 \alias{ent_tsallis.species_distribution}
-\alias{ent_tsallis.wmppp}
 \title{Tsallis Entropy of a Community}
 \usage{
 ent_tsallis(x, q = 1, ...)
@@ -40,24 +39,6 @@ ent_tsallis(x, q = 1, ...)
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
-  ...,
-  check_arguments = TRUE
-)
-
-\method{ent_tsallis}{wmppp}(
-  x,
-  q = 1,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
-    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
-  level = NULL,
-  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-  unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-  jack_alpha = 0.05,
-  jack_max = 10,
-  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-  sample_coverage = NULL,
-  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

@@ -4,7 +4,6 @@
 \alias{ent_simpson}
 \alias{ent_simpson.numeric}
 \alias{ent_simpson.species_distribution}
-\alias{ent_simpson.wmppp}
 \title{Simpson's Entropy of a Community}
 \usage{
 ent_simpson(x, ...)
@@ -37,22 +36,6 @@ ent_simpson(x, ...)
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
-  ...,
-  check_arguments = TRUE
-)
-
-\method{ent_simpson}{wmppp}(
-  x,
-  estimator = c("Lande", "UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
-  level = NULL,
-  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-  unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
-  jack_alpha = 0.05,
-  jack_max = 10,
-  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

@@ -4,7 +4,6 @@
 \alias{div_hill}
 \alias{div_hill.numeric}
 \alias{div_hill.species_distribution}
-\alias{div_hill.wmppp}
 \title{Hill number of a Community}
 \usage{
 div_hill(x, q = 1, ...)
@@ -40,24 +39,6 @@ div_hill(x, q = 1, ...)
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
-  ...,
-  check_arguments = TRUE
-)
-
-\method{div_hill}{wmppp}(
-  x,
-  q = 1,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
-    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
-  level = NULL,
-  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-  unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
-  jack_alpha = 0.05,
-  jack_max = 10,
-  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-  sample_coverage = NULL,
-  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
