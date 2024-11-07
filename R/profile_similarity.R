@@ -48,13 +48,6 @@ profile_similarity <- function(
 #' @param estimator An estimator of entropy. 
 #' @param n_simulations The number of simulations used to estimate the confidence envelope of the profile.
 #' @param alpha The risk level, 5% by default, of the confidence envelope of the profile.
-#' @param bootstrap The method used to obtain the probabilities to generate 
-#' bootstrapped communities from observed abundances. 
-#' If "Marcon2012", the probabilities are simply the abundances divided by the total
-#' number of individuals \insertCite{Marcon2012a}{divent}. 
-#' If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used 
-#' (see [as_probabilities]) following \insertCite{Chao2013;textual}{divent} or 
-#' \insertCite{Chao2015;textual}{divent}.
 #' 
 #' @export
 profile_similarity.numeric <- function(

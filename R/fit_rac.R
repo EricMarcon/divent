@@ -37,9 +37,6 @@ fit_rac <- function(x, ...) {
 
 #' @rdname fit_rac
 #'
-#' @param distribution The distribution of species abundances.
-#' May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or 
-#' "bstick" (broken stick).
 #' 
 #' @export
 fit_rac.numeric <- function(

@@ -53,7 +53,7 @@ Default is "isotropic".}
 
 \item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
-\item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}}
+\item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}.}
 
 \item{estimator}{an estimator of asymptotic entropy, diversity or richness.}
 
@@ -115,6 +115,26 @@ Used only for extrapolation.}
 
 \item{X}{a spatialized community
 (A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
+
+\item{bootstrap}{The method used to obtain the probabilities to generate
+bootstrapped communities from observed abundances.
+If "Marcon2012", the probabilities are simply the abundances divided by the total
+number of individuals \insertCite{Marcon2012a}{divent}.
+If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
+(see \link{as_probabilities}) following \insertCite{Chao2013;textual}{divent} or
+\insertCite{Chao2015;textual}{divent}.}
+
+\item{distribution}{The distribution of species abundances.
+May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
+"bstick" (broken stick).}
+
+\item{fisher_alpha}{Fisher's \eqn{\alpha} in the log-series distribution.}
+
+\item{n}{the number of observations.}
+
+\item{size}{The number of individuals to draw in each community.}
+
+\item{species_number}{The number of species.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.

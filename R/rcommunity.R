@@ -42,29 +42,16 @@
 #' Point weights, that may be for instance the size of the trees in a forest
 #' community, can be uniform, follow a Weibull or a negative exponential distribution.
 #' The latter describe well the diameter distribution of trees in a forest
-#' \insertCite{Rennolls1985;Turner2004}{divent}.
+#' \insertCite{Rennolls1985,Turner2004}{divent}.
 #'
 #' @inheritParams check_divent_args
-#' @param n The number of communities to draw.
-#' @param size The number of individuals to draw in each community.
-#' @param prob A numeric vector containing probabilities.
-#' @param abd A numeric vector containing abundances.
-#' @param bootstrap The method used to obtain the probabilities to generate 
-#' bootstrapped communities from observed abundances. 
-#' If "Marcon2012", the probabilities are simply the abundances divided by the total
-#' number of individuals \insertCite{Marcon2012a}{divent}. 
-#' If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used 
-#' (see [as_probabilities]) following\insertCite{Chao2013;textual}{divent} or 
-#' \insertCite{Chao2015;textual}{divent}.
-#' @param species_number The number of species.
-#' @param distribution The distribution of species abundances.
-#' May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or 
-#' "bstick" (broken stick).
-#' @param sd_lnorm The simulated log-normal distribution standard deviation. 
+#' @param n the number of communities to draw.
+#' @param prob a numeric vector containing probabilities.
+#' @param abd a numeric vector containing abundances.
+#' @param sd_lnorm the simulated log-normal distribution standard deviation. 
 #' This is the standard deviation on the log scale.
-#' @param prob_geom The proportion of resources taken by successive species 
+#' @param prob_geom the proportion of resources taken by successive species 
 #' of the geometric distribution.
-#' @param fisher_alpha Fisher's \eqn{\alpha} in the log-series distribution.
 #' 
 #' @name rcommunity
 #' @references
@@ -181,29 +168,29 @@ rcommunity <- function(
 
 
 #' @rdname rcommunity
-#' @param spatial The spatial distribution of points. 
+#' @param spatial the spatial distribution of points. 
 #' May be "Binomial" (a completely random point pattern except for its fixed number of points) or 
 #' "Thomas" for a clustered point pattern with parameters `scale` and `mu`.
-#' @param thomas_scale In Thomas point patterns, the standard deviation of random displacement 
+#' @param thomas_scale in Thomas point patterns, the standard deviation of random displacement 
 #' (along each coordinate axis) of a point from its cluster center.
-#' @param thomas_mu In Thomas point patterns, the mean number of points per cluster.
+#' @param thomas_mu in Thomas point patterns, the mean number of points per cluster.
 #' The intensity of the Poisson process of cluster centers is calculated as 
 #' the number of points (`size`) per area divided by `thomas_mu`.
-#' @param win The window containing the point pattern. 
+#' @param win the window containing the point pattern. 
 #' It is an [spatstat.geom::owin] object.
 #' Default is a 1x1 square.
-#' @param species_names A vector of characters or of factors containing the possible species names.
-#' @param weight_distribution The distribution of point weights.
+#' @param species_names a vector of characters or of factors containing the possible species names.
+#' @param weight_distribution the distribution of point weights.
 #' By default, all weight are 1.
 #' May be "uniform" for a uniform distribution between `w_min` and `w_max`, 
 #' "weibull" with parameters `w_min`, `weibull_scale` and `shape` or
 #' "exponential" with parameter `w_mean`.
-#' @param w_min The minimum weight in a uniform or Weibull distribution.
-#' @param w_max The maximum weight in a uniform distribution.
-#' @param w_mean The mean weight in an exponential distribution 
+#' @param w_min the minimum weight in a uniform or Weibull distribution.
+#' @param w_max the maximum weight in a uniform distribution.
+#' @param w_mean the mean weight in an exponential distribution 
 #' (i.e. the negative of the inverse of the decay rate).
-#' @param weibull_scale The scale parameter in a Weibull distribution.
-#' @param weibull_shape The shape parameter in a Weibull distribution.
+#' @param weibull_scale the scale parameter in a Weibull distribution.
+#' @param weibull_shape the shape parameter in a Weibull distribution.
 #'
 #' @return `rspcommunity()` returns either a spatialized community, 
 #' which is a [dbmss::wmppp] object , with `PointType` 

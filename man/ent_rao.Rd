@@ -36,7 +36,7 @@ or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{...}{Unused.}
 
-\item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}}
+\item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}.}
 
 \item{tree}{an ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}

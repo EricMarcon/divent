@@ -7,11 +7,11 @@
 rlseries(n, size, fisher_alpha, show_progress = TRUE, check_arguments = TRUE)
 }
 \arguments{
-\item{n}{Number of observations.}
+\item{n}{the number of observations.}
 
 \item{size}{The size of the distribution.}
 
-\item{fisher_alpha}{Fisher's \eqn{\alpha}.}
+\item{fisher_alpha}{Fisher's \eqn{\alpha} in the log-series distribution.}
 
 \item{show_progress}{if TRUE, a progress bar is shown during long computations.}
 

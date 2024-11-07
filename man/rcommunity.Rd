@@ -34,7 +34,7 @@ rspcommunity(
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   spatial = c("Binomial", "Thomas"),
   thomas_scale = 0.2,
-  mu = 10,
+  thomas_mu = 10,
   win = spatstat.geom::owin(),
   species_names = NULL,
   weight_distribution = c("Uniform", "Weibull", "Exponential"),
@@ -47,20 +47,20 @@ rspcommunity(
 )
 }
 \arguments{
-\item{n}{The number of communities to draw.}
+\item{n}{the number of communities to draw.}
 
 \item{size}{The number of individuals to draw in each community.}
 
-\item{prob}{A numeric vector containing probabilities.}
+\item{prob}{a numeric vector containing probabilities.}
 
-\item{abd}{A numeric vector containing abundances.}
+\item{abd}{a numeric vector containing abundances.}
 
 \item{bootstrap}{The method used to obtain the probabilities to generate
 bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
 number of individuals \insertCite{Marcon2012a}{divent}.
 If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
-(see \link{as_probabilities}) following\insertCite{Chao2013;textual}{divent} or
+(see \link{as_probabilities}) following \insertCite{Chao2013;textual}{divent} or
 \insertCite{Chao2015;textual}{divent}.}
 
 \item{species_number}{The number of species.}
@@ -69,10 +69,10 @@ If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
 May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 "bstick" (broken stick).}
 
-\item{sd_lnorm}{The simulated log-normal distribution standard deviation.
+\item{sd_lnorm}{the simulated log-normal distribution standard deviation.
 This is the standard deviation on the log scale.}
 
-\item{prob_geom}{The proportion of resources taken by successive species
+\item{prob_geom}{the proportion of resources taken by successive species
 of the geometric distribution.}
 
 \item{fisher_alpha}{Fisher's \eqn{\alpha} in the log-series distribution.}
@@ -82,38 +82,39 @@ of the geometric distribution.}
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
-\item{spatial}{The spatial distribution of points.
+\item{spatial}{the spatial distribution of points.
 May be "Binomial" (a completely random point pattern except for its fixed number of points) or
 "Thomas" for a clustered point pattern with parameters \code{scale} and \code{mu}.}
 
-\item{thomas_scale}{In Thomas point patterns, the standard deviation of random displacement
+\item{thomas_scale}{in Thomas point patterns, the standard deviation of random displacement
 (along each coordinate axis) of a point from its cluster center.}
 
-\item{mu}{In Thomas point patterns, the mean number of points per cluster.
+\item{thomas_mu}{in Thomas point patterns, the mean number of points per cluster.
 The intensity of the Poisson process of cluster centers is calculated as
-the number of points (\code{size}) per area divided by \code{mu}.}
+the number of points (\code{size}) per area divided by \code{thomas_mu}.}
 
-\item{win}{The window containing the point pattern. It is an \link[spatstat.geom:owin]{spatstat.geom::owin} object.}
+\item{win}{the window containing the point pattern.
+It is an \link[spatstat.geom:owin]{spatstat.geom::owin} object.
+Default is a 1x1 square.}
 
-\item{species_names}{A vector of characters or of factors containing the possible species names.}
+\item{species_names}{a vector of characters or of factors containing the possible species names.}
 
-\item{weight_distribution}{The distribution of point weights,
-that may be for instance the size of the trees in a forest community.
+\item{weight_distribution}{the distribution of point weights.
 By default, all weight are 1.
 May be "uniform" for a uniform distribution between \code{w_min} and \code{w_max},
 "weibull" with parameters \code{w_min}, \code{weibull_scale} and \code{shape} or
 "exponential" with parameter \code{w_mean}.}
 
-\item{w_min}{The minimum weight in a uniform or Weibull distribution.}
+\item{w_min}{the minimum weight in a uniform or Weibull distribution.}
 
-\item{w_max}{The maximum weight in a uniform distribution.}
+\item{w_max}{the maximum weight in a uniform distribution.}
 
-\item{w_mean}{The mean weight in an exponential distribution
+\item{w_mean}{the mean weight in an exponential distribution
 (i.e. the negative of the inverse of the decay rate).}
 
-\item{weibull_scale}{The scale parameter in a Weibull distribution.}
+\item{weibull_scale}{the scale parameter in a Weibull distribution.}
 
-\item{weibull_shape}{The shape parameter in a Weibull distribution.}
+\item{weibull_shape}{the shape parameter in a Weibull distribution.}
 }
 \value{
 \code{rcommunity()} returns an object of class \link{abundances}.
@@ -158,7 +159,16 @@ drawn in a multinomial distribution following these probabilities.
 Log-normal, log-series and broken-stick distributions are stochastic.
 The geometric distribution is completely determined by its parameters.
 
-Spatialized communities include the location of individuals in a window.
+Spatialized communities include the location of individuals in a window,
+in a a \link[dbmss:wmppp]{dbmss::wmppp} object.
+Several point processes are available, namely binomial (points are uniformly
+distributed in the window) and \insertCite{Thomas1949;textual}{divent}, which
+is clustered.
+
+Point weights, that may be for instance the size of the trees in a forest
+community, can be uniform, follow a Weibull or a negative exponential distribution.
+The latter describe well the diameter distribution of trees in a forest
+\insertCite{Rennolls1985,Turner2004}{divent}.
 }
 \examples{
 # Generate a community made of 100000 individuals among 300 species and fit it
