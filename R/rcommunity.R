@@ -20,11 +20,11 @@
 #' with given standard deviation (`sd_lnorm`; note that the mean is actually 
 #' a normalizing constant. Its value is set equal to 0 for the simulation of 
 #' the normal distribution of unnormalized log-abundances), log-series ("lseries")
-#' \insertCite{Fisher1943}{divent} with parameter `alpha`, geometric 
+#' \insertCite{Fisher1943}{divent} with parameter `fisher_alpha`, geometric 
 #' ("geom") \insertCite{Motomura1932}{divent} with parameter `prob_geom`, 
 #' or broken stick ("bstick") \insertCite{MacArthur1957}{divent}. 
 #' The number of simulated species is fixed by `species_number`, except for 
-#' "lseries" where it is obtained from `alpha` and `size`: 
+#' "lseries" where it is obtained from `fisher_alpha` and `size`: 
 #' \eqn{S = \alpha \ln(1 + size / \alpha)}.
 #' Note that the probabilities are drawn once only.
 #' If the number of communities to draw, `n`, is greater than 1, then they are
