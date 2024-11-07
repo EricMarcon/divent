@@ -8,17 +8,21 @@ check_divent_args(
   abundances = NULL,
   alpha = NULL,
   as_numeric = NULL,
+  bootstrap = NULL,
   check_arguments = NULL,
   correction = NULL,
   coverage_estimator = NULL,
   distances = NULL,
+  distribution = NULL,
   estimator = NULL,
+  fisher_alpha = NULL,
   gamma = NULL,
   global = NULL,
   jack_alpha = NULL,
   jack_max = NULL,
   k = NULL,
   level = NULL,
+  n = NULL,
   n_simulations = NULL,
   normalize = NULL,
   probability_estimator = NULL,
@@ -29,6 +33,8 @@ check_divent_args(
   sample_coverage = NULL,
   show_progress = NULL,
   similarities = NULL,
+  size = NULL,
+  species_number = NULL,
   species_distribution = NULL,
   tree = NULL,
   use.names = NULL,
@@ -44,6 +50,14 @@ check_divent_args(
 
 \item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
+\item{bootstrap}{The method used to obtain the probabilities to generate
+bootstrapped communities from observed abundances.
+If "Marcon2012", the probabilities are simply the abundances divided by the total
+number of individuals \insertCite{Marcon2012a}{divent}.
+If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
+(see \link{as_probabilities}) following \insertCite{Chao2013;textual}{divent} or
+\insertCite{Chao2015;textual}{divent}.}
+
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
@@ -55,7 +69,13 @@ Default is "isotropic".}
 
 \item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}.}
 
+\item{distribution}{The distribution of species abundances.
+May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
+"bstick" (broken stick).}
+
 \item{estimator}{an estimator of asymptotic entropy, diversity or richness.}
+
+\item{fisher_alpha}{Fisher's \eqn{\alpha} in the log-series distribution.}
 
 \item{gamma}{if \code{TRUE}, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.}
 
@@ -71,6 +91,8 @@ Default is "isotropic".}
 It may be a sample size (an integer) or a sample coverage
 (a number between 0 and 1).
 If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
+
+\item{n}{the number of observations.}
 
 \item{n_simulations}{the number of simulations used to estimate the confidence envelope.}
 
@@ -99,6 +121,10 @@ Used to calculate the gamma diversity of meta-communities, see details.}
 \item{similarities}{a similarity matrix, that can be obtained by \link{fun_similarity}.
 Its default value is the identity matrix.}
 
+\item{size}{The number of individuals to draw in each community.}
+
+\item{species_number}{The number of species.}
+
 \item{species_distribution}{an object of class \link{species_distribution}.}
 
 \item{tree}{an ultrametric, phylogenetic tree.
@@ -115,26 +141,6 @@ Used only for extrapolation.}
 
 \item{X}{a spatialized community
 (A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
-
-\item{bootstrap}{The method used to obtain the probabilities to generate
-bootstrapped communities from observed abundances.
-If "Marcon2012", the probabilities are simply the abundances divided by the total
-number of individuals \insertCite{Marcon2012a}{divent}.
-If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
-(see \link{as_probabilities}) following \insertCite{Chao2013;textual}{divent} or
-\insertCite{Chao2015;textual}{divent}.}
-
-\item{distribution}{The distribution of species abundances.
-May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
-"bstick" (broken stick).}
-
-\item{fisher_alpha}{Fisher's \eqn{\alpha} in the log-series distribution.}
-
-\item{n}{the number of observations.}
-
-\item{size}{The number of individuals to draw in each community.}
-
-\item{species_number}{The number of species.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.
