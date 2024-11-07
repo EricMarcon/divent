@@ -55,7 +55,7 @@
 #' This is the standard deviation on the log scale.
 #' @param prob_geom The proportion of resources taken by successive species 
 #' of the geometric distribution.
-#' @param alpha Fisher's \eqn{\alpha} in the log-series distribution.
+#' @param fisher_alpha Fisher's \eqn{\alpha} in the log-series distribution.
 #' 
 #' @name rcommunity
 #' @references
@@ -110,7 +110,7 @@ rcommunity <- function(
       lnorm = (the_abd <- stats::rlnorm(species_number, meanlog = 0, sdlog = sd_lnorm)) / 
         sum(the_abd),
       lseries = (the_abd <- rlseries(
-        species_number <- fisher_alpha * log(1 + size / fisher_alpha), alpha = alpha, size = size)
+        species_number <- fisher_alpha * log(1 + size / fisher_alpha), alpha = fisher_alpha, size = size)
         ) / sum(the_abd),
       bstick = c(cuts <- sort(stats::runif(species_number - 1)), 1) - c(0, cuts)
     )

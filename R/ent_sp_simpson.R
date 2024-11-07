@@ -1,7 +1,7 @@
 #' Spatially Explicit Simpson's Entropy
 #' 
 #' Simpson's entropy of the neighborhood of individuals, 
-#' up to a distance \insertCite{Shimatani2001}{SpatDiv}.
+#' up to a distance \insertCite{Shimatani2001}{divent}.
 #'
 #' @inheritParams check_divent_args
 #' 

@@ -367,6 +367,7 @@ check_divent_args <- function(
     distances = NULL,
     estimator = NULL,
     gamma = NULL,
+    global = NULL,
     jack_alpha = NULL,
     jack_max = NULL,
     k = NULL,
@@ -375,6 +376,7 @@ check_divent_args <- function(
     normalize = NULL,
     probability_estimator = NULL,
     q = NULL,
+    r = NULL,
     rate = NULL,
     richness_estimator = NULL,
     sample_coverage = NULL,
@@ -384,11 +386,12 @@ check_divent_args <- function(
     tree = NULL,
     use.names = NULL,
     unveiling = NULL,
-    weights = NULL) {
+    weights = NULL,
+    X = NULL) {
 
   # Verify that the package is attached
   if (!"divent" %in% .packages()) {
-    warning("Function arguments cannot be checked because the package divent is not attached. Add CheckArguments=FALSE to suppress this warning or run library('SpatDiv')")
+    warning("Function arguments cannot be checked because the package divent is not attached. Add CheckArguments=FALSE to suppress this warning or run library('divent')")
     return (TRUE)
   }
   # Get the list of arguments of the parent function
@@ -665,7 +668,7 @@ check_divent_args <- function(
       }
       if (length(r) < 2) {
         error_message(
-          paster("r has length", length(r.seq), "but it should be at least 2)"), 
+          paste("r has length", length(r), "but it should be at least 2)"), 
           r, 
           parent_function
         )
