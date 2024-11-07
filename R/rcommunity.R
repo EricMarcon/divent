@@ -109,8 +109,13 @@ rcommunity <- function(
         (1 - (1 - prob_geom) ^ species_number) * (1 - prob_geom) ^ (0:(species_number - 1)),
       lnorm = (the_abd <- stats::rlnorm(species_number, meanlog = 0, sdlog = sd_lnorm)) / 
         sum(the_abd),
-      lseries = (the_abd <- rlseries(
-        species_number <- fisher_alpha * log(1 + size / fisher_alpha), alpha = fisher_alpha, size = size)
+      lseries = (
+        the_abd <- 
+          rlseries(
+            species_number <- fisher_alpha * log(1 + size / fisher_alpha),
+            fisher_alpha = fisher_alpha, 
+            size = size
+          )
         ) / sum(the_abd),
       bstick = c(cuts <- sort(stats::runif(species_number - 1)), 1) - c(0, cuts)
     )
