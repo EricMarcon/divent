@@ -25,6 +25,7 @@ Imports:
   rlang,
   spatstat.explore,
   spatstat.geom,
+  spatstat.random,
   stats,
   tibble,
   tidyr,
