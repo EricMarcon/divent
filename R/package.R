@@ -363,6 +363,7 @@ check_divent_args <- function(
     alpha = NULL,
     as_numeric = NULL,
     check_arguments = NULL,
+    correction = NULL,
     coverage_estimator = NULL,
     distances = NULL,
     estimator = NULL,
