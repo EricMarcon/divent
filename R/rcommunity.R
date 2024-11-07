@@ -1,6 +1,7 @@
 #' Random communities
 #' 
-#' Draw random communities according to a probability distribution.
+#' `rcommunity()` draws random communities according to a probability distribution.
+#' `rspcommunity()` extends it by spatializing the random communities.
 #' 
 #' Communities of fixed `size` are drawn in a multinomial distribution according 
 #' to the distribution of probabilities provided by `prob`.
@@ -17,17 +18,22 @@
 #' Alternatively, the probabilities may be drawn following a classical 
 #' distribution: either lognormal ("lnorm")  \insertCite{Preston1948}{divent} 
 #' with given standard deviation (`sd_lnorm`; note that the mean is actually 
-#' a normalizing constant. Its values is set equal to 0 for the simulation of 
+#' a normalizing constant. Its value is set equal to 0 for the simulation of 
 #' the normal distribution of unnormalized log-abundances), log-series ("lseries")
 #' \insertCite{Fisher1943}{divent} with parameter `alpha`, geometric 
-#' ("geom") one \insertCite{Motomura1932}{divent} with parameter `prob_geom`, 
+#' ("geom") \insertCite{Motomura1932}{divent} with parameter `prob_geom`, 
 #' or broken stick ("bstick") \insertCite{MacArthur1957}{divent}. 
 #' The number of simulated species is fixed by `species_number`, except for 
-#' "lseries" where it is obtained from `alpha_lseries` and `size`: 
-#' \eqn{S=\alpha \ln(1 + size / \alpha)}.
+#' "lseries" where it is obtained from `alpha` and `size`: 
+#' \eqn{S = \alpha \ln(1 + size / \alpha)}.
+#' Note that the probabilities are drawn once only.
+#' If the number of communities to draw, `n`, is greater than 1, then they are
+#' drawn in a multinomial distribution following these probabilities.
 #' 
 #' Log-normal, log-series and broken-stick distributions are stochastic. 
 #' The geometric distribution is completely determined by its parameters.
+#' 
+#' Spatialized communities include the location of individuals in a window.
 #'
 #' @inheritParams check_divent_args
 #' @param n The number of communities to draw.
@@ -47,15 +53,19 @@
 #' "bstick" (broken stick).
 #' @param sd_lnorm The simulated log-normal distribution standard deviation. 
 #' This is the standard deviation on the log scale.
-#' @param prob_geom The proportion of ressources taken by successive species 
+#' @param prob_geom The proportion of resources taken by successive species 
 #' of the geometric distribution.
-#' @param alpha_lseries Fisher's alpha in the log-series distribution.
-#'
-#' @returns An object of class [abundances].
+#' @param alpha Fisher's $\alpha$ in the log-series distribution.
 #' 
+#' @name rcommunity
 #' @references
 #' \insertAllCited{}
-#' 
+NULL
+
+
+#' @rdname rcommunity
+#'
+#' @returns `rcommunity()` returns an object of class [abundances].
 #' @export
 #'
 #' @examples
@@ -73,7 +83,7 @@ rcommunity <- function(
     distribution = c("lnorm", "lseries", "geom", "bstick"),
     sd_lnorm = 1,
     prob_geom = 0.1,
-    alpha_lseries = 40,
+    fisher_alpha = 40,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
 
@@ -93,29 +103,17 @@ rcommunity <- function(
   if (is.null(prob) & is.null(abd)) {
     # Draw in a distribution
     name <- distribution
-    if (distribution == "lseries") {
-      # Draw probabilities, except for logseries: draw abundances.
-      the_abd <- t(
-        replicate(
-          # Number of communities
-          n,
-          # Draw each species separately
-          replicate(
-            # Number of species (Fisher's formula)
-            round(-alpha_lseries * log(alpha_lseries / (size + alpha_lseries))),
-            # Internal function to draw the number of individuals of a species
-            abd_lseries(size, alpha_lseries)
-          )
-        )
-      )
-    } else {
-      # Other distributions: draw probabilities
-      the_prob <- switch(distribution,
-        geom = prob_geom / (1 - (1 - prob_geom) ^ species_number) * (1 - prob_geom) ^ (0:(species_number - 1)),
-        lnorm = (n_lnorm <- stats::rlnorm(species_number, 0, sd_lnorm)) / sum(n_lnorm),
-        bstick = c(cuts <- sort(stats::runif(species_number - 1)), 1) - c(0, cuts)
-      )
-    }
+    # Other distributions: draw probabilities
+    the_prob <- switch(distribution,
+      geom = prob_geom / 
+        (1 - (1 - prob_geom) ^ species_number) * (1 - prob_geom) ^ (0:(species_number - 1)),
+      lnorm = (the_abd <- stats::rlnorm(species_number, meanlog = 0, sdlog = sd_lnorm)) / 
+        sum(the_abd),
+      lseries = (the_abd <- rlseries(
+        species_number <- fisher_alpha * log(1 + size / fisher_alpha), alpha = alpha, size = size)
+        ) / sum(the_abd),
+      bstick = c(cuts <- sort(stats::runif(species_number - 1)), 1) - c(0, cuts)
+    )
   } else {
     # Simulation from a distribution
     name <- ifelse(is.null(prob), "prob", "abd")
@@ -150,10 +148,8 @@ rcommunity <- function(
   }
   
   # Generate communities according to probabilities
-  if (is.null(the_abd)) {
-    # Draw multinomial samples from probabilities except if abundances have already been obtained (e.g.: lseries)
-    the_abd <- t(stats::rmultinom(n, size, the_prob))
-  }
+  # Draw multinomial samples from probabilities except if abundances have already been obtained (e.g.: lseries)
+  the_abd <- t(stats::rmultinom(n, size = size, prob = the_prob))
 
   return(
     as_abundances.matrix(
@@ -170,38 +166,187 @@ rcommunity <- function(
 }
 
 
-#' Abundance in a log-series
-#' 
-#' Abundance of a species in a logseries distribution of given 
-#' size and Fisher's alpha.
-#' 
-#' Adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
-#' 
-#' @param size The number of individuals in the community.
-#' @param alpha_lseries The value of Fisher's alpha.
+#' @rdname rcommunity
+#' @param spatial The spatial distribution of points. 
+#' May be "Binomial" (a completely random point pattern except for its fixed number of points) or 
+#' "Thomas" for a clustered point pattern with parameters `scale` and `mu`.
+#' @param thomas_scale In Thomas point patterns, the standard deviation of random displacement 
+#' (along each coordinate axis) of a point from its cluster center.
+#' @param mu In Thomas point patterns, the mean number of points per cluster.
+#' The intensity of the Poisson process of cluster centers is calculated as 
+#' the number of points (`size`) per area divided by `mu`.
+#' @param win The window containing the point pattern. It is an [spatstat.geom::owin] object.
+#' @param species_names A vector of characters or of factors containing the possible species names.
+#' @param weight_distribution The distribution of point weights, 
+#' that may be for instance the size of the trees in a forest community.
+#' By default, all weight are 1.
+#' May be "uniform" for a uniform distribution between `w_min` and `w_max`, 
+#' "weibull" with parameters `w_min`, `weibull_scale` and `shape` or
+#' "exponential" with parameter `w_mean`.
+#' @param w_min The minimum weight in a uniform or Weibull distribution.
+#' @param w_max The maximum weight in a uniform distribution.
+#' @param w_mean The mean weight in an exponential distribution 
+#' (i.e. the negative of the inverse of the decay rate).
+#' @param weibull_scale The scale parameter in a Weibull distribution.
+#' @param weibull_shape The shape parameter in a Weibull distribution.
 #'
-#' @returns The number of individuals of the species.
-#' @noRd
+#' @return `rspcommunity()` returns either a spatialized community, 
+#' which is a [dbmss::wmppp] object , with `PointType` 
+#' values as species names if `n`=1 or an object of class ppplist 
+#' (see [spatstat.geom::solist])  if `n`>1.
+#' @export
+#'
+#' @references
+#' \insertAllCited{}
+#' @examples
+#' sp_community <- rspCommunity(1, size = 30, species_number = 5)
+#' autoplot(sp_community)
 #' 
-abd_lseries <- function(size, alpha_lseries) {
-  # Fisher's x is log-series 1-theta
-  x <- size / (size + alpha_lseries)
-  # Draw a random number between 0 and 1
-  u <- stats::runif(1)
-  # k is the number of individuals to draw
-  k <- 1
-  # Calculate the probability at k=1
-  p <- -x / log(1 - x)
-  # Store it in the distribution function
-  p_cumulated <- p
-  # Repeat while the cumulated probability is below u
-  while (p_cumulated <= u) {
-    # Probability at k+1 obtained from that at k
-    p <- p * k * x / (k + 1)
-    # Increment k
-    k <- k + 1
-    # Increment the cumulated probability
-    p_cumulated <- p_cumulated + p
+rspcommunity <- function(
+    n,
+    size = sum(abd),
+    prob = NULL,
+    abd = NULL,
+    bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
+    species_number = 300,
+    distribution = c("lnorm", "lseries", "geom", "bstick"),
+    sd_lnorm = 1,
+    prob_geom = 0.1,
+    fisher_alpha = 40,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    spatial = c("Binomial", "Thomas"), 
+    thomas_scale = 0.2, 
+    mu = 10,
+    win = spatstat.geom::owin(),
+    species_names = NULL,
+    weight_distribution = c("Uniform", "Weibull", "Exponential"),
+    w_min = 1, 
+    w_max = 1, 
+    w_mean = 20, 
+    weibull_scale = 20, 
+    weibull_shape = 2,
+    check_arguments = TRUE) {
+  
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (!is.null(prob) & !is.null(abd)) {
+      stop("'prob' and 'abd' can't be both given.")
+    }
   }
-  return(k)
+  bootstrap <- match.arg(bootstrap) 
+  distribution <- match.arg(distribution) 
+  coverage_estimator <- match.arg(coverage_estimator)
+  spatial <- match.arg(spatial)
+  weight_distribution <- match.arg(weight_distribution)
+
+  # Species abundances: call rcommunity
+  the_communities <- rcommunity(
+    n = n, 
+    size = size, 
+    prob = prob,
+    abd = abd,
+    bootstrap = bootstrap,
+    species_number = species_number,
+    distribution = distribution,
+    sd_lnorm = sd_lnorm,
+    prob_geom = prob_geom,
+    fisher_alpha = fisher_alpha,
+    coverage_estimator = coverage_estimator,
+    check_arguments = check_arguments
+  )
+  
+  # Species names
+  is_species_column <- !colnames(the_communities) %in% non_species_columns
+  if (is.null(species_names)) {
+    # Read the species names returned by rcommunity
+    species_names <- names(the_communities)[is_species_column]
+  } else {
+    # Check the names
+    species_names <- species_names[!is.na(species_names)]
+    species_names <- unique(species_names)
+    species_names <- species_names[nchar(species_names) > 0]
+    if (length(species_names) < species_number) {
+      stop("The species names vector must contain at least 'species_number' names.")
+    } else {
+      # Sample species names
+      species_names <- sample(species_names, size = species_number)
+    }
+  }
+  # Make them factors
+  species_names <- as.factor(species_names)
+  
+  # marks_weight() draws random weights for all points of a random point pattern
+  marks_weight <- function(size) {
+    the_weights <- NULL
+    if (weight_distribution == "Uniform") {
+      the_weights <- stats::runif(size, min = w_min, max = w_max)
+    }
+    else if (weight_distribution == "Weibull") {
+      the_weights <- w_min + 
+        stats::rweibull(size, shape = weibull_shape, scale = weibull_scale)
+    }
+    else if (weight_distribution == "Exponential") {
+      the_weights <- stats::rexp(size, rate = 1 / w_mean)
+    }
+    return(the_weights)
+  }
+    
+  # Spatial distribution
+  if (spatial == "Binomial") {
+    rbinomial <- function(i) {
+      # Draw a binomial wmppp
+      the_wmppp <- dbmss::as.wmppp(
+        spatstat.random::runifpoint(
+          the_communities$weight[i], 
+          win = win
+        )
+      )
+      # Associate species and points
+      the_wmppp$marks$PointType <- rep(species_names, the_communities[i, is_species_column])
+      # Associate sizes and points
+      the_wmppp$marks$PointWeight <- marks_weight(the_wmppp$n)
+      return(the_wmppp)
+    }
+    # Loop to simulate several point processes
+    the_wmppp_list <- lapply(1:n, FUN = rbinomial)
+  }
+  else if (spatial == "Thomas") {
+    rthomas <- function(i) {
+      # Prepare an empty point pattern
+      the_ppp <- NULL
+      # Draw each species
+      for (s in 1:species_number) {
+        the_ppp_s <- spatstat.random::rThomas(
+          kappa = the_communities[i, is_species_column][s] / 
+            spatstat.geom::area.owin(win) / mu, 
+          scale = thomas_scale,
+          mu = mu, 
+          win = win
+        )
+        # Associate species and points
+        PointType <- rep(species_names[s],times = the_ppp_s$n)
+        # Associate sizes and points
+        PointWeight <- marks_weight(the_ppp_s$n)
+        # Add the marks
+        spatstat.geom::marks(the_ppp_s) <- data.frame(PointType, PointWeight)
+        # Add the species to the point pattern
+        if (is.null(the_ppp)) {
+          the_ppp <- the_ppp_s
+        } else {
+          the_ppp <- spatstat.geom::superimpose(the_ppp, the_ppp_s)
+        }
+      }
+      return(dbmss::as.wmppp(the_ppp))
+    }
+    # Loop to simulate several point processes
+    the_wmppp_list <- lapply(1:n, FUN = rthomas)
+  }
+    
+  if (n == 1) {
+    # Return a wmppp
+    return(the_wmppp_list[[1]])
+  } else {
+    # Return an object of class ppplist
+    return(spatstat.geom::as.solist(the_wmppp_list, promote = TRUE))
+  }
 }
