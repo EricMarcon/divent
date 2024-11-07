@@ -5,14 +5,14 @@
 #'
 #' @inheritParams check_divent_args
 #' 
-#' @name ent_simpson_r
+#' @name ent_sp_simpson
 #' @references
 #' \insertAllCited{}
 NULL
 
 
-#' @rdname ent_simpson_r
-#' @returns `ent_simpson_r` returns an object of class `fv`, 
+#' @rdname ent_sp_simpson
+#' @returns `ent_sp_simpson` returns an object of class `fv`, 
 #' see [spatstat.explore::fv.object].
 #' There are methods to print and plot this class.
 #' It contains the value of the spatially explicit Simpson's entropy 
@@ -23,9 +23,9 @@ NULL
 #' # Generate a random community
 #' community_sp <- rcommunity_sp(1, size = 1000, S = 3)
 #' # Calculate the entropy and plot it
-#' autoplot(ent_simpson_r(community_sp))
+#' autoplot(ent_sp_simpson(community_sp))
 #' 
-ent_simpson_r <- function(
+ent_sp_simpson <- function(
     X, 
     r = NULL, 
     correction = c("isotropic", "translate", "none"),
@@ -119,12 +119,12 @@ ent_simpson_r <- function(
 
 
 
-#' @rdname ent_simpson_r
+#' @rdname ent_sp_simpson
 #' @param simulation_type A string describing the null hypothesis to simulate. 
 #' The null hypothesis may be "RandomPosition": points are drawn in a Poisson process (default)
 #' or "RandomLabeling": randomizes point types, keeping locations unchanged.
 #'
-#' @return `ent_simpson_rEnvelope` returns an envelope object [spatstat.explore::envelope]. 
+#' @return `ent_sp_simpsonEnvelope` returns an envelope object [spatstat.explore::envelope]. 
 #' There are methods to print and plot this class.
 #' It contains the observed value of the function, 
 #' its average simulated value and the confidence envelope.
@@ -134,9 +134,9 @@ ent_simpson_r <- function(
 #' # Generate a random community
 #' community_sp <- rcommunity_sp(1, size = 1000, S = 3)
 #' # Calculate the entropy and plot it
-#' autoplot(ent_simpson_rEnvelope(X, n_simulations = 10))
+#' autoplot(ent_sp_simpsonEnvelope(X, n_simulations = 10))
 #' 
-ent_simpson_rEnvelope <- function(
+ent_sp_simpsonEnvelope <- function(
     X, 
     r = NULL, 
     n_simulations = 100,
@@ -164,7 +164,7 @@ ent_simpson_rEnvelope <- function(
   # local envelope, keep extreme values for lo and hi (nrank=1)
   the_envelope <- spatstat.explore::envelope(
     X, 
-    fun = ent_simpson_r, 
+    fun = ent_sp_simpson, 
     nsim = n_simulations, 
     nrank = 1,
     r = r, 
