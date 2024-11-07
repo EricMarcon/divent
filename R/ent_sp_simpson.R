@@ -37,7 +37,10 @@ ent_sp_simpson <- function(
   correction <- match.arg(correction) 
   
   # Summary
-  abd <- tapply(X$marks$PointType, X$marks$PointType, length)
+  abd <- tapply(
+    spatstat.geom::marks(X)$PointType, 
+    spatstat.geom::marks(X)$PointType, 
+    length)
   abd <- abd[!is.na(abd)]
   sample_size <- sum(abd)
   prob <- abd / sample_size
@@ -67,7 +70,7 @@ ent_sp_simpson <- function(
   )
   
   # The point pattern is split into a list of ppp for each mark
-  ppp.list <- split(X, as.factor(X$marks$PointType))
+  ppp.list <- split(X, as.factor(spatstat.geom::marks(X)$PointType))
   # K for each ppp
   K.list <- lapply(
     ppp.list, 
