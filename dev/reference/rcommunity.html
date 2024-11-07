@@ -9,7 +9,7 @@ rspcommunity() extends it by spatializing the random communities."><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@ rspcommunity() extends it by spatializing the random communities."><meta propert
 <span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Binomial"</span>, <span class="st">"Thomas"</span><span class="op">)</span>,</span>
 <span>  thomas_scale <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  mu <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  thomas_mu <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  win <span class="op">=</span> <span class="fu">spatstat.geom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatstat.geom/man/owin.html" class="external-link">owin</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  species_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  weight_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Uniform"</span>, <span class="st">"Weibull"</span>, <span class="st">"Exponential"</span><span class="op">)</span>,</span>
@@ -95,7 +95,7 @@ rspcommunity() extends it by spatializing the random communities."><meta propert
 
 
 <dl><dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
-<dd><p>The number of communities to draw.</p></dd>
+<dd><p>the number of communities to draw.</p></dd>
 
 
 <dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
@@ -103,11 +103,11 @@ rspcommunity() extends it by spatializing the random communities."><meta propert
 
 
 <dt id="arg-prob">prob<a class="anchor" aria-label="anchor" href="#arg-prob"></a></dt>
-<dd><p>A numeric vector containing probabilities.</p></dd>
+<dd><p>a numeric vector containing probabilities.</p></dd>
 
 
 <dt id="arg-abd">abd<a class="anchor" aria-label="anchor" href="#arg-abd"></a></dt>
-<dd><p>A numeric vector containing abundances.</p></dd>
+<dd><p>a numeric vector containing abundances.</p></dd>
 
 
 <dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
@@ -116,7 +116,7 @@ bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
 number of individuals Marcon2012adivent.
 If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
-(see <a href="species_distribution.html">as_probabilities</a>) followingChao2013;textualdivent or
+(see <a href="species_distribution.html">as_probabilities</a>) following Chao2013;textualdivent or
 Chao2015;textualdivent.</p></dd>
 
 
@@ -131,12 +131,12 @@ May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 
 
 <dt id="arg-sd-lnorm">sd_lnorm<a class="anchor" aria-label="anchor" href="#arg-sd-lnorm"></a></dt>
-<dd><p>The simulated log-normal distribution standard deviation.
+<dd><p>the simulated log-normal distribution standard deviation.
 This is the standard deviation on the log scale.</p></dd>
 
 
 <dt id="arg-prob-geom">prob_geom<a class="anchor" aria-label="anchor" href="#arg-prob-geom"></a></dt>
-<dd><p>The proportion of resources taken by successive species
+<dd><p>the proportion of resources taken by successive species
 of the geometric distribution.</p></dd>
 
 
@@ -154,33 +154,34 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 
 
 <dt id="arg-spatial">spatial<a class="anchor" aria-label="anchor" href="#arg-spatial"></a></dt>
-<dd><p>The spatial distribution of points.
+<dd><p>the spatial distribution of points.
 May be "Binomial" (a completely random point pattern except for its fixed number of points) or
 "Thomas" for a clustered point pattern with parameters <code>scale</code> and <code>mu</code>.</p></dd>
 
 
 <dt id="arg-thomas-scale">thomas_scale<a class="anchor" aria-label="anchor" href="#arg-thomas-scale"></a></dt>
-<dd><p>In Thomas point patterns, the standard deviation of random displacement
+<dd><p>in Thomas point patterns, the standard deviation of random displacement
 (along each coordinate axis) of a point from its cluster center.</p></dd>
 
 
-<dt id="arg-mu">mu<a class="anchor" aria-label="anchor" href="#arg-mu"></a></dt>
-<dd><p>In Thomas point patterns, the mean number of points per cluster.
+<dt id="arg-thomas-mu">thomas_mu<a class="anchor" aria-label="anchor" href="#arg-thomas-mu"></a></dt>
+<dd><p>in Thomas point patterns, the mean number of points per cluster.
 The intensity of the Poisson process of cluster centers is calculated as
-the number of points (<code>size</code>) per area divided by <code>mu</code>.</p></dd>
+the number of points (<code>size</code>) per area divided by <code>thomas_mu</code>.</p></dd>
 
 
 <dt id="arg-win">win<a class="anchor" aria-label="anchor" href="#arg-win"></a></dt>
-<dd><p>The window containing the point pattern. It is an <a href="https://rdrr.io/pkg/spatstat.geom/man/owin.html" class="external-link">spatstat.geom::owin</a> object.</p></dd>
+<dd><p>the window containing the point pattern.
+It is an <a href="https://rdrr.io/pkg/spatstat.geom/man/owin.html" class="external-link">spatstat.geom::owin</a> object.
+Default is a 1x1 square.</p></dd>
 
 
 <dt id="arg-species-names">species_names<a class="anchor" aria-label="anchor" href="#arg-species-names"></a></dt>
-<dd><p>A vector of characters or of factors containing the possible species names.</p></dd>
+<dd><p>a vector of characters or of factors containing the possible species names.</p></dd>
 
 
 <dt id="arg-weight-distribution">weight_distribution<a class="anchor" aria-label="anchor" href="#arg-weight-distribution"></a></dt>
-<dd><p>The distribution of point weights,
-that may be for instance the size of the trees in a forest community.
+<dd><p>the distribution of point weights.
 By default, all weight are 1.
 May be "uniform" for a uniform distribution between <code>w_min</code> and <code>w_max</code>,
 "weibull" with parameters <code>w_min</code>, <code>weibull_scale</code> and <code>shape</code> or
@@ -188,24 +189,24 @@ May be "uniform" for a uniform distribution between <code>w_min</code> and <code
 
 
 <dt id="arg-w-min">w_min<a class="anchor" aria-label="anchor" href="#arg-w-min"></a></dt>
-<dd><p>The minimum weight in a uniform or Weibull distribution.</p></dd>
+<dd><p>the minimum weight in a uniform or Weibull distribution.</p></dd>
 
 
 <dt id="arg-w-max">w_max<a class="anchor" aria-label="anchor" href="#arg-w-max"></a></dt>
-<dd><p>The maximum weight in a uniform distribution.</p></dd>
+<dd><p>the maximum weight in a uniform distribution.</p></dd>
 
 
 <dt id="arg-w-mean">w_mean<a class="anchor" aria-label="anchor" href="#arg-w-mean"></a></dt>
-<dd><p>The mean weight in an exponential distribution
+<dd><p>the mean weight in an exponential distribution
 (i.e. the negative of the inverse of the decay rate).</p></dd>
 
 
 <dt id="arg-weibull-scale">weibull_scale<a class="anchor" aria-label="anchor" href="#arg-weibull-scale"></a></dt>
-<dd><p>The scale parameter in a Weibull distribution.</p></dd>
+<dd><p>the scale parameter in a Weibull distribution.</p></dd>
 
 
 <dt id="arg-weibull-shape">weibull_shape<a class="anchor" aria-label="anchor" href="#arg-weibull-shape"></a></dt>
-<dd><p>The shape parameter in a Weibull distribution.</p></dd>
+<dd><p>the shape parameter in a Weibull distribution.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -245,7 +246,15 @@ If the number of communities to draw, <code>n</code>, is greater than 1, then th
 drawn in a multinomial distribution following these probabilities.</p>
 <p>Log-normal, log-series and broken-stick distributions are stochastic.
 The geometric distribution is completely determined by its parameters.</p>
-<p>Spatialized communities include the location of individuals in a window.</p>
+<p>Spatialized communities include the location of individuals in a window,
+in a a <a href="https://ericmarcon.github.io/dbmss/reference/wmppp.html" class="external-link">dbmss::wmppp</a> object.
+Several point processes are available, namely binomial (points are uniformly
+distributed in the window) and Thomas1949;textualdivent, which
+is clustered.</p>
+<p>Point weights, that may be for instance the size of the trees in a forest
+community, can be uniform, follow a Weibull or a negative exponential distribution.
+The latter describe well the diameter distribution of trees in a forest
+Rennolls1985,Turner2004divent.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
