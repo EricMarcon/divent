@@ -304,12 +304,12 @@ rspcommunity <- function(
         )
       )
       # Associate species and points
-      spatstat.geom::marks(the_wmppp)$PointType <- rep(
+      marks(the_wmppp)$PointType <- rep(
         species_names, 
         the_communities[i, is_species_column]
       )
       # Associate sizes and points
-      spatstat.geom::marks(the_wmppp)$PointWeight <- marks_weight(the_wmppp$n)
+      marks(the_wmppp)$PointWeight <- marks_weight(the_wmppp$n)
       return(the_wmppp)
     }
     # Loop to simulate several point processes
@@ -333,7 +333,7 @@ rspcommunity <- function(
         # Associate sizes and points
         PointWeight <- marks_weight(the_ppp_s$n)
         # Add the marks
-        spatstat.geom::marks(the_ppp_s) <- data.frame(PointType, PointWeight)
+        marks(the_ppp_s) <- data.frame(PointType, PointWeight)
         # Add the species to the point pattern
         if (is.null(the_ppp)) {
           the_ppp <- the_ppp_s
