@@ -124,7 +124,8 @@ rcommunity <- function(
     the_prob <- prob[prob != 0]
   }
   if (!is.null(abd)) {
-    # Subsample in given abundances. Generate probabilities according to the chosen method.
+    # Subsample in given abundances. 
+    # Generate probabilities according to the chosen method.
     if (bootstrap == "Chao2015") {
       the_prob <- probabilities.numeric(
         abd,
@@ -153,7 +154,7 @@ rcommunity <- function(
   the_abd <- t(stats::rmultinom(n, size = size, prob = the_prob))
 
   return(
-    as_abundances.matrix(
+    as_abundances(
       the_abd,
       names = paste(
         name, 
@@ -297,22 +298,22 @@ rspcommunity <- function(
   if (spatial == "Binomial") {
     rbinomial <- function(i) {
       # Draw a binomial wmppp
-      the_wmppp <- dbmss::as.wmppp(
-        spatstat.random::runifpoint(
-          the_communities$weight[i], 
-          win = win
-        )
+      the_ppp <- spatstat.random::runifpoint(
+        the_communities$weight[i], 
+        win = win
       )
-      # Associate species and points
-      spatstat.geom::marks(the_wmppp)$PointType <- rep(
-        species_names, 
-        the_communities[i, is_species_column]
+      # Create the marks
+      
+      spatstat.geom::marks(the_ppp) <- data.frame(
+        PointType = rep(
+          species_names, 
+          times = the_communities[i, is_species_column]
+        ),
+        PointWeight = marks_weight(the_ppp$n)
       )
-      # Associate sizes and points
-      spatstat.geom::marks(the_wmppp)$PointWeight <- marks_weight(the_wmppp$n)
       # Set the class
       class(the_ppp) <- c("wmppp", class(the_ppp))
-      return(the_wmppp)
+      return(the_ppp)
     }
     # Loop to simulate several point processes
     the_wmppp_list <- lapply(1:n, FUN = rbinomial)
@@ -330,12 +331,11 @@ rspcommunity <- function(
           mu = thomas_mu, 
           win = win
         )
-        # Associate species and points
-        PointType <- rep(species_names[s],times = the_ppp_s$n)
-        # Associate sizes and points
-        PointWeight <- marks_weight(the_ppp_s$n)
-        # Add the marks
-        spatstat.geom::marks(the_ppp_s) <- data.frame(PointType, PointWeight)
+        # Create the marks
+        spatstat.geom::marks(the_ppp_s) <- data.frame(
+          PointType = rep(species_names[s], times = the_ppp_s$n), 
+          PointWeight = marks_weight(the_ppp_s$n)
+        )
         # Add the species to the point pattern
         if (is.null(the_ppp)) {
           the_ppp <- the_ppp_s
