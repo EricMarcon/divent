@@ -1,7 +1,7 @@
 #' Diversity Accumulation of a Community
 #' 
 #' Diversity and Entropy Accumulation Curves represent the accumulation of 
-#' entropy with respect to the sample size.
+#' entropy and diversity with respect to the sample size.
 #' 
 #' `accum_hill()` or `accum_tsallis()` estimate the diversity or entropy accumulation 
 #' curve of a distribution.
