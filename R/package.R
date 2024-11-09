@@ -289,7 +289,7 @@ as_named_vector.character <- function(x){
 #'
 as_named_vector.wmppp <- function(X){
   # Count the number of points by type
-  return(as_named_vector.character(marks(X)$PointType))
+  return(as_named_vector.character(spatstat.geom::marks(X)$PointType))
 }
 
 #' check_divent_args
