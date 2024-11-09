@@ -310,6 +310,8 @@ rspcommunity <- function(
       )
       # Associate sizes and points
       spatstat.geom::marks(the_wmppp)$PointWeight <- marks_weight(the_wmppp$n)
+      # Set the class
+      class(the_ppp) <- c("wmppp", class(the_ppp))
       return(the_wmppp)
     }
     # Loop to simulate several point processes
