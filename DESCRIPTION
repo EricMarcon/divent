@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.4-99.9008
+Version: 0.4-99.9009
 Authors@R: c(
     person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X"))
     )
@@ -11,16 +11,20 @@ URL: https://ericmarcon.github.io/divent/, https://github.com/EricMarcon/divent
 BugReports: https://github.com/EricMarcon/divent/issues
 License: GNU General Public License
 Depends: 
-  R (>= 4.1)
+  R (>= 4.1),
+  Rcpp (>= 0.12.14)
 Imports:
+  alphahull,
   ape,
   cli,
   dbmss,
   dplyr,
   ggplot2,
   graphics,
+  igraph,
   EntropyEstimation,
   RColorBrewer,
+  RcppParallel,
   Rdpack,
   rlang,
   spatstat.explore,
@@ -37,11 +41,16 @@ Suggests:
   rmarkdown,
   SPECIES,
   testthat (>= 3.0.0)
+LinkingTo: 
+  Rcpp,
+  RcppParallel
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-VignetteBuilder: knitr
-SystemRequirements: pandoc
 RdMacros: Rdpack
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Config/testthat/edition: 3
+SystemRequirements: 
+  GNU make,
+  pandoc
+VignetteBuilder: knitr
