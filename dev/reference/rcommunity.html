@@ -9,7 +9,7 @@ rspcommunity() extends it by spatializing the random communities."><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -235,11 +235,11 @@ distribution: either lognormal ("lnorm")  Preston1948divent
 with given standard deviation (<code>sd_lnorm</code>; note that the mean is actually
 a normalizing constant. Its value is set equal to 0 for the simulation of
 the normal distribution of unnormalized log-abundances), log-series ("lseries")
-Fisher1943divent with parameter <code>alpha</code>, geometric
+Fisher1943divent with parameter <code>fisher_alpha</code>, geometric
 ("geom") Motomura1932divent with parameter <code>prob_geom</code>,
 or broken stick ("bstick") MacArthur1957divent.
 The number of simulated species is fixed by <code>species_number</code>, except for
-"lseries" where it is obtained from <code>alpha</code> and <code>size</code>:
+"lseries" where it is obtained from <code>fisher_alpha</code> and <code>size</code>:
 \(S = \alpha \ln(1 + size / \alpha)\).
 Note that the probabilities are drawn once only.
 If the number of communities to draw, <code>n</code>, is greater than 1, then they are
