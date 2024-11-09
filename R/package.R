@@ -12,11 +12,18 @@
 "_PACKAGE"
 
 
+# C code ----
+#' @importFrom Rcpp sourceCpp
+#' @importFrom RcppParallel RcppParallelLibs
+#' @useDynLib divent, .registration = TRUE
+
+
 # Functions to reexport ----
 #' @export
 ggplot2::autoplot
 base::as.numeric
 base::as.matrix
+
 
 #' ggplot method to plot wmppp objects
 #' 
