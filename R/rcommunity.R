@@ -341,7 +341,9 @@ rspcommunity <- function(
           the_ppp <- spatstat.geom::superimpose(the_ppp, the_ppp_s)
         }
       }
-      return(dbmss::as.wmppp(the_ppp))
+      # Set the class
+      class(the_ppp) <- c("wmppp", class(the_ppp))
+      return(the_ppp)
     }
     # Loop to simulate several point processes
     the_wmppp_list <- lapply(1:n, FUN = rthomas)
