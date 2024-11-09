@@ -10,11 +10,16 @@
 #' @param x,y The coordinates of the points.
 #' @param Type A vector containing the species of each point (as integer, i.e. the factor code).
 #' @param Weight A vector containing the weights of points.
+#' @returns a numeric vector with the distances to convert to a matrix
 #' @export
 #' @examples
-#' X <- rspcommunity(1, size = 10, species_number = 3)
-#' parallelCountNbd(r = 0:1, NbSpecies = 3, x= X$x, y = X$y, 
-#'     Type = marks(X)$PointType, Weight = marks(X)$PointType)
+#' # Build a point pattern
+#' X <- rspcommunity(1, size = 5, species_number = 3)
+#' if(require(spatstat.geom)) {
+#'   # Compute the distances
+#'   matrix(parallelCountNbd(r = 0:1, NbSpecies = 3, x= X$x, y = X$y, 
+#'     Type = marks(X)$PointType, Weight = marks(X)$PointType), nrow = 5)
+#' }
 parallelCountNbd <- function(r, NbSpecies, x, y, Type, Weight) {
     .Call(`_divent_parallelCountNbd`, r, NbSpecies, x, y, Type, Weight)
 }

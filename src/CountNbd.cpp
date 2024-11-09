@@ -71,9 +71,13 @@ struct CountNbdWrkr : public Worker
 //' @returns a numeric vector with the distances to convert to a matrix
 //' @export
 //' @examples
+//' # Build a point pattern
 //' X <- rspcommunity(1, size = 5, species_number = 3)
-//' matrix(parallelCountNbd(r = 0:1, NbSpecies = 3, x= X$x, y = X$y, 
+//' if(require(spatstat.geom)) {
+//'   # Compute the distances
+//'   matrix(parallelCountNbd(r = 0:1, NbSpecies = 3, x= X$x, y = X$y, 
 //'     Type = marks(X)$PointType, Weight = marks(X)$PointType), nrow = 5)
+//' }
 // [[Rcpp::export]]
 NumericVector parallelCountNbd(NumericVector r, IntegerVector NbSpecies,
                                NumericVector x, NumericVector y,
