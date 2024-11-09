@@ -124,7 +124,7 @@ or diversity at each level of sampling effort.
 }
 \description{
 Diversity and Entropy Accumulation Curves represent the accumulation of
-entropy with respect to the sample size.
+entropy and diversity with respect to the sample size.
 }
 \details{
 \code{accum_hill()} or \code{accum_tsallis()} estimate the diversity or entropy accumulation
