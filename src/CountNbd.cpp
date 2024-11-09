@@ -68,7 +68,12 @@ struct CountNbdWrkr : public Worker
 //' @param x,y The coordinates of the points.
 //' @param Type A vector containing the species of each point (as integer, i.e. the factor code).
 //' @param Weight A vector containing the weights of points.
+//' @returns a numeric vector with the distances to convert to a matrix
 //' @export
+//' @examples
+//' X <- rspcommunity(1, size = 5, species_number = 3)
+//' matrix(parallelCountNbd(r = 0:1, NbSpecies = 3, x= X$x, y = X$y, 
+//'     Type = marks(X)$PointType, Weight = marks(X)$PointType), nrow = 5)
 // [[Rcpp::export]]
 NumericVector parallelCountNbd(NumericVector r, IntegerVector NbSpecies,
                                NumericVector x, NumericVector y,
