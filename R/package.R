@@ -344,6 +344,7 @@ as_named_vector.wmppp <- function(X){
 #' @param n the number of observations.
 #' @param n_simulations the number of simulations used to estimate the confidence envelope.
 #' @param normalize if `TRUE`, phylogenetic is normalized: the height of the tree is set to 1.
+#' @param orders The orders of diversity.
 #' @param probability_estimator a string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
@@ -400,6 +401,7 @@ check_divent_args <- function(
     n = NULL,
     n_simulations = NULL,
     normalize = NULL,
+    orders = NULL,
     probability_estimator = NULL,
     q = NULL,
     r = NULL,
@@ -420,14 +422,14 @@ check_divent_args <- function(
   # Verify that the package is attached
   if (!"divent" %in% .packages()) {
     warning("Function arguments cannot be checked because the package divent is not attached. Add CheckArguments=FALSE to suppress this warning or run library('divent')")
-    return (TRUE)
+    return(TRUE)
   }
   # Get the list of arguments of the parent function
   parent_function <- sys.call(-1)[[1]]
   # If apply() or similar was used, the function name is not in parent_function: sys.call(-1)[[1]] returns "FUN"
   if (parent_function == "FUN") {
     warning("Function arguments cannot be checked, probably because you used apply(). Add CheckArguments=FALSE to suppress this warning.")
-    return (TRUE)
+    return(TRUE)
   }
 
   # Find the arguments. match.fun does not work with package::function
@@ -712,6 +714,19 @@ check_divent_args <- function(
       )
     }
   }
+  # orders
+  if (!is.na(names(args["orders"]))) {
+    orders <- eval(expression(orders), parent.frame())
+    if (!is.null(orders)) {
+      if (!is.numeric(orders) && !is.vector(orders)) {
+        error_message(
+          "orders must be a numeric vector", 
+          orders, 
+          parent_function
+        )
+      }
+    }
+  }
   # probability_estimator is checked by match.arg()
   # richness_estimator is checked by match.arg()
   # q
@@ -922,7 +937,7 @@ check_divent_args <- function(
   if (!is.na(names(args["weights"]))) {
     weights <- eval(expression(weights), parent.frame())
     if (!is.null(weights)) {
-      if (!is.numeric(weights)) {
+      if (!is.numeric(weights) && !is.vector(weights)) {
         error_message(
           "weights must be a numeric vector",
           weights,
