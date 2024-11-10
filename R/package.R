@@ -348,10 +348,8 @@ as_named_vector.wmppp <- function(X){
 #' @param probability_estimator a string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
-#' @param q the order of diversity.
-#' @param r a vector of distances. 
-#' If `NULL` accumulation is along `n`, 
-#' else neighbors are accumulated in circles of radius `r`.
+#' @param q a number: the order of diversity.
+#' @param r a vector of distances.
 #' @param rate the decay rate of the exponential similarity.
 #' @param richness_estimator an estimator of richness to evaluate the total number of species,
 #' see [div_richness]. used for interpolation and extrapolation.
