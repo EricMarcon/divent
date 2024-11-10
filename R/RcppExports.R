@@ -11,7 +11,7 @@
 #' @param Type A vector containing the species of each point (as integer, i.e. the factor code).
 #' @param Weight A vector containing the weights of points.
 #' @returns a numeric vector with the distances to convert to a matrix
-#' @export
+#' @noRd
 #' @examples
 #' # Build a point pattern
 #' X <- rspcommunity(1, size = 5, species_number = 3)
