@@ -168,7 +168,7 @@ accum_tsallis.numeric <- function(
         ent_level[(i + 1):length(levels)] <- s_obs - 1
       }
       ent_estimator[(i + 1):length(levels)] <- richness_estimator
-      if(show_progress & interactive()) {
+      if (show_progress & interactive()) {
         cli::cli_progress_bar("Running estimations", total = length(levels))
       }
     } else {
@@ -179,10 +179,10 @@ accum_tsallis.numeric <- function(
         # Estimate observed entropy
         ent_obs <- -sum(prob * log(prob))
         # Interpolation (the vector is levels_extrap)
-        ent_level[(i+1):length(levels)] <- sample_size / levels_extrap * ent_obs + 
+        ent_level[(i + 1):length(levels)] <- sample_size / levels_extrap * ent_obs + 
           (levels_extrap - sample_size) / levels_extrap * ent_est
         ent_estimator[(i + 1):length(levels)] <- richness_estimator
-        if(show_progress & interactive()) {
+        if (show_progress & interactive()) {
           cli::cli_progress_bar("Running estimations", total = length(levels))
         }
       } else {
@@ -201,7 +201,7 @@ accum_tsallis.numeric <- function(
               (1 - 1 / levels_extrap) * sum(abd * (abd - 1)) / sample_size / (sample_size - 1)
           }
           ent_estimator[(i + 1):length(levels)] <- "Chao2014"
-          if(show_progress & interactive()) {
+          if (show_progress & interactive()) {
             cli::cli_progress_bar("Running estimations", total = length(levels))
           }
         } else {
@@ -217,7 +217,7 @@ accum_tsallis.numeric <- function(
                   )
                 )
               }, 
-              FUN.VALUE=0.0
+              FUN.VALUE = 0.0
             )
             # Estimate entropy (Chao et al., 2014, eq. 6)
             i <- which(levels == level)
@@ -239,7 +239,7 @@ accum_tsallis.numeric <- function(
   if (n_simulations > 0) {
     # Prepare the result matrix
     ent_sim_quantiles <- matrix(0, nrow = length(levels), ncol = 2)
-    if(show_progress & interactive()) {
+    if (show_progress & interactive()) {
       cli::cli_progress_bar("Running simulations", total = length(levels))
     }
     if (is.null(prob_unv)) {
