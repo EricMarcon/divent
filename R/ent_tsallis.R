@@ -100,6 +100,8 @@ ent_tsallis.numeric <- function(
   abd <- x[x > 0]
   # Sample size
   sample_size <- sum(abd)
+  # Probabilities
+  prob <- abd / sample_size
   # Number of observed species
   s_obs <- length(abd)
   
@@ -150,7 +152,7 @@ ent_tsallis.numeric <- function(
         (estimator == "ChaoShen" | estimator == "Marcon")) {
       
       cp <- sample_coverage * abd / sample_size
-      chao_shen <- -sum(cp^q * ln_q(cp, q = q) /(1 - (1 - cp)^sample_size))
+      chao_shen <- -sum(cp^q * ln_q(cp, q = q) / (1 - (1 - cp)^sample_size))
       if (estimator == "Marcon") {
         # Calculate Grassberger's estimator
         if (q == 1) {
@@ -262,8 +264,8 @@ ent_tsallis.numeric <- function(
       # w_v <- cumprod(w_vi)
       # ZhangGrabchak <- sum(prob * vapply(seq_along(abd), sum_prod, 0)) / (1 - q)
       # Use EntropyEstimation instead
-      if (q==0) {
-        ent_ZhangGrabchak <- s_obs-1 
+      if (q == 0) {
+        ent_ZhangGrabchak <- s_obs - 1 
       } else {
         ent_ZhangGrabchak <- EntropyEstimation::Tsallis.z(abd, q)
       }
@@ -466,7 +468,7 @@ ent_tsallis.numeric <- function(
     }
     
     warning("estimator was not recognized")
-    return (NA)
+    return(NA)
   }
   
   # Entropy at a level ----
@@ -514,7 +516,7 @@ ent_tsallis.numeric <- function(
   }
   
   ## Integer q ----
-  if (q==0) {
+  if (q == 0) {
     # Richness - 1. Same result as general formula but faster
     the_richness <- div_richness.numeric(
       abd, 
@@ -540,7 +542,7 @@ ent_tsallis.numeric <- function(
       return(the_richness)  
     }
   } 
-  if (q==1) {
+  if (q == 1) {
     # Shannon. General formula is not defined at q=1
     return(
       ent_shannon(
@@ -558,7 +560,7 @@ ent_tsallis.numeric <- function(
       )
     )
   } 
-  if (q==2) {
+  if (q == 2) {
     # Simpson.
     return(
       ent_simpson(
@@ -579,10 +581,12 @@ ent_tsallis.numeric <- function(
   
   if (level <= sample_size) {
     ## Interpolation ----
-    # Obtain Abundance Frequence Count
+    # Obtain Abundance Frequency Count
     abd_freq <- abd_freq_count(abd, level = level, check_arguments = FALSE)
     # Calculate entropy (Chao et al., 2014, eq. 6)
-    the_entropy <- (sum(((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1)/(1 - q)
+    the_entropy <- (
+      sum(((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1
+      )/(1 - q)
     if (as_numeric) {
       return(the_entropy)
     } else {
@@ -615,11 +619,12 @@ ent_tsallis.numeric <- function(
       function(nu) {
         sum(
           exp(
-            lchoose(level, nu) + nu * log(prob_unv) + (level - nu) * log(1 - prob_unv)
+            lchoose(level, nu) + nu * log(prob_unv) + 
+              (level - nu) * log(1 - prob_unv)
           )
         )
       }, 
-      FUN.VALUE=0
+      FUN.VALUE = 0
     )
     # Estimate entropy (Chao et al., 2014, eq. 6)
     the_entropy <- (sum((seq_len(level) / level)^q * s_level) - 1) / (1 - q)
@@ -656,6 +661,7 @@ ent_tsallis.species_distribution <- function(
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -682,12 +688,13 @@ ent_tsallis.species_distribution <- function(
         jack_alpha  = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
-        as_numeric = FALSE
+        as_numeric = as_numeric
       )
     )
   } else {
     # Apply ent_tsallis.numeric() to each site
-    ent_tsallis_list <- apply(
+    # Creates a list if as_numeric is FALSE or a numeric vector else
+    ent_tsallis_sites <- apply(
       # Eliminate site and weight columns
       x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
@@ -703,17 +710,21 @@ ent_tsallis.species_distribution <- function(
       jack_alpha  = jack_alpha, 
       jack_max = jack_max, 
       coverage_estimator = coverage_estimator,
-      as_numeric = FALSE,
+      as_numeric = as_numeric,
       check_arguments = FALSE
     )
-    return(
-      # Make a tibble with site, estimator and entropy
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
-        do.call(rbind.data.frame, ent_tsallis_list)
+    if (as_numeric) {
+      return(ent_tsallis_sites)
+    } else {
+      return(
+        # Make a tibble with site, estimator and entropy
+        tibble::tibble(
+          # Restore non-species columns
+          x[colnames(x) %in% non_species_columns],
+          # Coerce the list returned by apply into a dataframe
+          do.call(rbind.data.frame, ent_tsallis_sites)
+        )
       )
-    )
+    }
   }
 }

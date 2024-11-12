@@ -159,6 +159,7 @@ div_hill.species_distribution <- function(
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -184,14 +185,19 @@ div_hill.species_distribution <- function(
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     gamma = gamma,
+    as_numeric = as_numeric,
     check_arguments = FALSE
   )
   # Calculate diversity
-  the_diversity <- dplyr::mutate(
-    the_entropy, 
-    diversity = exp_q(.data$entropy, q = q),
-    .keep = "unused"
-  )
-
+  if (as_numeric) {
+    the_diversity = exp_q(the_entropy, q = q)
+  } else {
+    the_diversity <- dplyr::mutate(
+      the_entropy, 
+      diversity = exp_q(.data$entropy, q = q),
+      .keep = "unused"
+    )
+  }
+  
   return(the_diversity)
 }

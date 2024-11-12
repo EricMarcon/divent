@@ -87,6 +87,7 @@ div_hurlbert.species_distribution <- function(
     x, 
     k = 2, 
     estimator = c("Hurlbert", "naive"),
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -100,14 +101,19 @@ div_hurlbert.species_distribution <- function(
     x, 
     k = k, 
     estimator = estimator,
+    as_numeric = as_numeric,
     check_arguments = FALSE
   )
   # Calculate diversity
-  the_diversity <- dplyr::mutate(
-    the_entropy, 
-    diversity = hurlbert_ent2div(.data$entropy, k = k),
-    .keep = "unused"
-  )
+  if (as_numeric) {
+    the_diversity = hurlbert_ent2div(the_entropy, k = k)
+  } else {
+    the_diversity <- dplyr::mutate(
+      the_entropy, 
+      diversity = hurlbert_ent2div(.data$entropy, k = k),
+      .keep = "unused"
+    )
+  }
 
   return(the_diversity)
 }

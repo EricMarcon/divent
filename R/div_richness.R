@@ -446,6 +446,7 @@ div_richness.species_distribution <- function(
     unveiling = c("geometric", "uniform", "none"),
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
+    as_numeric = FALSE,
     ..., 
     check_arguments = TRUE) {
   
@@ -471,7 +472,7 @@ div_richness.species_distribution <- function(
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
-      as_numeric = FALSE
+      as_numeric = as_numeric
     )
     # Calculate diversity
     ent_0 <- dplyr::mutate(
@@ -482,7 +483,7 @@ div_richness.species_distribution <- function(
     return(ent_0)
   } else {
     # Apply div_richness.numeric() to each site
-    div_richness_list <- apply(
+    div_richness_sites <- apply(
       # Eliminate site and weight columns
       x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
@@ -496,17 +497,21 @@ div_richness.species_distribution <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       coverage_estimator = coverage_estimator,
-      as_numeric = FALSE,
+      as_numeric = as_numeric,
       check_arguments = FALSE
     )
-    return(
-      # Make a tibble with site, estimator and richness
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
-        do.call(rbind.data.frame, div_richness_list)
+    if (as_numeric) {
+      the_diversity = div_richness_sites
+    } else {
+        return(
+        # Make a tibble with site, estimator and richness
+        tibble::tibble(
+          # Restore non-species columns
+          x[colnames(x) %in% non_species_columns],
+          # Coerce the list returned by apply into a dataframe
+          do.call(rbind.data.frame, div_richness_sites)
+        )
       )
-    ) 
+    }
   }
 }

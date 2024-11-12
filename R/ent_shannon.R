@@ -552,6 +552,7 @@ ent_shannon.species_distribution <- function(
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -578,12 +579,12 @@ ent_shannon.species_distribution <- function(
         jack_alpha  = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
-        as_numeric = FALSE
+        as_numeric = as_numeric
       )
     )
   } else {
     # Apply ent_shannon.numeric() to each site
-    ent_shannon_list <- apply(
+    ent_shannon_sites <- apply(
       # Eliminate site and weight columns
       x[, !colnames(x) %in% non_species_columns], 
       # Apply to each row
@@ -598,17 +599,21 @@ ent_shannon.species_distribution <- function(
       jack_alpha  = jack_alpha, 
       jack_max = jack_max, 
       coverage_estimator = coverage_estimator,
-      as_numeric = FALSE,
+      as_numeric = as_numeric,
       check_arguments = FALSE
     )
-    return(
-      # Make a tibble with site, estimator and richness
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
-        do.call(rbind.data.frame, ent_shannon_list)
+    if (as_numeric) {
+      return(ent_shannon_sites)
+    } else {
+      return(
+        # Make a tibble with site, estimator and richness
+        tibble::tibble(
+          # Restore non-species columns
+          x[colnames(x) %in% non_species_columns],
+          # Coerce the list returned by apply into a dataframe
+          do.call(rbind.data.frame, ent_shannon_sites)
+        )
       )
-    )
+    }
   }
 }

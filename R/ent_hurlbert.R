@@ -120,7 +120,7 @@ ent_hurlbert.numeric <- function(
   }
 
   warning("estimator was not recognized")
-  return (NA)
+  return(NA)
 }
   
 
@@ -132,6 +132,7 @@ ent_hurlbert.species_distribution <- function(
     x, 
     k = 2, 
     estimator = c("Hurlbert", "naive"),
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -142,7 +143,7 @@ ent_hurlbert.species_distribution <- function(
   estimator <- match.arg(estimator) 
 
   # Apply ent_hurlbert.numeric() to each site
-  ent_hurlbert_list <- apply(
+  ent_hurlbert_sites <- apply(
     # Eliminate site and weight columns
     x[, !colnames(x) %in% non_species_columns], 
     # Apply to each row
@@ -151,15 +152,20 @@ ent_hurlbert.species_distribution <- function(
     # Arguments
     k = k,
     estimator = estimator,
+    as_numeric = as_numeric,
     check_arguments = FALSE
   )
-  return(
-    # Make a tibble with site, estimator and entropy
-    tibble::tibble(
-      # Restore non-species columns
-      x[colnames(x) %in% non_species_columns],
-      # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, ent_hurlbert_list)
+  if (as_numeric) {
+    return(ent_hurlbert_sites)
+  } else {
+    return(
+      # Make a tibble with site, estimator and entropy
+      tibble::tibble(
+        # Restore non-species columns
+        x[colnames(x) %in% non_species_columns],
+        # Coerce the list returned by apply into a dataframe
+        do.call(rbind.data.frame, ent_hurlbert_sites)
+      )
     )
-  )
+  }
 }
