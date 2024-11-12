@@ -27,9 +27,7 @@ ent_sp_simpsonEnvelope(
 \item{X}{a spatialized community
 (A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
 
-\item{r}{a vector of distances.
-If \code{NULL} accumulation is along \code{n},
-else neighbors are accumulated in circles of radius \code{r}.}
+\item{r}{a vector of distances.}
 
 \item{correction}{the edge-effect correction to apply when estimating
 the number of neighbors or the K function with \link[spatstat.explore:Kest]{spatstat.explore::Kest}.

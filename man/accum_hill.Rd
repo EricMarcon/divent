@@ -87,7 +87,7 @@ or an object of class \link{abundances}  or \link{probabilities}.}
 
 \item{...}{Unused.}
 
-\item{q}{the order of diversity.}
+\item{q}{a number: the order of diversity.}
 
 \item{levels}{The levels, i.e. the sample sizes of interpolation or
 extrapolation: a vector of integer values.}

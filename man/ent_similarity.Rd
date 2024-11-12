@@ -50,7 +50,7 @@ If it is a numeric vector, then its length must equal the dimensions of the
 \item{similarities}{a similarity matrix, that can be obtained by \link{fun_similarity}.
 Its default value is the identity matrix.}
 
-\item{q}{the order of diversity.}
+\item{q}{a number: the order of diversity.}
 
 \item{...}{Unused.}
 

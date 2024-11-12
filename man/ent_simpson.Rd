@@ -36,6 +36,7 @@ ent_simpson(x, ...)
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

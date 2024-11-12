@@ -21,6 +21,7 @@ div_hurlbert(x, k = 1, ...)
   x,
   k = 2,
   estimator = c("Hurlbert", "naive"),
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

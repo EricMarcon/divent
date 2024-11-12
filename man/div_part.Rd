@@ -22,7 +22,7 @@ div_part(
 \arguments{
 \item{abundances}{an object of class \link{abundances}.}
 
-\item{q}{the order of diversity.}
+\item{q}{a number: the order of diversity.}
 
 \item{estimator}{An estimator of diversity.}
 

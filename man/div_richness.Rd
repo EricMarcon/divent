@@ -32,6 +32,7 @@ div_richness(x, ...)
   unveiling = c("geometric", "uniform", "none"),
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

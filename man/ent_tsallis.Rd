@@ -39,6 +39,7 @@ ent_tsallis(x, q = 1, ...)
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
@@ -47,7 +48,7 @@ ent_tsallis(x, q = 1, ...)
 \item{x}{An object, that may be a numeric vector containing abundances or probabilities,
 or an object of class \link{abundances} or \link{probabilities}.}
 
-\item{q}{the order of diversity.}
+\item{q}{a number: the order of diversity.}
 
 \item{...}{Unused.}
 

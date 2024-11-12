@@ -53,7 +53,7 @@ or probabilities, or an object of class \link{abundances} or \link{probabilities
 \item{tree}{an ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
-\item{q}{the order of diversity.}
+\item{q}{a number: the order of diversity.}
 
 \item{...}{Unused.}
 

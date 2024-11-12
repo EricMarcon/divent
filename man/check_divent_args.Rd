@@ -25,6 +25,7 @@ check_divent_args(
   n = NULL,
   n_simulations = NULL,
   normalize = NULL,
+  orders = NULL,
   probability_estimator = NULL,
   q = NULL,
   r = NULL,
@@ -98,15 +99,15 @@ If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
 
 \item{normalize}{if \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
 
+\item{orders}{The orders of diversity.}
+
 \item{probability_estimator}{a string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
 
-\item{q}{the order of diversity.}
+\item{q}{a number: the order of diversity.}
 
-\item{r}{a vector of distances.
-If \code{NULL} accumulation is along \code{n},
-else neighbors are accumulated in circles of radius \code{r}.}
+\item{r}{a vector of distances.}
 
 \item{rate}{the decay rate of the exponential similarity.}
 
