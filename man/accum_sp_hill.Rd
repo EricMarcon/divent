@@ -20,7 +20,12 @@ accum_sp_tsallis(
 )
 }
 \arguments{
+\item{X}{a spatialized community
+(A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
+
 \item{orders}{A numeric vector: the diversity orders to address. Default is 0.}
+
+\item{estimator}{an estimator of asymptotic entropy, diversity or richness.}
 
 \item{neighbors}{A vector of integers.
 Entropy will be accumulated along this number of neighbors around each individual.
@@ -36,7 +41,15 @@ Default is "none".
 "extrapolation" extrapolates the observed diversity up to the number of individuals
 estimated in the full area of the neighborhood, which is slow.}
 
+\item{richness_estimator}{an estimator of richness to evaluate the total number of species,
+see \link{div_richness}. used for interpolation and extrapolation.}
+
 \item{individual}{If \code{TRUE}, individual neighborhood entropies are returned.}
+
+\item{show_progress}{if TRUE, a progress bar is shown during long computations.}
+
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
+Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
 An "Accumulation" object that is a list.
@@ -59,9 +72,6 @@ entropy and diversity with respect to the distance from individuals
 accumulation curve of a distribution.
 }
 \examples{
-# Paracou 6 subplot 1
-autoplot(accum_sp_hill(paracou_6_abd[1, ]))
-
 # Generate a random community
 X <- rspcommunity(1, size = 50, species_number = 3)
 # Calculate the accumulation of richness 
