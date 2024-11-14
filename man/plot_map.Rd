@@ -28,6 +28,8 @@ plot_map(
 \arguments{
 \item{accum}{an object to map.}
 
+\item{q}{a number: the order of diversity.}
+
 \item{neighborhood}{The neighborhood size, i.e. the number of neighbors or the distance to consider.}
 
 \item{sigma}{the smoothing bandwidth.
@@ -39,6 +41,10 @@ elimination by the smoothing procedure.}
 
 \item{weighted}{if \code{TRUE}, the weight of the points is used by the smoothing
 procedure.}
+
+\item{adjust}{force the automatically selected bandwidth to be multiplied
+by \code{adjust}.
+Setting it to values lower than one (1/2 for example) will sharpen the estimation.}
 
 \item{dim_x}{the number of columns (pixels) of the resulting map, 128 by default.}
 
@@ -62,6 +68,9 @@ procedure.}
 \link[spatstat.explore:density.ppp]{spatstat.explore::density.ppp} to control the kernel smoothing and
 to \link[spatstat.geom:plot.im]{spatstat.geom::plot.im} to plot the image.
 Standard base graphic arguments such as \code{main} can be used.}
+
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
+Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
 A \link[spatstat.geom:im]{spatstat.geom::im} object that can be used to produce

@@ -196,7 +196,7 @@ accum_sp_tsallis <- function(
     )
     # individual values
     if (individual) {
-      ent_q_r_individuals <- array(
+      ent_q_nr_individuals <- array(
         0, 
         dim = c(length(orders), length(r), X$n), 
         dimnames = list(
@@ -576,7 +576,10 @@ accum_mixing <- function(
 
 #' @rdname accum_sp_hill
 #'
-#' @param x an "Accumulation" object that can be accumulation of diversity (\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or the Mixing index (\code{\link{Mixing}}).
+#' @param x an "Accumulation" object that can be accumulation of diversity
+#' (\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or 
+#' the Mixing index (\code{\link{Mixing}}).
+#' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
 #' @param type plotting parameter. Default is "l".
 #' @param main main title of the plot.
 #' @param xlab X-axis label.

@@ -127,7 +127,11 @@ in the window (a binomial point process is a Poisson point process conditionally
 
 \item{n_simulations}{the number of simulations used to estimate the confidence envelope.}
 
-\item{x}{an "Accumulation" object that can be accumulation of diversity (\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or the Mixing index (\code{\link{Mixing}}).}
+\item{x}{an "Accumulation" object that can be accumulation of diversity
+(\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or
+the Mixing index (\code{\link{Mixing}}).}
+
+\item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
 
 \item{q}{a number: the order of diversity.}
 

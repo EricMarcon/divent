@@ -4,6 +4,7 @@
 #' 
 #' Maps of interpolated values from points of an [accum] produced e.g. by the function [DivAccum] object are produced.
 #' 
+#' @inheritParams check_divent_args
 #' @param accum an object to map.
 #' @param neighborhood The neighborhood size, i.e. the number of neighbors or the distance to consider.
 #' @param sigma the smoothing bandwidth. 
@@ -13,6 +14,9 @@
 #' elimination by the smoothing procedure.
 #' @param weighted if `TRUE`, the weight of the points is used by the smoothing
 #' procedure.
+#' @param adjust force the automatically selected bandwidth to be multiplied 
+#' by `adjust`. 
+#' Setting it to values lower than one (1/2 for example) will sharpen the estimation.
 #' @param dim_x the number of columns (pixels) of the resulting map, 128 by default.
 #' @param dim_y the number of rows (pixels) of the resulting map, 128 by default.
 #' @param col the colors of the map. See [spatstat.geom::plot.im] for details.
