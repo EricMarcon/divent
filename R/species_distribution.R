@@ -34,7 +34,8 @@
 #' @param x an object.
 #' @param ... Unused.
 
-#' @returns An object of classes "species_distribution" and "abundances" or "probabilities".
+#' @returns An object of classes `species_distribution` and `abundances` 
+#' or `probabilities`.
 #' 
 #' `as.double()` and its synonymous `as.numeric()` return a numeric vector 
 #' that contains species abundances or probabilities of a single-row 
