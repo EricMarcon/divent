@@ -1,4 +1,4 @@
-#  Package description ----
+# Package description ----
 #' divent
 #'
 #' Measures of Diversity and Entropy
@@ -95,7 +95,7 @@ autoplot.wmppp <- function(
 }
 
 
-#  Initialization ----
+# Initialization ----
 # Columns to ignore when computing species distributions 
 non_species_columns <- c(
   # Site characteristics
@@ -115,7 +115,7 @@ non_species_columns <- c(
 
 
 
-#  Data ----
+# Data ----
 
 #' Paracou plot 6
 #'
@@ -202,7 +202,7 @@ non_species_columns <- c(
 
 
 
-#  Utilities ----
+# Utilities ----
 
 # Names of variables inside functions:
 # abd: a numeric vector of abundances
@@ -218,45 +218,85 @@ non_species_columns <- c(
 # species_names: char vector with the species names of the community
 
 
-#' Chao's A
-#' 
-#' Helper for Chao's estimators.
-#' 
-#' A's formula \insertCite{@Chao2015@, eq. 6b}{divent}) depends on the presence
-#' of singletons and doubletons.
-#' 
-#' @param abd A vector of positive integers.
+#' Helper to prepare parameters for `accum_sp` plot and autoplot.
 #'
-#' @returns The value of A.
-#' @references
-#' \insertAllCited{}
-#' 
+#' @param x the `accum_sp` object to plot.
+#' @param q the order of diversity.
+#' @param main the title of the plot.
+#' @param xlab X-axis label.
+#' @param ylab Y-axis label.
+#' @param ylim Y-axis limits
+#'
+#' @returns a vector of parameters for the plots
 #' @noRd
 #'
-chao_A <- function(abd) {
-  
-  # Calculate abundance distribution
-  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
-  s_1 <- as.numeric(abd_distribution["1"])
-  s_2 <- as.numeric(abd_distribution["2"])
-  sample_size <- sum(abd)
-  
-  # Calculate A
-  if (is.na(s_1)) {
-    A <- 0
-  } else {
-    # Use Chao1 estimator to evaluate the number of unobserved species
-    if (is.na(s_2)) {
-      s_0 <- (sample_size - 1) * s_1 * (s_1 - 1) / 2 / sample_size
-    } else {
-      s_0 <- (sample_size - 1) * s_1^2 / 2 / sample_size / s_2
-    }
-    A <- 1 - sample_size * s_0 / (sample_size * s_0 + s_1)
-  }
-  
-  return(A)
-}
+accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
 
+    # Find the row in the accumulation table
+    q_row <- which(dimnames(x$Accumulation)$q == q)
+    if (length(q_row) != 1) {
+      stop("The value of q does not correspond to any accumulation curve.")
+    }
+  
+    if (is.null(ylim)) {
+      # Evaluate ylim if not set by an argument
+      ymin <- min(x$Accumulation[q_row, , ])
+      ymax <- max(x$Accumulation[q_row, , ])
+    } else {
+      ymin <- ylim[1]
+      ymax <- ylim[2]
+    }
+    
+    if (main == "Accumulation of ...") {
+      # Prepare the main title
+      if (inherits(x, "EntAccum")) {
+        main <- paste("Accumulation of Entropy of order", q)
+      }
+      if (inherits(x, "DivAccum")) {
+        if (q == 0) {
+          main <- "Species Accumulation Curve"
+        } else {
+          main <- paste("Accumulation of Diversity of order", q)
+        }
+      }
+      if (inherits(x, "Mixing")) main <- paste("Mixing index of order", q)
+    }
+    
+    if (xlab == "Sample size...") {
+      if (names(dimnames(x$Accumulation)[2]) == "n") {
+        xlab <- "Number of individuals"
+      } else {
+        xlab <- "Distance from the central individual"
+      }
+    }
+    
+    if (ylab == "Diversity...") {
+      # Prepare Y-axis
+      if (inherits(x, "EntAccum")) {
+        ylab <- "Diversity"
+      }
+      if (inherits(x, "DivAccum")) {
+        if (q == 0) {
+          ylab <- "Richness"
+      } else {
+          ylab <- "Diversity"
+      }
+      if (inherits(x, "Mixing")) {
+        ylab <- "Mixing index"
+      }
+    }
+    return(
+      list(
+        q_row = q_row, 
+        ymin = ymin, 
+        ymax = ymax, 
+        main = main, 
+        xlab = xlab, 
+        ylab = ylab
+      )
+    )
+  }
+}
 
 
 
@@ -298,6 +338,49 @@ as_named_vector.wmppp <- function(X){
   # Count the number of points by type
   return(as_named_vector.character(spatstat.geom::marks(X)$PointType))
 }
+
+
+
+
+#' Chao's A
+#' 
+#' Helper for Chao's estimators.
+#' 
+#' A's formula \insertCite{@Chao2015@, eq. 6b}{divent}) depends on the presence
+#' of singletons and doubletons.
+#' 
+#' @param abd A vector of positive integers.
+#'
+#' @returns The value of A.
+#' @references
+#' \insertAllCited{}
+#' 
+#' @noRd
+#'
+chao_A <- function(abd) {
+  
+  # Calculate abundance distribution
+  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
+  s_1 <- as.numeric(abd_distribution["1"])
+  s_2 <- as.numeric(abd_distribution["2"])
+  sample_size <- sum(abd)
+  
+  # Calculate A
+  if (is.na(s_1)) {
+    A <- 0
+  } else {
+    # Use Chao1 estimator to evaluate the number of unobserved species
+    if (is.na(s_2)) {
+      s_0 <- (sample_size - 1) * s_1 * (s_1 - 1) / 2 / sample_size
+    } else {
+      s_0 <- (sample_size - 1) * s_1^2 / 2 / sample_size / s_2
+    }
+    A <- 1 - sample_size * s_0 / (sample_size * s_0 + s_1)
+  }
+  
+  return(A)
+}
+
 
 #' check_divent_args
 #'

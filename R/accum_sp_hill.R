@@ -7,8 +7,6 @@
 #' accumulation curve of a distribution.
 #' 
 #' @inheritParams check_divent_args
-#' @references
-#' \insertAllCited{}
 #' 
 #' @name accum_sp_hill
 NULL
@@ -47,11 +45,11 @@ NULL
 #' # Generate a random community
 #' X <- rspcommunity(1, size = 50, species_number = 3)
 #' # Calculate the accumulation of richness 
-#' accum <- accum_sp_tsallis(X)
-#' # plot(accum, q=0)
+#' accum <- accum_sp_hill(X)
+#' plot(accum, q = 0)
 #' # along distance
-#' accumR <- accum_sp_tsallis(X, orders = 1, r = seq(0, .5, .05))
-#' # plot(accumR, q=1)
+#' accum_r <- accum_sp_hill(X, orders = 1, r = seq(0, .5, .05))
+#' autoplot(accum_r, q = 1)
 #' 
 accum_sp_tsallis <- function(
     X, 
@@ -87,14 +85,14 @@ accum_sp_tsallis <- function(
       pgb <- utils::txtProgressBar(min = 0, max = length(neighbors))
     }
     # 3D array: q, n, observed entropy in a single slice
-    ent_q_n_observed <- array(
+    ent_q_nr_observed <- array(
       0, 
       dim = c(length(orders), 1 + length(neighbors), 1),
       dimnames = list(q = orders, n = c(1, 1 + neighbors), Values = "Observed")
     )
-    # Individual values. 3D array: q, n, individuals
+    # individual values. 3D array: q, n, individuals
     if (individual) {
-      ent_q_n_individuals <- array(
+      ent_q_nr_individuals <- array(
         0, 
         dim = c(length(orders), 1 + length(neighbors), X$n),
         dimnames = list(
@@ -105,12 +103,12 @@ accum_sp_tsallis <- function(
       )
       
     } else {
-      ent_q_n_individuals <- NA
+      ent_q_nr_individuals <- NA
     }
 
     # At each number of neighbors, calculate the entropy of 
     # all points' neighborhood for each q
-    for (k in 1:length(neighbors)) {
+    for (k in seq_along(neighbors)) {
       # Neighbor communities: 1 community per column
       neighbor_communities <- apply(
         neighbors.matrix[, 1:(k + 1)], 
@@ -138,7 +136,7 @@ accum_sp_tsallis <- function(
       )
       # Keep individual neighborhood values
       if (individual) {
-        ent_q_n_individuals[, k + 1, ] <- ent_nbhood_q
+        ent_q_nr_individuals[, k + 1, ] <- ent_nbhood_q
       }
 
       # Mean entropy. 
@@ -147,7 +145,7 @@ accum_sp_tsallis <- function(
       if (is.null(dim(ent_nbhood_q))) {
         ent_nbhood_q <- t(ent_nbhood_q)
       }
-      ent_q_n_observed[, k + 1, 1] <- apply(
+      ent_q_nr_observed[, k + 1, 1] <- apply(
         t(t(ent_nbhood_q)), 
         MARGIN = 1, 
         FUN = mean, 
@@ -161,8 +159,8 @@ accum_sp_tsallis <- function(
    
     # Entropy of a single individual is 0. 
     # This is the default value of the arrays so don't run.
-    #  ent_q_n_observed[, 1, 1] <- 0
-    #  if (individual) ent_q_n_individuals[, 1, ] <- 0
+    #  ent_q_nr_observed[, 1, 1] <- 0
+    #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
     
   } else {
     # A vector of distances ----
@@ -191,12 +189,12 @@ accum_sp_tsallis <- function(
       pgb <- utils::txtProgressBar(min = 1, max = length(r))
     }
     # 3D array: q, r, observed entropy in a single slice
-    ent_q_r_observed <- array(
+    ent_q_nr_observed <- array(
       0, 
       dim = c(length(orders), length(r), 1),
       dimnames = list(q = orders, r = r, Values = "Observed")
     )
-    # Individual values
+    # individual values
     if (individual) {
       ent_q_r_individuals <- array(
         0, 
@@ -208,7 +206,7 @@ accum_sp_tsallis <- function(
         )
       )
     } else {
-      ent_q_n_individuals <- NA
+      ent_q_nr_individuals <- NA
     }
 
     # At each distance, calculate the entropy of 
@@ -268,7 +266,7 @@ accum_sp_tsallis <- function(
             dim = c(length(orders), nrow(neighbor_communities))
           )
           for (community in 1:nrow(neighbor_communities)) {
-            for (order in 1:length(orders)) {
+            for (order in seq_along(orders)) {
               # Suppress the warnings for Coverage=0 every time neighbors are singletons only.
               suppressWarnings(
                 ent_nbhood_q[order, community] <- ent_tsallis(
@@ -288,7 +286,7 @@ accum_sp_tsallis <- function(
       }
       # Keep individual neighborhood values
       if (individual) {
-        ent_q_n_individuals[, r, ] <- ent_nbhood_q
+        ent_q_nr_individuals[, r, ] <- ent_nbhood_q
       }
       # Mean entropy. 
       # If ent_nbhood_q is a vector (i.e. a single value of q is provided), 
@@ -296,7 +294,7 @@ accum_sp_tsallis <- function(
       if (is.null(dim(ent_nbhood_q))) {
         ent_nbhood_q <- t(ent_nbhood_q)
       }
-      ent_q_r_observed[, r, 1] <- apply(
+      ent_q_nr_observed[, r, 1] <- apply(
         t(t(ent_nbhood_q)), 
         MARGIN = 1, 
         FUN = mean, 
@@ -306,15 +304,427 @@ accum_sp_tsallis <- function(
     }
     if (show_progress & interactive()) close(pgb)
     # Entropy at r=0 is 0. This is the default value of the arrays so don't run.
-    #  ent_q_r_observed[, 1, 1] <- 0
-    #  if (individual) ent_q_n_individuals[, 1, ] <- 0
+    #  ent_q_nr_observed[, 1, 1] <- 0
+    #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
   }
   
   entAccum <- list(
     X = X, 
-    Accumulation = ent_q_r_observed, 
-    Neighborhoods = ent_q_n_individuals
+    Accumulation = ent_q_nr_observed, 
+    Neighborhoods = ent_q_nr_individuals
   )
   class(entAccum) <- c("EntAccum", "Accumulation")
   return(entAccum)
+}
+
+
+#' @rdname accum_sp_hill
+#' @param h0 The null hypothesis to compare the distribution of `X` to. 
+#' If "none", the default value, no null hypothesis is tested.
+#' "multinomial" means the community will be rarefied down to the number of `neighbors`.
+#' "random location" means the points will we randomly permuted accross their actual locations.
+#' "binomial" means the points will we uniformly and independently drawn 
+#' in the window (a binomial point process is a Poisson point process conditionally to the number of points).
+#' 
+#' @export
+#' 
+accum_sp_hill <- function(
+    X, 
+    orders = 0, 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+              "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+              "Bonachela", "Holste"),
+    neighbors = 1:ceiling(X$n / 2), 
+    r = NULL, 
+    correction = c("none", "extrapolation"),
+    richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+    h0 = c("none", "multinomial", "random location", "binomial"), 
+    alpha = 0.05, 
+    n_simulations = 100,
+    individual = FALSE, 
+    show_progress = TRUE, 
+    check_arguments = TRUE) {
+
+  if (any(check_arguments)) {
+    check_divent_args()
+  }
+  estimator <- match.arg(estimator) 
+  richness_estimator <- match.arg(richness_estimator) 
+  correction <- match.arg(correction) 
+  h0 <- match.arg(h0) 
+  
+  # Prepare an array to store data
+  if (is.null(r)) {
+    # Neighborhoods defined as the number of neighbors + a column for no neighbor.
+    n_cols <- 1 + length(neighbors)
+    the_seq <- c(1, neighbors + 1)
+  } else {
+    # Neighborhoods defined by distances. The first distance in r is 0.
+    n_cols <- length(r)
+    the_seq <- r
+  }
+  
+  # Get the entropy
+  the_diversity <- accum_sp_tsallis(
+    X = X, 
+    orders = orders, 
+    estimator = estimator,
+    neighbors = neighbors, 
+    r = r, 
+    correction = correction,
+    richness_estimator = richness_estimator,
+    individual = individual, 
+    show_progress = (show_progress & (h0 == "none" | h0 == "multinomial")), 
+    check_arguments = FALSE)
+ 
+  if (h0 == "none") {
+    is_h0_found <- TRUE
+  } else {
+    # H0 will have to be found
+    is_h0_found <- FALSE
+    # Rename Accumulation
+    names(the_diversity)[2] <- "Entropy"
+    # Put the entropy into a 4-D array. 
+    # 4 z-values: observed, expected under H0, lower and upper bounds of H0.
+    the_diversity$Accumulation <- rep(the_diversity$Entropy, 4)
+    dim(the_diversity$Accumulation) <- c(length(orders), n_cols, 4)
+    dimnames(the_diversity$Accumulation) <- list(
+      q = orders, 
+      n = the_seq, 
+      c("Observed", "Theoretical", "Lower bound", "Upper bound")
+    )
+    # if accumulation is along r, change the name
+    if (!is.null(r)) {
+      names(dimnames(the_diversity$Accumulation))[2] <- "r"
+    }
+    the_diversity$Entropy <- NULL
+  }
+  
+  # Calculate Hill Numbers, by row
+  for (order in seq_along(orders)) {
+    # Transform entropy to diversity, by row (where q does not change)
+    the_diversity$Accumulation[order, , 1] <- exp_q(
+      the_diversity$Accumulation[order, , 1], 
+      q = orders[order]
+    )
+    if (individual) {
+      the_diversity$Neighborhoods[order, , ] <- exp_q(
+        the_diversity$Neighborhoods[order, , ], 
+        q = orders[order]
+      )
+    }
+  }
+  
+  # Null distribution
+  if (h0 == "multinomial") {
+    # Rarefy the community
+    if (!is.null(r)) {
+      stop("The 'multinomial' null hypothesis only applies to accumulation by number of neighbors.")
+    }
+    is_h0_found <- TRUE
+    # Prepare a progress bar 
+    if (show_progress & interactive())
+      pgb <- utils::txtProgressBar(min=0, max=length(orders))
+    # Prepare the distribution of the abundances of species.
+    abd <- as_abundances(X)
+    for (order in seq_along(orders)) {
+      # Rarefy the community to the sizes of neighborhoods
+      h0_values <- accum_hill(
+        abd, 
+        q = as.numeric(orders[order]), 
+        levels = the_seq,              # TODO: missing arguments for accum_hill.numeric
+        n_simulations = n_simulations, 
+        alpha = alpha, 
+        show_progress = FALSE, 
+        check_arguments = FALSE
+      )
+      # Extract the results from the object returned
+      the_diversity$Accumulation[order, , 2] <- h0_values$diversity
+      the_diversity$Accumulation[order, , 3] <- h0_values$inf
+      the_diversity$Accumulation[order, , 4] <- h0_values$sup
+      if (show_progress & interactive())
+        utils::setTxtProgressBar(pgb, i)
+    }
+    if (show_progress & interactive())
+      close(ProgressBar)
+  }
+  if (h0 == "random location" | h0 == "binomial") {
+    is_h0_found <- TRUE
+    # Prepare a progress bar 
+    if (show_progress & interactive()) {
+      pgb <- utils::txtProgressBar(min = 0, max = n_simulations)
+    }
+    # Prepare a 3-D array to store results. Rows are q, columns are r or n, 
+    # z-values are for each simulation.
+    h0_diversity <- array(
+      0, 
+      dim = c(length(orders), n_cols, n_simulations)
+    )
+    # Simulate communities according to H0
+    for (i in (1:n_simulations)) {
+      # Random community
+      if (h0 == "random location") 
+        h0_X <- dbmss::rRandomLocation(X, CheckArguments = FALSE)
+      if (H0 == "binomial") 
+        h0_X <- dbmss::rRandomPositionK(X, CheckArguments = FALSE)
+      # Calculate its accumulated diversity
+      h0_diversity[, , i] <- accum_sp_hill(
+        h0_X, 
+        orders = orders, 
+        estimator = estimator,
+        neighbors = neighbors, 
+        r = r, 
+        correction = correction,
+        richness_estimator = richness_estimator, 
+        h0 = "none",
+        n_simulations = 0,                 # TODO: check argument list
+        individual = FALSE, 
+        show_progress = FALSE, 
+        check_arguments = FALSE
+      )$Accumulation[, , 1]
+      if (show_progress & interactive())
+        utils::setTxtProgressBar(ProgressBar, i)
+    }
+    if (show_progress & interactive()) close(ProgressBar)
+    # Calculate quantiles
+    for (q in seq_along(orders)) {
+      for (r in seq_along(r)) {
+        the_diversity$Accumulation[q, r, 3:4] <- stats::quantile(
+          h0_diversity[q, r, ], c(alpha, 1 - alpha), na.rm = TRUE
+        )
+        the_diversity$Accumulation[q, r, 2] <- mean(
+          h0_diversity[q, r, ], na.rm = TRUE
+        )
+      }
+    }
+  }
+  
+  if (!is_h0_found) {
+    stop("The value of 'h0' does not correspond to a valid null hypothesis.")
+  }
+    
+  class(the_diversity) <- c("DivAccum", "Accumulation")
+  return(the_diversity)
+}
+
+
+#' @rdname accum_sp_hill
+#' 
+#' @export
+#' 
+accum_mixing <- function(
+    X, 
+    orders = 0, 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
+                  "Bonachela", "Holste"),
+    neighbors = 1:ceiling(X$n / 2), 
+    r = NULL, 
+    correction = c("none", "extrapolation"),
+    richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+    h0 = c("none", "multinomial", "random location", "binomial"), 
+    alpha = 0.05, 
+    n_simulations = 100,
+    individual = FALSE, 
+    show_progress = TRUE, 
+    check_arguments = TRUE) {
+
+  if (any(check_arguments)) {
+    check_divent_args()
+  }
+  estimator <- match.arg(estimator) 
+  richness_estimator <- match.arg(richness_estimator) 
+  correction <- match.arg(correction) 
+  h0 <- match.arg(h0) 
+  
+  # Get the diversity accumulation
+  the_mixing <- accum_sp_hill(
+    X, 
+    orders = orders, 
+    estimator = estimator,
+    neighbors = neighbors, 
+    r = r, 
+    correction = correction,
+    richness_estimator = richness_estimator, 
+    h0 = h0,
+    n_simulations = n_simulations,                 # TODO: check argument list
+    individual = show_progress, 
+    show_progress = show_progress, 
+    check_arguments = FALSE
+  )
+    
+  # Normalize it
+  the_mixing$Accumulation[, , 1] <- the_mixing$Accumulation[, , 1] / 
+    the_mixing$Accumulation[, , 2]
+  the_mixing$Accumulation[, , 3] <- the_mixing$Accumulation[, , 3] / 
+    the_mixing$Accumulation[, , 2]
+  the_mixing$Accumulation[, , 4] <- the_mixing$Accumulation[, , 4] / 
+    the_mixing$Accumulation[, , 2]
+  # Normalize individual values
+  if (individual) {
+    for (i in seq_len(X$n)) {
+      the_mixing$Neighborhoods[, , i] <- the_mixing$Neighborhoods[, , i] / 
+        the_mixing$Accumulation[, , 2]
+    }
+  }
+  the_mixing$Accumulation[, , 2] <- 1
+  
+  class(the_mixing) <- c("Mixing", "Accumulation")
+  return(the_mixing)
+}
+
+
+#' @rdname accum_sp_hill
+#'
+#' @param x an "Accumulation" object that can be accumulation of diversity (\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or the Mixing index (\code{\link{Mixing}}).
+#' @param type plotting parameter. Default is "l".
+#' @param main main title of the plot.
+#' @param xlab X-axis label.
+#' @param ylab Y-axis label.
+#' @param ylim limits of the Y-axis, as a vector of two numeric values.
+#' @param show_h0 if `TRUE`, the values of the null hypothesis are plotted.
+#' @param line_width width of the Diversity Accumulation Curve line.
+#' @param col_shade The color of the shaded confidence envelope.
+#' @param col_border The color of the borders of the confidence envelope.
+#' @export
+#'
+plot.Accumulation <- function(
+    x, 
+    ..., 
+    q = dimnames(x$Accumulation)$q[1], 
+    type = "l", 
+    main = "Accumulation of ...", 
+    xlab = "Sample size...", 
+    ylab = "Diversity...", 
+    ylim = NULL,
+    show_h0 = TRUE, 
+    line_width = 2, 
+    col_shade = "grey75", 
+    col_border = "red")  {
+  
+  # Prepare the parameters
+  h <- accum_sp_plot_helper(x, q, main, xlab, ylab, ylim)
+  
+  # Prepare the plot
+  plot(
+    x = dimnames(x$Accumulation)[[2]], 
+    y = as.numeric(x$Accumulation[h$q_row, , 1]), 
+    ylim = c(h$ymin, h$ymax),
+    type = h$type, 
+    main = h$main, 
+    xlab = h$xlab, 
+    ylab = h$ylab
+  )
+  
+  if (dim(x$Accumulation)[3] == 4) {
+    # Confidence envelope is available
+    graphics::polygon(
+      x = c(rev(dimnames(x$Accumulation)[[2]]), dimnames(x$Accumulation)[[2]]), 
+      y = c(rev(x$Accumulation[h$q_row, , 4]), x$Accumulation[h$q_row, , 3]), 
+      col = col_shade, 
+      border = FALSE
+    )
+    # Add red lines on borders of polygon
+    graphics::lines(
+      x = dimnames(x$Accumulation)[[2]], 
+      y = x$Accumulation[h$q_row, , 4], 
+      col = col_border, 
+      lty = 2
+    )
+    graphics::lines(
+      x = dimnames(x$Accumulation)[[2]], 
+      y = x$Accumulation[h$q_row, , 3], 
+      col = col_border, 
+      lty = 2
+    )
+    # Redraw the SAC
+    graphics::lines(
+      x = dimnames(x$Accumulation)[[2]], 
+      y = x$Accumulation[h$q_row, , 1], 
+      lwd = line_width, 
+      ...
+    )
+    
+    # H0
+    if (show_h0) {
+      graphics::lines(
+        x = dimnames(x$Accumulation)[[2]], 
+        y = x$Accumulation[h$q_row, , 2], 
+        lty = 2
+      )      
+    } 
+  }
+}
+
+
+#' @rdname accum_sp_hill
+#'
+#' @param object An "Accumulation" object that cat be accumulation of 
+#' diversity ([DivAccum]), entropy ([EntAccum]) or the Mixing index ([Mixing]).
+#'
+#' @export
+#'
+autoplot.Accumulation <- function(
+    object, 
+    ..., 
+    q = dimnames(object$Accumulation)$q[1],
+    main = "Accumulation of ...", 
+    xlab = "Sample size...", 
+    ylab = "Diversity...", 
+    ylim = NULL, 
+    show_h0 = TRUE, 
+    col_shade = "grey75", 
+    col_border = "red")   {
+
+  # Prepare the parameters
+  h <- accum_sp_plot_helper(object, q, main, xlab, ylab, ylim)
+  
+  # Prepare the data
+  df <- data.frame(
+    x = as.numeric(dimnames(object$Accumulation)[[2]]), 
+    y = object$Accumulation[h$q_row, , 1]
+  )
+  if (dim(object$Accumulation)[3] == 4) {
+    # Confidence envelope is available
+    df$low <- object$Accumulation[h$q_row, , 3]
+    df$high <- object$Accumulation[h$q_row, , 4]
+    if (show_h0) df$H0 <- object$Accumulation[h$q_row, , 2]
+  }
+  
+  # Prepare the plot
+  the_plot <- ggplot2::ggplot(
+    data = df, 
+    ggplot2::aes(x = .data$x, y = .data$y)
+  ) +
+    ggplot2::geom_line() +
+    ggplot2::labs(title = h$main, x = h$xlab, y = h$ylab)
+  
+  if (dim(object$Accumulation)[3] == 4) {
+    the_plot <- the_plot +
+      ggplot2::geom_ribbon(
+        ggplot2::aes(
+          ymin = .data$low, 
+          ymax = .data$high
+        ), 
+        fill = col_shade, 
+        alpha = 0.5) +
+      # Add red lines on borders of polygon
+      ggplot2::geom_line(
+        ggplot2::aes(y = .data$low), 
+        colour = col_border, 
+        linetype = 2
+      ) +
+      ggplot2::geom_line(
+        ggplot2::aes(y = .data$high), 
+        colour = col_border, 
+        linetype = 2
+      )
+    
+    # H0
+    if (show_h0) {
+      the_plot <- the_plot +
+        ggplot2::geom_line(ggplot2::aes(y=~H0), linetype=2)
+    }
+  }
+  return(the_plot)
 }

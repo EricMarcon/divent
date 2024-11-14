@@ -3,6 +3,9 @@
 \name{accum_sp_hill}
 \alias{accum_sp_hill}
 \alias{accum_sp_tsallis}
+\alias{accum_mixing}
+\alias{plot.Accumulation}
+\alias{autoplot.Accumulation}
 \title{Spatial Diversity Accumulation of a Community}
 \usage{
 accum_sp_tsallis(
@@ -18,9 +21,76 @@ accum_sp_tsallis(
   show_progress = TRUE,
   check_arguments = TRUE
 )
+
+accum_sp_hill(
+  X,
+  orders = 0,
+  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  neighbors = 1:ceiling(X$n/2),
+  r = NULL,
+  correction = c("none", "extrapolation"),
+  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  h0 = c("none", "multinomial", "random location", "binomial"),
+  alpha = 0.05,
+  n_simulations = 100,
+  individual = FALSE,
+  show_progress = TRUE,
+  check_arguments = TRUE
+)
+
+accum_mixing(
+  X,
+  orders = 0,
+  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
+    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  neighbors = 1:ceiling(X$n/2),
+  r = NULL,
+  correction = c("none", "extrapolation"),
+  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  h0 = c("none", "multinomial", "random location", "binomial"),
+  alpha = 0.05,
+  n_simulations = 100,
+  individual = FALSE,
+  show_progress = TRUE,
+  check_arguments = TRUE
+)
+
+\method{plot}{Accumulation}(
+  x,
+  ...,
+  q = dimnames(x$Accumulation)$q[1],
+  type = "l",
+  main = "Accumulation of ...",
+  xlab = "Sample size...",
+  ylab = "Diversity...",
+  ylim = NULL,
+  show_h0 = TRUE,
+  line_width = 2,
+  col_shade = "grey75",
+  col_border = "red"
+)
+
+\method{autoplot}{Accumulation}(
+  object,
+  ...,
+  q = dimnames(object$Accumulation)$q[1],
+  main = "Accumulation of ...",
+  xlab = "Sample size...",
+  ylab = "Diversity...",
+  ylim = NULL,
+  show_h0 = TRUE,
+  col_shade = "grey75",
+  col_border = "red"
+)
 }
 \arguments{
+\item{X}{a spatialized community
+(A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
+
 \item{orders}{A numeric vector: the diversity orders to address. Default is 0.}
+
+\item{estimator}{an estimator of asymptotic entropy, diversity or richness.}
 
 \item{neighbors}{A vector of integers.
 Entropy will be accumulated along this number of neighbors around each individual.
@@ -36,7 +106,51 @@ Default is "none".
 "extrapolation" extrapolates the observed diversity up to the number of individuals
 estimated in the full area of the neighborhood, which is slow.}
 
+\item{richness_estimator}{an estimator of richness to evaluate the total number of species,
+see \link{div_richness}. used for interpolation and extrapolation.}
+
 \item{individual}{If \code{TRUE}, individual neighborhood entropies are returned.}
+
+\item{show_progress}{if TRUE, a progress bar is shown during long computations.}
+
+\item{check_arguments}{if \code{TRUE}, the function arguments are verified.
+Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+
+\item{h0}{The null hypothesis to compare the distribution of \code{X} to.
+If "none", the default value, no null hypothesis is tested.
+"multinomial" means the community will be rarefied down to the number of \code{neighbors}.
+"random location" means the points will we randomly permuted accross their actual locations.
+"binomial" means the points will we uniformly and independently drawn
+in the window (a binomial point process is a Poisson point process conditionally to the number of points).}
+
+\item{alpha}{the risk level, 5\% by default.}
+
+\item{n_simulations}{the number of simulations used to estimate the confidence envelope.}
+
+\item{x}{an "Accumulation" object that can be accumulation of diversity (\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or the Mixing index (\code{\link{Mixing}}).}
+
+\item{q}{a number: the order of diversity.}
+
+\item{type}{plotting parameter. Default is "l".}
+
+\item{main}{main title of the plot.}
+
+\item{xlab}{X-axis label.}
+
+\item{ylab}{Y-axis label.}
+
+\item{ylim}{limits of the Y-axis, as a vector of two numeric values.}
+
+\item{show_h0}{if \code{TRUE}, the values of the null hypothesis are plotted.}
+
+\item{line_width}{width of the Diversity Accumulation Curve line.}
+
+\item{col_shade}{The color of the shaded confidence envelope.}
+
+\item{col_border}{The color of the borders of the confidence envelope.}
+
+\item{object}{An "Accumulation" object that cat be accumulation of
+diversity (\link{DivAccum}), entropy (\link{EntAccum}) or the Mixing index (\link{Mixing}).}
 }
 \value{
 An "Accumulation" object that is a list.
@@ -59,17 +173,14 @@ entropy and diversity with respect to the distance from individuals
 accumulation curve of a distribution.
 }
 \examples{
-# Paracou 6 subplot 1
-autoplot(accum_sp_hill(paracou_6_abd[1, ]))
-
 # Generate a random community
 X <- rspcommunity(1, size = 50, species_number = 3)
 # Calculate the accumulation of richness 
-accum <- accum_sp_tsallis(X)
-# plot(accum, q=0)
+accum <- accum_sp_hill(X)
+plot(accum, q = 0)
 # along distance
-accumR <- accum_sp_tsallis(X, orders = 1, r = seq(0, .5, .05))
-# plot(accumR, q=1)
+accum_r <- accum_sp_hill(X, orders = 1, r = seq(0, .5, .05))
+autoplot(accumR, q=1)
 
 }
 \references{
