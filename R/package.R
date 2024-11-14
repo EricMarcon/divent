@@ -1507,7 +1507,7 @@ phylo_entropy.phylo_abd <- function(
             # Obtain a vector.
             as_numeric = TRUE,
             check_arguments = FALSE
-          )$entropy
+          )
         }
       )
     )
