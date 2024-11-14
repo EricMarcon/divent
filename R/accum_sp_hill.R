@@ -303,8 +303,8 @@ accum_sp_tsallis <- function(
   
   entAccum <- list(
     X = X, 
-    Accumulation = ent_q_nr_observed, 
-    Neighborhoods = ent_q_nr_individuals
+    accumulation = ent_q_nr_observed, 
+    neighborhoods = ent_q_nr_individuals
   )
   class(entAccum) <- c("accum_sp_entropy", "accum_sp", class(entAccum))
   return(entAccum)
@@ -375,20 +375,20 @@ accum_sp_hill <- function(
   } else {
     # H0 will have to be found
     is_h0_found <- FALSE
-    # Rename Accumulation
+    # Rename accumulation
     names(the_diversity)[2] <- "Entropy"
     # Put the entropy into a 4-D array. 
     # 4 z-values: observed, expected under H0, lower and upper bounds of H0.
-    the_diversity$Accumulation <- rep(the_diversity$Entropy, 4)
-    dim(the_diversity$Accumulation) <- c(length(orders), n_cols, 4)
-    dimnames(the_diversity$Accumulation) <- list(
+    the_diversity$accumulation <- rep(the_diversity$Entropy, 4)
+    dim(the_diversity$accumulation) <- c(length(orders), n_cols, 4)
+    dimnames(the_diversity$accumulation) <- list(
       q = orders, 
       n = the_seq, 
       c("Observed", "Theoretical", "Lower bound", "Upper bound")
     )
     # if accumulation is along r, change the name
     if (!is.null(r)) {
-      names(dimnames(the_diversity$Accumulation))[2] <- "r"
+      names(dimnames(the_diversity$accumulation))[2] <- "r"
     }
     the_diversity$Entropy <- NULL
   }
@@ -396,13 +396,13 @@ accum_sp_hill <- function(
   # Calculate Hill Numbers, by row
   for (order in seq_along(orders)) {
     # Transform entropy to diversity, by row (where q does not change)
-    the_diversity$Accumulation[order, , 1] <- exp_q(
-      the_diversity$Accumulation[order, , 1], 
+    the_diversity$accumulation[order, , 1] <- exp_q(
+      the_diversity$accumulation[order, , 1], 
       q = orders[order]
     )
     if (individual) {
-      the_diversity$Neighborhoods[order, , ] <- exp_q(
-        the_diversity$Neighborhoods[order, , ], 
+      the_diversity$neighborhoods[order, , ] <- exp_q(
+        the_diversity$neighborhoods[order, , ], 
         q = orders[order]
       )
     }
@@ -432,9 +432,9 @@ accum_sp_hill <- function(
         check_arguments = FALSE
       )
       # Extract the results from the object returned
-      the_diversity$Accumulation[order, , 2] <- h0_values$diversity
-      the_diversity$Accumulation[order, , 3] <- h0_values$inf
-      the_diversity$Accumulation[order, , 4] <- h0_values$sup
+      the_diversity$accumulation[order, , 2] <- h0_values$diversity
+      the_diversity$accumulation[order, , 3] <- h0_values$inf
+      the_diversity$accumulation[order, , 4] <- h0_values$sup
       if (show_progress & interactive())
         utils::setTxtProgressBar(pgb, i)
     }
@@ -474,7 +474,7 @@ accum_sp_hill <- function(
         individual = FALSE, 
         show_progress = FALSE, 
         check_arguments = FALSE
-      )$Accumulation[, , 1]
+      )$accumulation[, , 1]
       if (show_progress & interactive())
         utils::setTxtProgressBar(pgb, i)
     }
@@ -482,10 +482,10 @@ accum_sp_hill <- function(
     # Calculate quantiles
     for (q in seq_along(orders)) {
       for (r in seq_along(r)) {
-        the_diversity$Accumulation[q, r, 3:4] <- stats::quantile(
+        the_diversity$accumulation[q, r, 3:4] <- stats::quantile(
           h0_diversity[q, r, ], c(alpha, 1 - alpha), na.rm = TRUE
         )
-        the_diversity$Accumulation[q, r, 2] <- mean(
+        the_diversity$accumulation[q, r, 2] <- mean(
           h0_diversity[q, r, ], na.rm = TRUE
         )
       }
@@ -547,20 +547,20 @@ accum_mixing <- function(
   )
     
   # Normalize it
-  the_mixing$Accumulation[, , 1] <- the_mixing$Accumulation[, , 1] / 
-    the_mixing$Accumulation[, , 2]
-  the_mixing$Accumulation[, , 3] <- the_mixing$Accumulation[, , 3] / 
-    the_mixing$Accumulation[, , 2]
-  the_mixing$Accumulation[, , 4] <- the_mixing$Accumulation[, , 4] / 
-    the_mixing$Accumulation[, , 2]
+  the_mixing$accumulation[, , 1] <- the_mixing$accumulation[, , 1] / 
+    the_mixing$accumulation[, , 2]
+  the_mixing$accumulation[, , 3] <- the_mixing$accumulation[, , 3] / 
+    the_mixing$accumulation[, , 2]
+  the_mixing$accumulation[, , 4] <- the_mixing$accumulation[, , 4] / 
+    the_mixing$accumulation[, , 2]
   # Normalize individual values
   if (individual) {
     for (i in seq_len(X$n)) {
-      the_mixing$Neighborhoods[, , i] <- the_mixing$Neighborhoods[, , i] / 
-        the_mixing$Accumulation[, , 2]
+      the_mixing$neighborhoods[, , i] <- the_mixing$neighborhoods[, , i] / 
+        the_mixing$accumulation[, , 2]
     }
   }
-  the_mixing$Accumulation[, , 2] <- 1
+  the_mixing$accumulation[, , 2] <- 1
   
   class(the_mixing) <- c("accum_sp_mixing", "accum_sp", class(the_mixing))
   return(the_mixing)

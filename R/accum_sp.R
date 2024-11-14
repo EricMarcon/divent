@@ -45,9 +45,9 @@ NULL
 plot.accum_sp <- function(
     x, 
     ..., 
-    q = dimnames(x$Accumulation)$q[1], 
+    q = dimnames(x$accumulation)$q[1], 
     type = "l", 
-    main = "Accumulation of ...", 
+    main = "accumulation of ...", 
     xlab = "Sample size...", 
     ylab = "Diversity...", 
     ylim = NULL,
@@ -61,8 +61,8 @@ plot.accum_sp <- function(
   
   # Prepare the plot
   plot(
-    x = dimnames(x$Accumulation)[[2]], 
-    y = as.numeric(x$Accumulation[h$q_row, , 1]), 
+    x = dimnames(x$accumulation)[[2]], 
+    y = as.numeric(x$accumulation[h$q_row, , 1]), 
     ylim = c(h$ymin, h$ymax),
     type = h$type, 
     main = h$main, 
@@ -70,31 +70,31 @@ plot.accum_sp <- function(
     ylab = h$ylab
   )
   
-  if (dim(x$Accumulation)[3] == 4) {
+  if (dim(x$accumulation)[3] == 4) {
     # Confidence envelope is available
     graphics::polygon(
-      x = c(rev(dimnames(x$Accumulation)[[2]]), dimnames(x$Accumulation)[[2]]), 
-      y = c(rev(x$Accumulation[h$q_row, , 4]), x$Accumulation[h$q_row, , 3]), 
+      x = c(rev(dimnames(x$accumulation)[[2]]), dimnames(x$accumulation)[[2]]), 
+      y = c(rev(x$accumulation[h$q_row, , 4]), x$accumulation[h$q_row, , 3]), 
       col = col_shade, 
       border = FALSE
     )
     # Add red lines on borders of polygon
     graphics::lines(
-      x = dimnames(x$Accumulation)[[2]], 
-      y = x$Accumulation[h$q_row, , 4], 
+      x = dimnames(x$accumulation)[[2]], 
+      y = x$accumulation[h$q_row, , 4], 
       col = col_border, 
       lty = 2
     )
     graphics::lines(
-      x = dimnames(x$Accumulation)[[2]], 
-      y = x$Accumulation[h$q_row, , 3], 
+      x = dimnames(x$accumulation)[[2]], 
+      y = x$accumulation[h$q_row, , 3], 
       col = col_border, 
       lty = 2
     )
     # Redraw the SAC
     graphics::lines(
-      x = dimnames(x$Accumulation)[[2]], 
-      y = x$Accumulation[h$q_row, , 1], 
+      x = dimnames(x$accumulation)[[2]], 
+      y = x$accumulation[h$q_row, , 1], 
       lwd = line_width, 
       ...
     )
@@ -102,8 +102,8 @@ plot.accum_sp <- function(
     # H0
     if (show_h0) {
       graphics::lines(
-        x = dimnames(x$Accumulation)[[2]], 
-        y = x$Accumulation[h$q_row, , 2], 
+        x = dimnames(x$accumulation)[[2]], 
+        y = x$accumulation[h$q_row, , 2], 
         lty = 2
       )      
     } 
@@ -123,7 +123,7 @@ plot.accum_sp <- function(
 autoplot.accum_sp <- function(
     object, 
     ..., 
-    q = dimnames(object$Accumulation)$q[1],
+    q = dimnames(object$accumulation)$q[1],
     main = "Accumulation of ...", 
     xlab = "Sample size...", 
     ylab = "Diversity...", 
@@ -137,14 +137,14 @@ autoplot.accum_sp <- function(
   
   # Prepare the data
   df <- data.frame(
-    x = as.numeric(dimnames(object$Accumulation)[[2]]), 
-    y = object$Accumulation[h$q_row, , 1]
+    x = as.numeric(dimnames(object$accumulation)[[2]]), 
+    y = object$accumulation[h$q_row, , 1]
   )
-  if (dim(object$Accumulation)[3] == 4) {
+  if (dim(object$accumulation)[3] == 4) {
     # Confidence envelope is available
-    df$low <- object$Accumulation[h$q_row, , 3]
-    df$high <- object$Accumulation[h$q_row, , 4]
-    if (show_h0) df$H0 <- object$Accumulation[h$q_row, , 2]
+    df$low <- object$accumulation[h$q_row, , 3]
+    df$high <- object$accumulation[h$q_row, , 4]
+    if (show_h0) df$H0 <- object$accumulation[h$q_row, , 2]
   }
   
   # Prepare the plot
@@ -155,7 +155,7 @@ autoplot.accum_sp <- function(
     ggplot2::geom_line() +
     ggplot2::labs(title = h$main, x = h$xlab, y = h$ylab)
   
-  if (dim(object$Accumulation)[3] == 4) {
+  if (dim(object$accumulation)[3] == 4) {
     the_plot <- the_plot +
       ggplot2::geom_ribbon(
         ggplot2::aes(
@@ -226,8 +226,8 @@ autoplot.accum_sp <- function(
 #' 
 plot_map <- function(
     accum, 
-    q = dimnames(accum$Accumulation)$q[1], 
-    neighborhood = dplyr::last(colnames(accum$Neighborhoods)), 
+    q = dimnames(accum$accumulation)$q[1], 
+    neighborhood = dplyr::last(colnames(accum$neighborhoods)), 
     sigma = spatstat.explore::bw.scott(accum$X, isotropic = TRUE), 
     allow_jitter = TRUE,
     weighted = FALSE, 
@@ -247,7 +247,7 @@ plot_map <- function(
   if (any(check_arguments)) {
     check_divent_args()
   }
-  if (is.null(dim(accum$Neighborhoods))) {
+  if (is.null(dim(accum$neighborhoods))) {
     stop("The Accumulation object does not contain individual data to plot.")
   }
     
@@ -265,19 +265,19 @@ plot_map <- function(
   }
   
   # Convert numeric values of q and Neighborhood into their index
-  q_row <- which(as.numeric(rownames(accum$Neighborhoods)) == q)
-  nbd_col <- which(as.numeric(colnames(accum$Neighborhoods)) == neighborhood)
+  q_row <- which(as.numeric(rownames(accum$neighborhoods)) == q)
+  nbd_col <- which(as.numeric(colnames(accum$neighborhoods)) == neighborhood)
   # Verify that values exist: if which() did not match, we get integer(0) for q or neighborhood
   # then data is of length 0.
-  if (length(accum$Neighborhoods[q_row, , ]) == 0) {
+  if (length(accum$neighborhoods[q_row, , ]) == 0) {
     stop("Incorrect q.")
   }
-  if (length(accum$Neighborhoods[, nbd_col, ]) == 0) {
+  if (length(accum$neighborhoods[, nbd_col, ]) == 0) {
     stop("Incorrect neighborhood.") 
   }
   
   # Detect points with NA values
-  is_not_na <- !is.na(accum$Neighborhoods[q_row, nbd_col, ])
+  is_not_na <- !is.na(accum$neighborhoods[q_row, nbd_col, ])
   
   # Weights
   if (weighted) {
@@ -288,7 +288,7 @@ plot_map <- function(
   
   # Prepare the ppp to plot
   the_ppp <- spatstat.geom::unmark(accum$X)
-  spatstat.geom::marks(the_ppp) <- accum$Neighborhoods[q_row, nbd_col, ]
+  spatstat.geom::marks(the_ppp) <- accum$neighborhoods[q_row, nbd_col, ]
   the_ppp <- the_ppp[is_not_na]
   class(the_ppp) <- "ppp"
   
