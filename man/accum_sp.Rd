@@ -13,9 +13,9 @@
 \method{plot}{accum_sp}(
   x,
   ...,
-  q = dimnames(x$Accumulation)$q[1],
+  q = dimnames(x$accumulation)$q[1],
   type = "l",
-  main = "Accumulation of ...",
+  main = "accumulation of ...",
   xlab = "Sample size...",
   ylab = "Diversity...",
   ylim = NULL,
@@ -28,7 +28,7 @@
 \method{autoplot}{accum_sp}(
   object,
   ...,
-  q = dimnames(object$Accumulation)$q[1],
+  q = dimnames(object$accumulation)$q[1],
   main = "Accumulation of ...",
   xlab = "Sample size...",
   ylab = "Diversity...",
@@ -40,8 +40,8 @@
 
 plot_map(
   accum,
-  q = dimnames(accum$Accumulation)$q[1],
-  neighborhood = dplyr::last(colnames(accum$Neighborhoods)),
+  q = dimnames(accum$accumulation)$q[1],
+  neighborhood = dplyr::last(colnames(accum$neighborhoods)),
   sigma = spatstat.explore::bw.scott(accum$X, isotropic = TRUE),
   allow_jitter = TRUE,
   weighted = FALSE,
@@ -55,6 +55,7 @@ plot_map(
   points = FALSE,
   pch = 20,
   point_col = "black",
+  suppress_margins = TRUE,
   ...,
   check_arguments = TRUE
 )
@@ -122,8 +123,10 @@ Setting it to values lower than one (1/2 for example) will sharpen the estimatio
 
 \item{pch}{the symbol used to represent points.}
 
-\item{point_col}{The color of the points.
+\item{point_col}{the color of the points.
 Standard base graphic arguments such as \code{main} can be used.}
+
+\item{suppress_margins}{if \code{TRUE}, the map has reduced margins.}
 
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

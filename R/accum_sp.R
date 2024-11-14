@@ -208,8 +208,9 @@ autoplot.accum_sp <- function(
 #' @param contour_col the color of the contour lines.
 #' @param points if `TRUE`, the points that brought the data are added to the map.
 #' @param pch the symbol used to represent points.
-#' @param point_col The color of the points.
+#' @param point_col the color of the points.
 #' Standard base graphic arguments such as `main` can be used.
+#' @param suppress_margins if `TRUE`, the map has reduced margins.
 #' 
 #' @returns `plot_map` returns a [spatstat.geom::im] object that can be used to produce 
 #' alternative maps.
@@ -241,6 +242,7 @@ plot_map <- function(
     points = FALSE, 
     pch = 20, 
     point_col = "black",
+    suppress_margins = TRUE,
     ..., 
     check_arguments = TRUE) {
   
@@ -293,6 +295,10 @@ plot_map <- function(
   class(the_ppp) <- "ppp"
   
   # Image
+  if (suppress_margins) {
+    par_old <- par("mar")
+    par(mar = c(0, 0, 2, 0))
+  }
   the_image <- spatstat.explore::Smooth.ppp(
     the_ppp, 
     sigma = sigma, 
@@ -319,7 +325,10 @@ plot_map <- function(
       col = point_col
     )
   }
-
+  if (suppress_margins) {
+    par("mar" = par_old)
+  }
+  
   # Return the image for further processing
   return(invisible(the_image))
 }
