@@ -723,7 +723,7 @@ autoplot.Accumulation <- function(
     # H0
     if (show_h0) {
       the_plot <- the_plot +
-        ggplot2::geom_line(ggplot2::aes(y=~H0), linetype=2)
+        ggplot2::geom_line(ggplot2::aes(y = .data$H0), linetype = 2)
     }
   }
   return(the_plot)

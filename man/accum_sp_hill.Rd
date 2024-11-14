@@ -180,9 +180,6 @@ accum <- accum_sp_hill(X)
 plot(accum, q = 0)
 # along distance
 accum_r <- accum_sp_hill(X, orders = 1, r = seq(0, .5, .05))
-autoplot(accumR, q=1)
+autoplot(accum_r, q = 1)
 
-}
-\references{
-\insertAllCited{}
 }
