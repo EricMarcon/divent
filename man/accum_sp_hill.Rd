@@ -4,8 +4,6 @@
 \alias{accum_sp_hill}
 \alias{accum_sp_tsallis}
 \alias{accum_mixing}
-\alias{plot.Accumulation}
-\alias{autoplot.Accumulation}
 \title{Spatial Diversity Accumulation of a Community}
 \usage{
 accum_sp_tsallis(
@@ -55,34 +53,6 @@ accum_mixing(
   show_progress = TRUE,
   check_arguments = TRUE
 )
-
-\method{plot}{Accumulation}(
-  x,
-  ...,
-  q = dimnames(x$Accumulation)$q[1],
-  type = "l",
-  main = "Accumulation of ...",
-  xlab = "Sample size...",
-  ylab = "Diversity...",
-  ylim = NULL,
-  show_h0 = TRUE,
-  line_width = 2,
-  col_shade = "grey75",
-  col_border = "red"
-)
-
-\method{autoplot}{Accumulation}(
-  object,
-  ...,
-  q = dimnames(object$Accumulation)$q[1],
-  main = "Accumulation of ...",
-  xlab = "Sample size...",
-  ylab = "Diversity...",
-  ylim = NULL,
-  show_h0 = TRUE,
-  col_shade = "grey75",
-  col_border = "red"
-)
 }
 \arguments{
 \item{X}{a spatialized community
@@ -126,35 +96,6 @@ in the window (a binomial point process is a Poisson point process conditionally
 \item{alpha}{the risk level, 5\% by default.}
 
 \item{n_simulations}{the number of simulations used to estimate the confidence envelope.}
-
-\item{x}{an "Accumulation" object that can be accumulation of diversity
-(\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or
-the Mixing index (\code{\link{Mixing}}).}
-
-\item{...}{Additional arguments to be passed to \link{plot}. Unused elsewhere.}
-
-\item{q}{a number: the order of diversity.}
-
-\item{type}{plotting parameter. Default is "l".}
-
-\item{main}{main title of the plot.}
-
-\item{xlab}{X-axis label.}
-
-\item{ylab}{Y-axis label.}
-
-\item{ylim}{limits of the Y-axis, as a vector of two numeric values.}
-
-\item{show_h0}{if \code{TRUE}, the values of the null hypothesis are plotted.}
-
-\item{line_width}{width of the Diversity Accumulation Curve line.}
-
-\item{col_shade}{The color of the shaded confidence envelope.}
-
-\item{col_border}{The color of the borders of the confidence envelope.}
-
-\item{object}{An "Accumulation" object that cat be accumulation of
-diversity (\link{DivAccum}), entropy (\link{EntAccum}) or the Mixing index (\link{Mixing}).}
 }
 \value{
 An "Accumulation" object that is a list.

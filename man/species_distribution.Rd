@@ -127,7 +127,8 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 in the matrix or vector they are converted to.}
 }
 \value{
-An object of classes "species_distribution" and "abundances" or "probabilities".
+An object of classes \code{species_distribution} and \code{abundances}
+or \code{probabilities}.
 
 \code{as.double()} and its synonymous \code{as.numeric()} return a numeric vector
 that contains species abundances or probabilities of a single-row
