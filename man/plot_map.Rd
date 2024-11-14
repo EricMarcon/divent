@@ -14,7 +14,7 @@ plot_map(
   adjust = 1,
   dim_x = 128,
   dim_y = 128,
-  col = terrain.colors(256),
+  col = grDevices::terrain.colors(256),
   contour = TRUE,
   contour_levels = 10,
   contour_col = "dark red",
@@ -86,7 +86,7 @@ Maps of interpolated values from points of an \link{accum} produced e.g. by the 
 # Generate a random community
 X <- rspcommunity(1, size = 50, species_number = 10)
 # Calculate the species accumulation curve
-accum <- accum_sp_hill(X, orders = 0, r = c(0, 0.2), individual=TRUE)
+accum <- accum_sp_hill(X, orders = 0, r = c(0, 0.2), individual = TRUE)
 # Plot the local richness at distance = 0.2
 plot_map(accum, q = 0, neighborhood = 0.2)
 

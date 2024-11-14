@@ -40,7 +40,7 @@
 #' # Generate a random community
 #' X <- rspcommunity(1, size = 50, species_number = 10)
 #' # Calculate the species accumulation curve
-#' accum <- accum_sp_hill(X, orders = 0, r = c(0, 0.2), individual=TRUE)
+#' accum <- accum_sp_hill(X, orders = 0, r = c(0, 0.2), individual = TRUE)
 #' # Plot the local richness at distance = 0.2
 #' plot_map(accum, q = 0, neighborhood = 0.2)
 #' 
@@ -54,7 +54,7 @@ plot_map <- function(
     adjust = 1, 
     dim_x = 128, 
     dim_y = 128, 
-    col = terrain.colors(256), 
+    col = grDevices::terrain.colors(256), 
     contour = TRUE,
     contour_levels = 10, 
     contour_col = "dark red",
@@ -86,29 +86,29 @@ plot_map <- function(
   
   # Convert numeric values of q and Neighborhood into their index
   q_row <- which(as.numeric(rownames(accum$Neighborhoods)) == q)
-  neighborhood <- which(as.numeric(colnames(accum$Neighborhoods)) == neighborhood)
+  nbd_col <- which(as.numeric(colnames(accum$Neighborhoods)) == neighborhood)
   # Verify that values exist: if which() did not match, we get integer(0) for q or neighborhood
   # then data is of length 0.
-  if (length(accum$Neighborhoods[q, , ]) == 0) {
+  if (length(accum$Neighborhoods[q_row, , ]) == 0) {
     stop("Incorrect q.")
   }
-  if (length(accum$Neighborhoods[, neighborhood, ]) == 0) {
+  if (length(accum$Neighborhoods[, nbd_col, ]) == 0) {
     stop("Incorrect neighborhood.") 
   }
   
   # Detect points with NA values
-  is_not_na <- !is.na(accum$Neighborhoods[q, neighborhood, ])
+  is_not_na <- !is.na(accum$Neighborhoods[q_row, nbd_col, ])
   
   # Weights
-  if (weighted()) {
-    the_weights <- spatstat.geom::marks(accum$X)[!is_na]
+  if (weighted) {
+    the_weights <- spatstat.geom::marks(accum$X)[is_not_na]
   } else {
     the_weights <- rep(1, spatstat.geom::npoints(accum$X))
   }
   
   # Prepare the ppp to plot
   the_ppp <- spatstat.geom::unmark(accum$X)
-  spatstat.geom::marks(the_ppp) <- accum$Neighborhoods[q, neighborhood, ]
+  spatstat.geom::marks(the_ppp) <- accum$Neighborhoods[q_row, nbd_col, ]
   the_ppp <- the_ppp[is_not_na]
   class(the_ppp) <- "ppp"
   

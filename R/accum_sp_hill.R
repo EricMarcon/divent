@@ -446,7 +446,7 @@ accum_sp_hill <- function(
         utils::setTxtProgressBar(pgb, i)
     }
     if (show_progress & interactive())
-      close(ProgressBar)
+      close(pgb)
   }
   if (h0 == "random location" | h0 == "binomial") {
     is_h0_found <- TRUE
@@ -465,7 +465,7 @@ accum_sp_hill <- function(
       # Random community
       if (h0 == "random location") 
         h0_X <- dbmss::rRandomLocation(X, CheckArguments = FALSE)
-      if (H0 == "binomial") 
+      if (h0 == "binomial") 
         h0_X <- dbmss::rRandomPositionK(X, CheckArguments = FALSE)
       # Calculate its accumulated diversity
       h0_diversity[, , i] <- accum_sp_hill(
