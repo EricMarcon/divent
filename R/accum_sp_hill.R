@@ -29,15 +29,8 @@ NULL
 #' estimated in the full area of the neighborhood, which is slow.
 #' @param individual If `TRUE`, individual neighborhood entropies are returned.
 #'
-#' @return An "Accumulation" object that is a list. 
-#' 
-#' - Its first item, named "X", is `X`. 
-#' - Its second item, named "Accumulation", is a 3-D array containing average entropy.
-#' The third dimension of the array is only of length 1: it contains observed entropy.
-#' The first two dimensions are respectively for $q$ values and the number of points 
-#' of the neighborhood, starting from 1 (the point itself, with no neighbor), or the distances starting from 0.
-#' - Its third item, named "Neighborhoods" has the same structure as the second one 
-#' but its third dimension contains the local values accumulated in the neighborhood of each point. 
+#' @return An [accum_sp] object, that is also either an [accum_sp_diversity], 
+#' [accum_sp_entropy] or [accum_sp_mixing] object.  
 #'
 #' @export
 #'
@@ -212,7 +205,7 @@ accum_sp_tsallis <- function(
     # At each distance, calculate the entropy of 
     # all points' neighborhood for each q
     for (d in 2:length(r)) {
-      # Neighbor communities of each point at distance r: 1 community per column
+      # Neighbor communities of each point at distance r: 1 species per column
       neighbor_communities <- vapply(
         1:species_number, 
         FUN = function(i) rowSums(neighbors.array[, 1:d, i]),
@@ -286,7 +279,7 @@ accum_sp_tsallis <- function(
       }
       # Keep individual neighborhood values
       if (individual) {
-        ent_q_nr_individuals[, r, ] <- ent_nbhood_q
+        ent_q_nr_individuals[, d, ] <- ent_nbhood_q
       }
       # Mean entropy. 
       # If ent_nbhood_q is a vector (i.e. a single value of q is provided), 
@@ -294,7 +287,7 @@ accum_sp_tsallis <- function(
       if (is.null(dim(ent_nbhood_q))) {
         ent_nbhood_q <- t(ent_nbhood_q)
       }
-      ent_q_nr_observed[, r, 1] <- apply(
+      ent_q_nr_observed[, d, 1] <- apply(
         t(t(ent_nbhood_q)), 
         MARGIN = 1, 
         FUN = mean, 
@@ -313,7 +306,7 @@ accum_sp_tsallis <- function(
     Accumulation = ent_q_nr_observed, 
     Neighborhoods = ent_q_nr_individuals
   )
-  class(entAccum) <- c("accum_sp", class(entAccum))
+  class(entAccum) <- c("accum_sp_entropy", "accum_sp", class(entAccum))
   return(entAccum)
 }
 
@@ -483,9 +476,9 @@ accum_sp_hill <- function(
         check_arguments = FALSE
       )$Accumulation[, , 1]
       if (show_progress & interactive())
-        utils::setTxtProgressBar(ProgressBar, i)
+        utils::setTxtProgressBar(pgb, i)
     }
-    if (show_progress & interactive()) close(ProgressBar)
+    if (show_progress & interactive()) close(pgb)
     # Calculate quantiles
     for (q in seq_along(orders)) {
       for (r in seq_along(r)) {
@@ -503,7 +496,7 @@ accum_sp_hill <- function(
     stop("The value of 'h0' does not correspond to a valid null hypothesis.")
   }
     
-  class(the_diversity) <- c("accum_sp", class(the_diversity))
+  class(the_diversity) <- c("accum_sp_diversity", "accum_sp", class(the_diversity))
   return(the_diversity)
 }
 
@@ -569,7 +562,7 @@ accum_mixing <- function(
   }
   the_mixing$Accumulation[, , 2] <- 1
   
-  class(the_mixing) <- c("accum_sp", class(the_mixing))
+  class(the_mixing) <- c("accum_sp_mixing", "accum_sp", class(the_mixing))
   return(the_mixing)
 }
 

@@ -249,17 +249,17 @@ accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
     
     if (main == "Accumulation of ...") {
       # Prepare the main title
-      if (inherits(x, "EntAccum")) {
+      if (inherits(x, "accum_sp_entropy")) {
         main <- paste("Accumulation of Entropy of order", q)
       }
-      if (inherits(x, "DivAccum")) {
+      if (inherits(x, "accum_sp_diversity")) {
         if (q == 0) {
           main <- "Species Accumulation Curve"
         } else {
           main <- paste("Accumulation of Diversity of order", q)
         }
       }
-      if (inherits(x, "Mixing")) main <- paste("Mixing index of order", q)
+      if (inherits(x, "accum_sp_mixing")) main <- paste("Mixing index of order", q)
     }
     
     if (xlab == "Sample size...") {

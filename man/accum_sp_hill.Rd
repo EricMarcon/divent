@@ -98,16 +98,8 @@ in the window (a binomial point process is a Poisson point process conditionally
 \item{n_simulations}{the number of simulations used to estimate the confidence envelope.}
 }
 \value{
-An "Accumulation" object that is a list.
-\itemize{
-\item Its first item, named "X", is \code{X}.
-\item Its second item, named "Accumulation", is a 3-D array containing average entropy.
-The third dimension of the array is only of length 1: it contains observed entropy.
-The first two dimensions are respectively for $q$ values and the number of points
-of the neighborhood, starting from 1 (the point itself, with no neighbor), or the distances starting from 0.
-\item Its third item, named "Neighborhoods" has the same structure as the second one
-but its third dimension contains the local values accumulated in the neighborhood of each point.
-}
+An \link{accum_sp} object, that is also either an \link{accum_sp_diversity},
+\link{accum_sp_entropy} or \link{accum_sp_mixing} object.
 }
 \description{
 Spatial Diversity and Entropy Accumulation Curves represent the accumulation of

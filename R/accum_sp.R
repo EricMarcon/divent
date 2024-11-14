@@ -2,10 +2,21 @@
 #'
 #' A spatial accumulation is a measure of diversity with respect to the distance from individuals.
 #' 
-#' Objects of class `accum_sp` contain the value of diversity or entropy 
-#' at distances from the individuals.
+#' Objects of class `accum_sp` contain the value of diversity 
+#' (`accum_sp_diversity` objects), entropy (`accum_sp_entropy` objects) or
+#' mixing (`accum_sp_mixing` objects) at distances from the individuals.
+#' 
+#' These objects are lists: 
+#' 
+#' - `X` contains the [dbmss::wmppp] point pattern,
+#' - `accumulation` is a 3-dimensional array, with orders of diveristy in rows,
+#' neighborhood size (number of points or distance) in columns and a single slice
+#' for the observed entropy, diversity or mixing.
+#' - `neighborhoods` is a similar 3-dimensional array with one slice per point
+#' of `X`.
 #' 
 #' They can be plotted or mapped.
+#' @aliases accum_sp accum_sp_entropy accum_sp_diversity accum_sp_mixing
 #' 
 #' @inheritParams check_divent_args
 #' 
@@ -104,8 +115,7 @@ plot.accum_sp <- function(
 
 #' @rdname accum_sp
 #'
-#' @param object An "Accumulation" object that cat be accumulation of 
-#' diversity ([DivAccum]), entropy ([EntAccum]) or the Mixing index ([Mixing]).
+#' @param object an `accum_sp` object.
 #'
 #' @returns `autoplot.accum_sp()` returns a [ggplot2::ggplot] object.
 #' @export

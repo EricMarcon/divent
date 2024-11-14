@@ -2,6 +2,9 @@
 % Please edit documentation in R/accum_sp.R
 \name{accum_sp}
 \alias{accum_sp}
+\alias{accum_sp_entropy}
+\alias{accum_sp_diversity}
+\alias{accum_sp_mixing}
 \alias{plot.accum_sp}
 \alias{autoplot.accum_sp}
 \alias{plot_map}
@@ -83,8 +86,7 @@ control the kernel smoothing and to \link[spatstat.geom:plot.im]{spatstat.geom::
 
 \item{col_border}{The color of the borders of the confidence envelope.}
 
-\item{object}{An "Accumulation" object that cat be accumulation of
-diversity (\link{DivAccum}), entropy (\link{EntAccum}) or the Mixing index (\link{Mixing}).}
+\item{object}{an \code{accum_sp} object.}
 
 \item{accum}{an object to map.}
 
@@ -138,8 +140,19 @@ alternative maps.
 A spatial accumulation is a measure of diversity with respect to the distance from individuals.
 }
 \details{
-Objects of class \code{accum_sp} contain the value of diversity or entropy
-at distances from the individuals.
+Objects of class \code{accum_sp} contain the value of diversity
+(\code{accum_sp_diversity} objects), entropy (\code{accum_sp_entropy} objects) or
+mixing (\code{accum_sp_mixing} objects) at distances from the individuals.
+
+These objects are lists:
+\itemize{
+\item \code{X} contains the \link[dbmss:wmppp]{dbmss::wmppp} point pattern,
+\item \code{accumulation} is a 3-dimensional array, with orders of diveristy in rows,
+neighborhood size (number of points or distance) in columns and a single slice
+for the observed entropy, diversity or mixing.
+\item \code{neighborhoods} is a similar 3-dimensional array with one slice per point
+of \code{X}.
+}
 
 They can be plotted or mapped.
 }
