@@ -1,10 +1,183 @@
-#' Plot a map
+#' Spatial Accumulation of Diversity
 #'
-#' Map Spatialized Communities
+#' A spatial accumulation is a measure of diversity with respect to the distance from individuals.
 #' 
-#' Maps of interpolated values from points of an [accum] produced e.g. by the function [DivAccum] object are produced.
+#' Objects of class `accum_sp` contain the value of diversity or entropy 
+#' at distances from the individuals.
+#' 
+#' They can be plotted or mapped.
 #' 
 #' @inheritParams check_divent_args
+#' 
+#' @name accum_sp
+NULL
+
+#' @rdname accum_sp
+#' 
+#' @param x an `accum_sp` object.
+#' @param ... Additional arguments to be passed to [plot], or, in `plot_map()`,
+#' to [spatstat.explore::bw.smoothppp] and [spatstat.explore::density.ppp] to 
+#' control the kernel smoothing and to [spatstat.geom::plot.im] to plot the image.
+#' @param type plotting parameter. Default is "l".
+#' @param main main title of the plot.
+#' @param xlab X-axis label.
+#' @param ylab Y-axis label.
+#' @param ylim limits of the Y-axis, as a vector of two numeric values.
+#' @param show_h0 if `TRUE`, the values of the null hypothesis are plotted.
+#' @param line_width width of the Diversity Accumulation Curve line.
+#' @param col_shade The color of the shaded confidence envelope.
+#' @param col_border The color of the borders of the confidence envelope.
+#' 
+#' @returns `plot.accum_sp()` returns `NULL`.
+#' @export
+#'
+plot.accum_sp <- function(
+    x, 
+    ..., 
+    q = dimnames(x$Accumulation)$q[1], 
+    type = "l", 
+    main = "Accumulation of ...", 
+    xlab = "Sample size...", 
+    ylab = "Diversity...", 
+    ylim = NULL,
+    show_h0 = TRUE, 
+    line_width = 2, 
+    col_shade = "grey75", 
+    col_border = "red")  {
+  
+  # Prepare the parameters
+  h <- accum_sp_plot_helper(x, q, main, xlab, ylab, ylim)
+  
+  # Prepare the plot
+  plot(
+    x = dimnames(x$Accumulation)[[2]], 
+    y = as.numeric(x$Accumulation[h$q_row, , 1]), 
+    ylim = c(h$ymin, h$ymax),
+    type = h$type, 
+    main = h$main, 
+    xlab = h$xlab, 
+    ylab = h$ylab
+  )
+  
+  if (dim(x$Accumulation)[3] == 4) {
+    # Confidence envelope is available
+    graphics::polygon(
+      x = c(rev(dimnames(x$Accumulation)[[2]]), dimnames(x$Accumulation)[[2]]), 
+      y = c(rev(x$Accumulation[h$q_row, , 4]), x$Accumulation[h$q_row, , 3]), 
+      col = col_shade, 
+      border = FALSE
+    )
+    # Add red lines on borders of polygon
+    graphics::lines(
+      x = dimnames(x$Accumulation)[[2]], 
+      y = x$Accumulation[h$q_row, , 4], 
+      col = col_border, 
+      lty = 2
+    )
+    graphics::lines(
+      x = dimnames(x$Accumulation)[[2]], 
+      y = x$Accumulation[h$q_row, , 3], 
+      col = col_border, 
+      lty = 2
+    )
+    # Redraw the SAC
+    graphics::lines(
+      x = dimnames(x$Accumulation)[[2]], 
+      y = x$Accumulation[h$q_row, , 1], 
+      lwd = line_width, 
+      ...
+    )
+    
+    # H0
+    if (show_h0) {
+      graphics::lines(
+        x = dimnames(x$Accumulation)[[2]], 
+        y = x$Accumulation[h$q_row, , 2], 
+        lty = 2
+      )      
+    } 
+  }
+  
+  return(invisible(NULL))
+}
+
+
+#' @rdname accum_sp
+#'
+#' @param object An "Accumulation" object that cat be accumulation of 
+#' diversity ([DivAccum]), entropy ([EntAccum]) or the Mixing index ([Mixing]).
+#'
+#' @returns `autoplot.accum_sp()` returns a [ggplot2::ggplot] object.
+#' @export
+#'
+autoplot.accum_sp <- function(
+    object, 
+    ..., 
+    q = dimnames(object$Accumulation)$q[1],
+    main = "Accumulation of ...", 
+    xlab = "Sample size...", 
+    ylab = "Diversity...", 
+    ylim = NULL, 
+    show_h0 = TRUE, 
+    col_shade = "grey75", 
+    col_border = "red")   {
+  
+  # Prepare the parameters
+  h <- accum_sp_plot_helper(object, q, main, xlab, ylab, ylim)
+  
+  # Prepare the data
+  df <- data.frame(
+    x = as.numeric(dimnames(object$Accumulation)[[2]]), 
+    y = object$Accumulation[h$q_row, , 1]
+  )
+  if (dim(object$Accumulation)[3] == 4) {
+    # Confidence envelope is available
+    df$low <- object$Accumulation[h$q_row, , 3]
+    df$high <- object$Accumulation[h$q_row, , 4]
+    if (show_h0) df$H0 <- object$Accumulation[h$q_row, , 2]
+  }
+  
+  # Prepare the plot
+  the_plot <- ggplot2::ggplot(
+    data = df, 
+    ggplot2::aes(x = .data$x, y = .data$y)
+  ) +
+    ggplot2::geom_line() +
+    ggplot2::labs(title = h$main, x = h$xlab, y = h$ylab)
+  
+  if (dim(object$Accumulation)[3] == 4) {
+    the_plot <- the_plot +
+      ggplot2::geom_ribbon(
+        ggplot2::aes(
+          ymin = .data$low, 
+          ymax = .data$high
+        ), 
+        fill = col_shade, 
+        alpha = 0.5) +
+      # Add red lines on borders of polygon
+      ggplot2::geom_line(
+        ggplot2::aes(y = .data$low), 
+        colour = col_border, 
+        linetype = 2
+      ) +
+      ggplot2::geom_line(
+        ggplot2::aes(y = .data$high), 
+        colour = col_border, 
+        linetype = 2
+      )
+    
+    # H0
+    if (show_h0) {
+      the_plot <- the_plot +
+        ggplot2::geom_line(ggplot2::aes(y = .data$H0), linetype = 2)
+    }
+  }
+  return(the_plot)
+}
+
+
+#' @rdname accum_sp
+#' 
 #' @param accum an object to map.
 #' @param neighborhood The neighborhood size, i.e. the number of neighbors or the distance to consider.
 #' @param sigma the smoothing bandwidth. 
@@ -26,12 +199,9 @@
 #' @param points if `TRUE`, the points that brought the data are added to the map.
 #' @param pch the symbol used to represent points.
 #' @param point_col The color of the points.
-#' @param ... further arguments passed to [spatstat.explore::bw.smoothppp] and 
-#' [spatstat.explore::density.ppp] to control the kernel smoothing and 
-#' to [spatstat.geom::plot.im] to plot the image.
 #' Standard base graphic arguments such as `main` can be used.
 #' 
-#' @returns A [spatstat.geom::im] object that can be used to produce 
+#' @returns `plot_map` returns a [spatstat.geom::im] object that can be used to produce 
 #' alternative maps.
 # 
 #' @export

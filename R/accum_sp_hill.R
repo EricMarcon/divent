@@ -313,7 +313,7 @@ accum_sp_tsallis <- function(
     Accumulation = ent_q_nr_observed, 
     Neighborhoods = ent_q_nr_individuals
   )
-  class(entAccum) <- c("EntAccum", "Accumulation")
+  class(entAccum) <- c("accum_sp", class(entAccum))
   return(entAccum)
 }
 
@@ -424,7 +424,7 @@ accum_sp_hill <- function(
     is_h0_found <- TRUE
     # Prepare a progress bar 
     if (show_progress & interactive())
-      pgb <- utils::txtProgressBar(min=0, max=length(orders))
+      pgb <- utils::txtProgressBar(min = 0, max = length(orders))
     # Prepare the distribution of the abundances of species.
     abd <- as_abundances(X)
     for (order in seq_along(orders)) {
@@ -503,7 +503,7 @@ accum_sp_hill <- function(
     stop("The value of 'h0' does not correspond to a valid null hypothesis.")
   }
     
-  class(the_diversity) <- c("DivAccum", "Accumulation")
+  class(the_diversity) <- c("accum_sp", class(the_diversity))
   return(the_diversity)
 }
 
@@ -569,165 +569,10 @@ accum_mixing <- function(
   }
   the_mixing$Accumulation[, , 2] <- 1
   
-  class(the_mixing) <- c("Mixing", "Accumulation")
+  class(the_mixing) <- c("accum_sp", class(the_mixing))
   return(the_mixing)
 }
 
 
 #' @rdname accum_sp_hill
 #'
-#' @param x an "Accumulation" object that can be accumulation of diversity
-#' (\code{\link{DivAccum}}), entropy (\code{\link{EntAccum}}) or 
-#' the Mixing index (\code{\link{Mixing}}).
-#' @param ... Additional arguments to be passed to [plot]. Unused elsewhere.
-#' @param type plotting parameter. Default is "l".
-#' @param main main title of the plot.
-#' @param xlab X-axis label.
-#' @param ylab Y-axis label.
-#' @param ylim limits of the Y-axis, as a vector of two numeric values.
-#' @param show_h0 if `TRUE`, the values of the null hypothesis are plotted.
-#' @param line_width width of the Diversity Accumulation Curve line.
-#' @param col_shade The color of the shaded confidence envelope.
-#' @param col_border The color of the borders of the confidence envelope.
-#' @export
-#'
-plot.Accumulation <- function(
-    x, 
-    ..., 
-    q = dimnames(x$Accumulation)$q[1], 
-    type = "l", 
-    main = "Accumulation of ...", 
-    xlab = "Sample size...", 
-    ylab = "Diversity...", 
-    ylim = NULL,
-    show_h0 = TRUE, 
-    line_width = 2, 
-    col_shade = "grey75", 
-    col_border = "red")  {
-  
-  # Prepare the parameters
-  h <- accum_sp_plot_helper(x, q, main, xlab, ylab, ylim)
-  
-  # Prepare the plot
-  plot(
-    x = dimnames(x$Accumulation)[[2]], 
-    y = as.numeric(x$Accumulation[h$q_row, , 1]), 
-    ylim = c(h$ymin, h$ymax),
-    type = h$type, 
-    main = h$main, 
-    xlab = h$xlab, 
-    ylab = h$ylab
-  )
-  
-  if (dim(x$Accumulation)[3] == 4) {
-    # Confidence envelope is available
-    graphics::polygon(
-      x = c(rev(dimnames(x$Accumulation)[[2]]), dimnames(x$Accumulation)[[2]]), 
-      y = c(rev(x$Accumulation[h$q_row, , 4]), x$Accumulation[h$q_row, , 3]), 
-      col = col_shade, 
-      border = FALSE
-    )
-    # Add red lines on borders of polygon
-    graphics::lines(
-      x = dimnames(x$Accumulation)[[2]], 
-      y = x$Accumulation[h$q_row, , 4], 
-      col = col_border, 
-      lty = 2
-    )
-    graphics::lines(
-      x = dimnames(x$Accumulation)[[2]], 
-      y = x$Accumulation[h$q_row, , 3], 
-      col = col_border, 
-      lty = 2
-    )
-    # Redraw the SAC
-    graphics::lines(
-      x = dimnames(x$Accumulation)[[2]], 
-      y = x$Accumulation[h$q_row, , 1], 
-      lwd = line_width, 
-      ...
-    )
-    
-    # H0
-    if (show_h0) {
-      graphics::lines(
-        x = dimnames(x$Accumulation)[[2]], 
-        y = x$Accumulation[h$q_row, , 2], 
-        lty = 2
-      )      
-    } 
-  }
-}
-
-
-#' @rdname accum_sp_hill
-#'
-#' @param object An "Accumulation" object that cat be accumulation of 
-#' diversity ([DivAccum]), entropy ([EntAccum]) or the Mixing index ([Mixing]).
-#'
-#' @export
-#'
-autoplot.Accumulation <- function(
-    object, 
-    ..., 
-    q = dimnames(object$Accumulation)$q[1],
-    main = "Accumulation of ...", 
-    xlab = "Sample size...", 
-    ylab = "Diversity...", 
-    ylim = NULL, 
-    show_h0 = TRUE, 
-    col_shade = "grey75", 
-    col_border = "red")   {
-
-  # Prepare the parameters
-  h <- accum_sp_plot_helper(object, q, main, xlab, ylab, ylim)
-  
-  # Prepare the data
-  df <- data.frame(
-    x = as.numeric(dimnames(object$Accumulation)[[2]]), 
-    y = object$Accumulation[h$q_row, , 1]
-  )
-  if (dim(object$Accumulation)[3] == 4) {
-    # Confidence envelope is available
-    df$low <- object$Accumulation[h$q_row, , 3]
-    df$high <- object$Accumulation[h$q_row, , 4]
-    if (show_h0) df$H0 <- object$Accumulation[h$q_row, , 2]
-  }
-  
-  # Prepare the plot
-  the_plot <- ggplot2::ggplot(
-    data = df, 
-    ggplot2::aes(x = .data$x, y = .data$y)
-  ) +
-    ggplot2::geom_line() +
-    ggplot2::labs(title = h$main, x = h$xlab, y = h$ylab)
-  
-  if (dim(object$Accumulation)[3] == 4) {
-    the_plot <- the_plot +
-      ggplot2::geom_ribbon(
-        ggplot2::aes(
-          ymin = .data$low, 
-          ymax = .data$high
-        ), 
-        fill = col_shade, 
-        alpha = 0.5) +
-      # Add red lines on borders of polygon
-      ggplot2::geom_line(
-        ggplot2::aes(y = .data$low), 
-        colour = col_border, 
-        linetype = 2
-      ) +
-      ggplot2::geom_line(
-        ggplot2::aes(y = .data$high), 
-        colour = col_border, 
-        linetype = 2
-      )
-    
-    # H0
-    if (show_h0) {
-      the_plot <- the_plot +
-        ggplot2::geom_line(ggplot2::aes(y = .data$H0), linetype = 2)
-    }
-  }
-  return(the_plot)
-}
