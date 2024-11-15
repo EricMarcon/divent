@@ -296,8 +296,8 @@ plot_map <- function(
   
   # Image
   if (suppress_margins) {
-    par_old <- par("mar")
-    par(mar = c(0, 0, 2, 0))
+    par_old <- graphics::par("mar")
+    graphics::par(mar = c(0, 0, 2, 0))
   }
   the_image <- spatstat.explore::Smooth.ppp(
     the_ppp, 
@@ -326,7 +326,7 @@ plot_map <- function(
     )
   }
   if (suppress_margins) {
-    par("mar" = par_old)
+    graphics::par("mar" = par_old)
   }
   
   # Return the image for further processing
