@@ -85,6 +85,7 @@ see \link{div_richness}. used for interpolation and extrapolation.}
 
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
+<<<<<<< HEAD
 
 \item{h0}{The null hypothesis to compare the distribution of \code{X} to.
 If "none", the default value, no null hypothesis is tested.
@@ -96,6 +97,8 @@ in the window (a binomial point process is a Poisson point process conditionally
 \item{alpha}{the risk level, 5\% by default.}
 
 \item{n_simulations}{the number of simulations used to estimate the confidence envelope.}
+=======
+>>>>>>> faa40851523cd54d2ede18bba77cd5c26270e6da
 }
 \value{
 An \link{accum_sp} object, that is also either an \link{accum_sp_diversity},
