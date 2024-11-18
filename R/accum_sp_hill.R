@@ -315,7 +315,7 @@ accum_sp_tsallis <- function(
 #' @param h0 The null hypothesis to compare the distribution of `X` to. 
 #' If "none", the default value, no null hypothesis is tested.
 #' "multinomial" means the community will be rarefied down to the number of `neighbors`.
-#' "random location" means the points will we randomly permuted accross their actual locations.
+#' "random location" means the points will we randomly permuted across their actual locations.
 #' "binomial" means the points will we uniformly and independently drawn 
 #' in the window (a binomial point process is a Poisson point process conditionally to the number of points).
 #' 
