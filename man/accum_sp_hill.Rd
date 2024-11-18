@@ -9,8 +9,6 @@
 accum_sp_tsallis(
   X,
   orders = 0,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
-    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
@@ -23,8 +21,6 @@ accum_sp_tsallis(
 accum_sp_hill(
   X,
   orders = 0,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
-    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
@@ -40,8 +36,6 @@ accum_sp_hill(
 accum_mixing(
   X,
   orders = 0,
-  estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", "Marcon",
-    "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
@@ -59,8 +53,6 @@ accum_mixing(
 (A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
 
 \item{orders}{A numeric vector: the diversity orders to address. Default is 0.}
-
-\item{estimator}{an estimator of asymptotic entropy, diversity or richness.}
 
 \item{neighbors}{A vector of integers.
 Entropy will be accumulated along this number of neighbors around each individual.

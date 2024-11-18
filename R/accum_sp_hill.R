@@ -47,9 +47,6 @@ NULL
 accum_sp_tsallis <- function(
     X, 
     orders = 0, 
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
     neighbors = 1:ceiling(X$n / 2), 
     r = NULL, 
     correction = c("none", "extrapolation"),
@@ -61,7 +58,6 @@ accum_sp_tsallis <- function(
   if (any(check_arguments)) {
     check_divent_args()
   }
-  estimator <- match.arg(estimator) 
   richness_estimator <- match.arg(richness_estimator) 
   correction <- match.arg(correction) 
   
@@ -119,7 +115,7 @@ accum_sp_tsallis <- function(
               ent_tsallis(
                 as_abundances(community), 
                 q = q, 
-                estimator = "naive", # TODO: check the estimator
+                estimator = "naive",
                 as_numeric = TRUE,
                 check_arguments = FALSE
               )
@@ -224,7 +220,7 @@ accum_sp_tsallis <- function(
                 ent_tsallis(
                   as_abundances(community), 
                   q = q, 
-                  estimator = "naive", # TODO: check the estimator
+                  estimator = "naive",
                   as_numeric = TRUE,
                   check_arguments = FALSE
                 )
@@ -324,9 +320,6 @@ accum_sp_tsallis <- function(
 accum_sp_hill <- function(
     X, 
     orders = 0, 
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-              "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-              "Bonachela", "Holste"),
     neighbors = 1:ceiling(X$n / 2), 
     r = NULL, 
     correction = c("none", "extrapolation"),
@@ -341,7 +334,6 @@ accum_sp_hill <- function(
   if (any(check_arguments)) {
     check_divent_args()
   }
-  estimator <- match.arg(estimator) 
   richness_estimator <- match.arg(richness_estimator) 
   correction <- match.arg(correction) 
   h0 <- match.arg(h0) 
@@ -361,7 +353,6 @@ accum_sp_hill <- function(
   the_diversity <- accum_sp_tsallis(
     X = X, 
     orders = orders, 
-    estimator = estimator,
     neighbors = neighbors, 
     r = r, 
     correction = correction,
@@ -464,7 +455,6 @@ accum_sp_hill <- function(
       h0_diversity[, , i] <- accum_sp_hill(
         h0_X, 
         orders = orders, 
-        estimator = estimator,
         neighbors = neighbors, 
         r = r, 
         correction = correction,
@@ -508,9 +498,6 @@ accum_sp_hill <- function(
 accum_mixing <- function(
     X, 
     orders = 0, 
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
     neighbors = 1:ceiling(X$n / 2), 
     r = NULL, 
     correction = c("none", "extrapolation"),
@@ -525,7 +512,6 @@ accum_mixing <- function(
   if (any(check_arguments)) {
     check_divent_args()
   }
-  estimator <- match.arg(estimator) 
   richness_estimator <- match.arg(richness_estimator) 
   correction <- match.arg(correction) 
   h0 <- match.arg(h0) 
@@ -534,7 +520,6 @@ accum_mixing <- function(
   the_mixing <- accum_sp_hill(
     X, 
     orders = orders, 
-    estimator = estimator,
     neighbors = neighbors, 
     r = r, 
     correction = correction,
