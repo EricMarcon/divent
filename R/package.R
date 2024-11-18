@@ -406,8 +406,7 @@ chao_A <- function(abd) {
 #' @param check_arguments if `TRUE`, the function arguments are verified.
 #' Should be set to `FALSE` to save time when the arguments have been checked elsewhere.
 #' @param correction the edge-effect correction to apply when estimating
-#' the number of neighbors or the K function with [spatstat.explore::Kest].
-#' Default is "isotropic".
+#' the number of neighbors.
 #' @param coverage_estimator an estimator of sample coverage used by [coverage].
 #' @param distances a distance matrix or an object of class [stats::dist].
 #' @param distribution The distribution of species abundances.
