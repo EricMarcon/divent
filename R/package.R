@@ -218,170 +218,6 @@ non_species_columns <- c(
 # species_names: char vector with the species names of the community
 
 
-#' Helper to prepare parameters for `accum_sp` plot and autoplot.
-#'
-#' @param x the `accum_sp` object to plot.
-#' @param q the order of diversity.
-#' @param main the title of the plot.
-#' @param xlab X-axis label.
-#' @param ylab Y-axis label.
-#' @param ylim Y-axis limits
-#'
-#' @returns a vector of parameters for the plots
-#' @noRd
-#'
-accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
-
-    # Find the row in the accumulation table
-    q_row <- which(dimnames(x$accumulation)$q == q)
-    if (length(q_row) != 1) {
-      stop("The value of q does not correspond to any accumulation curve.")
-    }
-  
-    if (is.null(ylim)) {
-      # Evaluate ylim if not set by an argument
-      ymin <- min(x$accumulation[q_row, , ])
-      ymax <- max(x$accumulation[q_row, , ])
-    } else {
-      ymin <- ylim[1]
-      ymax <- ylim[2]
-    }
-    
-    if (main == "Accumulation of ...") {
-      # Prepare the main title
-      if (inherits(x, "accum_sp_entropy")) {
-        main <- paste("Accumulation of Entropy of order", q)
-      }
-      if (inherits(x, "accum_sp_diversity")) {
-        if (q == 0) {
-          main <- "Species Accumulation Curve"
-        } else {
-          main <- paste("Accumulation of Diversity of order", q)
-        }
-      }
-      if (inherits(x, "accum_sp_mixing")) main <- paste("Mixing index of order", q)
-    }
-    
-    if (xlab == "Sample size...") {
-      if (names(dimnames(x$accumulation)[2]) == "n") {
-        xlab <- "Number of individuals"
-      } else {
-        xlab <- "Distance from the central individual"
-      }
-    }
-    
-    if (ylab == "Diversity...") {
-      # Prepare Y-axis
-      if (inherits(x, "accum_sp_entropy")) {
-        ylab <- "Diversity"
-      }
-      if (inherits(x, "accum_sp_diversity")) {
-        if (q == 0) {
-          ylab <- "Richness"
-      } else {
-          ylab <- "Diversity"
-      }
-      if (inherits(x, "accum_sp_mixing")) {
-        ylab <- "Mixing index"
-      }
-    }
-    return(
-      list(
-        q_row = q_row, 
-        ymin = ymin, 
-        ymax = ymax, 
-        main = main, 
-        xlab = xlab, 
-        ylab = ylab
-      )
-    )
-  }
-}
-
-
-
-#' as_named_vector.character
-#' 
-#' Counts the number of points of a `character` vector and returns a named vector.
-#' Names are the items of the character vector. 
-#' This is equivalent to `as.numeric(table(x))` but `table()`
-#' looses the names.
-#'
-#' @param x a character vector.
-#'
-#' @returns A named vector with the number of items by name.
-#' @noRd
-#'
-as_named_vector.character <- function(x){
-  # Count the number of items. Returns a 1D array, not a vector.
-  the_array <- tapply(x, x, length)
-  the_vector <- as.vector(the_array)
-  # Add the names
-  names(the_vector) <- names(the_array) 
-  return(the_vector)
-}
-
-
-#' as_named_vector.wmppp
-#' 
-#' Counts the number of points of a `wmppp` object and returns a named vector.
-#' Names are the point types. 
-#' This is equivalent to `as.numeric(table(X$marks$PointType))` but `table()`
-#' looses the names.
-#'
-#' @param X a [dbmss::wmppp] object, i.e. a weighted, marked planar point pattern.
-#'
-#' @returns A named vector with the number of points by type.
-#' @noRd
-#'
-as_named_vector.wmppp <- function(X){
-  # Count the number of points by type
-  return(as_named_vector.character(spatstat.geom::marks(X)$PointType))
-}
-
-
-
-
-#' Chao's A
-#' 
-#' Helper for Chao's estimators.
-#' 
-#' A's formula \insertCite{@Chao2015@, eq. 6b}{divent}) depends on the presence
-#' of singletons and doubletons.
-#' 
-#' @param abd A vector of positive integers.
-#'
-#' @returns The value of A.
-#' @references
-#' \insertAllCited{}
-#' 
-#' @noRd
-#'
-chao_A <- function(abd) {
-  
-  # Calculate abundance distribution
-  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
-  s_1 <- as.numeric(abd_distribution["1"])
-  s_2 <- as.numeric(abd_distribution["2"])
-  sample_size <- sum(abd)
-  
-  # Calculate A
-  if (is.na(s_1)) {
-    A <- 0
-  } else {
-    # Use Chao1 estimator to evaluate the number of unobserved species
-    if (is.na(s_2)) {
-      s_0 <- (sample_size - 1) * s_1 * (s_1 - 1) / 2 / sample_size
-    } else {
-      s_0 <- (sample_size - 1) * s_1^2 / 2 / sample_size / s_2
-    }
-    A <- 1 - sample_size * s_0 / (sample_size * s_0 + s_1)
-  }
-  
-  return(A)
-}
-
-
 #' check_divent_args
 #'
 #' Checks the arguments of a function of the package divent
@@ -393,6 +229,7 @@ chao_A <- function(abd) {
 #' The function is always called without arguments.
 #' Its arguments exist only for documentation.
 #' 
+#' @param abd a numeric vector containing abundances.
 #' @param abundances an object of class [abundances].
 #' @param alpha the risk level, 5% by default.
 #' @param as_numeric if `TRUE`, a number or a numeric vector is returned rather than a tibble.
@@ -427,6 +264,9 @@ chao_A <- function(abd) {
 #' @param n_simulations the number of simulations used to estimate the confidence envelope.
 #' @param normalize if `TRUE`, phylogenetic is normalized: the height of the tree is set to 1.
 #' @param orders The orders of diversity.
+#' @param prob a numeric vector containing probabilities.
+#' @param prob_geom the proportion of resources taken by successive species 
+#' of the geometric distribution.
 #' @param probability_estimator a string containing one of the possible estimators
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
@@ -440,6 +280,8 @@ chao_A <- function(abd) {
 #' @param show_progress if TRUE, a progress bar is shown during long computations. 
 #' @param similarities a similarity matrix, that can be obtained by [fun_similarity].
 #' Its default value is the identity matrix.
+#' @param sd_lnorm the simulated log-normal distribution standard deviation. 
+#' This is the standard deviation on the log scale.
 #' @param size The number of individuals to draw in each community.
 #' @param species_number The number of species.
 #' @param species_distribution an object of class [species_distribution].
@@ -461,6 +303,7 @@ chao_A <- function(abd) {
 #' @keywords internal
 #' 
 check_divent_args <- function(
+    abd = NULL,
     abundances = NULL,
     alpha = NULL,
     as_numeric = NULL,
@@ -482,12 +325,15 @@ check_divent_args <- function(
     n_simulations = NULL,
     normalize = NULL,
     orders = NULL,
+    prob = NULL,
+    prob_geom = NULL,
     probability_estimator = NULL,
     q = NULL,
     r = NULL,
     rate = NULL,
     richness_estimator = NULL,
     sample_coverage = NULL,
+    sd_lnorm = NULL,
     show_progress = NULL,
     similarities = NULL,
     size = NULL,
@@ -498,7 +344,7 @@ check_divent_args <- function(
     unveiling = NULL,
     weights = NULL,
     X = NULL) {
-
+  
   # Verify that the package is attached
   if (!"divent" %in% .packages()) {
     warning("Function arguments cannot be checked because the package divent is not attached. Add CheckArguments=FALSE to suppress this warning or run library('divent')")
@@ -511,13 +357,40 @@ check_divent_args <- function(
     warning("Function arguments cannot be checked, probably because you used apply(). Add CheckArguments=FALSE to suppress this warning.")
     return(TRUE)
   }
-
+  
   # Find the arguments. match.fun does not work with package::function
   # as.character creates a vector. The name of the function is the last item
   parent_function_split <- as.character(parent_function)
   parent_function_name <- parent_function_split[length(parent_function_split)]
   args <- formals(match.fun(parent_function_name))
   
+  # abd
+  if (!is.na(names(args["abd"]))) {
+    abd <- eval(expression(abd), parent.frame())
+    if (!is.null(abd)) {
+      if (!is.numeric(abd) && !is.vector(abd)) {
+        error_message(
+          "abd must be a numeric vector", 
+          abd, 
+          parent_function
+        )
+      }
+      if (any(abd <= 0)) {
+        error_message(
+          "abundances must be positive.",
+          abd,
+          parent_function
+        )
+      }
+      if (!is_integer_values(abd)) {
+        error_message(
+          "abundances must be integer values.",
+          abd,
+          parent_function
+        )
+      }
+    }
+  }
   # abundances
   if (!is.na(names(args["abundances"]))) {
     abundances <- eval(expression(abundances), parent.frame())
@@ -744,7 +617,7 @@ check_divent_args <- function(
         )
       }
     }
-   }
+  }
   # n
   if (!is.na(names(args["n"]))) {
     n <- eval(expression(n), parent.frame())
@@ -807,7 +680,54 @@ check_divent_args <- function(
       }
     }
   }
+  # prob
+  if (!is.na(names(args["prob"]))) {
+    prob <- eval(expression(prob), parent.frame())
+    if (!is.null(prob)) {
+      if (!is.numeric(prob) && !is.vector(prob)) {
+        error_message(
+          "prob must be a numeric vector", 
+          prob, 
+          parent_function
+        )
+      }
+      if (any(prob <= 0)) {
+        error_message(
+          "probabilities must be positive.",
+          prob,
+          parent_function
+        )
+      }
+      if (abs(sum(prob) - 1) > length(prob) * .Machine$double.eps) {
+        error_message(
+          "probabilities must add up to 1.",
+          prob,
+          parent_function
+        )
+      }
+    }
+  }
   # probability_estimator is checked by match.arg()
+  # prob_geom
+  if (!is.na(names(args["prob_geom"]))) {
+    prob_geom <- eval(expression(prob_geom), parent.frame())
+    if (!is.null(prob_geom)) {
+      if (!is.numeric(prob_geom) | length(prob_geom) != 1) {
+        error_message(
+          "prob_geom must be a number.",
+          prob_geom,
+          parent_function
+        )
+      }
+      if (any(prob_geom < 0) | any(prob_geom > 1)) {
+        error_message(
+          "prob_geom must be between 0 and 1",
+          prob_geom,
+          parent_function
+        )
+      }
+    }
+  }
   # richness_estimator is checked by match.arg()
   # q
   if (!is.na(names(args["q"]))) {
@@ -889,6 +809,26 @@ check_divent_args <- function(
         error_message(
           "sample_coverage must be between 0 and 1",
           sample_coverage,
+          parent_function
+        )
+      }
+    }
+  }
+  # sd_lnorm
+  if (!is.na(names(args["sd_lnorm"]))) {
+    sd_lnorm <- eval(expression(sd_lnorm), parent.frame())
+    if (!is.null(sd_lnorm)) {
+      if (!is.numeric(sd_lnorm) | length(sd_lnorm) != 1) {
+        error_message(
+          "sd_lnorm must be a number.",
+          sd_lnorm,
+          parent_function
+        )
+      }
+      if (any(sd_lnorm <= 0)) {
+        error_message(
+          "sd_lnorm must be positive.",
+          sd_lnorm,
           parent_function
         )
       }
@@ -1000,10 +940,10 @@ check_divent_args <- function(
     tree <- eval(expression(tree), parent.frame())
     if (!is.null(tree)) {
       if (
-          !inherits(tree, "phylo_divent") &
-          !inherits(tree, "phylo") &
-          !inherits(tree, "phylog") &
-          !inherits(tree, "hclust")) {
+        !inherits(tree, "phylo_divent") &
+        !inherits(tree, "phylo") &
+        !inherits(tree, "phylog") &
+        !inherits(tree, "hclust")) {
         error_message(
           "tree must be an object of class 'phylo_divent', 'phylo', 'phylog' or 'hclust'", 
           tree, 
@@ -1033,6 +973,7 @@ check_divent_args <- function(
       }
     }
   }
+  # X
   if (!is.na(names(args["X"]))) {
     X <- eval(expression(X), parent.frame())
     if (!is.null(X)) {
@@ -1048,6 +989,168 @@ check_divent_args <- function(
   
   # All tests passed.
   return (TRUE)
+}
+
+
+#' Helper to prepare parameters for `accum_sp` plot and autoplot.
+#'
+#' @param x the `accum_sp` object to plot.
+#' @param q the order of diversity.
+#' @param main the title of the plot.
+#' @param xlab X-axis label.
+#' @param ylab Y-axis label.
+#' @param ylim Y-axis limits
+#'
+#' @returns a vector of parameters for the plots
+#' @noRd
+#'
+accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
+
+    # Find the row in the accumulation table
+    q_row <- which(dimnames(x$accumulation)$q == q)
+    if (length(q_row) != 1) {
+      stop("The value of q does not correspond to any accumulation curve.")
+    }
+  
+    if (is.null(ylim)) {
+      # Evaluate ylim if not set by an argument
+      ymin <- min(x$accumulation[q_row, , ])
+      ymax <- max(x$accumulation[q_row, , ])
+    } else {
+      ymin <- ylim[1]
+      ymax <- ylim[2]
+    }
+    
+    if (main == "Accumulation of ...") {
+      # Prepare the main title
+      if (inherits(x, "accum_sp_entropy")) {
+        main <- paste("Accumulation of Entropy of order", q)
+      }
+      if (inherits(x, "accum_sp_diversity")) {
+        if (q == 0) {
+          main <- "Species Accumulation Curve"
+        } else {
+          main <- paste("Accumulation of Diversity of order", q)
+        }
+      }
+      if (inherits(x, "accum_sp_mixing")) main <- paste("Mixing index of order", q)
+    }
+    
+    if (xlab == "Sample size...") {
+      if (names(dimnames(x$accumulation)[2]) == "n") {
+        xlab <- "Number of individuals"
+      } else {
+        xlab <- "Distance from the central individual"
+      }
+    }
+    
+    if (ylab == "Diversity...") {
+      # Prepare Y-axis
+      if (inherits(x, "accum_sp_entropy")) {
+        ylab <- "Diversity"
+      }
+      if (inherits(x, "accum_sp_diversity")) {
+        if (q == 0) {
+          ylab <- "Richness"
+      } else {
+          ylab <- "Diversity"
+      }
+      if (inherits(x, "accum_sp_mixing")) {
+        ylab <- "Mixing index"
+      }
+    }
+    return(
+      list(
+        q_row = q_row, 
+        ymin = ymin, 
+        ymax = ymax, 
+        main = main, 
+        xlab = xlab, 
+        ylab = ylab
+      )
+    )
+  }
+}
+
+
+
+#' as_named_vector.character
+#' 
+#' Counts the number of points of a `character` vector and returns a named vector.
+#' Names are the items of the character vector. 
+#' This is equivalent to `as.numeric(table(x))` but `table()`
+#' looses the names.
+#'
+#' @param x a character vector.
+#'
+#' @returns A named vector with the number of items by name.
+#' @noRd
+#'
+as_named_vector.character <- function(x){
+  # Count the number of items. Returns a 1D array, not a vector.
+  the_array <- tapply(x, x, length)
+  the_vector <- as.vector(the_array)
+  # Add the names
+  names(the_vector) <- names(the_array) 
+  return(the_vector)
+}
+
+
+#' as_named_vector.wmppp
+#' 
+#' Counts the number of points of a `wmppp` object and returns a named vector.
+#' Names are the point types. 
+#' This is equivalent to `as.numeric(table(X$marks$PointType))` but `table()`
+#' looses the names.
+#'
+#' @param X a [dbmss::wmppp] object, i.e. a weighted, marked planar point pattern.
+#'
+#' @returns A named vector with the number of points by type.
+#' @noRd
+#'
+as_named_vector.wmppp <- function(X){
+  # Count the number of points by type
+  return(as_named_vector.character(spatstat.geom::marks(X)$PointType))
+}
+
+
+#' Chao's A
+#' 
+#' Helper for Chao's estimators.
+#' 
+#' A's formula \insertCite{@Chao2015@, eq. 6b}{divent}) depends on the presence
+#' of singletons and doubletons.
+#' 
+#' @param abd A vector of positive integers.
+#'
+#' @returns The value of A.
+#' @references
+#' \insertAllCited{}
+#' 
+#' @noRd
+#'
+chao_A <- function(abd) {
+  
+  # Calculate abundance distribution
+  abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
+  s_1 <- as.numeric(abd_distribution["1"])
+  s_2 <- as.numeric(abd_distribution["2"])
+  sample_size <- sum(abd)
+  
+  # Calculate A
+  if (is.na(s_1)) {
+    A <- 0
+  } else {
+    # Use Chao1 estimator to evaluate the number of unobserved species
+    if (is.na(s_2)) {
+      s_0 <- (sample_size - 1) * s_1 * (s_1 - 1) / 2 / sample_size
+    } else {
+      s_0 <- (sample_size - 1) * s_1^2 / 2 / sample_size / s_2
+    }
+    A <- 1 - sample_size * s_0 / (sample_size * s_0 + s_1)
+  }
+  
+  return(A)
 }
 
 

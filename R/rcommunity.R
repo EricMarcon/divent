@@ -46,12 +46,6 @@
 #'
 #' @inheritParams check_divent_args
 #' @param n the number of communities to draw.
-#' @param prob a numeric vector containing probabilities.
-#' @param abd a numeric vector containing abundances.
-#' @param sd_lnorm the simulated log-normal distribution standard deviation. 
-#' This is the standard deviation on the log scale.
-#' @param prob_geom the proportion of resources taken by successive species 
-#' of the geometric distribution.
 #' 
 #' @name rcommunity
 #' @references
