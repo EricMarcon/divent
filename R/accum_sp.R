@@ -235,6 +235,7 @@ plot_map <- function(
     adjust = 1, 
     dim_x = 128, 
     dim_y = 128, 
+    main = "", 
     col = grDevices::terrain.colors(256), 
     contour = TRUE,
     contour_levels = 10, 
@@ -308,7 +309,7 @@ plot_map <- function(
     dimyx = c(dim_y, dim_x)
   )
   
-  plot(the_image, col = col, ...)
+  plot(the_image, main = main, col = col, ...)
   if (contour) {
     graphics::contour(
       the_image, 
