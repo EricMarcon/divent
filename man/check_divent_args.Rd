@@ -63,8 +63,7 @@ If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 
 \item{correction}{the edge-effect correction to apply when estimating
-the number of neighbors or the K function with \link[spatstat.explore:Kest]{spatstat.explore::Kest}.
-Default is "isotropic".}
+the number of neighbors.}
 
 \item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 

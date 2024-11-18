@@ -4,6 +4,9 @@
 #' up to a distance \insertCite{Shimatani2001}{divent}.
 #'
 #' @inheritParams check_divent_args
+#' @param correction the edge-effect correction to apply when estimating
+#' the number of neighbors or the *K* function with [spatstat.explore::Kest].
+#' Default is "isotropic".
 #' 
 #' @name ent_sp_simpson
 #' @references

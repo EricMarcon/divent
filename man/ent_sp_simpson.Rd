@@ -30,7 +30,7 @@ ent_sp_simpsonEnvelope(
 \item{r}{a vector of distances.}
 
 \item{correction}{the edge-effect correction to apply when estimating
-the number of neighbors or the K function with \link[spatstat.explore:Kest]{spatstat.explore::Kest}.
+the number of neighbors or the \emph{K} function with \link[spatstat.explore:Kest]{spatstat.explore::Kest}.
 Default is "isotropic".}
 
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
