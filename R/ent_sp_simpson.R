@@ -123,7 +123,7 @@ ent_sp_simpson <- function(
 
 
 #' @rdname ent_sp_simpson
-#' @param simulation_type A string describing the null hypothesis to simulate. 
+#' @param h0 A string describing the null hypothesis to simulate. 
 #' The null hypothesis may be "RandomPosition": points are drawn in a Poisson process (default)
 #' or "RandomLabeling": randomizes point types, keeping locations unchanged.
 #'
@@ -145,7 +145,7 @@ ent_sp_simpsonEnvelope <- function(
     n_simulations = 100,
     alpha = 0.05, 
     correction = c("isotropic", "translate", "none"),
-    simulation_type = c("RandomPosition", "RandomLabeling"), 
+    h0 = c("RandomPosition", "RandomLabeling"), 
     global = FALSE, 
     check_arguments = TRUE) {
     
@@ -153,16 +153,16 @@ ent_sp_simpsonEnvelope <- function(
     check_divent_args()
   }
   correction <- match.arg(correction) 
-  simulation_type <- match.arg(simulation_type) 
+  h0 <- match.arg(h0) 
   
   # Choose the null hypothesis
   X_sim <- switch(
-    simulation_type,
+    h0,
     RandomPosition = expression(dbmss::rRandomPositionK(X, CheckArguments = FALSE)),
     RandomLabeling = expression(dbmss::rRandomLabeling(X, CheckArguments = FALSE))
   )
   if (is.null(X_sim)) {
-    stop(paste("The null hypothesis", sQuote(simulation_type), "has not been recognized."))
+    stop(paste("The null hypothesis", sQuote(h0), "has not been recognized."))
   }
   # local envelope, keep extreme values for lo and hi (nrank=1)
   the_envelope <- spatstat.explore::envelope(
@@ -177,7 +177,7 @@ ent_sp_simpsonEnvelope <- function(
     savefuns = TRUE
   )
   attr(the_envelope, "einfo")$H0 <- switch (
-    simulation_type,
+    h0,
     RandomPosition = "Random Position",
     RandomLabeling = "Random Labeling"
   )

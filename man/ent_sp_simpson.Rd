@@ -18,7 +18,7 @@ ent_sp_simpsonEnvelope(
   n_simulations = 100,
   alpha = 0.05,
   correction = c("isotropic", "translate", "none"),
-  simulation_type = c("RandomPosition", "RandomLabeling"),
+  h0 = c("RandomPosition", "RandomLabeling"),
   global = FALSE,
   check_arguments = TRUE
 )
@@ -40,7 +40,7 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 
 \item{alpha}{the risk level, 5\% by default.}
 
-\item{simulation_type}{A string describing the null hypothesis to simulate.
+\item{h0}{A string describing the null hypothesis to simulate.
 The null hypothesis may be "RandomPosition": points are drawn in a Poisson process (default)
 or "RandomLabeling": randomizes point types, keeping locations unchanged.}
 
