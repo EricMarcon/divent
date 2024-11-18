@@ -206,11 +206,9 @@ accum_ent_phylo.abundances <- function(
   }
   # Prepare the progress bar
   if (show_progress & interactive()) {
-    pgb <- utils::txtProgressBar(
-      min = 0, 
-      max = 1 + (length(the_phylo_abd) * n_communities) * (1 + n_simulations)
-    )
-    utils::setTxtProgressBar(pgb, 1)
+    cli::cli_progress_bar(
+      "Computing entropy", 
+      total = (length(the_phylo_abd) * n_communities) * (1 + n_simulations))
   }
   
   # Calculate entropy along the tree
@@ -233,7 +231,13 @@ accum_ent_phylo.abundances <- function(
       # Prepare an array to store simulated abd. Rows are species, columns are
       # communities (same structure as groups of the_phylo_abd), z are simulations
       # Max number of species in simulated communities
-      sp_sim <- max(vapply(comm_sim.list, dim, c(0L,0L))[2,])
+      sp_sim <- max(
+        vapply(
+          comm_sim.list, 
+          FUN = dim, 
+          FUN.VALUE = c(0L, 0L)
+        )[2, ]
+      )
       comm_sim <- array(
         data = 0,
         dim = c(sp_sim, length(comm_sim.list), n_simulations)
@@ -290,9 +294,7 @@ accum_ent_phylo.abundances <- function(
           check_arguments = FALSE
         )$entropy
         # Progress bar
-        if (show_progress & interactive()) {
-          utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
-        }
+        if (show_progress & interactive()) cli::cli_progress_update()
       }
       if (n_simulations > 0) {
         for (y_community in seq_len(n_communities)) {
@@ -309,12 +311,10 @@ accum_ent_phylo.abundances <- function(
       }
 
       # Progress bar
-      if (show_progress & interactive()) {
-        utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
-      }
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
   }
-  if (show_progress & interactive()) close(pgb)
+  if (show_progress & interactive()) cli::cli_progress_done()
   
   # Average entropy
   # Actual data

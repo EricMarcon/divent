@@ -196,9 +196,9 @@ profile_phylo.species_distribution <- function(
   
   # Prepare the progress bar
   if (show_progress & interactive()) {
-    pgb <- utils::txtProgressBar(
-      min = 0, 
-      max = length(the_phylo_abd) * length(orders)
+    cli::cli_progress_bar(
+      "Computing phyloentropy", 
+      total = length(the_phylo_abd) * length(orders)
     )
   }
   
@@ -288,13 +288,11 @@ profile_phylo.species_distribution <- function(
         }
       }
       # Progress bar
-      if (show_progress & interactive()) {
-        utils::setTxtProgressBar(pgb, utils::getTxtProgressBar(pgb) + 1)
-      }
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
   }
 
-  if (show_progress & interactive()) close(pgb)
+  if (show_progress & interactive()) cli::cli_progress_done()
 
   # Average entropy
   # Actual data

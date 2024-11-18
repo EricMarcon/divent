@@ -71,7 +71,7 @@ accum_sp_tsallis <- function(
     
     # Prepare a progress bar and the result arrays
     if (show_progress & interactive()) {
-      pgb <- utils::txtProgressBar(min = 0, max = length(neighbors))
+      cli::cli_progress_bar("Computing entropy", total = length(neighbors))
     }
     # 3D array: q, n, observed entropy in a single slice
     ent_q_nr_observed <- array(
@@ -140,12 +140,10 @@ accum_sp_tsallis <- function(
         FUN = mean, 
         na.rm = TRUE
       )
-      if (show_progress & interactive()) {
-        utils::setTxtProgressBar(pgb, k)
-      }
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive()) close(pgb)
-   
+    if (show_progress & interactive()) cli::cli_progress_done()
+    
     # Entropy of a single individual is 0. 
     # This is the default value of the arrays so don't run.
     #  ent_q_nr_observed[, 1, 1] <- 0
@@ -175,7 +173,7 @@ accum_sp_tsallis <- function(
     
     # Prepare a progress bar and the result arrays
     if (show_progress & interactive()) {
-      pgb <- utils::txtProgressBar(min = 1, max = length(r))
+      cli::cli_progress_bar("Computing entropy", total = length(r))
     }
     # 3D array: q, r, observed entropy in a single slice
     ent_q_nr_observed <- array(
@@ -289,9 +287,9 @@ accum_sp_tsallis <- function(
         FUN = mean, 
         na.rm = TRUE
       )
-      if (show_progress & interactive()) utils::setTxtProgressBar(pgb, d)
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive()) close(pgb)
+    if (show_progress & interactive()) cli::cli_progress_done()
     # Entropy at r=0 is 0. This is the default value of the arrays so don't run.
     #  ent_q_nr_observed[, 1, 1] <- 0
     #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
@@ -407,8 +405,10 @@ accum_sp_hill <- function(
     }
     is_h0_found <- TRUE
     # Prepare a progress bar 
-    if (show_progress & interactive())
-      pgb <- utils::txtProgressBar(min = 0, max = length(orders))
+    if (show_progress & interactive()) {
+      cli::cli_progress_bar("Running simulations", total = length(orders))
+    }
+    
     # Prepare the distribution of the abundances of species.
     abd <- as_abundances(X)
     for (order in seq_along(orders)) {
@@ -426,17 +426,15 @@ accum_sp_hill <- function(
       the_diversity$accumulation[order, , 2] <- h0_values$diversity
       the_diversity$accumulation[order, , 3] <- h0_values$inf
       the_diversity$accumulation[order, , 4] <- h0_values$sup
-      if (show_progress & interactive())
-        utils::setTxtProgressBar(pgb, i)
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive())
-      close(pgb)
+    if (show_progress & interactive()) cli::cli_progress_done()
   }
   if (h0 == "random location" | h0 == "binomial") {
     is_h0_found <- TRUE
     # Prepare a progress bar 
     if (show_progress & interactive()) {
-      pgb <- utils::txtProgressBar(min = 0, max = n_simulations)
+      cli::cli_progress_bar("Running simulations", total = n_simulations)
     }
     # Prepare a 3-D array to store results. Rows are q, columns are r or n, 
     # z-values are for each simulation.
@@ -465,10 +463,9 @@ accum_sp_hill <- function(
         show_progress = FALSE, 
         check_arguments = FALSE
       )$accumulation[, , 1]
-      if (show_progress & interactive())
-        utils::setTxtProgressBar(pgb, i)
+      if (show_progress & interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive()) close(pgb)
+    if (show_progress & interactive()) cli::cli_progress_done()
     # Calculate quantiles
     for (q in seq_along(orders)) {
       for (r in seq_along(r)) {
