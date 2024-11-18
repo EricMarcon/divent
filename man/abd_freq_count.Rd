@@ -57,7 +57,7 @@ distribution of the community by \link{probabilities} and eq. (5)
 of \insertCite{Chao2014}{divent}.
 }
 \examples{
-abd_freq_count(paracou_6_abd[1, -(1:2)])
+abd_freq_count(as.numeric(paracou_6_abd[1, ]))
 }
 \references{
 \insertAllCited{}

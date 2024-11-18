@@ -25,8 +25,8 @@
 #' \insertAllCited{}
 #' 
 #' @examples
-#' abd_freq_count(paracou_6_abd[1, -(1:2)])
-abd_freq_count <- function (
+#' abd_freq_count(as.numeric(paracou_6_abd[1, ]))
+abd_freq_count <- function(
     abd,
     level = NULL, 
     probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),

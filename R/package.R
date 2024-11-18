@@ -375,9 +375,9 @@ check_divent_args <- function(
           parent_function
         )
       }
-      if (any(abd <= 0)) {
+      if (any(abd < 0)) {
         error_message(
-          "abundances must be positive.",
+          "abundances must not be negative.",
           abd,
           parent_function
         )
@@ -691,9 +691,9 @@ check_divent_args <- function(
           parent_function
         )
       }
-      if (any(prob <= 0)) {
+      if (any(prob < 0)) {
         error_message(
-          "probabilities must be positive.",
+          "probabilities must not be negative.",
           prob,
           parent_function
         )

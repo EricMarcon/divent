@@ -5,6 +5,7 @@
 \title{check_divent_args}
 \usage{
 check_divent_args(
+  abd = NULL,
   abundances = NULL,
   alpha = NULL,
   as_numeric = NULL,
@@ -26,12 +27,15 @@ check_divent_args(
   n_simulations = NULL,
   normalize = NULL,
   orders = NULL,
+  prob = NULL,
+  prob_geom = NULL,
   probability_estimator = NULL,
   q = NULL,
   r = NULL,
   rate = NULL,
   richness_estimator = NULL,
   sample_coverage = NULL,
+  sd_lnorm = NULL,
   show_progress = NULL,
   similarities = NULL,
   size = NULL,
@@ -45,6 +49,8 @@ check_divent_args(
 )
 }
 \arguments{
+\item{abd}{a numeric vector containing abundances.}
+
 \item{abundances}{an object of class \link{abundances}.}
 
 \item{alpha}{the risk level, 5\% by default.}
@@ -100,6 +106,11 @@ If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
 
 \item{orders}{The orders of diversity.}
 
+\item{prob}{a numeric vector containing probabilities.}
+
+\item{prob_geom}{the proportion of resources taken by successive species
+of the geometric distribution.}
+
 \item{probability_estimator}{a string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
@@ -115,6 +126,9 @@ see \link{div_richness}. used for interpolation and extrapolation.}
 
 \item{sample_coverage}{the sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}
+
+\item{sd_lnorm}{the simulated log-normal distribution standard deviation.
+This is the standard deviation on the log scale.}
 
 \item{show_progress}{if TRUE, a progress bar is shown during long computations.}
 
