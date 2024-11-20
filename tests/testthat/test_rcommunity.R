@@ -38,7 +38,7 @@ testthat::test_that(
 )
 
 # Unveil probabilities
-abd <- abd_species(paracou_6_abd[1, ])
+abd <- as.numeric(abd_species(paracou_6_abd[1, ]))
 
 testthat::test_that(
   "No estimator fails", {

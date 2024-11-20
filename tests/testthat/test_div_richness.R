@@ -1,7 +1,7 @@
 # Check all estimators
 
 # Data: a vector of abundances
-abd <- abd_species(paracou_6_abd[1, ])
+abd <- as.numeric(abd_species(paracou_6_abd[1, ]))
 
 testthat::test_that(
   "Naive estimator is correct", {
@@ -71,7 +71,7 @@ testthat::test_that(
       # All estimators
       eval(formals(divent:::div_richness.numeric)$estimator), 
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All probability estimators
           eval(formals(divent:::div_richness.numeric)$probability_estimator), 
           function(probability_estimator) {
@@ -114,7 +114,7 @@ testthat::test_that(
     # The min value must be the number of observed species
     testthat::expect_equal(
       min(div_richness.dataframe$diversity),
-      sum(abundances[1, !colnames(abundances) %in% non_species_columns] > 0)
+      sum(abd > 0)
     )
   }
 )
@@ -132,7 +132,7 @@ testthat::test_that(
       # All estimators
       eval(formals(divent:::div_richness.numeric)$estimator), 
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All probability estimators
           eval(formals(divent:::div_richness.numeric)$probability_estimator), 
           function(probability_estimator) {
@@ -140,7 +140,7 @@ testthat::test_that(
               # All unveilings
               eval(formals(divent:::div_richness.numeric)$unveiling), 
               function(unveiling) {
-                the_list <-lapply(
+                the_list <- lapply(
                   # All levels
                   levels, 
                   function(level) {
@@ -187,3 +187,4 @@ testthat::test_that(
     )
   }
 )
+
