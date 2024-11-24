@@ -104,14 +104,11 @@ ent_phylo.numeric <- function(
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
+    as_numeric = as_numeric,
     check_arguments = FALSE)
  
   # Return
-  if(as_numeric) {
-    return(the_entropy$entropy)
-  } else {
-    return(the_entropy)
-  }
+  return(the_entropy)
 }
 
 #' @rdname ent_phylo
@@ -133,6 +130,7 @@ ent_phylo.species_distribution <- function(
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
   
@@ -176,30 +174,34 @@ ent_phylo.species_distribution <- function(
   )
   
   # Return
-  if (gamma) {
-    return(
-      # Make a tibble with site, estimator and entropy
-      tibble::tibble_row(
-        site = "Metacommunity",
-        # estimator and order
-        estimator = estimator,
-        q = q,
-        # Entropy
-        entropy = the_entropy
-      )
-    )
+  if (as_numeric) {
+    return(the_entropy)
   } else {
-    return(
-      # Make a tibble with site, estimator and entropy
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # estimator and order
-        estimator = estimator,
-        q = q,
-        # Entropy
-        entropy = the_entropy
+    if (gamma) {
+      return(
+        # Make a tibble with site, estimator and entropy
+        tibble::tibble_row(
+          site = "Metacommunity",
+          # estimator and order
+          estimator = estimator,
+          q = q,
+          # Entropy
+          entropy = the_entropy
+        )
       )
-    )
+    } else {
+      return(
+        # Make a tibble with site, estimator and entropy
+        tibble::tibble(
+          # Restore non-species columns
+          x[colnames(x) %in% non_species_columns],
+          # estimator and order
+          estimator = estimator,
+          q = q,
+          # Entropy
+          entropy = the_entropy
+        )
+      )
+    }
   }
 }

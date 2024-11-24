@@ -354,6 +354,7 @@ ent_similarity.species_distribution <- function(
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
   
@@ -381,7 +382,7 @@ ent_similarity.species_distribution <- function(
         jack_alpha  = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
-        as_numeric = FALSE
+        as_numeric = as_numeric
       )
     )
   } else {
@@ -403,15 +404,18 @@ ent_similarity.species_distribution <- function(
       as_numeric = FALSE,
       check_arguments = FALSE
     )
-    return(
-      # Make a tibble with site, estimator and entropy
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
-        do.call(rbind.data.frame, ent_similarity_list)
-      )
+    # Make a tibble with site, estimator and entropy
+    the_entropy <-  tibble::tibble(
+      # Restore non-species columns
+      x[colnames(x) %in% non_species_columns],
+      # Coerce the list returned by apply into a dataframe
+      do.call(rbind.data.frame, ent_similarity_list)
     )
+    if (as_numeric) {
+      return(the_entropy$entropy)
+    } else {
+      return(the_entropy)
+    }
   }
 }
 
@@ -436,5 +440,5 @@ S_v <- function(
     p_V_Ns
 ) {
   v_used <- seq_len(sample_size - abd[species_index])
-  return (sum(w_v[v_used] * p_V_Ns[v_used, species_index]))
+  return(sum(w_v[v_used] * p_V_Ns[v_used, species_index]))
 }

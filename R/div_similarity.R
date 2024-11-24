@@ -94,8 +94,12 @@ div_similarity.numeric <- function(
     diversity = exp_q(.data$entropy, q = q),
     .keep = "unused"
   )
-  # return the diversity
-  return(the_diversity)
+  # Return the diversity
+  if (as_numeric) {
+    return(the_diversity$diversity)
+  } else {
+    return(the_diversity)
+  }
 }
 
 
@@ -114,6 +118,7 @@ div_similarity.species_distribution <- function(
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
   
@@ -137,6 +142,7 @@ div_similarity.species_distribution <- function(
     jack_alpha  = jack_alpha, 
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
+    as_numeric = FALSE,
     check_arguments = FALSE
   )
   # Calculate diversity
@@ -146,5 +152,11 @@ div_similarity.species_distribution <- function(
     .keep = "unused"
   )
   
-  return(the_diversity)
+  # Return the diversity
+  if (as_numeric) {
+    return(the_diversity$diversity)
+  } else {
+    return(the_diversity)
+  }
+  
 }

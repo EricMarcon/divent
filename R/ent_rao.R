@@ -201,6 +201,7 @@ ent_rao.species_distribution <- function(
     normalize = TRUE,
     estimator = c("Lande", "naive"),
     gamma = FALSE,
+    as_numeric  = FALSE,
     ...,
     check_arguments = TRUE) {
   
@@ -253,16 +254,18 @@ ent_rao.species_distribution <- function(
       tree = tree,
       normalize = normalize,
       estimator = estimator,
-      as_numeric = FALSE,
+      as_numeric = as_numeric,
       check_arguments = FALSE
     )
-    # Add the site column
-    the_entropy <- dplyr::bind_cols(
-      site = "Metacommunity",
-      the_entropy
-    )
+    if (!as_numeric) {
+      # Add the site column
+      the_entropy <- dplyr::bind_cols(
+        site = "Metacommunity",
+        the_entropy
+      )
+    }
     return(the_entropy)
-  } else {
+   } else {
     # Apply ent_rao.numeric() to each site
     ent_rao_list <- apply(
       # Eliminate site and weight columns
@@ -278,14 +281,17 @@ ent_rao.species_distribution <- function(
       as_numeric = FALSE,
       check_arguments = FALSE
     )
-    return(
-      # Make a tibble with site, estimator and richness
-      tibble::tibble(
-        # Restore non-species columns
-        x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
-        do.call(rbind.data.frame, ent_rao_list)
-      )
+    # Make a tibble with site, estimator and entropy
+    the_entropy <- tibble::tibble(
+      # Restore non-species columns
+      x[colnames(x) %in% non_species_columns],
+      # Coerce the list returned by apply into a dataframe
+      do.call(rbind.data.frame, ent_rao_list)
     )
+    if (as_numeric) {
+      return(the_entropy$entropy)
+    } else {
+      return(the_entropy)
+    }
   }
 }
