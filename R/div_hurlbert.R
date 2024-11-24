@@ -117,3 +117,35 @@ div_hurlbert.species_distribution <- function(
 
   return(the_diversity)
 }
+
+
+#' Compute Hurlbert's diversity from its entropy
+#' 
+#' Find the effective number of species numerically
+#'
+#' @param hurlbert_entropy The entropy.
+#' @param k The order of entropy.
+#'
+#' @returns Hurlbert's effective number of species.
+#' @noRd
+#' 
+hurlbert_ent2div <- function(hurlbert_entropy, k) {
+  # Relation between diversity and entropy
+  # (D for diversity, S for entropy, k is the parameter)
+  f <- function(D, S, k) {D * (1 - (1 - 1 / D)^k) - S}
+  # Minimize it
+  return(
+    vapply(
+      hurlbert_entropy, 
+      FUN = function(S) {
+        stats::uniroot(
+          f = f, 
+          interval = c(1, 1E+7), 
+          S = S, 
+          k = k
+        )$root
+      },
+      FUN.VALUE = 0
+    )
+  )
+}

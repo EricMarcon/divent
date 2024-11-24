@@ -699,3 +699,45 @@ as.double.species_distribution <- function(x, use.names = TRUE, ...) {
 as.numeric.species_distribution <- function(x, use.names = TRUE, ...) {
   return(as.double.species_distribution(x, use.names, ...))
 }
+
+
+#  Utilities ----
+
+#' as_named_vector.character
+#' 
+#' Counts the number of points of a `character` vector and returns a named vector.
+#' Names are the items of the character vector. 
+#' This is equivalent to `as.numeric(table(x))` but `table()`
+#' looses the names.
+#'
+#' @param x a character vector.
+#'
+#' @returns A named vector with the number of items by name.
+#' @noRd
+#'
+as_named_vector.character <- function(x){
+  # Count the number of items. Returns a 1D array, not a vector.
+  the_array <- tapply(x, x, length)
+  the_vector <- as.vector(the_array)
+  # Add the names
+  names(the_vector) <- names(the_array) 
+  return(the_vector)
+}
+
+
+#' as_named_vector.wmppp
+#' 
+#' Counts the number of points of a `wmppp` object and returns a named vector.
+#' Names are the point types. 
+#' This is equivalent to `as.numeric(table(X$marks$PointType))` but `table()`
+#' looses the names.
+#'
+#' @param X a [dbmss::wmppp] object, i.e. a weighted, marked planar point pattern.
+#'
+#' @returns A named vector with the number of points by type.
+#' @noRd
+#'
+as_named_vector.wmppp <- function(X){
+  # Count the number of points by type
+  return(as_named_vector.character(spatstat.geom::marks(X)$PointType))
+}

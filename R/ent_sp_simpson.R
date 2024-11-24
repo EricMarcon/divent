@@ -189,3 +189,23 @@ ent_sp_simpsonEnvelope <- function(
   # Return the envelope
   return(the_envelope)
 }
+
+
+#' Extract a column from an fv object
+#' according to an edge-effect correction
+#'
+#' @param fv the function value object, see [spatstat.explore::fv.object].
+#' @param correction the edge-effect correction: 
+#' "isotropic", "translate" or "none"
+#'
+#' @returns a vector with the function values
+#' @noRd
+#'
+correction_fv <- function(fv, correction) {
+  switch(
+    correction,
+    "isotropic" = fv$iso,
+    "translate" = fv$trans,
+    "none" = fv$un
+  )
+}

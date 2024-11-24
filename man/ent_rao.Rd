@@ -26,6 +26,7 @@ ent_rao(x, ...)
   normalize = TRUE,
   estimator = c("Lande", "naive"),
   gamma = FALSE,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )

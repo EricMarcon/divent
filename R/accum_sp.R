@@ -333,3 +333,84 @@ plot_map <- function(
   # Return the image for further processing
   return(invisible(the_image))
 }
+
+
+#' Helper to prepare parameters for `accum_sp` plot and autoplot.
+#'
+#' @param x the `accum_sp` object to plot.
+#' @param q the order of diversity.
+#' @param main the title of the plot.
+#' @param xlab X-axis label.
+#' @param ylab Y-axis label.
+#' @param ylim Y-axis limits
+#'
+#' @returns a vector of parameters for the plots
+#' @noRd
+#'
+accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
+  
+  # Find the row in the accumulation table
+  q_row <- which(dimnames(x$accumulation)$q == q)
+  if (length(q_row) != 1) {
+    stop("The value of q does not correspond to any accumulation curve.")
+  }
+  
+  if (is.null(ylim)) {
+    # Evaluate ylim if not set by an argument
+    ymin <- min(x$accumulation[q_row, , ])
+    ymax <- max(x$accumulation[q_row, , ])
+  } else {
+    ymin <- ylim[1]
+    ymax <- ylim[2]
+  }
+  
+  if (main == "Accumulation of ...") {
+    # Prepare the main title
+    if (inherits(x, "accum_sp_entropy")) {
+      main <- paste("Accumulation of Entropy of order", q)
+    }
+    if (inherits(x, "accum_sp_diversity")) {
+      if (q == 0) {
+        main <- "Species Accumulation Curve"
+      } else {
+        main <- paste("Accumulation of Diversity of order", q)
+      }
+    }
+    if (inherits(x, "accum_sp_mixing")) main <- paste("Mixing index of order", q)
+  }
+  
+  if (xlab == "Sample size...") {
+    if (names(dimnames(x$accumulation)[2]) == "n") {
+      xlab <- "Number of individuals"
+    } else {
+      xlab <- "Distance from the central individual"
+    }
+  }
+  
+  if (ylab == "Diversity...") {
+    # Prepare Y-axis
+    if (inherits(x, "accum_sp_entropy")) {
+      ylab <- "Diversity"
+    }
+    if (inherits(x, "accum_sp_diversity")) {
+      if (q == 0) {
+        ylab <- "Richness"
+      } else {
+        ylab <- "Diversity"
+      }
+      if (inherits(x, "accum_sp_mixing")) {
+        ylab <- "Mixing index"
+      }
+    }
+    return(
+      list(
+        q_row = q_row, 
+        ymin = ymin, 
+        ymax = ymax, 
+        main = main, 
+        xlab = xlab, 
+        ylab = ylab
+      )
+    )
+  }
+}
