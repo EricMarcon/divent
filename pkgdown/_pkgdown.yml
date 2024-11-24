@@ -15,6 +15,7 @@ reference:
     contents:
     - starts_with("paracou_")
     - starts_with("mock_3sp_")
+    - non_species_columns   
   - title: Generate data
     contents:
     - rcommunity

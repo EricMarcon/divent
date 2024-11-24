@@ -96,26 +96,25 @@ autoplot.wmppp <- function(
 
 
 # Initialization ----
-# Columns to ignore when computing species distributions 
-non_species_columns <- c(
-  # Site characteristics
-  "site",
-  "weight",
-  # Phylodiversity cuts
-  "cut",
-  "interval",
-  # Outputs
-  "q",
-  "entropy",
-  "diversity",
-  "abundance",
-  # Free comments
-  "comments"
-)
 
+utils::globalVariables("non_species_columns")
 
 
 # Data ----
+
+#' Non-Species columns
+#'
+#' The column names that are not those of species in a [species_distribution].
+#'
+#' Objects of classes [abundances] and [probabilities], that are also of class
+#' [species_distribution], have columns named after the species they contain.
+#' Some columns are reserved to describe the plots and their diversity.
+#' 
+#'
+#' @format A character vector.
+#' @name non_species_columns
+"non_species_columns"
+
 
 #' Paracou plot 6
 #'
