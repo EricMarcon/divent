@@ -8,14 +8,12 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    runs-on: macOS-latest
+    runs-on: macOS-13
     env:
       GITHUB_PAT: ${{ secrets.GH_PAT }}
     steps:
       - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: '4.4.1' # Current 4.4.2 fails (24/11/24)
       - name: Install pandoc
         uses: r-lib/actions/setup-pandoc@v2
       - name: Install dependencies
