@@ -43,6 +43,7 @@ profile_hill(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q_threshold = 10,
   gamma = FALSE,
   n_simulations = 0,
   alpha = 0.05,
