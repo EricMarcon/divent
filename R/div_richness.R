@@ -461,7 +461,7 @@ div_richness.species_distribution <- function(
 
   if (gamma) {
     # Calculate gamma entropy of order 0
-    ent_0 <- ent_gamma_hill(
+    ent_0 <- ent_gamma_tsallis(
       species_distribution = x,
       q = 0,
       estimator = estimator,

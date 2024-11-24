@@ -1229,7 +1229,7 @@ checked_matrix <- function(
 #' @returns A tibble with the estimator used and the estimated entropy.
 #' @noRd
 #' 
-ent_gamma_hill <- function(
+ent_gamma_tsallis <- function(
     species_distribution,
     q,
     estimator,
@@ -1355,7 +1355,7 @@ ent_gamma_hill <- function(
 #' 
 #' Build the metacommunity and check that abundances are integers.
 #' 
-#' See [ent_gamma_hill] for details.
+#' See [ent_gamma_tsallis] for details.
 #' @param species_distribution An object of class [species_distribution].
 #' 
 #' @returns A tibble with the estimator used and the estimated entropy.
