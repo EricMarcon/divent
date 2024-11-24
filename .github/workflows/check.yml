@@ -22,6 +22,8 @@ jobs:
           options(install.packages.check.source = "no")
           install.packages(c("remotes", "rcmdcheck", "covr", "pkgdown", "roxygen2"))
           remotes::install_deps(dependencies = TRUE)
+          # dev version until 2.1.1 is replaced
+          remotes::install_github("r-lib/pkgdown")
         shell: Rscript {0}
       - name: Roxygenize
         run: roxygen2::roxygenize()
