@@ -58,7 +58,7 @@ metacommunity.matrix <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (length(weights != nrow(x))) {
-      stop ("The length of 'weights' must be the number of communities")
+      stop("The length of 'weights' must be the number of communities")
     }
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   }

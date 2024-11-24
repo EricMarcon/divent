@@ -149,7 +149,8 @@ ent_tsallis.numeric <- function(
     if (
         !is.null(sample_coverage) & 
         is_integer_values(sample_size) & 
-        (estimator == "ChaoShen" | estimator == "Marcon")) {
+        (estimator == "ChaoShen" | estimator == "Marcon")
+    ) {
       
       cp <- sample_coverage * abd / sample_size
       chao_shen <- -sum(cp^q * ln_q(cp, q = q) / (1 - (1 - cp)^sample_size))
@@ -258,7 +259,8 @@ ent_tsallis.numeric <- function(
     
     ## Not Shannon ----
     if (estimator == "ZhangGrabchak" | estimator == "ChaoJost") {
-      # Weights. Useless here if EntropyEstimation is used, but weights are necessary for ChaoJost
+      # Weights. Useless here if package EntropyEstimation is used, 
+      # but weights are necessary for ChaoJost
       # i <- seq_len(abd)
       # w_vi <- (i - q) / i
       # w_v <- cumprod(w_vi)
@@ -293,7 +295,7 @@ ent_tsallis.numeric <- function(
       # w_v is already available from ZhangGrabchak
       i <- seq_len(sample_size)
       # Weights: here only if EntropyEstimation is used. Else, they have been calculated above.
-      w_vi <- (i - q)/i
+      w_vi <- (i - q) / i
       w_v <- cumprod(w_vi)
       if (A == 1) {
         # The general formula of Eq 7d has a 0/0 part that must be forced to 0
@@ -311,7 +313,8 @@ ent_tsallis.numeric <- function(
         # The bias in Chao & Jost (2015) is that of the Hill number. 
         # It must be divided by 1-q to be applied to entropy.
         bias_chao_jost <- (
-          s_1 / sample_size * (1 - A)^(1 - sample_size) * (A^(q - 1) - sum(eq7d_sum) - 1)
+          s_1 / sample_size * 
+            (1 - A)^(1 - sample_size) * (A^(q - 1) - sum(eq7d_sum) - 1)
           ) / (1 - q)
       }
       the_entropy <- ent_ZhangGrabchak + bias_chao_jost
@@ -497,7 +500,8 @@ ent_tsallis.numeric <- function(
       as_numeric = TRUE,
       check_arguments = FALSE
     )
-  }
+  } 
+  
   if (level == sample_size) {
     # No interpolation/extrapolation needed: return the observed entropy
     the_entropy <- -sum(prob^q * ln_q(prob, q))
@@ -538,11 +542,11 @@ ent_tsallis.numeric <- function(
       the_richness <- dplyr::mutate(
         the_richness,
         entropy = .data$diversity - 1,
-        .keep = "unused")
+        .keep = "unused"
+      )
       return(the_richness)  
     }
-  } 
-  if (q == 1) {
+  } else if (q == 1) {
     # Shannon. General formula is not defined at q=1
     return(
       ent_shannon(
@@ -559,8 +563,7 @@ ent_tsallis.numeric <- function(
         check_arguments = FALSE
       )
     )
-  } 
-  if (q == 2) {
+  } else if (q == 2) {
     # Simpson.
     return(
       ent_simpson(
@@ -579,13 +582,15 @@ ent_tsallis.numeric <- function(
     )
   }
   
+  ## Non-integer q ----
   if (level <= sample_size) {
-    ## Interpolation ----
+    ### Interpolation ----
     # Obtain Abundance Frequency Count
     abd_freq <- abd_freq_count(abd, level = level, check_arguments = FALSE)
     # Calculate entropy (Chao et al., 2014, eq. 6)
     the_entropy <- (
-      sum(((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1
+      sum(
+        ((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1
       )/(1 - q)
     if (as_numeric) {
       return(the_entropy)
@@ -600,7 +605,7 @@ ent_tsallis.numeric <- function(
       )  
     }
   } else {
-    ## Extrapolation ----
+    ### Extrapolation ----
     # Unveil the full distribution that rarefies to the observed entropy
     prob_unv <- probabilities.numeric(
       abd,
