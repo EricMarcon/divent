@@ -93,7 +93,7 @@ species_distribution <- function(
     }
     if (length(names) != 1) {
       ### Rows: Add a site name ----
-      names <- paste("site", round(stats::runif(1)*.Machine$integer.max), sep="_")
+      names <- "site_1"
     }
     # Build a tibble
     the_distribution <- tibble::tibble_row(
