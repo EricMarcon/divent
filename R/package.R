@@ -988,7 +988,7 @@ check_divent_args <- function(
   }
   
   # All tests passed.
-  return (TRUE)
+  return(TRUE)
 }
 
 
@@ -1271,7 +1271,7 @@ ent_gamma_hill <- function(
   
   # Compute the entropy. Call the appropriate function for its estimators.
   # Richness estimators are specific
-  if (q==0 & estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
+  if (q == 0 & estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
     the_diversity <- div_richness.numeric(
       abd, 
       estimator = estimator,
@@ -1294,7 +1294,7 @@ ent_gamma_hill <- function(
     if (as_numeric) {
       the_entropy <- the_entropy$entropy
     }
-  } else if (q==1 & is.null(sample_coverage)) {
+  } else if (q == 1 & is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_shannon.numeric(
       abd,
@@ -1309,7 +1309,7 @@ ent_gamma_hill <- function(
       as_numeric = as_numeric,
       check_arguments = FALSE
     )
-  } else if (q==2 & is.null(sample_coverage)) {
+  } else if (q == 2 & is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_simpson.numeric(
       abd,
@@ -1648,7 +1648,7 @@ phylo_entropy.phylo_abd <- function(
   }
   # Should be a matrix, but simplify2array() makes a vector instead of a 1-col 
   # matrix and gamma entropy is a vector. Force a matrix.
-  if(is.vector(phylo_entropies)) {
+  if (is.vector(phylo_entropies)) {
     phylo_entropies <- t(phylo_entropies)
   }
   
