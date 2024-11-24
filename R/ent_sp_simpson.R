@@ -120,7 +120,7 @@ ent_sp_simpson <- function(
     unitname = X$window$unit, 
     fname = "Simpson's Entropy")
   spatstat.explore::fvnames(the_entropy, ".") <- colnames(Shi.df)[-1]
-  return (the_entropy)
+  return(the_entropy)
 }
 
 
@@ -179,7 +179,7 @@ ent_sp_simpsonEnvelope <- function(
     simulate = X_sim, 
     savefuns = TRUE
   )
-  attr(the_envelope, "einfo")$H0 <- switch (
+  attr(the_envelope, "einfo")$H0 <- switch(
     h0,
     RandomPosition = "Random Position",
     RandomLabeling = "Random Labeling"
