@@ -271,6 +271,12 @@ non_species_columns <- c(
 #' of the probability distribution (see [probabilities]). 
 #' Used only for extrapolation.
 #' @param q a number: the order of diversity.
+#' @param q_threshold the value of `q` above which diversity is computed 
+#' directly with the naive estimator \eqn{(sum{p_s^q}^{\frac{1}{(1-q)}}}, 
+#' without computing entropy.
+#' When `q` is great, the exponential of entropy goes to \eqn{0^{\frac{1}{(1-q)}}},
+#' causing rounding errors while the naive estimator of diversity is less and
+#' less biased.
 #' @param r a vector of distances.
 #' @param rate the decay rate of the exponential similarity.
 #' @param richness_estimator an estimator of richness to evaluate the total number of species,
@@ -329,6 +335,7 @@ check_divent_args <- function(
     prob_geom = NULL,
     probability_estimator = NULL,
     q = NULL,
+    q_threshold = NULL,
     r = NULL,
     rate = NULL,
     richness_estimator = NULL,
@@ -736,6 +743,31 @@ check_divent_args <- function(
       error_message(
         "q must be a number.", 
         q, 
+        parent_function
+      )
+    }
+  }
+  # q_threshold
+  if (!is.na(names(args["q_threshold"]))) {
+    q_threshold <- eval(expression(q_threshold), parent.frame())
+    if (!is.numeric(q_threshold) | length(q_threshold) != 1) {
+      error_message(
+        "q_threshold must be a number.", 
+        q_threshold, 
+        parent_function
+      )
+    }
+    if (any(q_threshold < 1)) {
+      error_message(
+        "q_threshold must be positive",
+        q_threshold,
+        parent_function
+      )
+    }
+    if (any(!is_integer_values(q_threshold))) {
+      error_message(
+        "q_threshold must be an integer",
+        q_threshold,
         parent_function
       )
     }

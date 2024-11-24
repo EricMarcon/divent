@@ -59,6 +59,7 @@ profile_hill.numeric <- function(
     jack_alpha  = 0.05, 
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    q_threshold = 10,
     sample_coverage = NULL,
     as_numeric = FALSE,
     n_simulations = 0,
@@ -81,7 +82,7 @@ profile_hill.numeric <- function(
 
   # Numeric vector, no simulation ----
   if (as_numeric) {
-    if (n_simulations > 0) stop ("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
+    if (n_simulations > 0) stop("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
     the_profile_hill <- vapply(
       orders,
       FUN = function(q) {
@@ -96,6 +97,7 @@ profile_hill.numeric <- function(
           jack_alpha  = jack_alpha, 
           jack_max = jack_max, 
           coverage_estimator = coverage_estimator,
+          q_threshold = q_threshold,
           as_numeric = TRUE,
           check_arguments = FALSE
         )
@@ -120,6 +122,7 @@ profile_hill.numeric <- function(
         jack_alpha  = jack_alpha, 
         jack_max = jack_max, 
         coverage_estimator = coverage_estimator,
+        q_threshold = q_threshold,
         as_numeric = FALSE,
         check_arguments = FALSE
       )
@@ -164,6 +167,7 @@ profile_hill.numeric <- function(
             jack_alpha  = jack_alpha, 
             jack_max = jack_max, 
             coverage_estimator = coverage_estimator,
+            q_threshold = q_threshold,
             as_numeric = TRUE,
             check_arguments = FALSE
           )

@@ -80,7 +80,7 @@ div_hill <- function(x, q = 1, ...) {
 
 #' @rdname div_hill
 #'
-#' @param estimator An estimator of asymptotic diversity.
+#' @param estimator an estimator of asymptotic diversity.
 #' 
 #' @export
 div_hill.numeric <- function(
@@ -96,6 +96,7 @@ div_hill.numeric <- function(
     jack_alpha  = 0.05, 
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    q_threshold = 10,
     sample_coverage = NULL,
     as_numeric = FALSE,
     ...,
@@ -111,33 +112,55 @@ div_hill.numeric <- function(
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
 
-  the_entropy <- ent_tsallis.numeric(
-    x, 
-    q = q, 
-    estimator = estimator,
-    level = level, 
-    probability_estimator = probability_estimator,
-    unveiling = unveiling,
-    richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
-    jack_max = jack_max,
-    coverage_estimator = coverage_estimator,
-    sample_coverage = sample_coverage,
-    as_numeric = FALSE,
-    check_arguments = FALSE
-  )
-  # Calculate diversity
-  the_diversity <- dplyr::mutate(
-    the_entropy, 
-    diversity = exp_q(.data$entropy, q = q),
-    .keep = "unused"
-  )
-  
-  # return the diversity
-  if (as_numeric) {
-    return(the_diversity$diversity)
+  if (q > q_threshold) {
+    # Apply the naive estimator of diversity because rounding errors 
+    # of exp_q(entropy) are greater than its bias
+    prob <- x / sum(x)
+    the_diversity <- sum(prob^q)^(1/(1 - q))
+    # Possible rounding error again
+    if (is.infinite(the_diversity)) {
+      # Berger Parker index
+      the_diversity <- 1 / max(prob)
+    }
+    if (as_numeric) {
+      return(the_diversity)
+    } else {
+      return(
+        tibble::tibble_row(
+          estimator = "naive", 
+          order = q,
+          diversity = the_diversity
+        )
+      )  
+    }
   } else {
-    return(the_diversity)
+    the_entropy <- ent_tsallis.numeric(
+      x, 
+      q = q, 
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
+      sample_coverage = sample_coverage,
+      as_numeric = FALSE,
+      check_arguments = FALSE
+    )
+    # Calculate diversity
+    the_diversity <- dplyr::mutate(
+      the_entropy, 
+      diversity = exp_q(.data$entropy, q = q),
+      .keep = "unused"
+    )
+    # return the diversity
+    if (as_numeric) {
+      return(the_diversity$diversity)
+    } else {
+      return(the_diversity)
+    }
   }
 }
 
@@ -158,6 +181,7 @@ div_hill.species_distribution <- function(
     jack_alpha  = 0.05, 
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    q_threshold = 10,
     gamma = FALSE,
     as_numeric = FALSE,
     ...,
@@ -173,31 +197,64 @@ div_hill.species_distribution <- function(
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator)
 
-  the_entropy <- ent_tsallis.species_distribution(
-    x, 
-    q = q, 
-    estimator = estimator,
-    level = level, 
-    probability_estimator = probability_estimator,
-    unveiling = unveiling,
-    richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
-    jack_max = jack_max,
-    coverage_estimator = coverage_estimator,
-    gamma = gamma,
-    as_numeric = as_numeric,
-    check_arguments = FALSE
-  )
-  # Calculate diversity
-  if (as_numeric) {
-    the_diversity = exp_q(the_entropy, q = q)
-  } else {
-    the_diversity <- dplyr::mutate(
-      the_entropy, 
-      diversity = exp_q(.data$entropy, q = q),
-      .keep = "unused"
+  if (q > q_threshold) {
+    # Apply the naive estimator of diversity because rounding errors 
+    # of exp_q(entropy) are greater than its bias
+    div_hill_sites <- apply(
+      # Eliminate site and weight columns
+      x[, !colnames(x) %in% non_species_columns], 
+      # Apply to each row
+      MARGIN = 1,
+      FUN = function(distribution) {
+        prob <- distribution / sum(distribution)
+        the_diversity <- sum(prob^q)^(1/(1 - q))
+        if (is.infinite(the_diversity)) {
+          # Berger Parker index if rounding errors
+          the_diversity <- 1 / max(prob)
+        }
+      }
     )
+    if (as_numeric) {
+      return(div_hill_sites)
+    } else {
+      return(
+        # Make a tibble with site, estimator and diversity
+        tibble::tibble(
+          # Restore non-species columns
+          x[colnames(x) %in% non_species_columns],
+          estimator = estimator, 
+          order = q,
+          diversity = div_hill_sites
+        )
+      )
+    }
+  } else {
+    # Estimate diversity and transform it into diversity
+    the_entropy <- ent_tsallis.species_distribution(
+      x, 
+      q = q, 
+      estimator = estimator,
+      level = level, 
+      probability_estimator = probability_estimator,
+      unveiling = unveiling,
+      richness_estimator = richness_estimator,
+      jack_alpha  = jack_alpha, 
+      jack_max = jack_max,
+      coverage_estimator = coverage_estimator,
+      gamma = gamma,
+      as_numeric = as_numeric,
+      check_arguments = FALSE
+    )
+    # Calculate diversity
+    if (as_numeric) {
+      the_diversity = exp_q(the_entropy, q = q)
+    } else {
+      the_diversity <- dplyr::mutate(
+        the_entropy, 
+        diversity = exp_q(.data$entropy, q = q),
+        .keep = "unused"
+      )
+    }
   }
-  
   return(the_diversity)
 }

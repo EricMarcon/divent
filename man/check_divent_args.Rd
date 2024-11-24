@@ -31,6 +31,7 @@ check_divent_args(
   prob_geom = NULL,
   probability_estimator = NULL,
   q = NULL,
+  q_threshold = NULL,
   r = NULL,
   rate = NULL,
   richness_estimator = NULL,
@@ -116,6 +117,13 @@ of the probability distribution (see \link{probabilities}).
 Used only for extrapolation.}
 
 \item{q}{a number: the order of diversity.}
+
+\item{q_threshold}{the value of \code{q} above which diversity is computed
+directly with the naive estimator \eqn{(sum{p_s^q}^{\frac{1}{(1-q)}}},
+without computing entropy.
+When \code{q} is great, the exponential of entropy goes to \eqn{0^{\frac{1}{(1-q)}}},
+causing rounding errors while the naive estimator of diversity is less and
+less biased.}
 
 \item{r}{a vector of distances.}
 

@@ -32,6 +32,7 @@ div_part <- function(
     jack_alpha  = 0.05, 
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+    q_threshold = 10,
     check_arguments = TRUE) {
  
   if (any(check_arguments)) {
@@ -130,6 +131,7 @@ div_part <- function(
     jack_alpha  = jack_alpha, 
     jack_max = jack_max, 
     coverage_estimator = coverage_estimator,
+    q_threshold = q_threshold,
     gamma = FALSE,
     check_arguments = FALSE
   )

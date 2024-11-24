@@ -20,6 +20,7 @@ profile_hill(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q_threshold = 10,
   sample_coverage = NULL,
   as_numeric = FALSE,
   n_simulations = 0,
@@ -82,6 +83,13 @@ see \link{div_richness}. used for interpolation and extrapolation.}
 \item{jack_max}{the highest jackknife order allowed. Default is 10.}
 
 \item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
+
+\item{q_threshold}{the value of \code{q} above which diversity is computed
+directly with the naive estimator \eqn{(sum{p_s^q}^{\frac{1}{(1-q)}}},
+without computing entropy.
+When \code{q} is great, the exponential of entropy goes to \eqn{0^{\frac{1}{(1-q)}}},
+causing rounding errors while the naive estimator of diversity is less and
+less biased.}
 
 \item{sample_coverage}{the sample coverage of \code{x} calculated elsewhere.
 Used to calculate the gamma diversity of meta-communities, see details.}
