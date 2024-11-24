@@ -329,7 +329,7 @@ accum_tsallis.abundances <- function(
   probability_estimator <- match.arg(probability_estimator) 
   unveiling <- match.arg(unveiling) 
   richness_estimator <- match.arg(richness_estimator) 
-  coverage_estimator <- match.arg(coverage_estimator) 
+  coverage_estimator <- match.arg(coverage_estimator)
 
   # Set levels if needed
   if (is.null(levels)) {

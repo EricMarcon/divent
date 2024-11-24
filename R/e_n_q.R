@@ -31,7 +31,7 @@
 #' 
 e_n_q <- function(n, q) {
   if (q == 0) {
-    return (rep(1, length(n)))
+    return(rep(1, length(n)))
   } else {
     # beta cannot be computed for n - q + 1 < 0 (so warnings must be suppressed) 
     # but the value is 0 then
@@ -41,6 +41,6 @@ e_n_q <- function(n, q) {
     # It is replaced by 1 - n %% 2 * 2 (n is rounded if is not an integer)
     the_e_n_q <- beta_value - 
       (1 - round(n) %% 2 * 2) * gamma(1 + q) * sin(pi * q) / pi / (n + 1)   
-    return (the_e_n_q)
+    return(the_e_n_q)
   }
 }                                

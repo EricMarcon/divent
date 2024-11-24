@@ -98,11 +98,11 @@ accum_ent_phylo.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator) 
  
   # Make a species_distribution
-  species_distribution <- as_species_distribution(x)
+  the_species_distribution <- as_species_distribution(x)
   
   # Entropy accumulation
   the_entropy <- accum_ent_phylo.abundances(
-    x = species_distribution,
+    x = the_species_distribution,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -429,12 +429,12 @@ accum_div_phylo.numeric <- function(
   richness_estimator <- match.arg(richness_estimator) 
   coverage_estimator <- match.arg(coverage_estimator) 
   
-  # Make a species_distribution
-  species_distribution <- as_species_distribution(x)
+  # Make a the_species_distribution
+  the_species_distribution <- as_species_distribution(x)
   
   # Diversity accumulation
   the_diversity <- accum_div_phylo.abundances(
-    x = species_distribution,
+    x = the_species_distribution,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -576,9 +576,4 @@ ent.tibble <- function(ent.matrix, x, levels) {
   )
   # Return
   return(the_ent.tibble)
-}
-
-
-function(abundances, level) {
-  
 }
