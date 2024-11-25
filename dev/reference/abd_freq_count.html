@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,9 +48,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">abd_freq_count</span><span class="op">(</span></span>
 <span>  <span class="va">abd</span>,</span>
 <span>  level <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"naive"</span>, <span class="st">"Chao2013"</span>, <span class="st">"Chao2015"</span>, <span class="st">"ChaoShen"</span><span class="op">)</span>,</span>
-<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"uniform"</span>, <span class="st">"geometric"</span><span class="op">)</span>,</span>
+<span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chao2015"</span>, <span class="st">"Chao2013"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"rarefy"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -87,6 +89,14 @@ Used only for extrapolation.</p></dd>
 <dd><p>A string containing an estimator recognized by
 <a href="div_richness.html">div_richness</a> to evaluate the total number of species in <a href="probabilities.html">probabilities</a>.
 Used only for extrapolation.</p></dd>
+
+
+<dt id="arg-jack-alpha">jack_alpha<a class="anchor" aria-label="anchor" href="#arg-jack-alpha"></a></dt>
+<dd><p>the risk level, 5% by default, used to optimize the jackknife order.</p></dd>
+
+
+<dt id="arg-jack-max">jack_max<a class="anchor" aria-label="anchor" href="#arg-jack-max"></a></dt>
+<dd><p>the highest jackknife order allowed. Default is 10.</p></dd>
 
 
 <dt id="arg-coverage-estimator">coverage_estimator<a class="anchor" aria-label="anchor" href="#arg-coverage-estimator"></a></dt>
@@ -133,7 +143,7 @@ of (Chao et al. 2014)
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">abd_freq_count</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 25 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    abundance number_of_species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int[1d]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int[1d]&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>         1                84</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>         2                35</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>         3                19</span>

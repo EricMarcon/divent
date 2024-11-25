@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,11 +83,19 @@
 <span>  size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  species_number <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  species_distribution <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  thomas_mu <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  thomas_scale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tree <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  use.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unveiling <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  X <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  w_max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  w_mean <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  w_min <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weibull_scale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weibull_shape <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  X <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  win <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -272,6 +280,17 @@ Its default value is the identity matrix.</p></dd>
 <dd><p>an object of class <a href="species_distribution.html">species_distribution</a>.</p></dd>
 
 
+<dt id="arg-thomas-mu">thomas_mu<a class="anchor" aria-label="anchor" href="#arg-thomas-mu"></a></dt>
+<dd><p>in Thomas point patterns, the mean number of points per cluster.
+The intensity of the Poisson process of cluster centers is calculated as
+the number of points (<code>size</code>) per area divided by <code>thomas_mu</code>.</p></dd>
+
+
+<dt id="arg-thomas-scale">thomas_scale<a class="anchor" aria-label="anchor" href="#arg-thomas-scale"></a></dt>
+<dd><p>in Thomas point patterns, the standard deviation of random displacement
+(along each coordinate axis) of a point from its cluster center.</p></dd>
+
+
 <dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p>an ultrametric, phylogenetic tree.
 May be an object of class <a href="phylo_divent.html">phylo_divent</a>, <a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a>, <a href="https://rdrr.io/pkg/ade4/man/phylog.html" class="external-link">ade4::phylog</a> or <a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust</a>.</p></dd>
@@ -292,9 +311,36 @@ Used only for extrapolation.</p></dd>
 <dd><p>the weights of the sites of the species distributions.</p></dd>
 
 
+<dt id="arg-w-max">w_max<a class="anchor" aria-label="anchor" href="#arg-w-max"></a></dt>
+<dd><p>the maximum weight in a uniform distribution.</p></dd>
+
+
+<dt id="arg-w-mean">w_mean<a class="anchor" aria-label="anchor" href="#arg-w-mean"></a></dt>
+<dd><p>the mean weight in an exponential distribution
+(i.e. the negative of the inverse of the decay rate).</p></dd>
+
+
+<dt id="arg-w-min">w_min<a class="anchor" aria-label="anchor" href="#arg-w-min"></a></dt>
+<dd><p>the minimum weight in a uniform or Weibull distribution.</p></dd>
+
+
+<dt id="arg-weibull-scale">weibull_scale<a class="anchor" aria-label="anchor" href="#arg-weibull-scale"></a></dt>
+<dd><p>the scale parameter in a Weibull distribution.</p></dd>
+
+
+<dt id="arg-weibull-shape">weibull_shape<a class="anchor" aria-label="anchor" href="#arg-weibull-shape"></a></dt>
+<dd><p>the shape parameter in a Weibull distribution.</p></dd>
+
+
 <dt id="arg-x">X<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>a spatialized community
 (A <a href="https://ericmarcon.github.io/dbmss/reference/wmppp.html" class="external-link">dbmss::wmppp</a> object with <code>PointType</code> values as species names.)</p></dd>
+
+
+<dt id="arg-win">win<a class="anchor" aria-label="anchor" href="#arg-win"></a></dt>
+<dd><p>the window containing the point pattern.
+It is an <a href="https://rdrr.io/pkg/spatstat.geom/man/owin.html" class="external-link">spatstat.geom::owin</a> object.
+Default is a 1x1 square.</p></dd>
 
 </dl></div>
     <div class="section level2">
