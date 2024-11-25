@@ -32,6 +32,8 @@ abd_freq_count <- function(
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+    jack_alpha = 0.05,
+    jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
 
@@ -98,11 +100,13 @@ abd_freq_count <- function(
         s_nu <- c(rep(0, level - 1), 1)
       } else {
         # Unveil the full distribution
-        prob_s_0 <- probabilities(
+        prob_s_0 <- probabilities.numeric(
           abd_int,
           estimator = probability_estimator,
           unveiling = unveiling,
           richness_estimator = richness_estimator,
+          jack_alpha = jack_alpha,
+          jack_max = jack_max,
           check_arguments = TRUE
         )
         # Extrapolate
