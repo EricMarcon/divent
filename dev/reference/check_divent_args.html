@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,6 +72,7 @@
 <span>  prob_geom <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  probability_estimator <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  q <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  q_threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  richness_estimator <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -114,10 +115,13 @@
 <dd><p>The method used to obtain the probabilities to generate
 bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
-number of individuals Marcon2012adivent.
+number of individuals (Marcon et al. 2012)
+.
 If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
-(see <a href="species_distribution.html">as_probabilities</a>) following Chao2013;textualdivent or
-Chao2015;textualdivent.</p></dd>
+(see <a href="species_distribution.html">as_probabilities</a>) following Chao et al. (2013)
+ or
+Chao and Jost (2015)
+.</p></dd>
 
 
 <dt id="arg-check-arguments">check_arguments<a class="anchor" aria-label="anchor" href="#arg-check-arguments"></a></dt>
@@ -157,7 +161,8 @@ May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 
 
 <dt id="arg-global">global<a class="anchor" aria-label="anchor" href="#arg-global"></a></dt>
-<dd><p>if <code>TRUE</code>, a global envelope sensu Duranton2005divent is calculated.</p></dd>
+<dd><p>if <code>TRUE</code>, a global envelope sensu (Duranton and Overman 2005)
+ is calculated.</p></dd>
 
 
 <dt id="arg-jack-alpha">jack_alpha<a class="anchor" aria-label="anchor" href="#arg-jack-alpha"></a></dt>
@@ -212,6 +217,15 @@ Used only for extrapolation.</p></dd>
 
 <dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
 <dd><p>a number: the order of diversity.</p></dd>
+
+
+<dt id="arg-q-threshold">q_threshold<a class="anchor" aria-label="anchor" href="#arg-q-threshold"></a></dt>
+<dd><p>the value of <code>q</code> above which diversity is computed
+directly with the naive estimator \((sum{p_s^q}^{\frac{1}{(1-q)}}\),
+without computing entropy.
+When <code>q</code> is great, the exponential of entropy goes to \(0^{\frac{1}{(1-q)}}\),
+causing rounding errors while the naive estimator of diversity is less and
+less biased.</p></dd>
 
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
@@ -305,7 +319,7 @@ Its arguments exist only for documentation.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
     </footer></div>

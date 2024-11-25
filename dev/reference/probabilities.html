@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,20 +154,37 @@ to estimate the actual probability distribution.
 The list of species is changed:
 zero-abundance species are cleared, and some unobserved species are added.
 First, observed species probabilities are estimated following
-Chao2003;textualdivent, i.e. input probabilities are multiplied by
+Chao and Shen (2003)
+, i.e. input probabilities are multiplied by
 the sample coverage, or according to more sophisticated models:
-Chao2013;textualdivent, a single-parameter model, or
-Chao2015;textualdivent, a two-parameter model.
+Chao et al. (2013)
+, a single-parameter model, or
+Chao and Jost (2015)
+, a two-parameter model.
 The total probability of observed species equals the sample coverage.
 Then, the distribution of unobserved species can be unveiled: their number
 is estimated according to the <code>richness_estimator</code>.
 The coverage deficit (1 minus the sample coverage) is shared by the unobserved
-species equally (<code>unveiling</code> = "uniform", Chao2013divent) or
-according to a geometric distribution (<code>unveiling</code> = "geometric", Chao2015divent).</p>
+species equally (<code>unveiling</code> = "uniform", (Chao et al. 2013)
+) or
+according to a geometric distribution (<code>unveiling</code> = "geometric", (Chao and Jost 2015)
+).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p></p>
+    <p>Chao A, Jost L (2015).
+“Estimating Diversity and Entropy Profiles via Discovery Rates of New Species.”
+<em>Methods in Ecology and Evolution</em>, <b>6</b>(8), 873–882.
+<a href="https://doi.org/10.1111/2041-210X.12349" class="external-link">doi:10.1111/2041-210X.12349</a>
+.<br><br> Chao A, Shen T (2003).
+“Nonparametric Estimation of Shannon's Index of Diversity When There Are Unseen Species in Sample.”
+<em>Environmental and Ecological Statistics</em>, <b>10</b>(4), 429–443.
+<a href="https://doi.org/10.1023/A%3A1026096204727" class="external-link">doi:10.1023/A:1026096204727</a>
+.<br><br> Chao A, Wang Y, Jost L (2013).
+“Entropy and the Species Accumulation Curve: A Novel Entropy Estimator via Discovery Rates of New Species.”
+<em>Methods in Ecology and Evolution</em>, <b>4</b>(11), 1091–1100.
+<a href="https://doi.org/10.1111/2041-210x.12108" class="external-link">doi:10.1111/2041-210x.12108</a>
+.</p>
     </div>
 
     <div class="section level2">
@@ -177,10 +194,10 @@ according to a geometric distribution (<code>unveiling</code> = "geometric", Cha
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 337</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight Abarema_jupunba Abarema_mataybifolia Amaioua_guianensis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1            0.002<span style="text-decoration: underline;">12</span>              0.002<span style="text-decoration: underline;">12</span>            0.001<span style="text-decoration: underline;">06</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.00         0.002<span style="text-decoration: underline;">29</span>              0                  0.001<span style="text-decoration: underline;">15</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.00         0.002<span style="text-decoration: underline;">15</span>              0.002<span style="text-decoration: underline;">15</span>            0      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.00         0.005<span style="text-decoration: underline;">01</span>              0                  0      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1      1         0.002<span style="text-decoration: underline;">12</span>              0.002<span style="text-decoration: underline;">12</span>            0.001<span style="text-decoration: underline;">06</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2      1         0.002<span style="text-decoration: underline;">29</span>              0                  0.001<span style="text-decoration: underline;">15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3      1         0.002<span style="text-decoration: underline;">15</span>              0.002<span style="text-decoration: underline;">15</span>            0      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4      1         0.005<span style="text-decoration: underline;">01</span>              0                  0      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 332 more variables: Amanoa_congesta &lt;dbl&gt;, Amanoa_guianensis &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Ambelania_acida &lt;dbl&gt;, Amphirrhox_longifolia &lt;dbl&gt;, Andira_coriacea &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Apeiba_glabra &lt;dbl&gt;, Aspidosperma_album &lt;dbl&gt;, Aspidosperma_cruentum &lt;dbl&gt;,</span></span>
@@ -200,10 +217,10 @@ according to a geometric distribution (<code>unveiling</code> = "geometric", Cha
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.00 naive         1    4.57</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.00 naive         1    4.73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.00 naive         1    4.65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1    naive         1    4.55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1      1 naive         1    4.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2      1 naive         1    4.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3      1 naive         1    4.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4      1 naive         1    4.55</span>
 <span class="r-in"><span><span class="co"># Identical to</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ent_shannon.html">ent_shannon</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, estimator <span class="op">=</span> <span class="st">"UnveilJ"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
@@ -225,7 +242,7 @@ according to a geometric distribution (<code>unveiling</code> = "geometric", Cha
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
     </footer></div>

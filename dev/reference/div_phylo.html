@@ -11,7 +11,7 @@ Several estimators are available to deal with incomplete sampling."><meta proper
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,6 +89,7 @@ Several estimators are available to deal with incomplete sampling.</p>
 <span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  gamma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  as_numeric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -184,12 +185,17 @@ diversity</p>
 See <a href="div_hill.html">div_hill</a> for estimators.</p>
 <p>Entropy can be estimated at a specified level of interpolation or
 extrapolation, either a chosen sample size or sample coverage
-Chao2014divent, rather than its asymptotic value.
+(Chao et al. 2014)
+, rather than its asymptotic value.
 See <a href="accum_hill.html">accum_tsallis</a> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p></p>
+    <p>Chao A, Gotelli NJ, Hsieh TC, Sander EL, Ma KH, Colwell RK, Ellison AM (2014).
+“Rarefaction and Extrapolation with Hill Numbers: A Framework for Sampling and Estimation in Species Diversity Studies.”
+<em>Ecological Monographs</em>, <b>84</b>(1), 45–67.
+<a href="https://doi.org/10.1890/13-0133.1" class="external-link">doi:10.1890/13-0133.1</a>
+.</p>
     </div>
 
     <div class="section level2">
@@ -215,12 +221,10 @@ See <a href="accum_hill.html">accum_tsallis</a> for details.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Gamma entropy</span></span></span>
 <span class="r-in"><span><span class="fu">div_phylo</span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, q <span class="op">=</span> <span class="fl">2</span>, gamma <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The estimator can't be applied to non-integer values.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The estimator can't be applied to non-integer values.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site          estimator diversity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity UnveilJ        19.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity UnveilJ        19.7</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -233,7 +237,7 @@ See <a href="accum_hill.html">accum_tsallis</a> for details.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
     </footer></div>

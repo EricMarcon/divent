@@ -9,7 +9,7 @@ Several estimators are available to deal with incomplete sampling."><meta proper
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,17 +152,21 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Bias correction requires the number of individuals.
-Chao's estimation techniques are from Chao2014;textualdivent
-and Chiu2014a;textualdivent.
+Chao's estimation techniques are from Chao et al. (2014)
+
+and Chiu et al. (2014)
+.
 The Jackknife estimator is calculated by a straight adaptation of the code
 by Ji-Ping Wang (jackknife in package <strong>SPECIES</strong>).
 The optimal order is selected according to
-Burnham1978,Burnham1979;textualdivent.
+Burnham and Overton (1978); Burnham and Overton (1979)
+.
 Many other estimators are available elsewhere, the ones implemented here are
 necessary for other entropy estimations.</p>
 <p>Richness can be estimated at a specified <code>level</code> of interpolation or
 extrapolation, either a chosen sample size or sample coverage
-Chiu2014adivent, rather than its asymptotic value.
+(Chiu et al. 2014)
+, rather than its asymptotic value.
 Extrapolation relies on the estimation of the asymptotic richness.
 If <code>probability_estimator</code> is "naive", then the asymptotic estimation of
 richness is made using the chosen <code>estimator</code>, else the asymptotic
@@ -172,7 +176,23 @@ actual sample has the richness of the actual sample.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p></p>
+    <p>Burnham KP, Overton WS (1978).
+“Estimation of the Size of a Closed Population When Capture Probabilities Vary among Animals.”
+<em>Biometrika</em>, <b>65</b>(3), 625–633.
+<a href="https://doi.org/10.2307/2335915" class="external-link">doi:10.2307/2335915</a>
+.<br><br> Burnham KP, Overton WS (1979).
+“Robust Estimation of Population Size When Capture Probabilities Vary among Animals.”
+<em>Ecology</em>, <b>60</b>(5), 927–936.
+<a href="https://doi.org/10.2307/1936861" class="external-link">doi:10.2307/1936861</a>
+.<br><br> Chao A, Gotelli NJ, Hsieh TC, Sander EL, Ma KH, Colwell RK, Ellison AM (2014).
+“Rarefaction and Extrapolation with Hill Numbers: A Framework for Sampling and Estimation in Species Diversity Studies.”
+<em>Ecological Monographs</em>, <b>84</b>(1), 45–67.
+<a href="https://doi.org/10.1890/13-0133.1" class="external-link">doi:10.1890/13-0133.1</a>
+.<br><br> Chiu C, Wang Y, Walther BA, Chao A (2014).
+“An Improved Nonparametric Lower Bound of Species Richness via a Modified Good-Turing Frequency Formula.”
+<em>Biometrics</em>, <b>70</b>(3), 671–682.
+<a href="https://doi.org/10.1111/biom.12200" class="external-link">doi:10.1111/biom.12200</a>
+, 24945937.</p>
     </div>
 
     <div class="section level2">
@@ -214,7 +234,7 @@ actual sample has the richness of the actual sample.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
     </footer></div>
