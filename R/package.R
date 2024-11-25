@@ -1183,7 +1183,7 @@ check_divent_args <- function(
   if (!is.na(names(args["win"]))) {
     win <- eval(expression(win), parent.frame())
     if (!is.null(win)) {
-      if (!inherits(X, "owin")) {
+      if (!inherits(win, "owin")) {
         error_message(
           "win must be an object of class 'owin'",
           win,
