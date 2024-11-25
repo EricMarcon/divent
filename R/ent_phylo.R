@@ -1,19 +1,19 @@
 #' Phylogenetic Entropy of a Community
-#' 
+#'
 #' Estimate the entropy of species from abundance or probability data
 #' and a phylogenetic tree.
 #' Several estimators are available to deal with incomplete sampling.
-#' 
-#' Bias correction requires the number of individuals. 
+#'
+#' Bias correction requires the number of individuals.
 #' See [div_hill] for estimators.
-#' 
-#' Entropy can be estimated at a specified level of interpolation or 
-#' extrapolation, either a chosen sample size or sample coverage 
+#'
+#' Entropy can be estimated at a specified level of interpolation or
+#' extrapolation, either a chosen sample size or sample coverage
 #' \insertCite{Chao2014}{divent}, rather than its asymptotic value.
 #' See [accum_tsallis] for details.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object, that may be a numeric vector containing abundances 
+#' @param x An object, that may be a numeric vector containing abundances
 #' or probabilities, or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
@@ -22,17 +22,17 @@
 #'
 #' @references
 #' \insertAllCited{}
-#' 
+#'
 #' @examples
 #' # Entropy of each community
 #' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 #' # Gamma entropy
 #' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, gamma = TRUE)
-#' 
+#'
 #' # At 80% coverage
 #' ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, level = 0.8)
-#' 
-#' 
+#'
+#'
 #' @name ent_phylo
 NULL
 
@@ -47,28 +47,28 @@ ent_phylo <- function(x, tree, q = 1, ...) {
 
 #' @rdname ent_phylo
 #'
-#' @param estimator An estimator of entropy. 
-#' 
+#' @param estimator An estimator of entropy.
+#'
 #' @export
 ent_phylo.numeric <- function(
     x,
     tree,
     q = 1,
     normalize = TRUE,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
                   "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
                   "Bonachela", "Holste"),
-    level = NULL, 
+    level = NULL,
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
-    jack_alpha  = 0.05, 
+    jack_alpha  = 0.05,
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
-  
+
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -78,18 +78,18 @@ ent_phylo.numeric <- function(
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")    
+      stop("Some species are missing in the tree.")
     }
   }
-  estimator <- match.arg(estimator) 
-  probability_estimator <- match.arg(probability_estimator) 
-  unveiling <- match.arg(unveiling) 
-  richness_estimator <- match.arg(richness_estimator) 
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
 
   # Make a species_distribution
   species_distribution <- as_species_distribution(x)
-  
+
   # Entropy
   the_entropy <- ent_phylo.species_distribution(
     species_distribution,
@@ -97,16 +97,16 @@ ent_phylo.numeric <- function(
     q = q,
     normalize = normalize,
     estimator = estimator,
-    level = level, 
+    level = level,
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
+    jack_alpha  = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     as_numeric = as_numeric,
     check_arguments = FALSE)
- 
+
   # Return
   return(the_entropy)
 }
@@ -119,21 +119,21 @@ ent_phylo.species_distribution <- function(
     tree,
     q = 1,
     normalize = TRUE,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
                   "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
                   "Bonachela", "Holste"),
-    level = NULL, 
+    level = NULL,
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
-    jack_alpha  = 0.05, 
+    jack_alpha  = 0.05,
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
-  
+
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -143,15 +143,15 @@ ent_phylo.species_distribution <- function(
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")    
+      stop("Some species are missing in the tree.")
     }
   }
-  estimator <- match.arg(estimator) 
-  probability_estimator <- match.arg(probability_estimator) 
-  unveiling <- match.arg(unveiling) 
-  richness_estimator <- match.arg(richness_estimator) 
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
-  
+
   # Calculate abundances along the tree, that are a list of matrices
   the_phylo_abd <- phylo_abd(abundances = x, tree = tree)
 
@@ -163,16 +163,16 @@ ent_phylo.species_distribution <- function(
     # Arguments for ent_tsallis.numeric
     q = q,
     estimator = estimator,
-    level = level, 
+    level = level,
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
+    jack_alpha  = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     gamma = gamma
   )
-  
+
   # Return
   if (as_numeric) {
     return(the_entropy)
@@ -208,36 +208,35 @@ ent_phylo.species_distribution <- function(
 
 
 #' Phylogenetic entropies
-#' 
-#' Calculate entropies of a list of phylogenetic abundances (obtained by 
+#'
+#' Calculate entropies of a list of phylogenetic abundances (obtained by
 #' [phylo_abd]).
 #' Each item of the list corresponds to a phylogenetic group, i.e. an interval
 #' of the tree (where the species do not change).
-#' 
-#' @param phylo_abd A list of matrices of abundance (caution: lines are species,
+#'
+#' @param phylo_abd A list of matrices of abundance (caution: rows are species,
 #' columns are communities).
 #'
 #' @returns A vector. Each item is the entropy of a community.
-#'  
+#'
 #' @noRd
 #'
 phylo_entropy.phylo_abd <- function(
-    # Allow lapply along q
   q,
   phylo_abd,
   tree,
   normalize,
   # Other arguments for ent_tsallis.numeric
   estimator,
-  level, 
+  level,
   probability_estimator,
   unveiling,
   richness_estimator,
-  jack_alpha, 
+  jack_alpha,
   jack_max,
   coverage_estimator,
   gamma) {
-  
+
   if (gamma) {
     # Calculate gamma entropy of each group.
     # simplify2array() makes a vector with the list of numbers.
@@ -248,14 +247,14 @@ phylo_entropy.phylo_abd <- function(
         phylo_abd,
         FUN = function(group) {
           ent_tsallis.species_distribution(
-            as_abundances(t(group)),
+            as_abundances.numeric(t(group)),
             q = q,
             estimator = estimator,
-            level = level, 
+            level = level,
             probability_estimator = probability_estimator,
             unveiling = unveiling,
             richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha, 
+            jack_alpha  = jack_alpha,
             jack_max = jack_max,
             coverage_estimator = coverage_estimator,
             gamma = TRUE,
@@ -266,7 +265,7 @@ phylo_entropy.phylo_abd <- function(
         }
       )
     )
-    
+
   } else {
     # Calculate entropy of each community in each group.
     # simplify2array() makes a matrix with the list of vectors.
@@ -284,11 +283,11 @@ phylo_entropy.phylo_abd <- function(
             # Arguments
             q = q,
             estimator = estimator,
-            level = level, 
+            level = level,
             probability_estimator = probability_estimator,
             unveiling = unveiling,
             richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha, 
+            jack_alpha  = jack_alpha,
             jack_max = jack_max,
             coverage_estimator = coverage_estimator,
             # Obtain a vector.
@@ -299,15 +298,15 @@ phylo_entropy.phylo_abd <- function(
       )
     )
   }
-  # Should be a matrix, but simplify2array() makes a vector instead of a 1-col 
+  # Should be a matrix, but simplify2array() makes a vector instead of a 1-col
   # matrix and gamma entropy is a vector. Force a matrix.
   if (is.vector(phylo_entropies)) {
     phylo_entropies <- t(phylo_entropies)
   }
-  
+
   # Calculate the weighted mean of entropy and normalize
   the_entropy <- as.numeric(tree$intervals %*% t(phylo_entropies))
   if (normalize) the_entropy <- the_entropy / sum(tree$intervals)
-  
+
   return(the_entropy)
 }
