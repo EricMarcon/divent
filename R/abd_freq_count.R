@@ -62,7 +62,7 @@ abd_freq_count <- function(
     # No extrapolation. Prepare a two-column matrix ----
     return(
       tibble::tibble(
-        abundance = names(abd_distribution),
+        abundance = as.numeric(names(abd_distribution)),
         number_of_species = abd_distribution
       )
     )
