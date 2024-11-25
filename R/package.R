@@ -290,6 +290,11 @@ utils::globalVariables("non_species_columns")
 #' @param size The number of individuals to draw in each community.
 #' @param species_number The number of species.
 #' @param species_distribution an object of class [species_distribution].
+#' @param thomas_scale in Thomas point patterns, the standard deviation of random displacement 
+#' (along each coordinate axis) of a point from its cluster center.
+#' @param thomas_mu in Thomas point patterns, the mean number of points per cluster.
+#' The intensity of the Poisson process of cluster centers is calculated as 
+#' the number of points (`size`) per area divided by `thomas_mu`.
 #' @param tree an ultrametric, phylogenetic tree.
 #' May be an object of class [phylo_divent], [ape::phylo], [ade4::phylog] or [stats::hclust]. 
 #' @param unveiling a string containing one of the possible unveiling methods 
@@ -298,8 +303,17 @@ utils::globalVariables("non_species_columns")
 #' @param use.names if `TRUE`, the names of the `species_distribution` are kept 
 #' in the matrix or vector they are converted to.
 #' @param weights the weights of the sites of the species distributions.
+#' @param w_max the maximum weight in a uniform distribution.
+#' @param w_mean the mean weight in an exponential distribution 
+#' (i.e. the negative of the inverse of the decay rate).
+#' @param w_min the minimum weight in a uniform or Weibull distribution.
+#' @param weibull_scale the scale parameter in a Weibull distribution.
+#' @param weibull_shape the shape parameter in a Weibull distribution.
 #' @param X a spatialized community 
 #' (A [dbmss::wmppp] object with `PointType` values as species names.)
+#' @param win the window containing the point pattern. 
+#' It is an [spatstat.geom::owin] object.
+#' Default is a 1x1 square.
 #'
 #' @returns Returns `TRUE` or stops if a problem is detected.
 #' 
@@ -345,11 +359,19 @@ check_divent_args <- function(
     size = NULL,
     species_number = NULL,
     species_distribution = NULL,
+    thomas_mu = NULL,
+    thomas_scale = NULL,
     tree = NULL,
     use.names = NULL,
     unveiling = NULL,
     weights = NULL,
-    X = NULL) {
+    w_max = NULL,
+    w_mean = NULL,
+    w_min = NULL,
+    weibull_scale = NULL,
+    weibull_shape = NULL,
+    X = NULL,
+    win = NULL) {
   
   # Verify that the package is attached
   if (!"divent" %in% .packages()) {
@@ -966,6 +988,46 @@ check_divent_args <- function(
       }
     }
   }
+  # thomas_mu
+  if (!is.na(names(args["thomas_mu"]))) {
+    thomas_mu <- eval(expression(thomas_mu), parent.frame())
+    if (!is.null(thomas_mu)) {
+      if (!is.numeric(thomas_mu) | length(thomas_mu) != 1) {
+        error_message(
+          "thomas_mu must be a number.",
+          thomas_mu,
+          parent_function
+        )
+      }
+      if (any(thomas_mu <= 0)) {
+        error_message(
+          "thomas_mu must be positive.",
+          thomas_mu,
+          parent_function
+        )
+      }
+    }
+  }
+  # thomas_scale
+  if (!is.na(names(args["thomas_scale"]))) {
+    thomas_scale <- eval(expression(thomas_scale), parent.frame())
+    if (!is.null(thomas_scale)) {
+      if (!is.numeric(thomas_scale) | length(thomas_scale) != 1) {
+        error_message(
+          "thomas_scale must be a number.",
+          thomas_scale,
+          parent_function
+        )
+      }
+      if (any(thomas_scale <= 0)) {
+        error_message(
+          "thomas_scale must be positive.",
+          thomas_scale,
+          parent_function
+        )
+      }
+    }
+  }
   # tree
   if (!is.na(names(args["tree"]))) {
     tree <- eval(expression(tree), parent.frame())
@@ -1004,6 +1066,106 @@ check_divent_args <- function(
       }
     }
   }
+  # w_max
+  if (!is.na(names(args["w_max"]))) {
+    w_max <- eval(expression(w_max), parent.frame())
+    if (!is.null(w_max)) {
+      if (!is.numeric(w_max) | length(w_max) != 1) {
+        error_message(
+          "w_max must be a number.",
+          w_max,
+          parent_function
+        )
+      }
+      if (any(w_max <= 0)) {
+        error_message(
+          "w_max must be positive.",
+          w_max,
+          parent_function
+        )
+      }
+    }
+  }
+  # w_mean
+  if (!is.na(names(args["w_mean"]))) {
+    w_mean <- eval(expression(w_mean), parent.frame())
+    if (!is.null(w_mean)) {
+      if (!is.numeric(w_mean) | length(w_mean) != 1) {
+        error_message(
+          "w_mean must be a number.",
+          w_mean,
+          parent_function
+        )
+      }
+      if (any(w_mean <= 0)) {
+        error_message(
+          "w_mean must be positive.",
+          w_mean,
+          parent_function
+        )
+      }
+    }
+  }
+  # w_min
+  if (!is.na(names(args["w_min"]))) {
+    w_min <- eval(expression(w_min), parent.frame())
+    if (!is.null(w_min)) {
+      if (!is.numeric(w_min) | length(w_min) != 1) {
+        error_message(
+          "w_min must be a number.",
+          w_min,
+          parent_function
+        )
+      }
+      if (any(w_min <= 0)) {
+        error_message(
+          "w_min must be positive.",
+          w_min,
+          parent_function
+        )
+      }
+    }
+  }
+  # weibull_scale
+  if (!is.na(names(args["weibull_scale"]))) {
+    weibull_scale <- eval(expression(weibull_scale), parent.frame())
+    if (!is.null(weibull_scale)) {
+      if (!is.numeric(weibull_scale) | length(weibull_scale) != 1) {
+        error_message(
+          "weibull_scale must be a number.",
+          weibull_scale,
+          parent_function
+        )
+      }
+      if (any(weibull_scale < 0)) {
+        error_message(
+          "weibull_scale must be positive.",
+          weibull_scale,
+          parent_function
+        )
+      }
+    }
+  }
+  # weibull_shape
+  if (!is.na(names(args["weibull_shape"]))) {
+    weibull_shape <- eval(expression(weibull_shape), parent.frame())
+    if (!is.null(weibull_shape)) {
+      if (!is.numeric(weibull_shape) | length(weibull_shape) != 1) {
+        error_message(
+          "weibull_shape must be a number.",
+          weibull_shape,
+          parent_function
+        )
+      }
+      if (any(weibull_shape <= 0)) {
+        error_message(
+          "weibull_shape must be strictly positive.",
+          weibull_shape,
+          parent_function
+        )
+      }
+    }
+  }
   # X
   if (!is.na(names(args["X"]))) {
     X <- eval(expression(X), parent.frame())
@@ -1012,6 +1174,19 @@ check_divent_args <- function(
         error_message(
           "X must be an object of class 'wmppp'", 
           X, 
+          parent_function
+        )
+      }
+    }
+  }
+  # win
+  if (!is.na(names(args["win"]))) {
+    win <- eval(ewinpression(win), parent.frame())
+    if (!is.null(win)) {
+      if (!inherits(X, "owin")) {
+        error_message(
+          "win must be an object of class 'owin'", 
+          win, 
           parent_function
         )
       }

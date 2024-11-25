@@ -166,26 +166,12 @@ rcommunity <- function(
 #' @param spatial the spatial distribution of points. 
 #' May be "Binomial" (a completely random point pattern except for its fixed number of points) or 
 #' "Thomas" for a clustered point pattern with parameters `scale` and `mu`.
-#' @param thomas_scale in Thomas point patterns, the standard deviation of random displacement 
-#' (along each coordinate axis) of a point from its cluster center.
-#' @param thomas_mu in Thomas point patterns, the mean number of points per cluster.
-#' The intensity of the Poisson process of cluster centers is calculated as 
-#' the number of points (`size`) per area divided by `thomas_mu`.
-#' @param win the window containing the point pattern. 
-#' It is an [spatstat.geom::owin] object.
-#' Default is a 1x1 square.
 #' @param species_names a vector of characters or of factors containing the possible species names.
 #' @param weight_distribution the distribution of point weights.
 #' By default, all weight are 1.
 #' May be "uniform" for a uniform distribution between `w_min` and `w_max`, 
 #' "weibull" with parameters `w_min`, `weibull_scale` and `shape` or
 #' "exponential" with parameter `w_mean`.
-#' @param w_min the minimum weight in a uniform or Weibull distribution.
-#' @param w_max the maximum weight in a uniform distribution.
-#' @param w_mean the mean weight in an exponential distribution 
-#' (i.e. the negative of the inverse of the decay rate).
-#' @param weibull_scale the scale parameter in a Weibull distribution.
-#' @param weibull_shape the shape parameter in a Weibull distribution.
 #'
 #' @return `rspcommunity()` returns either a spatialized community, 
 #' which is a [dbmss::wmppp] object , with `PointType` 
@@ -228,6 +214,9 @@ rspcommunity <- function(
     check_divent_args()
     if (!is.null(prob) & !is.null(abd)) {
       stop("'prob' and 'abd' can't be both given.")
+    }
+    if (w_min > w_max) {
+      stop("'w_max' must be greater of equal to 'wmin'.")
     }
   }
   bootstrap <- match.arg(bootstrap) 
