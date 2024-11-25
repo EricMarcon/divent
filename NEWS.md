@@ -1,10 +1,11 @@
-# divent 0.4-99.9015
+# divent 0.4-99.9016
 
 ## Features
 
 - Spatially explicit Simpson's entropy: `ent_sp_simpson()` and `ent_sp_simpsonEnvelope()`
 - Spatially explicit random communities: `rspcommunity()`
 - `species_distribution` methods for `wmppp` and `character` objects.
+- values of abundances are no longer limited to `.Machine$integer.max`.
 
 
 # divent 0.4-4
