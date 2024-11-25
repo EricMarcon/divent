@@ -36,9 +36,10 @@ rlseries <- function(
     show_progress = TRUE, 
     check_arguments = TRUE) {
   # adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
-  if (size + 1 == size || size - 1 == size) {
-    stop("size is too large to simulate the distribution.")
-  }
+  # Uncomment to limit to integer value
+  # if (size + 1 == size || size - 1 == size) {
+  #   stop("size is too large to simulate the distribution.")
+  # }
   # Fisher's x
   x <- size / (size + fisher_alpha)
   # Draw random numbers between 0 and 1 that are quantiles of the cumulative function
@@ -48,7 +49,7 @@ rlseries <- function(
   # Prepare a progress bar
   if (show_progress & interactive()) {
     cli::cli_progress_bar(
-      total = n,
+      total = as.integer(n),
       format = "{cli::pb_spin} Drawing log-series values {cli::pb_current}/{cli::pb_total}"
     )
   }
@@ -78,5 +79,6 @@ rlseries <- function(
       k <- k + 1
     }
   }
+  if (show_progress & interactive()) cli::cli_progress_done()
   return(abd)
 }
