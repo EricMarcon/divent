@@ -7,9 +7,11 @@
 abd_freq_count(
   abd,
   level = NULL,
-  probability_estimator = c("naive", "Chao2013", "Chao2015", "ChaoShen"),
-  unveiling = c("none", "uniform", "geometric"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
   richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   check_arguments = TRUE
 )
@@ -33,6 +35,10 @@ Used only for extrapolation.}
 \item{richness_estimator}{A string containing an estimator recognized by
 \link{div_richness} to evaluate the total number of species in \link{probabilities}.
 Used only for extrapolation.}
+
+\item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
+
+\item{jack_max}{the highest jackknife order allowed. Default is 10.}
 
 \item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 

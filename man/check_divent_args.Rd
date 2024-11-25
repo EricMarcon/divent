@@ -42,11 +42,19 @@ check_divent_args(
   size = NULL,
   species_number = NULL,
   species_distribution = NULL,
+  thomas_mu = NULL,
+  thomas_scale = NULL,
   tree = NULL,
   use.names = NULL,
   unveiling = NULL,
   weights = NULL,
-  X = NULL
+  w_max = NULL,
+  w_mean = NULL,
+  w_min = NULL,
+  weibull_scale = NULL,
+  weibull_shape = NULL,
+  X = NULL,
+  win = NULL
 )
 }
 \arguments{
@@ -149,6 +157,13 @@ Its default value is the identity matrix.}
 
 \item{species_distribution}{an object of class \link{species_distribution}.}
 
+\item{thomas_mu}{in Thomas point patterns, the mean number of points per cluster.
+The intensity of the Poisson process of cluster centers is calculated as
+the number of points (\code{size}) per area divided by \code{thomas_mu}.}
+
+\item{thomas_scale}{in Thomas point patterns, the standard deviation of random displacement
+(along each coordinate axis) of a point from its cluster center.}
+
 \item{tree}{an ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
@@ -161,8 +176,23 @@ Used only for extrapolation.}
 
 \item{weights}{the weights of the sites of the species distributions.}
 
+\item{w_max}{the maximum weight in a uniform distribution.}
+
+\item{w_mean}{the mean weight in an exponential distribution
+(i.e. the negative of the inverse of the decay rate).}
+
+\item{w_min}{the minimum weight in a uniform or Weibull distribution.}
+
+\item{weibull_scale}{the scale parameter in a Weibull distribution.}
+
+\item{weibull_shape}{the shape parameter in a Weibull distribution.}
+
 \item{X}{a spatialized community
 (A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
+
+\item{win}{the window containing the point pattern.
+It is an \link[spatstat.geom:owin]{spatstat.geom::owin} object.
+Default is a 1x1 square.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.

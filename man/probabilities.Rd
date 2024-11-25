@@ -106,8 +106,8 @@ according to a geometric distribution (\code{unveiling} = "geometric", \insertCi
 probabilities(paracou_6_abd)
 # Estimate the distribution of probabilities from observed abundances (unveiled probabilities)
 prob_unv <- probabilities(
-  paracou_6_abd, 
-  estimator = "Chao2015", 
+  paracou_6_abd,
+  estimator = "Chao2015",
   unveiling = "geometric",
   richness_estimator = "jackknife"
 )

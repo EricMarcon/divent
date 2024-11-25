@@ -7,9 +7,9 @@
 alphahull(X, alpha = NULL)
 }
 \arguments{
-\item{X}{A planar point pattern (\link[spatstat.geom:ppp.object]{spatstat.geom::ppp.object}).}
+\item{X}{a planar point pattern (\link[spatstat.geom:ppp.object]{spatstat.geom::ppp.object}).}
 
-\item{alpha}{A smoothing parameter to delimit concave polygons.}
+\item{alpha}{a smoothing parameter to delimit concave polygons.}
 }
 \value{
 A window, i.e. a \link[spatstat.geom:owin.object]{spatstat.geom::owin.object}.

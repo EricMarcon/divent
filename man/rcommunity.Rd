@@ -172,7 +172,7 @@ The latter describe well the diameter distribution of trees in a forest
 }
 \examples{
 # Generate a community made of 100000 individuals among 300 species and fit it
-abundances <- rcommunity(n = 1, size = 1E5, 
+abundances <- rcommunity(n = 1, size = 1E5,
   species_number = 300, distribution = "lnorm")
 autoplot(abundances)
 X <- rspcommunity(1, size = 30, species_number = 5)

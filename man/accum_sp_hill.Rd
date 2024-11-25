@@ -104,7 +104,7 @@ accumulation curve of a distribution.
 \examples{
 # Generate a random community
 X <- rspcommunity(1, size = 50, species_number = 3)
-# Calculate the accumulation of richness 
+# Calculate the accumulation of richness
 accum <- accum_sp_hill(X)
 plot(accum, q = 0)
 # along distance

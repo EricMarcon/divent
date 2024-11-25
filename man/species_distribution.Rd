@@ -121,7 +121,7 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 
 \item{...}{Unused.}
 
-\item{round}{If \code{TRUE}, the values of \code{x} are converted to integers.}
+\item{round}{If \code{TRUE}, the values of \code{x} are rounded to the nearest integer.}
 
 \item{use.names}{If \code{TRUE}, the names of the \code{species_distribution} are kept
 in the matrix or vector they are converted to.}
