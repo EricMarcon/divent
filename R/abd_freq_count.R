@@ -71,6 +71,7 @@ abd_freq_count <- function(
         abd,
         sample_coverage = level,
         estimator = coverage_estimator,
+        as_numeric  = TRUE,
         check_arguments = FALSE
       )
     }
