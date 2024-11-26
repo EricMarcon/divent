@@ -35,6 +35,7 @@ Utilities for community abundances (objects of class "abundances").
 }
 \examples{
 abd_species(paracou_6_abd)
+prob_species(paracou_6_abd)
 abd_sum(paracou_6_abd)
 
 }

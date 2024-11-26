@@ -63,6 +63,4 @@ estimators.
 \examples{
 metacommunity(paracou_6_abd)
 
-metacommunity(paracou_6_abd)
-
 }
