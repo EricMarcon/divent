@@ -1,16 +1,16 @@
 #' Similarity-Based Entropy of a Community
-#' 
+#'
 #' Estimate the entropy of species from abundance or probability data and a
 #' similarity matrix between species.
-#' Several estimators are available to deal with incomplete sampling. 
+#' Several estimators are available to deal with incomplete sampling.
 #' Bias correction requires the number of individuals.
-#' 
-#' All species of the `species_distribution` must be found in the matrix of 
+#'
+#' All species of the `species_distribution` must be found in the matrix of
 #' `similarities` if it is named.
 #' If it is not or if `x` is numeric, its size must equal the number of species.
 #' Then, the order of species is assumed to be the same as that of the
 #' `species_distribution` or its numeric equivalent.
-#' 
+#'
 #' Similarity-Based entropy can't be interpolated of extrapolated as of the
 #' state of the art.
 #'
@@ -30,7 +30,7 @@
 #' ent_similarity(paracou_6_abd, similarities = Z, q = 2)
 #' # gamma diversity
 #' ent_similarity(paracou_6_abd, similarities = Z, q = 2, gamma = TRUE)
-#' 
+#'
 #' @name ent_similarity
 NULL
 
@@ -45,18 +45,18 @@ ent_similarity <- function(x, similarities, q = 1, ...) {
 
 #' @rdname ent_similarity
 #'
-#' @param estimator An estimator of entropy. 
-#' 
+#' @param estimator An estimator of entropy.
+#'
 #' @export
 ent_similarity.numeric <- function(
-    x, 
+    x,
     similarities = diag(length(x)),
-    q = 1, 
-    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang", 
+    q = 1,
+    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang",
                   "UnveilC", "UnveiliC", "naive"),
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05, 
+    jack_alpha  = 0.05,
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     sample_coverage = NULL,
@@ -69,9 +69,9 @@ ent_similarity.numeric <- function(
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
     similarities <- checked_matrix(similarities, x)
   }
-  estimator <- match.arg(estimator) 
-  probability_estimator <- match.arg(probability_estimator) 
-  unveiling <- match.arg(unveiling) 
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
   coverage_estimator <- match.arg(coverage_estimator)
 
   # Check that dimensions correspond
@@ -93,14 +93,14 @@ ent_similarity.numeric <- function(
     } else {
       return(
         tibble::tibble_row(
-          estimator = "naive", 
+          estimator = "naive",
           order = q,
           entropy = the_entropy
         )
-      )  
+      )
     }
   }
-  
+
   # Eliminate 0
   abd <- x[x > 0]
   similarities <- similarities[x > 0, x > 0]
@@ -111,8 +111,8 @@ ent_similarity.numeric <- function(
   ordinariness <- as.numeric(similarities %*% prob)
   # Number of observed species
   s_obs <- length(abd)
-  
-  
+
+
   # Entropy of a vector of abundances ----
   ## Exit if x contains no or a single species ----
   if (length(abd) < 2) {
@@ -122,11 +122,11 @@ ent_similarity.numeric <- function(
       } else {
         return(
           tibble::tibble_row(
-            estimator = "No Species", 
+            estimator = "No Species",
             order = q,
             entropy = NA
           )
-        )  
+        )
       }
     } else {
       if (as_numeric) {
@@ -134,11 +134,11 @@ ent_similarity.numeric <- function(
       } else {
         return(
           tibble::tibble_row(
-            estimator = "Single Species", 
+            estimator = "Single Species",
             order = q,
             entropy = 0
           )
-        )  
+        )
       }
     }
   } else {
@@ -148,7 +148,7 @@ ent_similarity.numeric <- function(
       estimator <- "naive"
     }
   }
-  
+
   ## Metacommunity estimation ----
   if (!is.null(sample_coverage)) {
     # Force estimator to ChaoShen
@@ -156,13 +156,13 @@ ent_similarity.numeric <- function(
   } else {
     # Calculate sample coverage
     sample_coverage <- coverage.numeric(
-      abd, 
+      abd,
       estimator = coverage_estimator,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
   }
-  
+
   ## Naive estimator ----
   if (!is_integer_values(abd)) {
     warning("The estimator can't be applied to non-integer values.")
@@ -180,14 +180,14 @@ ent_similarity.numeric <- function(
     } else {
       return(
         tibble::tibble_row(
-          estimator = estimator, 
+          estimator = estimator,
           order = q,
           entropy = the_entropy
         )
-      ) 
+      )
     }
   }
-  
+
   ## Unveiled estimator ----
   if (estimator %in% c("UnveilJ", "UnveilC", "UnveiliC")) {
     prob_unv <- probabilities.numeric(
@@ -196,10 +196,10 @@ ent_similarity.numeric <- function(
       unveiling = unveiling,
       richness_estimator = switch(
         estimator,
-        UnveilJ = "jackknife", 
-        UnveilC = "Chao1", 
+        UnveilJ = "jackknife",
+        UnveilC = "Chao1",
         UnveiliC = "iChao1"
-      ), 
+      ),
       jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
@@ -209,7 +209,7 @@ ent_similarity.numeric <- function(
     )
     s_est <- length(prob_unv)
   }
-  
+
   # Calculate the average similarity
   Z <- similarities
   diag(Z) <- NA
@@ -218,13 +218,13 @@ ent_similarity.numeric <- function(
   prob_cov <- prob * sample_coverage
   # Tune the ordinariness of observed species, i.e.
   # similarity with observed species is multiplied by coverage
-  # and unobserved species add (1 - coverage) * average similarity 
-  Z_p <- as.vector(similarities %*% prob_cov) + 
+  # and unobserved species add (1 - coverage) * average similarity
+  Z_p <- as.vector(similarities %*% prob_cov) +
     rep(sim_mean * (1 - sample_coverage), length(prob_cov))
-  
+
   if (estimator %in% c("UnveilJ", "UnveilC", "UnveiliC")) {
     # concatenate the ordinariness of unobserved species, i.e.
-    # their probability + sim_mean * the other probabilities 
+    # their probability + sim_mean * the other probabilities
     Z_p <- c(
       Z_p,
       prob_unv[-(1:s_obs)] + (1 - prob_unv[-(1:s_obs)]) * sim_mean
@@ -241,24 +241,24 @@ ent_similarity.numeric <- function(
     } else {
       return(
         tibble::tibble_row(
-          estimator = estimator, 
+          estimator = estimator,
           order = q,
           entropy = the_entropy
         )
-      ) 
+      )
     }
   }
-  
+
   ## MarconZhang ----
   if (estimator == "MarconZhang" | estimator == "Max") {
     V <- seq_len(sample_size - 1)
-    # p_V_Ns is an array, containing (1 - (n_s-1)/(n-j)) for each species (lines) 
+    # p_V_Ns is an array, containing (1 - (n_s-1)/(n-j)) for each species (lines)
     # and all j from 1 to n-1
     p_V_Ns <- outer(abd, V, function(n_s, j) 1 - (n_s - 1) / (sample_size - j))
     # Useful values are products from j=1 to v, so prepare cumulative products
     p_V_Ns <- apply(p_V_Ns, 1, cumprod)
   }
-  
+
   if (estimator == "ChaoShen" | estimator == "Max") {
     # Horvitz-Thomson multiplier
     HT_C_P <- prob_cov / (1 - (1 - prob_cov)^sample_size)
@@ -267,7 +267,7 @@ ent_similarity.numeric <- function(
     Z_p[Z_p == 0] <- 1
     ent_chao_shen <- (sum(HT_C_P * ln_q(1 / Z_p, q = q)))
   }
-  
+
   if ((estimator == "MarconZhang" | estimator == "Max") & (q != 1)) {
     Zpqm1 <- Z_p^(q - 1)
     # Force 0^(q-1) = 0
@@ -279,8 +279,8 @@ ent_similarity.numeric <- function(
     w_v <- cumprod(w_vi)
     Taylor <- 1 + sum(
       prob * vapply(
-        seq_len(s_obs), 
-        FUN = S_v, 
+        seq_len(s_obs),
+        FUN = S_v,
         # Arguments
         abd = abd,
         sample_size = sample_size,
@@ -294,15 +294,15 @@ ent_similarity.numeric <- function(
     U <- Taylor - sum(FirstTerms)
     ent_marcon_zhang <- ((K + U - 1) / (1 - q))
   }
-  
+
   if ((estimator == "MarconZhang" | estimator == "Max") & (q == 1)) {
     L <- -sum(prob_cov * log(Z_p))
     # Weights
     w_v <- ((1 - sim_mean)^V) / V
     Taylor <- 1 + sum(
       prob * vapply(
-        seq_len(s_obs), 
-        FUN = S_v, 
+        seq_len(s_obs),
+        FUN = S_v,
         # Arguments
         abd = abd,
         sample_size = sample_size,
@@ -316,25 +316,25 @@ ent_similarity.numeric <- function(
     X <- Taylor - sum(FirstTerms)
     ent_marcon_zhang <- L + X
   }
-  
-  the_entropy <- switch (
+
+  the_entropy <- switch(
     estimator,
     ChaoShen = ent_chao_shen,
     MarconZhang = ent_marcon_zhang,
     Max = max(ent_chao_shen, ent_marcon_zhang)
   )
-  
+
   # Return
   if (as_numeric) {
     return(the_entropy)
   } else {
     return(
       tibble::tibble_row(
-        estimator = estimator, 
+        estimator = estimator,
         order = q,
         entropy = the_entropy
       )
-    )  
+    )
   }
 }
 
@@ -343,30 +343,30 @@ ent_similarity.numeric <- function(
 #'
 #' @export
 ent_similarity.species_distribution <- function(
-    x, 
+    x,
     similarities = diag(sum(!colnames(x) %in% non_species_columns)),
-    q = 1, 
-    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang", 
+    q = 1,
+    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang",
                   "UnveilC", "UnveiliC", "naive"),
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05, 
+    jack_alpha  = 0.05,
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     gamma = FALSE,
     as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
-  
+
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   }
-  estimator <- match.arg(estimator) 
-  probability_estimator <- match.arg(probability_estimator) 
-  unveiling <- match.arg(unveiling) 
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
   coverage_estimator <- match.arg(coverage_estimator)
-  
+
   # Check species names and reorder the matrix to fit the names
   similarities <- checked_matrix(similarities, x)
 
@@ -389,7 +389,7 @@ ent_similarity.species_distribution <- function(
     # Apply ent_similarity.numeric() to each site
     ent_similarity_list <- apply(
       # Eliminate site and weight columns
-      x[, !colnames(x) %in% non_species_columns], 
+      x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
       FUN = ent_similarity.numeric,
@@ -399,8 +399,8 @@ ent_similarity.species_distribution <- function(
       estimator = estimator,
       probability_estimator = probability_estimator,
       unveiling = unveiling,
-      jack_alpha  = jack_alpha, 
-      jack_max = jack_max, 
+      jack_alpha  = jack_alpha,
+      jack_max = jack_max,
       as_numeric = FALSE,
       check_arguments = FALSE
     )
@@ -421,7 +421,7 @@ ent_similarity.species_distribution <- function(
 
 
 #' Sum of Products Weighted by w_v
-#' 
+#'
 #' Utility for the Marcon-Zhang estimator of similarity-based entropy.
 #'
 #' @param species_index The species to consider (from 1 to `s_obs`)
@@ -445,15 +445,15 @@ S_v <- function(
 
 
 #' Similarity-Based Gamma entropy of a metacommunity
-#' 
+#'
 #' Build the metacommunity and check that abundances are integers.
-#' 
+#'
 #' See [ent_gamma_tsallis] for details.
 #' @param species_distribution An object of class [species_distribution].
-#' 
+#'
 #' @returns A tibble with the estimator used and the estimated entropy.
 #' @noRd
-#' 
+#'
 ent_gamma_similarity <- function(
     species_distribution,
     similarities,
@@ -465,18 +465,18 @@ ent_gamma_similarity <- function(
     jack_max,
     coverage_estimator,
     as_numeric) {
-  
+
   # Build the metacommunity
   abd <- metacommunity.abundances(
-    species_distribution, 
-    as_numeric = TRUE, 
+    species_distribution,
+    as_numeric = TRUE,
     check_arguments = FALSE
   )
   if (is_integer_values(abd)) {
     # Sample coverage is useless
     sample_coverage <- NULL
   } else {
-    # Non-integer values in the metacommunity. 
+    # Non-integer values in the metacommunity.
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage.numeric(
       colSums(
@@ -492,7 +492,7 @@ ent_gamma_similarity <- function(
       estimator <- "Marcon"
     }
   }
-  
+
   # Compute the entropy.
   the_entropy <- ent_similarity.numeric(
     abd,
@@ -507,7 +507,7 @@ ent_gamma_similarity <- function(
     as_numeric = as_numeric,
     check_arguments = FALSE
   )
-  
+
   # Return
   if (as_numeric) {
     return(the_entropy)

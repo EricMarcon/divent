@@ -1,13 +1,13 @@
 #' Log-Series Distribution
-#' 
+#'
 #' Random generation for the log-series distribution.
-#' 
+#'
 #' Fast implementation of the random generation of a log-series distribution
 #' \insertCite{Fisher1943}{divent}.
-#' 
+#'
 #' The complete set of functions (including density, distribution function and quantiles)
 #' can be found in package _sads_ but this implementation of the random generation is much faster.
-#' 
+#'
 #' If `size` is too large, i.e. `size` + 1 can't be distinguished from `size` due to rounding,
 #' then an error is raised.
 #'
@@ -30,10 +30,10 @@
 #' # rcommunity() may be a better choice here
 #' autoplot(rcommunity(1, size = 1E4, fisher_alpha = 40, distribution = "lseries"))
 rlseries <- function(
-    n, 
-    size, 
-    fisher_alpha, 
-    show_progress = TRUE, 
+    n,
+    size,
+    fisher_alpha,
+    show_progress = TRUE,
     check_arguments = TRUE) {
   # adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
   # Uncomment to limit to integer value

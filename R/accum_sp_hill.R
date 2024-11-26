@@ -547,7 +547,3 @@ accum_mixing <- function(
   class(the_mixing) <- c("accum_sp_mixing", "accum_sp", class(the_mixing))
   return(the_mixing)
 }
-
-
-#' @rdname accum_sp_hill
-#'

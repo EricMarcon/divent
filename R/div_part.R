@@ -1,8 +1,8 @@
 #' Diversity partition
-#' 
+#'
 #' Calculate \eqn{\gamma}, \eqn{\beta} and \eqn{\alpha} diversities of a metacommunity.
-#' 
-#' The function computes \eqn{\gamma} diversity after building a metacommunity 
+#'
+#' The function computes \eqn{\gamma} diversity after building a metacommunity
 #' from local communities according to their weight \insertCite{Marcon2014a}{divent}.
 #' \eqn{\alpha} entropy is the weighted mean local entropy, converted into Hill
 #' numbers to obtain \eqn{\alpha} diversity.
@@ -13,36 +13,36 @@
 #'
 #' @returns A tibble with diversity values at each scale.
 #' @export
-#' 
+#'
 #' @references
 #' \insertAllCited{}
 #'
 #' @examples
 #' div_part(paracou_6_abd)
-#' 
+#'
 div_part <- function(
-    abundances, 
-    q = 1, 
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger", 
+    abundances,
+    q = 1,
+    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
                   "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak"),
-    level = NULL, 
+    level = NULL,
     probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
-    jack_alpha  = 0.05, 
+    jack_alpha  = 0.05,
     jack_max = 10,
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     q_threshold = 10,
     check_arguments = TRUE) {
- 
+
   if (any(check_arguments)) {
     check_divent_args()
     if (any(abundances < 0)) stop("Species probabilities or abundances must be positive.")
   }
-  estimator <- match.arg(estimator) 
-  probability_estimator <- match.arg(probability_estimator) 
-  unveiling <- match.arg(unveiling) 
-  richness_estimator <- match.arg(richness_estimator) 
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
 
   # Gamma diversity ----
@@ -51,7 +51,7 @@ div_part <- function(
     species_distribution = abundances,
     q = q,
     estimator = estimator,
-    level = level, 
+    level = level,
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
@@ -62,7 +62,7 @@ div_part <- function(
   )
   # Calculate diversity
   div_gamma <- dplyr::mutate(
-    ent_gamma, 
+    ent_gamma,
     diversity = exp_q(.data$entropy, q = q),
     .keep = "unused"
   )
@@ -73,19 +73,19 @@ div_part <- function(
   # Apply div_hill.numeric() to each site
   ent_sites <- apply(
     # Eliminate site and weight columns
-    abundances[, !colnames(abundances) %in% non_species_columns], 
+    abundances[, !colnames(abundances) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
     FUN = ent_tsallis.numeric,
     # Arguments
     q = q,
     estimator = estimator,
-    level = level, 
+    level = level,
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
-    jack_max = jack_max, 
+    jack_alpha  = jack_alpha,
+    jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     as_numeric = TRUE,
     check_arguments = FALSE
@@ -108,17 +108,17 @@ div_part <- function(
     order = q,
     diversity = div_gamma$diversity / div_alpha$diversity
   )
-  
+
   # Summarize
   div_metacommunity <- dplyr::bind_cols(
     site = "Metacommunity",
     dplyr::bind_rows(
-      dplyr::select(div_gamma, -.data$site), 
-      div_beta, 
+      dplyr::select(div_gamma, -.data$site),
+      div_beta,
       div_alpha
     )
   )
-    
+
   # Site diversity
   div_sites <- div_hill.species_distribution(
     x = abundances,
@@ -128,21 +128,21 @@ div_part <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha, 
-    jack_max = jack_max, 
+    jack_alpha  = jack_alpha,
+    jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     q_threshold = q_threshold,
     gamma = FALSE,
     check_arguments = FALSE
   )
-  
+
   # Bind everything
   the_divpart <- dplyr::bind_rows(
-    div_metacommunity, 
+    div_metacommunity,
     dplyr::bind_cols(scale = "community", div_sites)
   )
   # Weight of the metacommunity
   the_divpart[the_divpart$scale == "gamma", "weight"] <- sum(abundances$weight)
-  
+
   return(the_divpart)
 }

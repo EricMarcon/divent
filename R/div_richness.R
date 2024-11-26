@@ -305,7 +305,7 @@ div_richness.numeric <- function(
         coe <- stats::qnorm(1 - jack_alpha/2, 0, 1)
         # Which orders pass the test?
         orders <- (gene[2:(k + 1), 5] < coe)
-        if (sum(orders, na.rm=TRUE) == 0) {
+        if (sum(orders, na.rm = TRUE) == 0) {
           # If none, keep the max value of k (+1 because jack1 is in line 2)
           k_smallest <- k + 1
           s_jack <- gene[k_smallest, 1]
@@ -388,7 +388,7 @@ div_richness.numeric <- function(
         # Don't unveil the asymptotic distribution, use the asymptotic estimator
         s_0 <- div_richness.numeric(
           abd,
-          estimator=estimator,
+          estimator = estimator,
           jack_alpha = jack_alpha,
           jack_max = jack_max,
           as_numeric = TRUE,

@@ -90,7 +90,7 @@ profile_phylo.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
   if (as_numeric && n_simulations > 0) {
-    stop ("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
+    stop("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
   }
 
   # Call the .species_distribution method
