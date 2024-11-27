@@ -181,7 +181,7 @@ Used only for extrapolation.}
 \item{w_mean}{the mean weight in an exponential distribution
 (i.e. the negative of the inverse of the decay rate).}
 
-\item{w_min}{the minimum weight in a uniform or Weibull distribution.}
+\item{w_min}{the minimum weight in a uniform, exponential or Weibull distribution.}
 
 \item{weibull_scale}{the scale parameter in a Weibull distribution.}
 

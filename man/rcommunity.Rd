@@ -105,7 +105,7 @@ May be "uniform" for a uniform distribution between \code{w_min} and \code{w_max
 "weibull" with parameters \code{w_min}, \code{weibull_scale} and \code{shape} or
 "exponential" with parameter \code{w_mean}.}
 
-\item{w_min}{the minimum weight in a uniform or Weibull distribution.}
+\item{w_min}{the minimum weight in a uniform, exponential or Weibull distribution.}
 
 \item{w_max}{the maximum weight in a uniform distribution.}
 

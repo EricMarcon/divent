@@ -163,7 +163,7 @@ They generalize the classical Species Accumulation Curves (SAC) which are
 diversity accumulation of order \eqn{q=0}.
 }
 \examples{
-# Richness accumulation up to the sample size. 
+# Richness accumulation up to the sample size.
 # 100 simulations only to save time.
 autoplot(
   accum_div_phylo(mock_3sp_abd, tree = mock_3sp_tree, n_simulations = 100)

@@ -76,7 +76,7 @@ Then, the order of species is assumed to be the same as that of the
 \examples{
 # Entropy of each community
 ent_rao(paracou_6_abd, tree = paracou_6_taxo)
-# Similar to (but estimators are not the same) 
+# Similar to (but estimators are not the same)
 ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 
 # Functional entropy
