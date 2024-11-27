@@ -272,7 +272,8 @@ rspcommunity <- function(
         stats::rweibull(size, shape = weibull_shape, scale = weibull_scale)
     }
     else if (weight_distribution == "Exponential") {
-      the_weights <- stats::rexp(size, rate = 1 / w_mean)
+      the_weights <-  w_min +
+        stats::rexp(size, rate = 1 / w_mean)
     }
     return(the_weights)
   }
@@ -308,8 +309,10 @@ rspcommunity <- function(
       # Draw each species
       for (s in 1:species_number) {
         the_ppp_s <- spatstat.random::rThomas(
-          kappa = the_communities[i, is_species_column][s] /
-            spatstat.geom::area.owin(win) / thomas_mu,
+          kappa = as.numeric(
+            the_communities[i, is_species_column][s] /
+            spatstat.geom::area.owin(win) / thomas_mu
+          ),
           scale = thomas_scale,
           mu = thomas_mu,
           win = win

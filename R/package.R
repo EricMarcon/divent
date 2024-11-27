@@ -306,7 +306,7 @@ utils::globalVariables("non_species_columns")
 #' @param w_max the maximum weight in a uniform distribution.
 #' @param w_mean the mean weight in an exponential distribution
 #' (i.e. the negative of the inverse of the decay rate).
-#' @param w_min the minimum weight in a uniform or Weibull distribution.
+#' @param w_min the minimum weight in a uniform, exponential or Weibull distribution.
 #' @param weibull_scale the scale parameter in a Weibull distribution.
 #' @param weibull_shape the shape parameter in a Weibull distribution.
 #' @param X a spatialized community
