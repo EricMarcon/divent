@@ -45,7 +45,7 @@ base::as.matrix
 #' The default is `NULL` to display the full description of functions.
 #' @param labelSize the guide of the point size legend in point maps, i.e. what the `PointSize` mark represents.
 #' @param labelColor the guide of the point color legend in point maps, i.e. what the `PointType` mark represents.
-#' @param palette The color palette used to display point types in maps. See [ggplot2::scale_colour_brewer].
+#' @param palette the color palette used to display point types in maps. See [ggplot2::scale_colour_brewer].
 #' @param windowColor the color used to draw the limits of the windows in point maps.
 #' @param windowFill the color used to fill the windows in point maps.
 #' @param alpha the opacity of the confidence envelope (in function values) or the points (in maps), between 0 and 1.
@@ -54,7 +54,10 @@ base::as.matrix
 #' @export
 #'
 #' @examples
-#' autoplot(paracou_6_wmppp)
+#' autoplot(paracou_6_wmppp) +
+#'  # use radius scale because point sizes are already areas
+#'  scale_radius() +
+#'  labs(color = "Species", size = "Basal area")
 #'
 autoplot.wmppp <- function(
     object,
@@ -134,6 +137,10 @@ utils::globalVariables("non_species_columns")
 #' `paracou_6_wmppp` is a [dbmss::wmppp] object, i.e. a weighted, marked planar point pattern.
 #' @source Permanent data census of Paracou: <https://paracou.cirad.fr/>
 #' @seealso [paracou_6_taxo], [paracou_6_fundist]
+#' @examples
+#' # Rank-abundance curve of the species of the whole plot
+#' autoplot(metacommunity(paracou_6_abd))
+#'
 #' @name paracou_6
 "paracou_6_abd"
 

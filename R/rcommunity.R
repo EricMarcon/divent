@@ -205,7 +205,7 @@ rspcommunity <- function(
     weight_distribution = c("Uniform", "Weibull", "Exponential"),
     w_min = 1,
     w_max = 1,
-    w_mean = 20,
+    w_mean = 15,
     weibull_scale = 20,
     weibull_shape = 2,
     check_arguments = TRUE) {
@@ -215,7 +215,8 @@ rspcommunity <- function(
     if (!is.null(prob) & !is.null(abd)) {
       stop("'prob' and 'abd' can't be both given.")
     }
-    if (w_min > w_max) {
+    if (weight_distribution == "Uniform" & (w_min > w_max)) {
+      # Check w_max only in uniform distributions
       stop("'w_max' must be greater of equal to 'wmin'.")
     }
   }
