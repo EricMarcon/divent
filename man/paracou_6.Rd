@@ -34,6 +34,11 @@ In \code{paracou_6_wmppp} (a point pattern), the point type is tree species and 
 
 This dataset is from Paracou field station, French Guiana, managed by \href{https://www.cirad.fr}{Cirad}.
 }
+\examples{
+# Rank-abundance curve of the species of the whole plot
+autoplot(metacommunity(paracou_6_abd))
+
+}
 \seealso{
 \link{paracou_6_taxo}, \link{paracou_6_fundist}
 }

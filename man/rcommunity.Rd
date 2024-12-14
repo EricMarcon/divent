@@ -40,7 +40,7 @@ rspcommunity(
   weight_distribution = c("Uniform", "Weibull", "Exponential"),
   w_min = 1,
   w_max = 1,
-  w_mean = 20,
+  w_mean = 15,
   weibull_scale = 20,
   weibull_shape = 2,
   check_arguments = TRUE
