@@ -14,6 +14,16 @@ vignette: >
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(message = FALSE)
 set.seed(97310)
+# Installation of packages if necessary
+install_packages <- function(packages) {
+  install_package <- function(package) {
+    if (!package %in% installed.packages()[, 1]) {
+      install.packages(package, repos = "https://cran.rstudio.com/")
+    }
+  }
+  invisible(sapply(packages, install_package))
+}
+install_packages(c("spatstat"))
 ```
 
 The package proposes several functions to simulate random communities.
