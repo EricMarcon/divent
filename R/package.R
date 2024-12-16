@@ -54,11 +54,12 @@ base::as.matrix
 #' @export
 #'
 #' @examples
-#' autoplot(paracou_6_wmppp) +
-#'  # use radius scale because point sizes are already areas
-#'  scale_radius() +
-#'  labs(color = "Species", size = "Basal area")
-#'
+#' if (require("ggplot2")) {
+#'   autoplot(paracou_6_wmppp) +
+#'     # use radius scale because point sizes are already areas
+#'     scale_radius() +
+#'     labs(color = "Species", size = "Basal area")
+#'}
 autoplot.wmppp <- function(
     object,
     ...,

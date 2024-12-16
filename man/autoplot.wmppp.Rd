@@ -50,7 +50,7 @@ The default is \code{NULL} to display the full description of functions.}
 
 \item{labelColor}{the guide of the point color legend in point maps, i.e. what the \code{PointType} mark represents.}
 
-\item{palette}{The color palette used to display point types in maps. See \link[ggplot2:scale_brewer]{ggplot2::scale_colour_brewer}.}
+\item{palette}{the color palette used to display point types in maps. See \link[ggplot2:scale_brewer]{ggplot2::scale_colour_brewer}.}
 
 \item{windowColor}{the color used to draw the limits of the windows in point maps.}
 
@@ -65,6 +65,10 @@ A \link[ggplot2:ggplot]{ggplot2::ggplot}.
 This method is from the dbmss package. See \link[dbmss:autoplot]{dbmss::autoplot.wmppp}.
 }
 \examples{
-autoplot(paracou_6_wmppp)
-
+if (require("ggplot2")) {
+  autoplot(paracou_6_wmppp) +
+    # use radius scale because point sizes are already areas
+    scale_radius() +
+    labs(color = "Species", size = "Basal area")
+}
 }
