@@ -71,4 +71,3 @@ if (require("ggplot2")) {
     scale_radius() +
     labs(color = "Species", size = "Basal area")
 }
-}
