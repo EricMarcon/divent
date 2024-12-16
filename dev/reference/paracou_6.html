@@ -11,7 +11,7 @@ The plot covers 6.25 ha of tropical rainforest, divided into 4 equally-sized sub
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9016</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4-99.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,6 +26,7 @@ The plot covers 6.25 ha of tropical rainforest, divided into 4 equally-sized sub
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/arguments.html">Common Arguments of divent Functions</a></li>
     <li><a class="dropdown-item" href="../articles/extrapolation.html">Asymptotic Estimation, Interpolation and Extrapolation </a></li>
     <li><a class="dropdown-item" href="../articles/phylogenies.html">Phylogenies in divent</a></li>
+    <li><a class="dropdown-item" href="../articles/simulations.html">Random communities</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -79,6 +80,14 @@ Data are the number of trees above 10 cm diameter at breast height (DBH).</p>
     <div class="dont-index"><p><a href="paracou_6_taxo.html">paracou_6_taxo</a>, <a href="paracou_6_fundist.html">paracou_6_fundist</a></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Rank-abundance curve of the species of the whole plot</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="fu"><a href="metacommunity.html">metacommunity</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="paracou_6-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
