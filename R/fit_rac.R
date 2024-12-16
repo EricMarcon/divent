@@ -45,11 +45,12 @@ fit_rac.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  distribution <- match.arg(distribution)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   }
-  distribution <- match.arg(distribution)
 
   # Eliminate zeros and sort.
   abd <- sort(x[x > 0], decreasing = TRUE)
@@ -153,11 +154,12 @@ fit_rac.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  distribution <- match.arg(distribution)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   }
-  distribution <- match.arg(distribution)
 
   # Apply probabilities.numeric() to each site
   rac_list <- apply(

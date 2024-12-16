@@ -70,14 +70,15 @@ accum_tsallis.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   if (!is_integer_values(x)) {
     warning(
@@ -322,14 +323,15 @@ accum_tsallis.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   # Set levels if needed
   if (is.null(levels)) {
@@ -408,14 +410,15 @@ accum_hill.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   # Accumulate entropy
   the_accum_tsallis <- accum_tsallis.numeric(
@@ -471,14 +474,15 @@ accum_hill.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   # Set levels if needed
   if (is.null(levels)) {

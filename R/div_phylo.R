@@ -68,6 +68,12 @@ div_phylo.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -80,11 +86,6 @@ div_phylo.numeric <- function(
       stop("Some species are missing in the tree.")
     }
   }
-  estimator <- match.arg(estimator)
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
 
   the_entropy <- ent_phylo.numeric(
     x,
@@ -140,6 +141,12 @@ div_phylo.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -152,11 +159,6 @@ div_phylo.species_distribution <- function(
       stop("Some species are missing in the tree.")
     }
   }
-  estimator <- match.arg(estimator)
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
 
   the_entropy <- ent_phylo.species_distribution(
     x,

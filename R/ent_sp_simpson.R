@@ -34,10 +34,11 @@ ent_sp_simpson <- function(
     correction = c("isotropic", "translate", "none"),
     check_arguments = TRUE) {
 
+  # Check arguments
+  correction <- match.arg(correction)
   if (any(check_arguments)) {
     check_divent_args()
   }
-  correction <- match.arg(correction)
 
   # Summary
   abd <- tapply(
@@ -152,11 +153,12 @@ ent_sp_simpsonEnvelope <- function(
     global = FALSE,
     check_arguments = TRUE) {
 
+  # Check arguments
+  correction <- match.arg(correction)
+  h0 <- match.arg(h0)
   if (any(check_arguments)) {
     check_divent_args()
   }
-  correction <- match.arg(correction)
-  h0 <- match.arg(h0)
 
   # Choose the null hypothesis
   X_sim <- switch(

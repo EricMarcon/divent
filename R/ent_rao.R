@@ -64,6 +64,8 @@ ent_rao.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -92,7 +94,6 @@ ent_rao.numeric <- function(
       }
     }
   }
-  estimator <- match.arg(estimator)
 
   # Prepare the distance matrix
   if (is.null(distances)) {
@@ -205,6 +206,8 @@ ent_rao.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -234,7 +237,6 @@ ent_rao.species_distribution <- function(
       }
     }
   }
-  estimator <- match.arg(estimator)
 
   if (!is.null(distances)) {
     # Check species names and reorder the matrix to fit the names

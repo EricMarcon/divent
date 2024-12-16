@@ -96,14 +96,14 @@ probabilities.numeric <- function(
     check_arguments = TRUE) {
 
   # Check the data ----
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
   estimator <- match.arg(estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   # Save or generate the species names
   species_names <- names(x)
@@ -307,14 +307,15 @@ probabilities.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   estimator <- match.arg(estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   # Apply probabilities.numeric() to each site
   probabilities_list <- apply(

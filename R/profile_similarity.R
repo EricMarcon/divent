@@ -71,16 +71,17 @@ profile_similarity.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-    similarities <- checked_matrix(similarities, x)
-  }
+  # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    similarities <- checked_matrix(similarities, x)
+  }
 
   # Numeric vector, no simulation ----
   if (as_numeric) {
@@ -224,16 +225,17 @@ profile_similarity.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-    similarities <- checked_matrix(similarities, x)
-  }
+  # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    similarities <- checked_matrix(similarities, x)
+  }
 
   if (gamma) {
     the_profile_similarity <- profile_similarity.numeric(

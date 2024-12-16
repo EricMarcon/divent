@@ -67,15 +67,16 @@ ent_simpson.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
@@ -238,15 +239,16 @@ ent_simpson.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   if (gamma) {
     return(

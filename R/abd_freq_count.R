@@ -37,10 +37,11 @@ abd_freq_count <- function(
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
+  if (any(check_arguments)) check_divent_args()
 
   # Convert to integer values
   if (length(abd) == 0) {

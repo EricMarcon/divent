@@ -44,7 +44,9 @@ plot.species_distribution <- function(
     ylab = NULL,
     palette = "Set1") {
 
+  # Check arguments
   type <- match.arg(type)
+  distribution <- match.arg(distribution)
 
   if (type == "RAC") {
     # Whittaker plot ----

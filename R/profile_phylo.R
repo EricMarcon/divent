@@ -71,6 +71,13 @@ profile_phylo.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
+  bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -83,12 +90,6 @@ profile_phylo.numeric <- function(
       stop("Some species are missing in the tree.")
     }
   }
-  estimator <- match.arg(estimator)
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
-  bootstrap <- match.arg(bootstrap)
   if (as_numeric && n_simulations > 0) {
     stop("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
   }
@@ -149,6 +150,13 @@ profile_phylo.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
+  bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -161,12 +169,6 @@ profile_phylo.species_distribution <- function(
       stop("Some species are missing in the tree.")
     }
   }
-  estimator <- match.arg(estimator)
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
-  bootstrap <- match.arg(bootstrap)
 
   # Calculate abundances along the tree, that are a list of matrices
   the_phylo_abd <- phylo_abd(abundances = x, tree = tree)

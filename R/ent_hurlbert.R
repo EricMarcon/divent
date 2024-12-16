@@ -48,11 +48,12 @@ ent_hurlbert.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   }
-  estimator <- match.arg(estimator)
 
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
@@ -136,11 +137,12 @@ ent_hurlbert.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
   }
-  estimator <- match.arg(estimator)
 
   # Apply ent_hurlbert.numeric() to each site
   ent_hurlbert_sites <- apply(

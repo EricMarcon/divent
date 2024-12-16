@@ -55,11 +55,12 @@ accum_sp_tsallis <- function(
     show_progress = TRUE,
     check_arguments = TRUE) {
 
+  # Check arguments
+  richness_estimator <- match.arg(richness_estimator)
+  correction <- match.arg(correction)
   if (any(check_arguments)) {
     check_divent_args()
   }
-  richness_estimator <- match.arg(richness_estimator)
-  correction <- match.arg(correction)
 
   if (is.null(r)) {
     # A number of neighbors ----
@@ -329,12 +330,13 @@ accum_sp_hill <- function(
     show_progress = TRUE,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-  }
+  # Check arguments
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
+  if (any(check_arguments)) {
+    check_divent_args()
+  }
 
   # Prepare an array to store data
   if (is.null(r)) {
@@ -506,12 +508,13 @@ accum_mixing <- function(
     show_progress = TRUE,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-  }
+  # Check arguments
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
+  if (any(check_arguments)) {
+    check_divent_args()
+  }
 
   # Get the diversity accumulation
   the_mixing <- accum_sp_hill(

@@ -77,15 +77,16 @@ rcommunity <- function(
     coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     check_arguments = TRUE) {
 
+  # Check arguments
+  bootstrap <- match.arg(bootstrap)
+  distribution <- match.arg(distribution)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (!is.null(prob) & !is.null(abd)) {
       stop("'prob' and 'abd' can't be both given.")
     }
   }
-  bootstrap <- match.arg(bootstrap)
-  distribution <- match.arg(distribution)
-  coverage_estimator <- match.arg(coverage_estimator)
 
   the_prob <- the_abd <- NULL
 
@@ -210,6 +211,12 @@ rspcommunity <- function(
     weibull_shape = 2,
     check_arguments = TRUE) {
 
+  # Check arguments
+  weight_distribution <- match.arg(weight_distribution)
+  bootstrap <- match.arg(bootstrap)
+  distribution <- match.arg(distribution)
+  coverage_estimator <- match.arg(coverage_estimator)
+  spatial <- match.arg(spatial)
   if (any(check_arguments)) {
     check_divent_args()
     if (!is.null(prob) & !is.null(abd)) {
@@ -217,14 +224,9 @@ rspcommunity <- function(
     }
     if (weight_distribution == "Uniform" & (w_min > w_max)) {
       # Check w_max only in uniform distributions
-      stop("'w_max' must be greater of equal to 'wmin'.")
+      stop("'w_max' must be greater of equal to 'w_min'.")
     }
   }
-  bootstrap <- match.arg(bootstrap)
-  distribution <- match.arg(distribution)
-  coverage_estimator <- match.arg(coverage_estimator)
-  spatial <- match.arg(spatial)
-  weight_distribution <- match.arg(weight_distribution)
 
   # Species abundances: call rcommunity
   the_communities <- rcommunity(

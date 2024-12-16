@@ -69,16 +69,17 @@ profile_hill.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   # Numeric vector, no simulation ----
   if (as_numeric) {
@@ -227,16 +228,17 @@ profile_hill.species_distribution <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
-    check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
-  }
+  # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
   bootstrap <- match.arg(bootstrap)
+  if (any(check_arguments)) {
+    check_divent_args()
+    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+  }
 
   if (gamma) {
     the_profile_hill <- profile_hill.numeric(

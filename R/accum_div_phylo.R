@@ -75,6 +75,11 @@ accum_ent_phylo.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -92,10 +97,6 @@ accum_ent_phylo.numeric <- function(
       levels <- seq_len(sample_size)
     }
   }
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
 
   # Make a species_distribution
   the_species_distribution <- as_species_distribution(x)
@@ -147,10 +148,11 @@ accum_ent_phylo.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  # Species names
-  col_names <- colnames(x)
-  species_names <- col_names[!col_names %in% non_species_columns]
   # Check arguments
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -170,10 +172,10 @@ accum_ent_phylo.abundances <- function(
       levels <- seq_len(sample_size)
     }
   }
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
+
+  # Species names
+  col_names <- colnames(x)
+  species_names <- col_names[!col_names %in% non_species_columns]
 
   # Calculate abundances along the tree, that are a list of matrices
   if (gamma) {
@@ -407,6 +409,11 @@ accum_div_phylo.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -424,10 +431,6 @@ accum_div_phylo.numeric <- function(
       levels <- seq_len(sample_size)
     }
   }
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
 
   # Make a the_species_distribution
   the_species_distribution <- as_species_distribution(x)
@@ -479,6 +482,11 @@ accum_div_phylo.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
+  # Check arguments
+  probability_estimator <- match.arg(probability_estimator)
+  unveiling <- match.arg(unveiling)
+  richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
     if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
@@ -500,10 +508,6 @@ accum_div_phylo.abundances <- function(
       levels <- seq_len(sample_size)
     }
   }
-  probability_estimator <- match.arg(probability_estimator)
-  unveiling <- match.arg(unveiling)
-  richness_estimator <- match.arg(richness_estimator)
-  coverage_estimator <- match.arg(coverage_estimator)
 
   the_entropy <- accum_ent_phylo.abundances(
     x,
