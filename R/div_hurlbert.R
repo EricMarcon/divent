@@ -1,6 +1,6 @@
 #' Hurlbert Diversity of a Community
 #'
-#' Estimate the diversity sensu stricto, i.e. the effective number of species
+#' Estimate the diversity sensu stricto, i.e. the effective
 #' number of species \insertCite{Dauby2012;textual}{divent}
 #' from abundance or probability data.
 #'
@@ -19,6 +19,8 @@
 #' @param ... Unused.
 #'
 #' @returns A tibble with the site names, the estimators used and the estimated diversity.
+#'
+#' @seealso [ent_hurlbert]
 #'
 #' @references
 #' \insertAllCited{}
@@ -63,6 +65,7 @@ div_hurlbert.numeric <- function(
     x,
     k = k,
     estimator = estimator,
+    as_numeric = FALSE,
     check_arguments = FALSE
   )
   # Calculate diversity
@@ -108,7 +111,7 @@ div_hurlbert.species_distribution <- function(
   )
   # Calculate diversity
   if (as_numeric) {
-    the_diversity = hurlbert_ent2div(the_entropy, k = k)
+    the_diversity <- hurlbert_ent2div(the_entropy, k = k)
   } else {
     the_diversity <- dplyr::mutate(
       the_entropy,

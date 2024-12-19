@@ -45,7 +45,7 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 A tibble with the site names, the estimators used and the estimated diversity.
 }
 \description{
-Estimate the diversity sensu stricto, i.e. the effective number of species
+Estimate the diversity sensu stricto, i.e. the effective
 number of species \insertCite{Dauby2012;textual}{divent}
 from abundance or probability data.
 }
@@ -66,4 +66,7 @@ div_hurlbert(paracou_6_abd, k = 2)
 }
 \references{
 \insertAllCited{}
+}
+\seealso{
+\link{ent_hurlbert}
 }

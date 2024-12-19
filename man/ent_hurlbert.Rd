@@ -63,3 +63,6 @@ ent_hurlbert(paracou_6_abd, k = 2)
 \references{
 \insertAllCited{}
 }
+\seealso{
+\link{div_hurlbert}
+}

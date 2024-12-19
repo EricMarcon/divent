@@ -16,6 +16,8 @@
 #'
 #' @returns A tibble with the site names, the estimators used and the estimated entropy.
 #'
+#' @seealso [div_hurlbert]
+#'
 #' @references
 #' \insertAllCited{}
 #'
