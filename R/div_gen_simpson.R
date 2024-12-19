@@ -70,7 +70,7 @@ div_gen_simpson.numeric <- function(
   # Calculate diversity
   the_diversity <- dplyr::mutate(
     the_entropy,
-    diversity = 1 / (1 - entropy)^(1 / r),
+    diversity = 1 / (1 - .data$entropy)^(1 / k),
     .keep = "unused"
   )
 
@@ -114,7 +114,7 @@ div_gen_simpson.species_distribution <- function(
   } else {
     the_diversity <- dplyr::mutate(
       the_entropy,
-      diversity = 1 / (1 - entropy)^(1 / k),
+      diversity = 1 / (1 - .data$entropy)^(1 / k),
       .keep = "unused"
     )
   }
