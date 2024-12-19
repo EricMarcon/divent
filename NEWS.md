@@ -1,7 +1,8 @@
-# divent 0.4-99.9017
+# divent 0.4-99.9018
 
 ## Features
 
+- Generalized Simpson's entropy: `ent_gen_simpson()` and `div_gen_simpson()`
 - Spatially explicit Simpson's entropy: `ent_sp_simpson()` and `ent_sp_simpsonEnvelope()`
 - Spatially explicit random communities: `rspcommunity()`
 - `species_distribution` methods for `wmppp` and `character` objects.
