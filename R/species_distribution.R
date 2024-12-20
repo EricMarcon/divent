@@ -735,5 +735,7 @@ as_named_vector.character <- function(x){
 #'
 as_named_vector.wmppp <- function(X){
   # Count the number of points by type
-  return(as_named_vector.character(spatstat.geom::marks(X)$PointType))
+  the_vector <- as_named_vector.character(spatstat.geom::marks(X)$PointType)
+  # Eliminate NAs due to factor levels with no item
+  return(the_vector[!is.na(the_vector)])
 }
