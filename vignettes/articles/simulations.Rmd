@@ -31,26 +31,109 @@ The package proposes several functions to simulate random communities.
 
 # Simulating abundances according to classical models
 
-The classical models of ecology are implemented in **divent** in the `rcommunity()`.
+The classical models of ecology are implemented in **divent** in the `rcommunity()` function.
 
-To write:
+Arguments are :
 
-- models
+- `n`: the number of communities to draw.
+- `size`: the number of individuals to draw in each community.
+- `species_number`: the number of species.
+- `distribution`: the distribution of species abundances.
+
+Distributions may be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or "bstick" (broken stick):
+
+- log-normal ("lnorm") distributions [@Preston1948] require argument `sd_lnorm` to set the standard deviation of the log-abundances. 
+The expectation of the distribution is computed from the other arguments.
+- log-series ("lseries") distributions [@Fisher1943] rely on the `fisher_alpha` argument.
+They ignore `species_number` because the number of species is given by  `fisher_alpha` and `size`.
+-  geometric ("geom") distributions [@Motomura1932] have argument `prob_geom`.
+This distribution is not stochastic.
+- MacArthur's broken stick ["bstick", @MacArthur1957] has no argument.
+
+The probability distribution is first drawn, once.
+Abundances are then drawn in `n` multinomial distributions, with respect to the probabilities and `size`.
+
+Example: a single log-normal community with 300 species and standard deviation equal to 2 is drawn and plotted:
+
+```{r}
+library("dplyr")  # for `%>%`
+library("divent")
+rcommunity(1, size = 1E4, species_number = 300, distribution = "lnorm") %>% 
+  # Rank-abundance plot
+  autoplot()
+```
 
 
-# Simulating abundances according to an observed abundance distribution
+# Bootstrapping an observed abundance distribution
 
-To write:
+Bootstrapping allows drawing many community according to the same probability distribution according to a multinomial law with respect to the probabilities and `size`.
+This is useful to compute confidence intervals of any statistics of the distribution.
 
-- multinomial 
-- unveiled
+Arguments are :
+
+- `n`: the number of communities to draw.
+- `size`: the number of individuals to draw in each community.
+- `prob` or `abd`: a numeric vector containing probabilities or abundances.
+One of them must be given, the other one must be `NULL`.
+- `bootstrap`: defines the technique used:
+    - "Marcon2012": following @Marcon2012a, abundances are just normalized to obtain probabilities.
+    If `prob` is given rather than `abd`, these probabilities are used.
+    - "Chao2013" or "Chao2015" (by default): based on the observed abundances (`abd` must be given), the actual probability distribution is estimated following @Chao2013 or @Chao2015.
+    Observed frequencies (normalized abundances) are not directly used as estimators of the probabilities: abundant species are correctly estimated but rare species are either overestimated or unobserved.
+    A model based on sample coverage is used to correct this issue.
+    The estimator of sample coverage is chosen by the argument `coverage_estimator`: the sum of observed probabilities equals the sample coverage.
+    The number of unobserved species is estimated and their distribution (their probabilities sum to the coverage deficit) is arbitrary set as uniform ("Chao2013") or geometric ("Chao2015").
+
+Example: a community based on the subplot 1 of Paracou plot 6 is drawn and its distribution is compared to the observed frequencies.
+
+```{r}
+library("ggplot2") # for `labs()`
+# Draw a large community to avoid sample bias
+rcommunity(1, size = 1E6, abd = as.numeric(paracou_6_abd[1, ])) %>% 
+  # Compute the probabilities
+  as_probabilities() %>% 
+  # Rename the distribution
+  mutate(site = "bootstrap") %>% 
+  # Compare to the original distribution
+  bind_rows(as_probabilities(paracou_6_abd[1, ])) %>% 
+  autoplot() +
+  labs(color = "Distribution")
+```
+
+The probabilities of abundant species are not modified.
+The probabilities of rare species is smaller than their frequencies and more than a hundred species are added.
 
 
 # Simulating spatialized communities
 
 ## Communities
 
-To write.
+Spatialized communities include the location of individuals in a window.
+The abundance distribution is drawn according to the same arguments as in `rcommunity()`.
+
+Additional arguments allow choosing:
+
+- the window: `win` must be an `owin` object from the **spatstat.geom** package.
+Default is a square window whose side length is 1.
+- the species names: `species_names` is a character vector with the species names.
+They may be generated automatically.
+- the spatial distribution of the points in argument `spatial`, i.e. the point process used to draw their location:
+    - "Binomial" draws points uniformly in the window.
+    - "Thomas" draws aggregated points: `thomas_mu` is the average number of points per cluster and `thomas_scale`  the standard deviation of random displacement (along each coordinate axis) of a point from its cluster center.
+- the `weight_distribution` of the points sets their sizes:
+    - "Uniform": a uniform distribution between `w_min` and `w_max`.
+    This is the default distribution, with `w_min = w_max = 1.`
+    - "Weibull": parameters are `w_min` (minimum size), `weibull_scale` (the scale parameter) and shape (the shape parameter).
+    - "Exponential": argument `w_mean` is the mean weight, i.e. the negative of the inverse of the decay rate.
+
+Example: a random community is drawn and mapped.
+It contains 100 trees of 5 species. 
+Their spatial distribution is aggregated and their size distribution is exponential (with default parameters).
+
+```{r}
+rspcommunity(1, size = 100, species_number = 5, spatial = "Thomas", weight_distribution = "Exponential") %>% 
+  autoplot()
+```
 
 ## Species
 
@@ -62,10 +145,10 @@ The following example shows how to do it: a 1-ha forest made of an aggregated sp
 A list is of point patterns is obtained and superimposed to make a single `wmppp` object.
 
 ```{r}
-library("spatstat")
-library("dbmss")
-library("ggplot2")
-library("dplyr")
+library("spatstat") # for `square()`
+library("dbmss")    # for `superimpose.wmppp()`
+library("ggplot2")  # for `labs()`
+library("dplyr")    # for `%>%`
 library("divent")
 # A 1-ha window
 the_win <- square(100, unitname = c("meter", "meters"))
