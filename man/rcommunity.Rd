@@ -49,13 +49,13 @@ rspcommunity(
 \arguments{
 \item{n}{the number of communities to draw.}
 
-\item{size}{The number of individuals to draw in each community.}
+\item{size}{the number of individuals to draw in each community.}
 
 \item{prob}{a numeric vector containing probabilities.}
 
 \item{abd}{a numeric vector containing abundances.}
 
-\item{bootstrap}{The method used to obtain the probabilities to generate
+\item{bootstrap}{the method used to obtain the probabilities to generate
 bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
 number of individuals \insertCite{Marcon2012a}{divent}.
@@ -63,7 +63,7 @@ If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
 (see \link{as_probabilities}) following \insertCite{Chao2013;textual}{divent} or
 \insertCite{Chao2015;textual}{divent}.}
 
-\item{species_number}{The number of species.}
+\item{species_number}{the number of species.}
 
 \item{distribution}{The distribution of species abundances.
 May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
@@ -135,7 +135,7 @@ An abundance vector \code{abd} may be used instead of probabilities,
 then \code{size} is by default the total number of individuals in the vector.
 Random communities can be built by drawing in a multinomial law following
 \insertCite{Marcon2012a;textual}{divent}, or trying to estimate the
-distribution of the actual community with \link{as_probabilities}.
+distribution of the actual community with \link{probabilities}.
 If \code{bootstrap} is "Chao2013", the distribution is estimated by a single
 parameter model and unobserved species are given equal probabilities.
 If \code{bootstrap} is "Chao2015", a two-parameter model is used and unobserved
@@ -160,7 +160,7 @@ Log-normal, log-series and broken-stick distributions are stochastic.
 The geometric distribution is completely determined by its parameters.
 
 Spatialized communities include the location of individuals in a window,
-in a a \link[dbmss:wmppp]{dbmss::wmppp} object.
+in a \link[dbmss:wmppp]{dbmss::wmppp} object.
 Several point processes are available, namely binomial (points are uniformly
 distributed in the window) and \insertCite{Thomas1949;textual}{divent}, which
 is clustered.

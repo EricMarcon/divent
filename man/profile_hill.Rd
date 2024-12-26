@@ -101,7 +101,7 @@ Used to calculate the gamma diversity of meta-communities, see details.}
 
 \item{alpha}{The risk level, 5\% by default, of the confidence envelope of the profile.}
 
-\item{bootstrap}{The method used to obtain the probabilities to generate
+\item{bootstrap}{the method used to obtain the probabilities to generate
 bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
 number of individuals \insertCite{Marcon2012a}{divent}.

@@ -66,7 +66,7 @@ check_divent_args(
 
 \item{as_numeric}{if \code{TRUE}, a number or a numeric vector is returned rather than a tibble.}
 
-\item{bootstrap}{The method used to obtain the probabilities to generate
+\item{bootstrap}{the method used to obtain the probabilities to generate
 bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
 number of individuals \insertCite{Marcon2012a}{divent}.
@@ -151,9 +151,9 @@ This is the standard deviation on the log scale.}
 \item{similarities}{a similarity matrix, that can be obtained by \link{fun_similarity}.
 Its default value is the identity matrix.}
 
-\item{size}{The number of individuals to draw in each community.}
+\item{size}{the number of individuals to draw in each community.}
 
-\item{species_number}{The number of species.}
+\item{species_number}{the number of species.}
 
 \item{species_distribution}{an object of class \link{species_distribution}.}
 
