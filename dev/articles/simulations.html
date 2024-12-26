@@ -80,21 +80,114 @@ communities.</p>
 <h2 id="simulating-abundances-according-to-classical-models">Simulating abundances according to classical models<a class="anchor" aria-label="anchor" href="#simulating-abundances-according-to-classical-models"></a>
 </h2>
 <p>The classical models of ecology are implemented in
-<strong>divent</strong> in the <code><a href="../reference/rcommunity.html">rcommunity()</a></code>.</p>
-<p>To write:</p>
+<strong>divent</strong> in the <code><a href="../reference/rcommunity.html">rcommunity()</a></code> function.</p>
+<p>Arguments are :</p>
 <ul>
-<li>models</li>
+<li>
+<code>n</code>: the number of communities to draw.</li>
+<li>
+<code>size</code>: the number of individuals to draw in each
+community.</li>
+<li>
+<code>species_number</code>: the number of species.</li>
+<li>
+<code>distribution</code>: the distribution of species
+abundances.</li>
 </ul>
+<p>Distributions may be “lnorm” (log-normal), “lseries” (log-series),
+“geom” (geometric) or “bstick” (broken stick):</p>
+<ul>
+<li>log-normal (“lnorm”) distributions <span class="citation">(Preston
+1948)</span> require argument <code>sd_lnorm</code> to set the standard
+deviation of the log-abundances. The expectation of the distribution is
+computed from the other arguments.</li>
+<li>log-series (“lseries”) distributions <span class="citation">(Fisher,
+Corbet, and Williams 1943)</span> rely on the <code>fisher_alpha</code>
+argument. They ignore <code>species_number</code> because the number of
+species is given by <code>fisher_alpha</code> and
+<code>size</code>.</li>
+<li>geometric (“geom”) distributions <span class="citation">(Motomura
+1932)</span> have argument <code>prob_geom</code>. This distribution is
+not stochastic.</li>
+<li>MacArthur’s broken stick <span class="citation">(“bstick,” MacArthur
+1957)</span> has no argument.</li>
+</ul>
+<p>The probability distribution is first drawn, once. Abundances are
+then drawn in <code>n</code> multinomial distributions, with respect to
+the probabilities and <code>size</code>.</p>
+<p>Example: a single log-normal community with 300 species and standard
+deviation equal to 2 is drawn and plotted:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span>  <span class="co"># for `%&gt;%`</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
+<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ericmarcon.github.io/divent/">"divent"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/rcommunity.html">rcommunity</a></span><span class="op">(</span><span class="fl">1</span>, size <span class="op">=</span> <span class="fl">1E4</span>, species_number <span class="op">=</span> <span class="fl">300</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="co"># Rank-abundance plot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulations_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 </div>
 <div class="section level2">
-<h2 id="simulating-abundances-according-to-an-observed-abundance-distribution">Simulating abundances according to an observed abundance
-distribution<a class="anchor" aria-label="anchor" href="#simulating-abundances-according-to-an-observed-abundance-distribution"></a>
+<h2 id="bootstrapping-an-observed-abundance-distribution">Bootstrapping an observed abundance distribution<a class="anchor" aria-label="anchor" href="#bootstrapping-an-observed-abundance-distribution"></a>
 </h2>
-<p>To write:</p>
+<p>Bootstrapping allows drawing many community according to the same
+probability distribution according to a multinomial law with respect to
+the probabilities and <code>size</code>. This is useful to compute
+confidence intervals of any statistics of the distribution.</p>
+<p>Arguments are :</p>
 <ul>
-<li>multinomial</li>
-<li>unveiled</li>
+<li>
+<code>n</code>: the number of communities to draw.</li>
+<li>
+<code>size</code>: the number of individuals to draw in each
+community.</li>
+<li>
+<code>prob</code> or <code>abd</code>: a numeric vector containing
+probabilities or abundances. One of them must be given, the other one
+must be <code>NULL</code>.</li>
+<li>
+<code>bootstrap</code>: defines the technique used:
+<ul>
+<li>“Marcon2012”: following <span class="citation">Marcon et al.
+(2012)</span>, abundances are just normalized to obtain probabilities.
+If <code>prob</code> is given rather than <code>abd</code>, these
+probabilities are used.</li>
+<li>“Chao2013” or “Chao2015” (by default): based on the observed
+abundances (<code>abd</code> must be given), the actual probability
+distribution is estimated following <span class="citation">Chao, Wang,
+and Jost (2013)</span> or <span class="citation">Chao and Jost
+(2015)</span>. Observed frequencies (normalized abundances) are not
+directly used as estimators of the probabilities: abundant species are
+correctly estimated but rare species are either overestimated or
+unobserved. A model based on sample coverage is used to correct this
+issue. The estimator of sample coverage is chosen by the argument
+<code>coverage_estimator</code>: the sum of observed probabilities
+equals the sample coverage. The number of unobserved species is
+estimated and their distribution (their probabilities sum to the
+coverage deficit) is arbitrary set as uniform (“Chao2013”) or geometric
+(“Chao2015”).</li>
 </ul>
+</li>
+</ul>
+<p>Example: a community based on the subplot 1 of Paracou plot 6 is
+drawn and its distribution is compared to the observed frequencies.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span> <span class="co"># for `labs()`</span></span>
+<span><span class="co"># Draw a large community to avoid sample bias</span></span>
+<span><span class="fu"><a href="../reference/rcommunity.html">rcommunity</a></span><span class="op">(</span><span class="fl">1</span>, size <span class="op">=</span> <span class="fl">1E6</span>, abd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="co"># Compute the probabilities</span></span>
+<span>  <span class="fu"><a href="../reference/species_distribution.html">as_probabilities</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="co"># Rename the distribution</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>site <span class="op">=</span> <span class="st">"bootstrap"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="co"># Compare to the original distribution</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="../reference/species_distribution.html">as_probabilities</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Distribution"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulations_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>The probabilities of abundant species are not modified. The
+probabilities of rare species is smaller than their frequencies and more
+than a hundred species are added.</p>
 </div>
 <div class="section level2">
 <h2 id="simulating-spatialized-communities">Simulating spatialized communities<a class="anchor" aria-label="anchor" href="#simulating-spatialized-communities"></a>
@@ -102,7 +195,48 @@ distribution<a class="anchor" aria-label="anchor" href="#simulating-abundances-a
 <div class="section level3">
 <h3 id="communities">Communities<a class="anchor" aria-label="anchor" href="#communities"></a>
 </h3>
-<p>To write.</p>
+<p>Spatialized communities include the location of individuals in a
+window. The abundance distribution is drawn according to the same
+arguments as in <code><a href="../reference/rcommunity.html">rcommunity()</a></code>.</p>
+<p>Additional arguments allow choosing:</p>
+<ul>
+<li>the window: <code>win</code> must be an <code>owin</code> object
+from the <strong>spatstat.geom</strong> package. Default is a square
+window whose side length is 1.</li>
+<li>the species names: <code>species_names</code> is a character vector
+with the species names. They may be generated automatically.</li>
+<li>the spatial distribution of the points in argument
+<code>spatial</code>, i.e. the point process used to draw their
+location:
+<ul>
+<li>“Binomial” draws points uniformly in the window.</li>
+<li>“Thomas” draws aggregated points: <code>thomas_mu</code> is the
+average number of points per cluster and <code>thomas_scale</code> the
+standard deviation of random displacement (along each coordinate axis)
+of a point from its cluster center.</li>
+</ul>
+</li>
+<li>the <code>weight_distribution</code> of the points sets their sizes:
+<ul>
+<li>“Uniform”: a uniform distribution between <code>w_min</code> and
+<code>w_max</code>. This is the default distribution, with
+<code>w_min = w_max = 1.</code>
+</li>
+<li>“Weibull”: parameters are <code>w_min</code> (minimum size),
+<code>weibull_scale</code> (the scale parameter) and shape (the shape
+parameter).</li>
+<li>“Exponential”: argument <code>w_mean</code> is the mean weight,
+i.e. the negative of the inverse of the decay rate.</li>
+</ul>
+</li>
+</ul>
+<p>Example: a random community is drawn and mapped. It contains 100
+trees of 5 species. Their spatial distribution is aggregated and their
+size distribution is exponential (with default parameters).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rcommunity.html">rspcommunity</a></span><span class="op">(</span><span class="fl">1</span>, size <span class="op">=</span> <span class="fl">100</span>, species_number <span class="op">=</span> <span class="fl">5</span>, spatial <span class="op">=</span> <span class="st">"Thomas"</span>, weight_distribution <span class="op">=</span> <span class="st">"Exponential"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulations_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="species">Species<a class="anchor" aria-label="anchor" href="#species"></a>
@@ -116,14 +250,11 @@ aggregated species of interest and undifferentiated other ones.
 and <code>species_number = 1</code>. A list is of point patterns is
 obtained and superimposed to make a single <code>wmppp</code>
 object.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://spatstat.org/" class="external-link">"spatstat"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ericmarcon.github.io/dbmss/" class="external-link">"dbmss"</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
-<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://spatstat.org/" class="external-link">"spatstat"</a></span><span class="op">)</span> <span class="co"># for `square()`</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ericmarcon.github.io/dbmss/" class="external-link">"dbmss"</a></span><span class="op">)</span>    <span class="co"># for `superimpose.wmppp()`</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span>  <span class="co"># for `labs()`</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span>    <span class="co"># for `%&gt;%`</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ericmarcon.github.io/divent/">"divent"</a></span><span class="op">)</span></span>
 <span><span class="co"># A 1-ha window</span></span>
 <span><span class="va">the_win</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatstat.geom/man/square.html" class="external-link">square</a></span><span class="op">(</span><span class="fl">100</span>, unitname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meter"</span>, <span class="st">"meters"</span><span class="op">)</span><span class="op">)</span></span>
@@ -152,34 +283,72 @@ object.</p>
 <span><span class="co"># Map the simulated community</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">the_species</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Species"</span>, size <span class="op">=</span> <span class="st">"Diameter"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulations_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+<p><img src="simulations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Post-simulation processing of such spatialized communities may be for
 instance thinning to reduced the local average basal area.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Basal area</span></span>
 <span><span class="va">G</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu">spatstat.geom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatstat.geom/man/marks.html" class="external-link">marks</a></span><span class="op">(</span><span class="va">the_species</span><span class="op">)</span><span class="op">$</span><span class="va">PointWeight</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">/</span> <span class="fl">4E4</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">G</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 41.0622</span></span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] 41.90301</span></span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Density</span></span>
 <span><span class="va">G_density</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">the_species</span>, sigma <span class="op">=</span> <span class="fl">10</span>, weights <span class="op">=</span> <span class="va">G</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">G_density</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulations_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><img src="simulations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Thinning: the target is at most 40m² locally</span></span>
 <span><span class="va">target</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">G_density</span><span class="op">)</span> <span class="op">*</span> <span class="fl">40</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">G</span><span class="op">)</span></span>
 <span><span class="va">thin_im</span> <span class="op">&lt;-</span> <span class="va">G_density</span></span>
 <span><span class="va">thin_im</span><span class="op">$</span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">target</span> <span class="op">/</span> <span class="va">G_density</span><span class="op">$</span><span class="va">v</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co"># Plot the thinning probability</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">thin_im</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulations_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p><img src="simulations_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot the thinned community </span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/spatstat.random/man/rthin.html" class="external-link">rthin</a></span><span class="op">(</span></span>
 <span>  <span class="va">the_species</span>,</span>
 <span>  P <span class="op">=</span> <span class="va">thin_im</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulations_files/figure-html/unnamed-chunk-2-3.png" width="700"></p>
+<p><img src="simulations_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Chao2015" class="csl-entry">
+Chao, Anne, and Lou Jost. 2015. <span>“Estimating Diversity and Entropy
+Profiles via Discovery Rates of New Species.”</span> <em>Methods in
+Ecology and Evolution</em> 6 (8): 873–82. <a href="https://doi.org/10.1111/2041-210X.12349" class="external-link">https://doi.org/10.1111/2041-210X.12349</a>.
+</div>
+<div id="ref-Chao2013" class="csl-entry">
+Chao, Anne, Yi-Ting Wang, and Lou Jost. 2013. <span>“Entropy and the
+Species Accumulation Curve: A Novel Entropy Estimator via Discovery
+Rates of New Species.”</span> <em>Methods in Ecology and Evolution</em>
+4 (11): 1091–1100. <a href="https://doi.org/10.1111/2041-210x.12108" class="external-link">https://doi.org/10.1111/2041-210x.12108</a>.
+</div>
+<div id="ref-Fisher1943" class="csl-entry">
+Fisher, Ronald Aylmer, A. Steven Corbet, and Carrington Bonsor Williams.
+1943. <span>“The Relation Between the Number of Species and the Number
+of Individuals in a Random Sample of an Animal Population.”</span>
+<em>Journal of Animal Ecology</em> 12: 42–58. <a href="https://doi.org/10.2307/1411" class="external-link">https://doi.org/10.2307/1411</a>.
+</div>
+<div id="ref-MacArthur1957" class="csl-entry">
+MacArthur, Robert H. 1957. <span>“On the Relative Abundance of Bird
+Species.”</span> <em>Proceedings of the National Academy of Sciences of
+the United States of America</em> 43 (3): 293–95. <a href="https://doi.org/10.1073/pnas.43.3.293" class="external-link">https://doi.org/10.1073/pnas.43.3.293</a>.
+</div>
+<div id="ref-Marcon2012a" class="csl-entry">
+Marcon, Eric, Bruno Hérault, Christopher Baraloto, and Gabriel Lang.
+2012. <span>“The Decomposition of <span>Shannon</span>’s Entropy and a
+Confidence Interval for <span><em>Beta</em></span> Diversity.”</span>
+<em>Oikos</em> 121 (4): 516–22. <a href="https://doi.org/10.1111/j.1600-0706.2011.19267.x" class="external-link">https://doi.org/10.1111/j.1600-0706.2011.19267.x</a>.
+</div>
+<div id="ref-Motomura1932" class="csl-entry">
+Motomura, I. 1932. <span>“<span>On the statistical treatment of
+communities</span>.”</span> <em>Zoological Magazine</em> 44: 379–83.
+</div>
+<div id="ref-Preston1948" class="csl-entry">
+Preston, F. W. 1948. <span>“The Commonness, and Rarity, of
+Species.”</span> <em>Ecology</em> 29 (3): 254–83. <a href="https://doi.org/10.2307/1930989" class="external-link">https://doi.org/10.2307/1930989</a>.
+</div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

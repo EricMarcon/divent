@@ -100,7 +100,7 @@ rspcommunity() extends it by spatializing the random communities."><meta propert
 
 
 <dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
-<dd><p>The number of individuals to draw in each community.</p></dd>
+<dd><p>the number of individuals to draw in each community.</p></dd>
 
 
 <dt id="arg-prob">prob<a class="anchor" aria-label="anchor" href="#arg-prob"></a></dt>
@@ -112,7 +112,7 @@ rspcommunity() extends it by spatializing the random communities."><meta propert
 
 
 <dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
-<dd><p>The method used to obtain the probabilities to generate
+<dd><p>the method used to obtain the probabilities to generate
 bootstrapped communities from observed abundances.
 If "Marcon2012", the probabilities are simply the abundances divided by the total
 number of individuals (Marcon et al. 2012)
@@ -125,7 +125,7 @@ Chao and Jost (2015)
 
 
 <dt id="arg-species-number">species_number<a class="anchor" aria-label="anchor" href="#arg-species-number"></a></dt>
-<dd><p>The number of species.</p></dd>
+<dd><p>the number of species.</p></dd>
 
 
 <dt id="arg-distribution">distribution<a class="anchor" aria-label="anchor" href="#arg-distribution"></a></dt>
@@ -230,7 +230,7 @@ then <code>size</code> is by default the total number of individuals in the vect
 Random communities can be built by drawing in a multinomial law following
 Marcon et al. (2012)
 , or trying to estimate the
-distribution of the actual community with <a href="species_distribution.html">as_probabilities</a>.
+distribution of the actual community with <a href="probabilities.html">probabilities</a>.
 If <code>bootstrap</code> is "Chao2013", the distribution is estimated by a single
 parameter model and unobserved species are given equal probabilities.
 If <code>bootstrap</code> is "Chao2015", a two-parameter model is used and unobserved
@@ -256,7 +256,7 @@ drawn in a multinomial distribution following these probabilities.</p>
 <p>Log-normal, log-series and broken-stick distributions are stochastic.
 The geometric distribution is completely determined by its parameters.</p>
 <p>Spatialized communities include the location of individuals in a window,
-in a a <a href="https://ericmarcon.github.io/dbmss/reference/wmppp.html" class="external-link">dbmss::wmppp</a> object.
+in a <a href="https://ericmarcon.github.io/dbmss/reference/wmppp.html" class="external-link">dbmss::wmppp</a> object.
 Several point processes are available, namely binomial (points are uniformly
 distributed in the window) and Thomas (1949)
 , which
