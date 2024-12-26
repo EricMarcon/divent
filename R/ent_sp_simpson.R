@@ -90,7 +90,7 @@ ent_sp_simpson <- function(
       correction = correction
     )
   )
-  # K_PointType is NA for species with a a single point. Should be 0
+  # K_PointType is NA for species with a single point. Should be 0
   K_PointType[is.na(K_PointType)] <- 0
 
   # Result: Shilmatani's function of r

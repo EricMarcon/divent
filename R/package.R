@@ -240,7 +240,7 @@ utils::globalVariables("non_species_columns")
 #' @param abundances an object of class [abundances].
 #' @param alpha the risk level, 5% by default.
 #' @param as_numeric if `TRUE`, a number or a numeric vector is returned rather than a tibble.
-#' @param bootstrap The method used to obtain the probabilities to generate
+#' @param bootstrap the method used to obtain the probabilities to generate
 #' bootstrapped communities from observed abundances.
 #' If "Marcon2012", the probabilities are simply the abundances divided by the total
 #' number of individuals \insertCite{Marcon2012a}{divent}.
@@ -295,8 +295,8 @@ utils::globalVariables("non_species_columns")
 #' Its default value is the identity matrix.
 #' @param sd_lnorm the simulated log-normal distribution standard deviation.
 #' This is the standard deviation on the log scale.
-#' @param size The number of individuals to draw in each community.
-#' @param species_number The number of species.
+#' @param size the number of individuals to draw in each community.
+#' @param species_number the number of species.
 #' @param species_distribution an object of class [species_distribution].
 #' @param thomas_scale in Thomas point patterns, the standard deviation of random displacement
 #' (along each coordinate axis) of a point from its cluster center.

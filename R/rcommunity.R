@@ -9,7 +9,7 @@
 #' then `size` is by default the total number of individuals in the vector.
 #' Random communities can be built by drawing in a multinomial law following
 #' \insertCite{Marcon2012a;textual}{divent}, or trying to estimate the
-#' distribution of the actual community with [as_probabilities].
+#' distribution of the actual community with [probabilities].
 #' If `bootstrap` is "Chao2013", the distribution is estimated by a single
 #' parameter model and unobserved species are given equal probabilities.
 #' If `bootstrap` is "Chao2015", a two-parameter model is used and unobserved
@@ -34,7 +34,7 @@
 #' The geometric distribution is completely determined by its parameters.
 #'
 #' Spatialized communities include the location of individuals in a window,
-#' in a a [dbmss::wmppp] object.
+#' in a [dbmss::wmppp] object.
 #' Several point processes are available, namely binomial (points are uniformly
 #' distributed in the window) and \insertCite{Thomas1949;textual}{divent}, which
 #' is clustered.
