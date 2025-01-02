@@ -169,7 +169,7 @@ div_pd.species_distribution <- function(
       FUN = div_pd.numeric,
       # Arguments
       tree = tree,
-      normalize = normalize,
+      prune = prune,
       as_numeric = FALSE,
       check_arguments = FALSE
     )
