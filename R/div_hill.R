@@ -14,7 +14,7 @@
 #' \insertCite{Zhang2014a;textual}{divent}, \insertCite{Chao2014c;textual}{divent},
 #' \insertCite{Chao2015;textual}{divent} and \insertCite{Marcon2015a;textual}{divent}.
 #'
-#' The `ChaoJost` estimator \insertCite{Chao2013,Chao2015;textual}{divent} contains
+#' The `ChaoJost` estimator \insertCite{Chao2013,Chao2015}{divent} contains
 #' an unbiased part concerning observed species, equal to that of
 #' \insertCite{Zhang2014a;textual}{divent}, and a (biased) estimator of the remaining
 #' bias based on the estimation of the species-accumulation curve.
