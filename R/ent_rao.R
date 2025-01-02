@@ -16,7 +16,8 @@
 #' `species_distribution` or its numeric equivalent.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object, that may be a numeric vector containing abundances or probabilities,
+#' @param x An object, that may be a named numeric vector (names are species names)
+#' containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
@@ -73,7 +74,7 @@ ent_rao.numeric <- function(
       stop("Either 'distance' or 'tree' must be provided.")
     }
     # Check species names
-    species_names <- colnames(x)
+    species_names <- names(x)
     # Prepare the tree
     tree <- as_phylo_divent(tree)
     if (is.null(distances)) {

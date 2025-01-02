@@ -12,7 +12,8 @@
 #' `tree`.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object, that may be a numeric vector containing abundances or probabilities,
+#' @param x An object, that may be a named numeric vector (names are species names)
+#' containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
 #' @param prune What to do when some species are in the tree but not in `x`?
 #' If `TRUE`, the tree is pruned to keep species of `x` only.

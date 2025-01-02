@@ -48,8 +48,9 @@ div_phylo(x, tree, q = 1, ...)
 )
 }
 \arguments{
-\item{x}{An object, that may be a numeric vector containing abundances
-or probabilities, or an object of class \link{abundances} or \link{probabilities}.}
+\item{x}{An object, that may be a named numeric vector (names are species names)
+containing abundances or probabilities,
+or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{tree}{an ultrametric, phylogenetic tree.
 May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}

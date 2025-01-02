@@ -21,7 +21,8 @@ div_pd(x, tree, ...)
 )
 }
 \arguments{
-\item{x}{An object, that may be a numeric vector containing abundances or probabilities,
+\item{x}{An object, that may be a named numeric vector (names are species names)
+containing abundances or probabilities,
 or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{tree}{an ultrametric, phylogenetic tree.
