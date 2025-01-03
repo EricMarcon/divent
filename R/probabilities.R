@@ -102,7 +102,9 @@ probabilities.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Save or generate the species names
@@ -207,7 +209,7 @@ probabilities.numeric <- function(
     ## Estimate the number of unobserved species ----
     if (richness_estimator == "rarefy") {
       if (unveiling == "none") {
-        stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
+        cli::cli_abort("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
       s_0 <- div_richness.numeric(
@@ -315,7 +317,9 @@ probabilities.abundances <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Apply probabilities.numeric() to each site

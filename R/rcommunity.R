@@ -84,7 +84,7 @@ rcommunity <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (!is.null(prob) & !is.null(abd)) {
-      stop("'prob' and 'abd' can't be both given.")
+      cli::cli_abort("{.code prob} and {.code abd} can't be both given.")
     }
   }
 
@@ -220,11 +220,11 @@ rspcommunity <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (!is.null(prob) & !is.null(abd)) {
-      stop("'prob' and 'abd' can't be both given.")
+      cli::cli_abort("{.code prob} and {.code abd} can't be both given.")
     }
     if (weight_distribution == "Uniform" & (w_min > w_max)) {
       # Check w_max only in uniform distributions
-      stop("'w_max' must be greater of equal to 'w_min'.")
+      cli::cli_abort("{.code w_max} must be greater of equal to {.code w_min}.")
     }
   }
 
@@ -255,7 +255,9 @@ rspcommunity <- function(
     species_names <- unique(species_names)
     species_names <- species_names[nchar(species_names) > 0]
     if (length(species_names) < species_number) {
-      stop("The species names vector must contain at least 'species_number' names.")
+      cli::cli_abort(
+        "The species names vector must contain at least {.code species_number} names."
+      )
     } else {
       # Sample species names
       species_names <- sample(species_names, size = species_number)

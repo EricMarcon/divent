@@ -60,7 +60,9 @@ div_pd.numeric <- function(
   # Check arguments
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
   # Check species names
   species_names <- names(x)
@@ -69,7 +71,7 @@ div_pd.numeric <- function(
   if (any(check_arguments)) {
     # Check species in the tree
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")
+      cli::cli_abort("Some species are missing in the tree.")
     }
   }
 
@@ -123,7 +125,9 @@ div_pd.species_distribution <- function(
   # Check arguments
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     # Check species names
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
@@ -131,7 +135,7 @@ div_pd.species_distribution <- function(
     tree <- as_phylo_divent(tree)
     # Check species in the tree
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")
+      cli::cli_abort("Some species are missing in the tree.")
     }
   } else {
     # Prepare the tree

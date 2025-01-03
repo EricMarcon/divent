@@ -57,12 +57,12 @@ as_phylo_divent <- function(tree) {
     # Double edge.lengths to correct as.phylo.hclust
     tree.phylo$edge.length <- 2 * tree.phylo$edge.length
   } else {
-    stop("tree must be an object of class phylo, phylog or hclust")
+    cli::cli_abort("tree must be an object of class phylo, phylog or hclust")
   }
 
   # The tree must be ultrametric ----
   if (!ape::is.ultrametric(tree.phylo)) {
-    stop("The tree must be ultrametric.")
+    cli::cli_abort("The tree must be ultrametric.")
   }
 
   # Calculate distances between nodes and leaves ----

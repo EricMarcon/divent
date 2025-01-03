@@ -110,7 +110,9 @@ div_hill.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (q > q_threshold) {
@@ -196,7 +198,9 @@ div_hill.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (q > q_threshold) {

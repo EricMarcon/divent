@@ -75,9 +75,15 @@ species_distribution <- function(
   # Check the data ----
   if (any(check_arguments)) {
     check_divent_args()
-    if (!is.numeric(x)) stop("'x' must be numeric")
-    if (length(dim(x)) > 2) stop("'x' may be a vector or a matrix")
-    if (any(x < 0)) stop("Species distribution abundances or probabilities must be positive.")
+    if (!is.numeric(x)) {
+      cli::cli_abort("{.code x} must be numeric")
+    }
+    if (length(dim(x)) > 2) {
+      cli::cli_abort("{.code x} may be a vector or a matrix")
+    }
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Build a tibble from the data ----
@@ -119,7 +125,12 @@ species_distribution <- function(
       if (length(names) == nrow(x)) {
         the_distribution$site <- names
       } else {
-        stop("The length of 'names' must match the number of lines of the data matrix.")
+        cli::cli_abort(
+          paste(
+            "The length of {.code names} must match",
+            "the number of lines of the data matrix."
+          )
+        )
       }
     } else {
       # names is null...
@@ -142,7 +153,12 @@ species_distribution <- function(
           .after = "site"
         )
       } else {
-        stop("The length of 'weights' must match the number of lines of the data matrix.")
+        cli::cli_abort(
+          paste(
+            "The length of {.code weights} must match",
+            "the number of lines of the data matrix."
+          )
+        )
       }
     } else {
       # Weights are the number of individuals
@@ -216,7 +232,9 @@ as_species_distribution.data.frame <- function(
 
   if (any(check_arguments)) check_divent_args()
   # Check the data
-  if (any(x < 0)) stop("All numeric values of the dataframe must be positive.")
+  if (any(x < 0)) {
+    cli::cli_abort("All numeric values of the dataframe must be positive.")
+  }
 
   # Build a tibble
   the_distribution <- tibble::as_tibble(x)
@@ -334,7 +352,9 @@ as_probabilities.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(x < 0)) stop("Species probabilities must be positive.")
+  if (any(x < 0)) {
+    cli::cli_abort("Species probabilities must be positive.")
+  }
 
   # Normalize to 1
   prob <- x / sum(x)
@@ -494,8 +514,12 @@ abundances <- function(
 
   if (any(check_arguments)) {
     check_divent_args()
-    if (!is.numeric(x)) stop("'x' must be numeric")
-    if (any(x < 0)) stop("Species abundances must be positive.")
+    if (!is.numeric(x)) {
+      cli::cli_abort("{.code x} must be numeric")
+    }
+    if (any(x < 0)) {
+      cli::cli_abort("Species abundances must be positive.")
+    }
   }
 
   if (round) {
@@ -532,7 +556,9 @@ as_abundances.numeric <- function(
 
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species abundances must be positive.")
+    }
   }
 
   if (round) {
@@ -682,7 +708,7 @@ as.double.species_distribution <- function(x, use.names = TRUE, ...) {
     cli::cli_alert_warning(
       "The species_distribution object contains several rows."
     )
-    cli::cli_alert("{.code as.matrix()} is used.")
+    cli::cli_alert("{.fn as.matrix} is used.")
     return(as.matrix.species_distribution(x, use.names, ...))
   } else {
     is_species_column <- !colnames(x) %in% non_species_columns

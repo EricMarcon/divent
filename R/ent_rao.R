@@ -69,9 +69,11 @@ ent_rao.numeric <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     if (!xor(is.null(distances), is.null(tree))) {
-      stop("Either 'distance' or 'tree' must be provided.")
+      cli::cli_abort("Either 'distance' or 'tree' must be provided.")
     }
     # Check species names
     species_names <- names(x)
@@ -80,7 +82,7 @@ ent_rao.numeric <- function(
     if (is.null(distances)) {
       # Check species in the tree
       if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-        stop("Some species are missing in the tree.")
+        cli::cli_abort("Some species are missing in the tree.")
       }
     } else {
       # Check species in the distance matrix
@@ -90,7 +92,7 @@ ent_rao.numeric <- function(
       }
       if (!is.null(colnames(distances))) {
         if (length(setdiff(species_names, colnames(distances))) != 0) {
-          stop("Some species are missing in the distance matrix")
+          cli::cli_abort("Some species are missing in the distance matrix")
         }
       }
     }
@@ -214,9 +216,11 @@ ent_rao.species_distribution <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     if (!xor(is.null(distances), is.null(tree))) {
-      stop("Either 'distance' or 'tree' must be provided.")
+      cli::cli_abort("Either 'distance' or 'tree' must be provided.")
     }
     # Check species names
     col_names <- colnames(x)
@@ -226,7 +230,7 @@ ent_rao.species_distribution <- function(
     if (is.null(distances)) {
       # Check species in the tree
       if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-        stop("Some species are missing in the tree.")
+        cli::cli_abort("Some species are missing in the tree.")
       }
     } else {
       # Check species in the distance matrix
@@ -236,7 +240,7 @@ ent_rao.species_distribution <- function(
       }
       if (!is.null(colnames(distances))) {
         if (length(setdiff(species_names, colnames(distances))) != 0) {
-          stop("Some species are missing in the distance matrix")
+          cli::cli_abort("Some species are missing in the distance matrix")
         }
       }
     }

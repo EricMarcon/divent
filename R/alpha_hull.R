@@ -32,17 +32,17 @@
 alphahull <- function(X, alpha = NULL) {
 
   if (!inherits(X, "ppp")) {
-    stop("X must be a plana point pattern (ppp object)")
+    cli::cli_abort("X must be a plana point pattern (ppp object)")
   }
   if (!is.null(alpha)) {
     if (!is.numeric(alpha)) {
-      stop("alpha must be numeric")
+      cli::cli_abort("alpha must be numeric")
     }
     if (length(alpha) > 1) {
-      stop("alpha must be a single number")
+      cli::cli_abort("alpha must be a single number")
     }
     if (alpha <= 0) {
-      stop("alpha must be a positive number.")
+      cli::cli_abort("alpha must be a positive number.")
     }
   }
   # At least 3 points are needed

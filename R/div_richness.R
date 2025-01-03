@@ -91,12 +91,18 @@ div_richness.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Diversity of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
-    if (!is.null(level)) stop("Richness can't be estimated at a level without the abundance of species.")
+    if (!is.null(level)) {
+      cli::cli_abort(
+        "Richness can't be estimated at a level without the abundance of species."
+      )
+    }
     # Probabilities sum to 1, allowing rounding error
     return(
       tibble::tibble_row(
@@ -461,7 +467,9 @@ div_richness.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (gamma) {

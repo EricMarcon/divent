@@ -56,9 +56,11 @@ metacommunity.matrix <- function(
   if (any(check_arguments)) {
     check_divent_args()
     if (length(weights != nrow(x))) {
-      stop("The length of 'weights' must be the number of communities")
+      cli::cli_abort("The length of 'weights' must be the number of communities")
     }
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Sample size
@@ -110,7 +112,9 @@ metacommunity.abundances <- function(
 
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Select species columns

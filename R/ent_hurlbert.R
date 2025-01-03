@@ -54,7 +54,9 @@ ent_hurlbert.numeric <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Entropy of a vector of probabilities ----
@@ -78,7 +80,9 @@ ent_hurlbert.numeric <- function(
   # Sample size
   sample_size <- sum(abd)
   if (k > sample_size) {
-    stop("The order of diversity cannot be greater than the size of the sample.")
+    cli::cli_abort(
+      "The order of diversity cannot be greater than the size of the sample."
+    )
   }
   # Number of observed species
   s_obs <- length(abd)
@@ -144,7 +148,9 @@ ent_hurlbert.species_distribution <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Apply ent_hurlbert.numeric() to each site

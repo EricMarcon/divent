@@ -71,13 +71,17 @@ ent_similarity.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     similarities <- checked_matrix(similarities, x)
   }
 
   # Check that dimensions correspond
   if (length(x) != ncol(similarities)) {
-    stop("The length of 'x' must be equal to the dimension of the similarities.")
+    cli::cli_abort(
+      "The length of 'x' must be equal to the dimension of the similarities."
+      )
   }
 
   # Entropy of a vector of probabilities ----
@@ -370,7 +374,9 @@ ent_similarity.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Check species names and reorder the matrix to fit the names

@@ -1291,7 +1291,12 @@ checked_matrix <- function(
       # Do not change the matrix
       return(sim_dist_matrix)
     } else {
-      stop("If the similarity matrix is not named, then its size must fit the number of species.")
+      cli::cli_abort(
+        paste(
+          "If the similarity matrix is not named,",
+          "then its size must fit the number of species."
+        )
+      )
     }
   }
 
@@ -1304,9 +1309,11 @@ checked_matrix <- function(
   }
 
   # Stop if some species are not in the matrix
-  if (length(species_names) == 0) stop("There are no species in the distribution")
+  if (length(species_names) == 0) {
+    cli::cli_abort("There are no species in the distribution")
+  }
   if (length(setdiff(species_names, colnames(sim_dist_matrix))) != 0) {
-    stop("Some species are missing in the similarity matrix.")
+    cli::cli_abort("Some species are missing in the similarity matrix.")
   }
 
   # Filter and reorder the similarity matrix
@@ -1466,10 +1473,25 @@ ent_gamma_tsallis <- function(
 #' @noRd
 #'
 error_message <- function(message, argument, parent_function) {
-  message(deparse(substitute(argument)), " cannot be:", appendLF = TRUE)
+  cli::cli_alert_danger(
+    paste(
+      deparse(substitute(argument)),
+      "cannot be:"
+    )
+  )
   message(utils::head(argument))
-  message("In function ", parent_function, ": ", message)
-  stop("Check the function arguments.", call. = FALSE)
+  cli::cli_alert_info(
+    c(
+      "In function ",
+      parent_function,
+      ": ",
+      message
+    )
+  )
+  cli::cli_abort(
+    "Check the function arguments.",
+    call = NULL
+  )
 }
 
 

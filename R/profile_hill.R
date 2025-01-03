@@ -78,12 +78,21 @@ profile_hill.numeric <- function(
   bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Numeric vector, no simulation ----
   if (as_numeric) {
-    if (n_simulations > 0) stop("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
+    if (n_simulations > 0) {
+      cli::cli_abort(
+        c(
+          "No simulations are allowed if a numeric vector is expected",
+          "i" = "Change argument for {.code as_numeric = FALSE}"
+        )
+      )
+    }
     the_profile_hill <- vapply(
       orders,
       FUN = function(q) {
@@ -243,7 +252,9 @@ profile_hill.species_distribution <- function(
   bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (gamma) {

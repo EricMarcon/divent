@@ -175,7 +175,9 @@ coverage.numeric <- function(
   # Coverage at a chosen level ----
   if (!is.null(level)) {
     # level must be an integer. check_divent_args() may have accepted a value between 0 and 1
-    if (level <= 1) stop("level must be an integer > 1.")
+    if (level <= 1) {
+      cli::cli_abort("level must be an integer > 1.")
+    }
 
     ## Turing or Zhang & Huang's estimator ----
     if (estimator == "Turing" | estimator == "ZhangHuang") {
@@ -335,7 +337,7 @@ coverage_to_size.numeric <- function(
 
   # Singletons only
   if (s_1 == sample_size) {
-    stop("Sample coverage is 0.")
+    cli::cli_abort("Sample coverage is 0.")
   }
 
   # Actual coverage

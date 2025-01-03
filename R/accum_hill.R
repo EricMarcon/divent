@@ -77,7 +77,9 @@ accum_tsallis.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (!is_integer_values(x)) {
@@ -338,7 +340,9 @@ accum_tsallis.abundances <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Set levels if needed
@@ -425,7 +429,9 @@ accum_hill.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Accumulate entropy
@@ -489,7 +495,9 @@ accum_hill.abundances <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Set levels if needed

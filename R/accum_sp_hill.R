@@ -269,7 +269,9 @@ accum_sp_tsallis <- function(
             }
           }
         } else {
-          stop("The edge-effect correction argument correction has not been recognized.")
+          cli::cli_abort(
+            "The edge-effect correction argument correction has not been recognized."
+          )
         }
       }
       # Keep individual neighborhood values
@@ -403,7 +405,12 @@ accum_sp_hill <- function(
   if (h0 == "multinomial") {
     # Rarefy the community
     if (!is.null(r)) {
-      stop("The 'multinomial' null hypothesis only applies to accumulation by number of neighbors.")
+      cli::cli_abort(
+        paste(
+          "The 'multinomial' null hypothesis only applies to accumulation",
+          "by number of neighbors."
+        )
+      )
     }
     is_h0_found <- TRUE
     # Prepare a progress bar
@@ -482,7 +489,9 @@ accum_sp_hill <- function(
   }
 
   if (!is_h0_found) {
-    stop("The value of 'h0' does not correspond to a valid null hypothesis.")
+    cli::cli_abort(
+      "The value of 'h0' does not correspond to a valid null hypothesis."
+    )
   }
 
   class(the_diversity) <- c("accum_sp_diversity", "accum_sp", class(the_diversity))

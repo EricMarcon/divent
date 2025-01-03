@@ -73,12 +73,16 @@ ent_tsallis.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
-    if (!is.null(level)) stop("Entropy can't be estimated at a level without the abundance of species.")
+    if (!is.null(level)) {
+      cli::cli_abort("Entropy can't be estimated at a level without the abundance of species.")
+    }
     # Probabilities sum to 1, allowing rounding error
     prob <- x[x > 0]
     # Avoid big numbers with this rather than prob * ln_q(1/prob, q)
@@ -688,7 +692,9 @@ ent_tsallis.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (gamma) {

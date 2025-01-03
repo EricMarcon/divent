@@ -251,7 +251,9 @@ plot_map <- function(
     check_divent_args()
   }
   if (is.null(dim(accum$neighborhoods))) {
-    stop("The Accumulation object does not contain individual data to plot.")
+    cli::cli_abort(
+      "The Accumulation object does not contain individual data to plot."
+    )
   }
 
   # Jitter
@@ -273,10 +275,10 @@ plot_map <- function(
   # Verify that values exist: if which() did not match, we get integer(0) for q or neighborhood
   # then data is of length 0.
   if (length(accum$neighborhoods[q_row, , ]) == 0) {
-    stop("Incorrect q.")
+    cli::cli_abort("Incorrect q.")
   }
   if (length(accum$neighborhoods[, nbd_col, ]) == 0) {
-    stop("Incorrect neighborhood.")
+    cli::cli_abort("Incorrect neighborhood.")
   }
 
   # Detect points with NA values
@@ -352,7 +354,7 @@ accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
   # Find the row in the accumulation table
   q_row <- which(dimnames(x$accumulation)$q == q)
   if (length(q_row) != 1) {
-    stop("The value of q does not correspond to any accumulation curve.")
+    cli::cli_abort("The value of q does not correspond to any accumulation curve.")
   }
 
   if (is.null(ylim)) {
