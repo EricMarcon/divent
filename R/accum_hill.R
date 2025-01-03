@@ -81,9 +81,10 @@ accum_tsallis.numeric <- function(
   }
 
   if (!is_integer_values(x)) {
-    warning(
-      "Integer abundance values are required to estimate community probabilities. Abundances have been rounded."
+    cli::cli_alert_warning(
+      "Integer abundance values are required to estimate community probabilities."
     )
+    cli::cli_alert("Abundances have been rounded.")
     x <- round(x)
   }
 
@@ -234,7 +235,14 @@ accum_tsallis.numeric <- function(
   # Simulations ----
   # Generate distributions from the unveiled probabilities
   if (n_simulations > 0 & (probability_estimator == "naive" | unveiling == "none")) {
-    warning("Accumulation confidence interval can't be estimated without unveiling the asymptotic distribution. 'probability_estimator' can't be 'naive' and 'unveiling' can't be 'none'.")
+    cli::cli_alert_warning(
+      paste(
+        "Accumulation confidence interval can't be estimated without",
+        "unveiling the asymptotic distribution.\n",
+        "{.code probability_estimator} can't be 'naive' and",
+        "{.code unveiling} can't be 'none'."
+      )
+    )
     n_simulations <- 0
   }
   if (n_simulations > 0) {

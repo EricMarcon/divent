@@ -145,7 +145,10 @@ ent_similarity.numeric <- function(
   } else {
     # Probabilities instead of abundances
     if (sample_size < 2) {
-      warning("Entropy estimators can't apply to probability data. Estimator forced to 'naive'")
+      cli::cli_alert_warning(
+        "Entropy estimators can't apply to probability data."
+      )
+      cli::cli_alert("{.code estimator} forced to 'naive'.")
       estimator <- "naive"
     }
   }
@@ -166,7 +169,8 @@ ent_similarity.numeric <- function(
 
   ## Naive estimator ----
   if (!is_integer_values(abd)) {
-    warning("The estimator can't be applied to non-integer values.")
+    cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
+    cli::cli_alert("{.code estimator} forced to 'naive.'")
     estimator <- "naive"
   }
   if (estimator == "naive") {

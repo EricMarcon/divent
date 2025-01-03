@@ -141,14 +141,18 @@ ent_shannon.numeric <- function(
     } else {
       # Probabilities instead of abundances
       if (sample_size < 2) {
-        warning("Entropy estimators can't apply to probability data. Estimator forced to 'naive'")
+        cli::cli_alert_warning(
+          "Entropy estimators can't apply to probability data."
+        )
+        cli::cli_alert("{.code estimator} forced to 'naive'.")
         estimator <- "naive"
       }
     }
 
     ## Naive estimator ----
     if (!is_integer_values(abd)) {
-      warning("The estimator can't be applied to non-integer values.")
+      cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
+      cli::cli_alert("{.code estimator} forced to 'naive.'")
       estimator <- "naive"
     }
     if (estimator == "naive") {
@@ -200,7 +204,12 @@ ent_shannon.numeric <- function(
     }
     if (estimator == "GenCov") {
       if (unveiling != "none") {
-        warning("'unveiling' is forced to 'none' with estimator 'GenCov'.")
+        cli::cli_alert_warning(
+          paste(
+            "{.code unveiling} is forced to 'none'",
+            "with estimator 'GenCov'."
+          )
+        )
       }
       prob_cov <- probabilities.numeric(
         abd,
@@ -442,7 +451,7 @@ ent_shannon.numeric <- function(
     }
 
     # Not recognized
-    warning("Correction was not recognized")
+    cli::cli_alert_warning("{.code correction} was not recognized.")
     return(NA)
   }
 

@@ -138,7 +138,10 @@ ent_tsallis.numeric <- function(
     } else {
       # Probabilities instead of abundances
       if (sample_size < 2) {
-        warning("Entropy estimators can't apply to probability data. Estimator forced to 'naive'")
+        cli::cli_alert_warning(
+          "Entropy estimators can't apply to probability data.",
+        )
+        cli::cli_alert("{.code estimator} forced to 'naive'.")
         estimator <- "naive"
       }
     }
@@ -196,7 +199,7 @@ ent_tsallis.numeric <- function(
 
     ## Naive estimator ----
     if (!is_integer_values(abd)) {
-      warning("The estimator can't be applied to non-integer values.")
+      cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
       estimator <- "naive"
     }
     if (estimator == "naive") {
@@ -342,10 +345,15 @@ ent_tsallis.numeric <- function(
     }
     if (estimator == "GenCov") {
       if (probability_estimator == "naive") {
-        warning("'probability_estimator' can't be 'naive' with estimator 'GenCov'. It is forced to 'Chao2015'.")
+        cli::cli_alert_warning(
+          "{.code probability_estimator} can't be 'naive' with estimator 'GenCov'."
+        )
+        cli::cli_alert("It is forced to 'Chao2015'.")
       }
       if (unveiling != "none") {
-        warning("'unveiling' is forced to 'none' with estimator 'GenCov'.")
+        cli::cli_alert_warning(
+          "{.code unveiling} is forced to 'none' with estimator 'GenCov'."
+        )
       }
       prob_cov <- probabilities.numeric(
         abd,
@@ -471,7 +479,7 @@ ent_tsallis.numeric <- function(
       }
     }
 
-    warning("estimator was not recognized")
+    cli::cli_alert_warning("{.code estimator} was not recognized")
     return(NA)
   }
 

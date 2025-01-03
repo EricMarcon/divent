@@ -85,7 +85,8 @@ ent_hurlbert.numeric <- function(
 
   # Entropy of a vector of abundances ----
   if (!is_integer_values(abd)) {
-    warning("The estimator can't be applied to non-integer values.")
+    cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
+    cli::cli_alert("{.code estimator} forced to 'naive.'")
     estimator <- "naive"
   }
   # Naive estimator
@@ -122,7 +123,7 @@ ent_hurlbert.numeric <- function(
     }
   }
 
-  warning("estimator was not recognized")
+  cli::cli_alert_warning("estimator was not recognized")
   return(NA)
 }
 

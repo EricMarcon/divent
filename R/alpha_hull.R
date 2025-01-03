@@ -78,20 +78,25 @@ alphahull <- function(X, alpha = NULL) {
     # Tests: the graph must be connected and circular. If it is not, increase alpha.
     the_error <- ""
     if (alpha_shape$length == 0) {
-      the_error <- "No edges in alpha shape"
+      the_error <- "No edges in alpha shape."
     } else if (!igraph::is.connected(graph_alpha_shape)) {
-      the_error <- "Graph not connected"
+      the_error <- "Graph not connected."
     } else if (any(igraph::degree(graph_alpha_shape) != 2)) {
-      the_error <- "Graph not circular"
+      the_error <- "Graph not circular."
     } else if (igraph::clusters(graph_alpha_shape)$no > 1) {
-      the_error <- "Graph composed of more than one circle"
+      the_error <- "Graph composed of more than one circle."
     }
     if (the_error == "") {
       is_validated_alpha <- TRUE
     } else {
       if (alpha > the_diameter) {
         # Unable to make a circular graph: give up.
-        warning(paste("Unable to build an alpha hull:", the_error))
+        cli::cli_alert_warning(
+          paste(
+            "Unable to build an alpha hull:\n",
+            the_error
+          )
+        )
       }
       else # Try to double alpha
         alpha <- 2 * alpha

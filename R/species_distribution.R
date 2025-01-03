@@ -679,7 +679,10 @@ as.matrix.species_distribution <- function(x, use.names = TRUE, ...) {
 #' @export
 as.double.species_distribution <- function(x, use.names = TRUE, ...) {
   if (nrow(x) > 1) {
-    warning("The species_distribution object contains several rows. as.matrix() is used.")
+    cli::cli_alert_warning(
+      "The species_distribution object contains several rows."
+    )
+    cli::cli_alert("{.code as.matrix()} is used.")
     return(as.matrix.species_distribution(x, use.names, ...))
   } else {
     is_species_column <- !colnames(x) %in% non_species_columns

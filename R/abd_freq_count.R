@@ -51,7 +51,12 @@ abd_freq_count <- function(
     abd_int <- round(abd)
   }
   if (any(abs(abd_int - abd) > 2 * .Machine$double.eps)) {
-    warning("The abundance frequency count requires integer abundances. Abundances have been rounded.")
+    cli::cli_alert_warning(
+      "The abundance frequency count requires integer abundances."
+    )
+    cli::cli_alert(
+      "Abundances have been rounded."
+    )
   }
 
   # Eliminate 0

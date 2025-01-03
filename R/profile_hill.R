@@ -135,7 +135,13 @@ profile_hill.numeric <- function(
   if (n_simulations > 0) {
     # Simulations ----
     if (!is_integer_values(x)) {
-      warning("Evaluation of the confidence interval of community profiles requires integer abundances. They have been rounded.")
+      cli::cli_alert_warning(
+        paste(
+          "Evaluation of the confidence interval of community profiles requires",
+          "integer abundances."
+        )
+      )
+      cli::cli_alert("They have been rounded.")
     }
     abd_int <- round(x)
     # Simulate communities

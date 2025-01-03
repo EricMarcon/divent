@@ -116,9 +116,10 @@ probabilities.numeric <- function(
   } else {
     # Integer abundances are required by all non-naive estimators
     if (!is_integer_values(x)) {
-      warning(
-        "Integer abundance values are required to estimate community probabilities. Abundances have been rounded."
+      cli::cli_alert_warning(
+        "Integer abundance values are required to estimate community probabilities."
       )
+      cli::cli_alert("Abundances have been rounded.")
     }
     abd_int <- round(x)
 
@@ -422,7 +423,7 @@ estimate_prob_s_0 <- function(
     the_prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
   }
   if (any(is.na(the_prob_s_0))) {
-    warning("Unveiling method was not recognized")
+    cli::cli_alert_warning("Unveiling method was not recognized")
     return(NA)
   } else {
     names(the_prob_s_0) <- paste("Unobs_sp", seq_along(the_prob_s_0), sep = "_")

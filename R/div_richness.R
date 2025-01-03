@@ -146,7 +146,10 @@ div_richness.numeric <- function(
     } else {
       # Probabilities instead of abundances
       if (sample_size < 2) {
-        warning("Richness estimators can't apply to probability data. Estimator forced to 'naive'")
+        cli::cli_alert_warning(
+          "Richness estimators can't apply to probability data."
+        )
+        cli::cli_alert("{.code estimator} forced to 'naive.'")
         estimator <- "naive"
       }
     }

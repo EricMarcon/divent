@@ -104,7 +104,9 @@ coverage.numeric <- function(
 
     ## Singletons only: coverage=0 ----
     if (s_1 == sample_size) {
-      warning("Sample coverage is 0, most estimators will return NaN.")
+      cli::cli_alert_warning(
+        "Sample coverage is 0, most estimators will return {.code NaN}."
+      )
       if (as_numeric) {
         return(0)
       } else {
@@ -177,14 +179,18 @@ coverage.numeric <- function(
 
     ## Turing or Zhang & Huang's estimator ----
     if (estimator == "Turing" | estimator == "ZhangHuang") {
-      warning("Turing and ZhangHuang estimators do not allow interpolation or extrapolation. Chao's estimator is used.")
+      cli::cli_alert_warning(
+        "Turing and ZhangHuang estimators do not allow interpolation or extrapolation."
+      )
+      cli::cli_alert("Chao's estimator is used.")
       estimator <- "Chao"
     }
 
     ## Good's estimator ----
     if (estimator == "Good") {
       if (level >= sample_size) {
-        warning("Good's estimator only allows interpolation. Chao's estimator is used.")
+        cli::cli_alert_warning("Good's estimator only allows interpolation.")
+        cli::cli_alert("Chao's estimator is used.")
         estimator <- "Chao"
       } else {
         the_coverage <- 1 - EntropyEstimation::GenSimp.z(abd, level)
