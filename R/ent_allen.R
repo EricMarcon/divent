@@ -7,8 +7,8 @@
 #' Use function [ent_phylo] with argument if they are needed.
 #'
 #' The phylogenetic entropy is calculated following
-#' \insertCite{Allen2009:textual}{divent} for order \eqn{q=1} and
-#' \insertCite{Leinster2012:textual}{divent} for other orders.
+#' \insertCite{Allen2009;textual}{divent} for order \eqn{q=1} and
+#' \insertCite{Leinster2012;textual}{divent} for other orders.
 #' The result is identical to the total entropy calculated by
 #' [ent_phylo].
 #' It is much faster but no bias correction is available.
