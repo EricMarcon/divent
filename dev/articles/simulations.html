@@ -234,7 +234,13 @@ i.e. the negative of the inverse of the decay rate.</li>
 trees of 5 species. Their spatial distribution is aggregated and their
 size distribution is exponential (with default parameters).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/rcommunity.html">rspcommunity</a></span><span class="op">(</span><span class="fl">1</span>, size <span class="op">=</span> <span class="fl">100</span>, species_number <span class="op">=</span> <span class="fl">5</span>, spatial <span class="op">=</span> <span class="st">"Thomas"</span>, weight_distribution <span class="op">=</span> <span class="st">"Exponential"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rcommunity.html">rspcommunity</a></span><span class="op">(</span></span>
+<span>  <span class="fl">1</span>, </span>
+<span>  size <span class="op">=</span> <span class="fl">100</span>, </span>
+<span>  species_number <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>  spatial <span class="op">=</span> <span class="st">"Thomas"</span>, </span>
+<span>  weight_distribution <span class="op">=</span> <span class="st">"Exponential"</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulations_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
