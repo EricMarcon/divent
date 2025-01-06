@@ -3,10 +3,9 @@ testthat::test_that(
   "Warning is returned", {
     testthat::skip_on_cran()
     # Singletons only
-    testthat::expect_warning(
-      coverage(rep(1,5)), 
-      "Sample coverage is 0, most estimators will return NaN.", 
-      ignore.case = TRUE
+    testthat::expect_message(
+      coverage(rep(1,5)),
+      "Sample coverage is 0, most estimators will return `NaN`."
     )
   }
 )
@@ -17,12 +16,12 @@ testthat::test_that(
     testthat::skip_on_cran()
     # Chao
     testthat::expect_lt(
-      abs(coverage(seq_len(5), estimator="Chao")$coverage - coverage(seq_len(5))$coverage), 
+      abs(coverage(seq_len(5), estimator="Chao")$coverage - coverage(seq_len(5))$coverage),
       1/1000
     )
     # Turing
     testthat::expect_lt(
-      abs(coverage(seq_len(5), Estimator="turing")$coverage - coverage(seq_len(5))$coverage), 
+      abs(coverage(seq_len(5), Estimator="turing")$coverage - coverage(seq_len(5))$coverage),
       1/100
     )
   }
@@ -37,7 +36,7 @@ testthat::test_that(
     # Estimate coverage systematically
     coverage.list <- lapply(
       # All estimators
-      eval(formals(divent:::coverage.numeric)$estimator), 
+      eval(formals(divent:::coverage.numeric)$estimator),
       function(estimator) {
         # print(estimator)
         suppressWarnings(
@@ -71,11 +70,11 @@ testthat::test_that(
     # Estimate coverage systematically
     coverage.list <- lapply(
       # All estimators
-      eval(formals(divent:::coverage.numeric)$estimator), 
+      eval(formals(divent:::coverage.numeric)$estimator),
       function(estimator) {
         the_list <-lapply(
           # Two levels
-          levels, 
+          levels,
           function(level) {
             # print(paste(estimator, level))
             suppressWarnings(

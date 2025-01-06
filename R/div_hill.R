@@ -14,7 +14,7 @@
 #' \insertCite{Zhang2014a;textual}{divent}, \insertCite{Chao2014c;textual}{divent},
 #' \insertCite{Chao2015;textual}{divent} and \insertCite{Marcon2015a;textual}{divent}.
 #'
-#' The `ChaoJost` estimator \insertCite{Chao2013,Chao2015;textual}{divent} contains
+#' The `ChaoJost` estimator \insertCite{Chao2013,Chao2015}{divent} contains
 #' an unbiased part concerning observed species, equal to that of
 #' \insertCite{Zhang2014a;textual}{divent}, and a (biased) estimator of the remaining
 #' bias based on the estimation of the species-accumulation curve.
@@ -110,7 +110,9 @@ div_hill.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (q > q_threshold) {
@@ -196,7 +198,9 @@ div_hill.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (q > q_threshold) {

@@ -16,7 +16,8 @@
 #' `species_distribution` or its numeric equivalent.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object, that may be a numeric vector containing abundances or probabilities,
+#' @param x An object, that may be a named numeric vector (names are species names)
+#' containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
@@ -68,18 +69,20 @@ ent_rao.numeric <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     if (!xor(is.null(distances), is.null(tree))) {
-      stop("Either 'distance' or 'tree' must be provided.")
+      cli::cli_abort("Either 'distance' or 'tree' must be provided.")
     }
     # Check species names
-    species_names <- colnames(x)
+    species_names <- names(x)
     # Prepare the tree
     tree <- as_phylo_divent(tree)
     if (is.null(distances)) {
       # Check species in the tree
       if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-        stop("Some species are missing in the tree.")
+        cli::cli_abort("Some species are missing in the tree.")
       }
     } else {
       # Check species in the distance matrix
@@ -89,7 +92,7 @@ ent_rao.numeric <- function(
       }
       if (!is.null(colnames(distances))) {
         if (length(setdiff(species_names, colnames(distances))) != 0) {
-          stop("Some species are missing in the distance matrix")
+          cli::cli_abort("Some species are missing in the distance matrix")
         }
       }
     }
@@ -161,7 +164,10 @@ ent_rao.numeric <- function(
   } else {
     # Probabilities instead of abundances
     if (sample_size < 2) {
-      warning("Entropy estimators can't apply to probability data. Estimator forced to 'naive'")
+      cli::cli_alert_warning(
+        "Entropy estimators can't apply to probability data."
+      )
+      cli::cli_alert("{.code estimator} forced to 'naive'.")
       estimator <- "naive"
     }
   }
@@ -210,9 +216,11 @@ ent_rao.species_distribution <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     if (!xor(is.null(distances), is.null(tree))) {
-      stop("Either 'distance' or 'tree' must be provided.")
+      cli::cli_abort("Either 'distance' or 'tree' must be provided.")
     }
     # Check species names
     col_names <- colnames(x)
@@ -222,7 +230,7 @@ ent_rao.species_distribution <- function(
     if (is.null(distances)) {
       # Check species in the tree
       if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-        stop("Some species are missing in the tree.")
+        cli::cli_abort("Some species are missing in the tree.")
       }
     } else {
       # Check species in the distance matrix
@@ -232,7 +240,7 @@ ent_rao.species_distribution <- function(
       }
       if (!is.null(colnames(distances))) {
         if (length(setdiff(species_names, colnames(distances))) != 0) {
-          stop("Some species are missing in the distance matrix")
+          cli::cli_abort("Some species are missing in the distance matrix")
         }
       }
     }

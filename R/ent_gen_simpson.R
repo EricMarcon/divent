@@ -66,7 +66,9 @@ ent_gen_simpson.numeric <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Entropy of a vector of probabilities ----
@@ -88,7 +90,7 @@ ent_gen_simpson.numeric <- function(
 
   # Integer values needed
   if (!is_integer_values(x)) {
-    stop("Species abundances must be integers.")
+    cli::cli_abort("Species abundances must be integers.")
   }
   # Computed by the EntropyEstimation package
   the_entropy <- EntropyEstimation::GenSimp.z(x = x, r = k)
@@ -123,14 +125,21 @@ ent_gen_simpson.species_distribution <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (gamma) {
     # Build the metacommunity
     abd <- metacommunity.abundances(x, as_numeric = TRUE, check_arguments = FALSE)
     if (estimator != "naive" & !is_integer_values(abd)) {
-      stop("The weights of communities yield non-integer abundances in the metacommunity that only allow using the naive estimator.")
+      cli::cli_abort(
+        paste(
+          "The weights of communities yield non-integer abundances in",
+          "the metacommunity that only allow using the naive estimator."
+        )
+      )
     }
     return(
       ent_gen_simpson.numeric(

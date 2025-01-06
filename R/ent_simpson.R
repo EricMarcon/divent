@@ -75,12 +75,18 @@ ent_simpson.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Entropy of a vector of probabilities ----
   if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
-    if (!is.null(level)) stop("Entropy can't be estimated at a level without the abundance of species.")
+    if (!is.null(level)) {
+      cli::cli_abort(
+        "Entropy can't be estimated at a level without the abundance of species."
+      )
+    }
     # Probabilities sum to 1, allowing rounding error
     the_entropy <- 1 - sum(x^2)
     if (as_numeric) {
@@ -133,7 +139,10 @@ ent_simpson.numeric <- function(
     } else {
       # Probabilities instead of abundances
       if (sample_size < 2) {
-        warning("Entropy estimators can't apply to probability data. Estimator forced to 'naive'")
+        cli::cli_alert_warning(
+          "Entropy estimators can't apply to probability data.",
+        )
+        cli::cli_alert("{.code estimator} forced to 'naive'.")
         estimator <- "naive"
       }
     }
@@ -247,7 +256,9 @@ ent_simpson.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (gamma) {

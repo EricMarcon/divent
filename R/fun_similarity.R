@@ -31,7 +31,7 @@ fun_similarity <- function(
     check_divent_args()
     # Names
     if (xor(is.null(colnames(distances)), is.null(rownames(distances)))) {
-      stop("Row and column names must be identical in 'distances'.")
+      cli::cli_abort("Row and column names must be identical in 'distances'.")
     }
   }
 
@@ -49,7 +49,7 @@ fun_similarity <- function(
     )
     rownames(x) <- colnames(x)
   } else if (!identical(colnames(distances), rownames(distances))) {
-    stop("Row and column names must be identical in 'distances'.")
+    cli::cli_abort("Row and column names must be identical in 'distances'.")
   }
 
   if (exponential) {

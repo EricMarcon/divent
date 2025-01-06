@@ -167,7 +167,9 @@ ent_sp_simpsonEnvelope <- function(
     RandomLabeling = expression(dbmss::rRandomLabeling(X, CheckArguments = FALSE))
   )
   if (is.null(X_sim)) {
-    stop(paste("The null hypothesis", sQuote(h0), "has not been recognized."))
+    cli::cli_abort(
+      paste("The null hypothesis", sQuote(h0), "has not been recognized.")
+    )
   }
   # local envelope, keep extreme values for lo and hi (nrank=1)
   the_envelope <- spatstat.explore::envelope(

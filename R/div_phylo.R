@@ -13,8 +13,9 @@
 #' See [accum_tsallis] for details.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object, that may be a numeric vector containing abundances
-#' or probabilities, or an object of class [abundances] or [probabilities].
+#' @param x An object, that may be a named numeric vector (names are species names)
+#' containing abundances or probabilities,
+#' or an object of class [abundances] or [probabilities].
 #' @param ... Unused.
 #'
 #' @returns A tibble with the site names, the estimators used and the estimated
@@ -76,14 +77,16 @@ div_phylo.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     # Prepare the tree
     tree <- as_phylo_divent(tree)
     # Check species names
-    col_names <- colnames(x)
+    col_names <- names(x)
     species_names <- col_names[!col_names %in% non_species_columns]
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")
+      cli::cli_abort("Some species are missing in the tree.")
     }
   }
 
@@ -149,14 +152,16 @@ div_phylo.species_distribution <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     # Prepare the tree
     tree <- as_phylo_divent(tree)
     # Check species names
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")
+      cli::cli_abort("Some species are missing in the tree.")
     }
   }
 

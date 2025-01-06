@@ -102,7 +102,9 @@ probabilities.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Save or generate the species names
@@ -116,9 +118,10 @@ probabilities.numeric <- function(
   } else {
     # Integer abundances are required by all non-naive estimators
     if (!is_integer_values(x)) {
-      warning(
-        "Integer abundance values are required to estimate community probabilities. Abundances have been rounded."
+      cli::cli_alert_warning(
+        "Integer abundance values are required to estimate community probabilities."
       )
+      cli::cli_alert("Abundances have been rounded.")
     }
     abd_int <- round(x)
 
@@ -206,7 +209,7 @@ probabilities.numeric <- function(
     ## Estimate the number of unobserved species ----
     if (richness_estimator == "rarefy") {
       if (unveiling == "none") {
-        stop("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
+        cli::cli_abort("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
       s_0 <- div_richness.numeric(
@@ -314,7 +317,9 @@ probabilities.abundances <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Apply probabilities.numeric() to each site
@@ -422,7 +427,7 @@ estimate_prob_s_0 <- function(
     the_prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
   }
   if (any(is.na(the_prob_s_0))) {
-    warning("Unveiling method was not recognized")
+    cli::cli_alert_warning("Unveiling method was not recognized")
     return(NA)
   } else {
     names(the_prob_s_0) <- paste("Unobs_sp", seq_along(the_prob_s_0), sep = "_")

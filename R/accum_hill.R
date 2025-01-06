@@ -77,13 +77,16 @@ accum_tsallis.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   if (!is_integer_values(x)) {
-    warning(
-      "Integer abundance values are required to estimate community probabilities. Abundances have been rounded."
+    cli::cli_alert_warning(
+      "Integer abundance values are required to estimate community probabilities."
     )
+    cli::cli_alert("Abundances have been rounded.")
     x <- round(x)
   }
 
@@ -234,7 +237,14 @@ accum_tsallis.numeric <- function(
   # Simulations ----
   # Generate distributions from the unveiled probabilities
   if (n_simulations > 0 & (probability_estimator == "naive" | unveiling == "none")) {
-    warning("Accumulation confidence interval can't be estimated without unveiling the asymptotic distribution. 'probability_estimator' can't be 'naive' and 'unveiling' can't be 'none'.")
+    cli::cli_alert_warning(
+      paste(
+        "Accumulation confidence interval can't be estimated without",
+        "unveiling the asymptotic distribution.\n",
+        "{.code probability_estimator} can't be 'naive' and",
+        "{.code unveiling} can't be 'none'."
+      )
+    )
     n_simulations <- 0
   }
   if (n_simulations > 0) {
@@ -330,7 +340,9 @@ accum_tsallis.abundances <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Set levels if needed
@@ -417,7 +429,9 @@ accum_hill.numeric <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Accumulate entropy
@@ -481,7 +495,9 @@ accum_hill.abundances <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Set levels if needed

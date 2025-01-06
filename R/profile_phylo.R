@@ -80,18 +80,25 @@ profile_phylo.numeric <- function(
   bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     # Prepare the tree
     tree <- as_phylo_divent(tree)
     # Check species names
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")
+      cli::cli_abort("Some species are missing in the tree.")
     }
   }
   if (as_numeric && n_simulations > 0) {
-    stop("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
+    cli::cli_abort(
+      c(
+        "No simulations are allowed if a numeric vector is expected",
+        "i" = "Change argument for {.code as_numeric = FALSE}"
+      )
+    )
   }
 
   # Call the .species_distribution method
@@ -159,14 +166,16 @@ profile_phylo.species_distribution <- function(
   bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     # Prepare the tree
     tree <- as_phylo_divent(tree)
     # Check species names
     col_names <- colnames(x)
     species_names <- col_names[!col_names %in% non_species_columns]
     if (length(setdiff(species_names, rownames(tree$phylo_groups))) != 0) {
-      stop("Some species are missing in the tree.")
+      cli::cli_abort("Some species are missing in the tree.")
     }
   }
 

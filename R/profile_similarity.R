@@ -79,14 +79,21 @@ profile_similarity.numeric <- function(
   bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     similarities <- checked_matrix(similarities, x)
   }
 
   # Numeric vector, no simulation ----
   if (as_numeric) {
     if (n_simulations > 0) {
-      stop("No simulations are allowed if a numeric vector is expected ('as_numeric = TRUE').")
+      cli::cli_abort(
+        c(
+          "No simulations are allowed if a numeric vector is expected",
+          "i" = "Change argument for {.code as_numeric = FALSE}"
+        )
+      )
     }
     the_profile_similarity <- vapply(
       orders,
@@ -136,7 +143,13 @@ profile_similarity.numeric <- function(
   if (n_simulations > 0) {
     # Simulations ----
     if (!is_integer_values(x)) {
-      warning("Evaluation of the confidence interval of community profiles requires integer abundances. They have been rounded.")
+      cli::cli_alert_warning(
+        paste(
+          "Evaluation of the confidence interval of community profiles requires",
+          "integer abundances."
+        )
+      )
+      cli::cli_alert("They have been rounded.")
     }
     abd_int <- round(x)
     # Simulate communities
@@ -233,7 +246,9 @@ profile_similarity.species_distribution <- function(
   bootstrap <- match.arg(bootstrap)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
     similarities <- checked_matrix(similarities, x)
   }
 

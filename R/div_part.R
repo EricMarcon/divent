@@ -43,7 +43,9 @@ div_part <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(abundances < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(abundances < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   # Gamma diversity ----

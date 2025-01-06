@@ -57,7 +57,9 @@ div_gen_simpson.numeric <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   the_entropy <- ent_gen_simpson.numeric(
@@ -98,7 +100,9 @@ div_gen_simpson.species_distribution <- function(
   estimator <- match.arg(estimator)
   if (any(check_arguments)) {
     check_divent_args()
-    if (any(x < 0)) stop("Species probabilities or abundances must be positive.")
+    if (any(x < 0)) {
+      cli::cli_abort("Species probabilities or abundances must be positive.")
+    }
   }
 
   the_entropy <- ent_gen_simpson.species_distribution(
