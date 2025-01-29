@@ -1,13 +1,13 @@
 pandoc: 3.1.11
 pkgdown: 2.1.1.9000
-pkgdown_sha: 4519ca0ae415b415eb8c1c142a6d4d39d8a5b80d
+pkgdown_sha: 74fda8cdb8bbbcd215faf2a2079f4eb98db586c6
 articles:
   articles/arguments: arguments.html
   divent: divent.html
   articles/extrapolation: extrapolation.html
   articles/phylogenies: phylogenies.html
   articles/simulations: simulations.html
-last_built: 2025-01-06T09:24Z
+last_built: 2025-01-29T13:56Z
 urls:
   reference: https://ericmarcon.github.io/divent/reference
   article: https://ericmarcon.github.io/divent/articles
