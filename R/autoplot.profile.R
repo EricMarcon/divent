@@ -28,8 +28,8 @@ autoplot.profile <-  function(
     ylab = "Diversity",
     shade_color = "grey75",
     alpha = 0.3,
-    lty = ggplot2::GeomLine$default_aes$linetype,
-    lwd = ggplot2::GeomLine$default_aes$linewidth){
+    lty = 1,
+    lwd = 0.5){
 
   # Add a site column if needed
   if (!"site" %in% colnames(object)) {
