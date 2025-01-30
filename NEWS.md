@@ -1,4 +1,4 @@
-# divent 0.4-99.9021
+# divent 0.4-99.9022
 
 ## Features
 
@@ -9,6 +9,10 @@
 - Spatially explicit random communities: `rspcommunity()`
 - `species_distribution` methods for `wmppp` and `character` objects.
 - values of abundances are no longer limited to `.Machine$integer.max`.
+
+## External changes
+
+- Replaced `Geom*$default_aes` by their values for compatibility with ggplot2 3.6.0 (PR #2 by @teunbrand)
 
 
 # divent 0.4-4
