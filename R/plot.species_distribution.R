@@ -188,8 +188,8 @@ autoplot.species_distribution <- function(
     main = NULL,
     xlab = "Rank",
     ylab = NULL,
-    pch = ggplot2::GeomPoint$default_aes$shape,
-    cex = ggplot2::GeomPoint$default_aes$size) {
+    pch = 19,
+    cex = 1.5) {
 
   # Prepare ylab
   if (is.null(ylab)) {
