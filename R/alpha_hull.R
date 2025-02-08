@@ -32,7 +32,7 @@
 alphahull <- function(X, alpha = NULL) {
 
   if (!inherits(X, "ppp")) {
-    cli::cli_abort("X must be a plana point pattern (ppp object)")
+    cli::cli_abort("X must be a planar point pattern (ppp object)")
   }
   if (!is.null(alpha)) {
     if (!is.numeric(alpha)) {
@@ -55,7 +55,7 @@ alphahull <- function(X, alpha = NULL) {
   # Prepare
   is_validated_alpha <- FALSE
   # Unique points are needed
-  xy <- unique(data.frame(x = X$x, y = X$y))
+  xy <- as.matrix(unique(data.frame(x = X$x, y = X$y)))
   # Size of the window
   the_diameter <- spatstat.geom::diameter(spatstat.geom::Window(X))
   # Use alphahull::ashape to obtain a concave hull.
@@ -69,21 +69,24 @@ alphahull <- function(X, alpha = NULL) {
     alpha_shape <- alphahull::ashape(xy, alpha = alpha)
     # Convert alpha shape into polygon (https://rpubs.com/geospacedman/alphasimple)
     # Make a graph with edges, library igraph
-    graph_alpha_shape <- igraph::graph.edgelist(
+    graph_alpha_shape <- igraph::graph_from_edgelist(
       cbind(
         as.character(alpha_shape$edges[, "ind1"]),
-        as.character(alpha_shape$edges[, "ind2"])),
-        directed = FALSE
-      )
-    # Tests: the graph must be connected and circular. If it is not, increase alpha.
+        as.character(alpha_shape$edges[, "ind2"])
+      ),
+      directed = FALSE
+    )
+    # Tests: the graph must be connected and circular.
+    # If it is not, increase alpha.
     the_error <- ""
     if (alpha_shape$length == 0) {
       the_error <- "No edges in alpha shape."
-    } else if (!igraph::is.connected(graph_alpha_shape)) {
+    } else if (!igraph::is_connected(graph_alpha_shape)) {
       the_error <- "Graph not connected."
-    } else if (any(igraph::degree(graph_alpha_shape) != 2)) {
-      the_error <- "Graph not circular."
-    } else if (igraph::clusters(graph_alpha_shape)$no > 1) {
+    # Ignore circularity
+    # } else if (any(igraph::degree(graph_alpha_shape) != 2)) {
+    #  the_error <- "Graph not circular."
+    } else if (igraph::components(graph_alpha_shape)$no > 1) {
       the_error <- "Graph composed of more than one circle."
     }
     if (the_error == "") {
@@ -91,7 +94,7 @@ alphahull <- function(X, alpha = NULL) {
     } else {
       if (alpha > the_diameter) {
         # Unable to make a circular graph: give up.
-        cli::cli_alert_warning(
+        cli::cli_abort(
           paste(
             "Unable to build an alpha hull:\n",
             the_error
@@ -107,7 +110,7 @@ alphahull <- function(X, alpha = NULL) {
   graph_cut <- graph_alpha_shape - igraph::E(graph_alpha_shape)[1]
   # Find chain end points
   ends <- names(which(igraph::degree(graph_cut) == 1))
-  path <- igraph::get.shortest.paths(graph_cut, ends[1], ends[2])[[1]]
+  path <- igraph::shortest_paths(graph_cut, ends[1], ends[2])[[1]]
   # This is an index into the points
   X_path <- as.numeric(igraph::V(graph_cut)[unlist(path)]$name)
   # Join the ends to restore circularity
