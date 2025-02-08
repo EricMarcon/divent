@@ -40,8 +40,8 @@
 
 plot_map(
   accum,
-  q = dimnames(accum$accumulation)$q[1],
-  neighborhood = dplyr::last(colnames(accum$neighborhoods)),
+  q = as.numeric(dimnames(accum$accumulation)$q[1]),
+  neighborhood = as.numeric(dplyr::last(colnames(accum$neighborhoods))),
   sigma = spatstat.explore::bw.scott(accum$X, isotropic = TRUE),
   allow_jitter = TRUE,
   weighted = FALSE,
