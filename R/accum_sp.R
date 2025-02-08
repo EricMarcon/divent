@@ -288,7 +288,7 @@ plot_map <- function(
   if (weighted) {
     the_weights <- spatstat.geom::marks(accum$X)[is_not_na]
   } else {
-    the_weights <- rep(1, spatstat.geom::npoints(accum$X))
+    the_weights <- rep(1, sum(is_not_na))
   }
 
   # Prepare the ppp to plot
