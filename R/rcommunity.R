@@ -180,8 +180,6 @@ rcommunity <- function(
 #' (see [spatstat.geom::solist])  if `n`>1.
 #' @export
 #'
-#' @references
-#' \insertAllCited{}
 #' @examples
 #' X <- rspcommunity(1, size = 30, species_number = 5)
 #' autoplot(X)

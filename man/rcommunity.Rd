@@ -181,6 +181,4 @@ autoplot(X)
 }
 \references{
 \insertAllCited{}
-
-\insertAllCited{}
 }
