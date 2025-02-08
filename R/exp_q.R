@@ -46,13 +46,20 @@ exp_q <- function(x, q) {
   # to limit rounding errors
   the_exp_q <- (1 - x * q + x)^(1 / (1 - q))
   # returns 1 if q==1: calculate exp(x)
-  the_exp_q[q == 1] <- exp(x)[q == 1]
+  is_q_1 <- q == 1
+  the_exp_q[is_q_1] <- exp(x)[is_q_1]
   # Force NaN for x out of limits
   the_exp_q[(q > 1) & (x > 1 / (q - 1))] <- NaN
   # Rounding error: x values that can't be distinguished from the max defined
   # Substract the rounding error to x and recompute. Far from perfect.
-  the_exp_q[(q > 1) & (abs(1 - x * q + x) < .Machine$double.eps)] <-
-    (1 - x * q + x + q * .Machine$double.eps - .Machine$double.eps)^(1 / (1 - q))
+  is_poorly_rounded <-
+    # NA is not allowed in indexed affectations
+    !is.na(x) & (q > 1) & (abs(1 - x * q + x) < .Machine$double.eps)
+  the_exp_q[is_poorly_rounded] <- (
+      1 - x[is_poorly_rounded] * q[is_poorly_rounded] +
+        x[is_poorly_rounded] + q[is_poorly_rounded] * .Machine$double.eps -
+        .Machine$double.eps
+      )^(1 / (1 - q[is_poorly_rounded]))
 
   return(the_exp_q)
 }
