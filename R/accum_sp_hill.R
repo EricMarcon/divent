@@ -66,7 +66,7 @@ accum_sp_tsallis <- function(
     # A number of neighbors ----
     # n nearest neighbors. Find them.
     neighbors.matrix <- spatstat.geom::nnwhich(X, k = neighbors)
-    # Add the reference point to get a table: center points in line, neighbors in columns,
+    # Add the reference point to get a table: center points in rows, neighbors in columns,
     # including the point itself in the first column
     neighbors.matrix <- cbind(Reference = 1:X$n, neighbors.matrix)
 
