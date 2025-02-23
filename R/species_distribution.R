@@ -87,7 +87,7 @@ species_distribution <- function(
   }
 
   # Build a tibble from the data ----
-  if (is.vector(x)) {
+  if (length(dim(x)) < 2) {
     ## Single distribution ----
     if (is.null(names(x))) {
       ### Columns: add default species names such as sp_1 ----
@@ -318,7 +318,7 @@ as_species_distribution.factor <- function(
   return(
     species_distribution(
       # tapply keep factors' names
-      tapply(x, x, length) ,
+      tapply(x, INDEX = x, FUN = length, default = 0),
       check_arguments = check_arguments
     )
   )
@@ -481,7 +481,7 @@ as_probabilities.factor <- function(
 
   the_probabilities <- as_species_distribution(
     # tapply keep factors' names
-    tapply(x, x, length) ,
+    tapply(x, INDEX = x, FUN = length, default = 0),
     check_arguments = check_arguments
   )
 
@@ -665,7 +665,7 @@ as_abundances.factor <- function(
 
   the_abundances <- as_species_distribution(
     # tapply keep factors' names
-    tapply(x, x, length) ,
+    tapply(x, INDEX = x, FUN = length, default = 0),
     check_arguments = check_arguments
   )
 
@@ -742,7 +742,7 @@ as.numeric.species_distribution <- function(x, use.names = TRUE, ...) {
 #'
 as_named_vector.character <- function(x){
   # Count the number of items. Returns a 1D array, not a vector.
-  the_array <- tapply(x, x, length)
+  the_array <- tapply(x, INDEX = x, FUN = length, default = 0)
   the_vector <- as.vector(the_array)
   # Add the names
   names(the_vector) <- names(the_array)
