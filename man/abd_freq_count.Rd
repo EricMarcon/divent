@@ -20,9 +20,8 @@ abd_freq_count(
 \item{abd}{A numeric vector containing species abundances.}
 
 \item{level}{the level of interpolation or extrapolation.
-It may be a sample size (an integer) or a sample coverage
-(a number between 0 and 1).
-If not \code{NULL}, the asymptotic \code{estimator} is ignored.}
+If \code{NULL} (by default), observed data is simply used
+and all other arguments are ignored.}
 
 \item{probability_estimator}{a string containing one of the possible estimators
 of the probability distribution (see \link{probabilities}).

@@ -151,7 +151,7 @@ mixing (\code{accum_sp_mixing} objects) at distances from the individuals.
 These objects are lists:
 \itemize{
 \item \code{X} contains the \link[dbmss:wmppp]{dbmss::wmppp} point pattern,
-\item \code{accumulation} is a 3-dimensional array, with orders of diveristy in rows,
+\item \code{accumulation} is a 3-dimensional array, with orders of diversity in rows,
 neighborhood size (number of points or distance) in columns and a single slice
 for the observed entropy, diversity or mixing.
 \item \code{neighborhoods} is a similar 3-dimensional array with one slice per point
