@@ -13,6 +13,9 @@
 #'
 #' @inheritParams check_divent_args
 #' @param abd A numeric vector containing species abundances.
+#' @param level the level of interpolation or extrapolation.
+#' If `NULL` (by default), observed data is simply used
+#' and all other arguments are ignored.
 #' @param richness_estimator A string containing an estimator recognized by
 #' [div_richness] to evaluate the total number of species in [probabilities].
 #' Used only for extrapolation.
@@ -41,6 +44,7 @@ abd_freq_count <- function(
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
+  coverage_estimator <- match.arg(coverage_estimator)
   if (any(check_arguments)) check_divent_args()
 
   # Convert to integer values
