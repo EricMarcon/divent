@@ -26,4 +26,9 @@ Useful links:
 \author{
 \strong{Maintainer}: Eric Marcon \email{eric.marcon@agroparistech.fr} (\href{https://orcid.org/0000-0002-5249-321X}{ORCID})
 
+Authors:
+\itemize{
+  \item Florence Puech \email{florence.puech@universite-paris-saclay.fr} (\href{https://orcid.org/0000-0002-5279-6878}{ORCID})
+}
+
 }
