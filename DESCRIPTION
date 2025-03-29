@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.5-2
+Version: 0.5-2.9000
 Authors@R: c(
   person("Eric", "Marcon", email="eric.marcon@agroparistech.fr", role=c("aut", "cre"), comment=c(ORCID="0000-0002-5249-321X")),
   person("Florence", "Puech", email="florence.puech@universite-paris-saclay.fr", role="aut", comment = c(ORCID = "0000-0002-5279-6878"))
