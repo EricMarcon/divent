@@ -361,7 +361,8 @@ accum_sp_hill <- function(
     richness_estimator = richness_estimator,
     individual = individual,
     show_progress = (show_progress & (h0 == "none" | h0 == "multinomial")),
-    check_arguments = FALSE)
+    check_arguments = FALSE
+  )
 
   if (h0 == "none") {
     is_h0_found <- TRUE
