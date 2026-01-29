@@ -1,0 +1,90 @@
+---
+title: 'memoiR: R Markdown and Bookdown Templates to Publish Documents'
+tags:
+- R
+- biodiversity
+- phylogenetic diversity
+- functional diversity
+- entropy
+- Hill numbers
+- estimation
+- partitioning
+authors:
+- name: Eric Marcon
+  orcid: "0000-0002-5249-321X"
+  affiliation: "1, 2"
+- name: Florence Puech
+  orcid: "0000-0002-5279-6878"
+  affiliation: 2
+affiliations:
+- name: AgroParisTech, Montpellier, France
+  index: 1
+- name: AMAP, CIRAD, CNRS, INRAE, IRD, Univ Montpellier, Montpellier, France
+  index: 2
+- name: Université Paris-Saclay, INRAE, AgroParisTech, Paris-Saclay Applied Economics, F-91120, Palaiseau, France
+  index: 3
+date: "1 February 2026"
+bibliography: ../inst/REFERENCES.bib
+output: pdf_document
+---
+
+# Summary
+
+`divent` is a package for R dedicated to the measurement of biodiversity.
+It provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
+
+It is a reboot of the [entropart](https://ericmarcon.github.io/entropart/) package to make it easier to use and computationally more efficient.
+
+# Statement of need
+
+The definitions and the estimation of diversity in general and specifically biodiversity \> historique
+
+Unified approach based on the theory of information [@Shannon1948] and Hill numbers [@Hill1973].
+
+Extension to phylogenetic and functional diversity: different scientific goals / different data.
+
+DMD.
+
+# State of the field
+
+The entropart R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
+It is widely used (around 40 citations every year according to Google Scholar) but suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
+These issues justified a complete refactoring.
+
+The other major R package with the same purposes is iNEXT[@Hsieh2014] and its update iNEXT.3D [@Chao2021a].
+
+divent vs iNEXT:
+
+-   entropy
+-   jackknife
+-   ultrametric trees
+-   functional distance cutoff.
+-   lower-level and more atomic functions.
+-   DMD.
+-   no temporal beta yet.
+
+A description of how this software compares to other commonly-used packages in the research area.
+If related tools exist, provide a clear “build vs. contribute” justification explaining your unique scholarly contribution and why existing alternatives are insufficient.
+
+# Software design
+
+Classical R package: Roxygen, pkgdown, github
+
+Tidy data.
+
+# Research impact statement
+
+Successeur de entropart, nombreuses publications.
+
+Textbook French/entropart: rewritten.
+
+# AI usage disclosure
+
+No AI tools were used at any stage of the package development nor in this article.
+
+# Acknowledgements
+
+This work benefited from the support of “Investissements d’avenir” of the French National Agency for Research (Labex CEBA, ref. ANR-10-LABX-25-01).
+The authors thank [Bruno Hérault](https://agents.cirad.fr/Bruno+HERAULT) and [Stéphane Traissac](https://www.linkedin.com/in/st%C3%A9phane-traissac-b58511296) for their contributions to the [entropart](https://ericmarcon.github.io/entropart/) package.
+
+# References
