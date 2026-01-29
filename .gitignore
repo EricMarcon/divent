@@ -36,3 +36,6 @@ src/*.so
 src/*.dll
 # pkgdown by CI
 docs/
+# JOSS
+paper/paper.pdf
+
