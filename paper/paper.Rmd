@@ -35,6 +35,8 @@ It provides functions to estimate alpha, beta and gamma diversity of communities
 
 It is a reboot of the [entropart](https://ericmarcon.github.io/entropart/) package to make it easier to use and computationally more efficient.
 
+Main features.
+
 # Statement of need
 
 The definitions and the estimation of diversity in general and specifically biodiversity \> historique
