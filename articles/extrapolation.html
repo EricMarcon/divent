@@ -231,7 +231,7 @@ around the actual sample size is guaranteed.</p>
 <span>  q <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">0.9</span> <span class="op">*</span> <span class="va">paracou6_1_size</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">1.1</span> <span class="op">*</span> <span class="va">paracou6_1_size</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extrapolation_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="extrapolation_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
 <p>For non-integer orders, things get more complicated. In
 <em>divent</em>, asymptotic entropy is estimated by the unveiled
 jackknife estimator and rarefied down to the actual sample size. There
@@ -263,7 +263,7 @@ each sample size.</p>
 <span>  n_simulations <span class="op">=</span> <span class="fl">1000</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extrapolation_files/figure-html/accum_hill-1.png" width="700"></p>
+<p><img src="extrapolation_files/figure-html/accum_hill-1.png" class="r-plt" alt="" width="700"></p>
 <p>To ensure continuity of the DAC around the actual sample, the
 asymptotic diversity is estimated by unveiling the asymptotic
 distribution, choosing the number of species such that the rarefied
@@ -302,7 +302,7 @@ at any coverage of sampling level.</p>
 <code class="sourceCode R"><span><span class="co"># Diversity at levels from 1 to twice the sample size</span></span>
 <span><span class="fu"><a href="../reference/profile_hill.html">profile_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, level <span class="op">=</span> <span class="va">paracou6_1_size</span> <span class="op">*</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extrapolation_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="extrapolation_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
 <p>Extrapolated diversity is estimated at each order such that it is
 continuous at the observed sample size.</p>
 </div>
@@ -402,7 +402,7 @@ Ecology and Evolution</em> 7: 1451–56. <a href="https://doi.org/10.1111/2041-2
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
