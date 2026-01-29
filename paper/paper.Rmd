@@ -1,5 +1,5 @@
 ---
-title: 'memoiR: R Markdown and Bookdown Templates to Publish Documents'
+title: 'divent: an R Package for Diversity Measures Based on Entropy'
 tags:
 - R
 - biodiversity
@@ -53,7 +53,7 @@ The entropart R package [@Marcon2014c] was first published in 2015 and augmented
 It is widely used (around 40 citations every year according to Google Scholar) but suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
 These issues justified a complete refactoring.
 
-The other major R package with the same purposes is iNEXT[@Hsieh2014] and its update iNEXT.3D [@Chao2021a].
+The other major R package with the same purposes is iNEXT [@Hsieh2014] and its update iNEXT.3D [@Chao2021a].
 
 divent vs iNEXT:
 
@@ -73,6 +73,8 @@ If related tools exist, provide a clear “build vs. contribute” justification
 Classical R package: Roxygen, pkgdown, github
 
 Tidy data.
+
+Parallel computing.
 
 # Research impact statement
 
