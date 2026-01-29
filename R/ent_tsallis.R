@@ -605,7 +605,7 @@ ent_tsallis.numeric <- function(
     the_entropy <- (
       sum(
         ((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1
-      )/(1 - q)
+      ) / (1 - q)
     if (as_numeric) {
       return(the_entropy)
     } else {
