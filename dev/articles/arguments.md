@@ -1,0 +1,94 @@
+# Common Arguments of divent Functions
+
+Functions to estimate entropy and diversity share many arguments, whose
+default value is generally the best choice. They are explained here.
+
+## Asymptotic or interpolated / extrapolated diversity
+
+### `q`
+
+This argument sets the order of diversity to estimate, e.g. 0 for
+richness, 1 for Shannon’s and 2 for Simpson’s entropies.
+
+### `estimator`
+
+Each function comes with several estimators that correspond to the state
+of the art. Asymptotic entropy and diversity are calculated according to
+the chosen estimator.
+
+### `level`
+
+`level` allows estimating entropy or diversity at a chosen level, that
+may be a number of individuals (at least 1) of a sample coverage
+(between 0 and 1) that is first converted to a number of individuals by
+[`coverage_to_size()`](https://ericmarcon.github.io/divent/dev/reference/coverage.md).
+
+If `level` is not `NULL`, `estimator` is ignored.
+
+### `sample_coverage`
+
+To estimate \\\gamma\\ diversity, the size of a metacommunity is unknown
+so it has to be set according to a rule which does not ensure that its
+abundances are integer values. Then, classical bias-correction methods
+do not apply. Providing the sample_coverage argument allows applying the
+ChaoShen and Grassberger estimators to estimate quite well the entropy.
+
+## Unveiling
+
+The unveiled estimators, whose names start with `unveil`, rely on the
+estimation of the distribution of probabilities of the species (i.e. the
+probability for an individual to belong to each species). They require
+several arguments, that are ignored if another estimator is chosen.
+
+### `probability_estimator`
+
+The probability estimators allow estimating the actual probability of
+species from the observed abundances.
+
+### `unveiling`
+
+The unveiling technique sets the distribution of the unobserved species.
+If `unveiling` is “none”, they are ignored.
+
+### `richness_estimator`
+
+The number of unobserved species is estimated by `richness_estimator`.
+
+### `jack_alpha` and `jackmax`
+
+If `richness_estimator` is `jackknife`, `jackmax` is the maximum order
+allowed. `jack_alpha` is the risk level of the confidence interval of
+the estimation.
+
+The estimation starts at order \\k=0\\. If the estimate of order \\k+1\\
+is out of the confidence interval of the estimate of order \\k\\, then
+\\k\\ is incremented and the test is repeated until the optimal order is
+found.
+
+### `coverage_estimator`
+
+Unveiling is based on the estimation of the sample coverage. Its
+estimator can be chosen.
+
+## General arguments
+
+### `alpha`
+
+The risk level of tests or confidence intervals.
+
+### `as_numeric`
+
+Diversity and entropy functions return a tibble with detailed
+information about the estimation. When applied to a single community,
+they can return a number instead of a one-line tibble with the argument
+`as_numeric = TRUE`.
+
+### `check_arguments`
+
+Most functions of the package check their arguments, e.g. that `alpha`,
+the risk level, is between 0 and 1. To save time,
+`check_arguments = FALSE` skips the checks.
+
+### `n_simulations`
+
+The number of simulations run to estimate confidence intervals.
