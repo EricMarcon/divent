@@ -116,6 +116,11 @@ utils::globalVariables("non_species_columns")
 #'
 #'
 #' @format A character vector.
+#'
+#' @examples
+#' # Default values
+#' non_species_columns
+#'
 #' @name non_species_columns
 "non_species_columns"
 
