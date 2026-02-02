@@ -30,13 +30,13 @@ output: pdf_document
 
 # Summary
 
-`divent` is a package for R dedicated to the measurement of biodiversity.
+*divent* is a package for R dedicated to the measurement of biodiversity.
 It provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
 
-It is a reboot of the [entropart](https://ericmarcon.github.io/entropart/) package to make it easier to use and computationally more efficient.
+It is a reboot of the [*entropart*](https://ericmarcon.github.io/entropart/) package to make it easier to use and computationally more efficient.
 
-Data may be abundance vectors or matrices (the number of indivual per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
-Random communities can be simulated (`rcommunity`) and spatialized (`rspcommunity`).
+Data may be abundance vectors or matrices (the number of individual per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
+Random communities can be simulated (function `rcommunity`) and spatialized (`rspcommunity`).
 The main functions allow computing:
 
 -   Taxonomic entropy: HCDT entropy (`ent_tsallis`) including Shannon and Simpson's entropies.
@@ -61,24 +61,21 @@ DMD.
 
 # State of the field
 
-The entropart R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
+The *entropart* R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
 It is widely used (around 40 citations every year according to Google Scholar) but suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
 These issues justified a complete refactoring.
+Spatially-explicit diversity is completely new in *divent*.
 
-The other major R package with the same purposes is iNEXT [@Hsieh2014] and its update iNEXT.3D [@Chao2021a].
+The other major R package with the same purposes is *iNEXT* [@Hsieh2014] and its update *iNEXT.3D* [@Chao2021a].
+The most important features are identical.
+Additionally, *iNEXT.3D* addresses temporal changes in diversity (divent does not yet), while *divent* addresses spatially-explicit diversity.
+*divent* proposes more atomic functions to calculate various aspects of diversity separately (thus, faster, allowing including the results in larger analyses) while *iNEXT.3D* relies on the single, end-user oriented *estimate3D* function for all purposes.
 
-divent vs iNEXT:
+*divent* is built on some explicit theoretical choices that differ from those of *iNEXT.3D*:
 
--   entropy
--   jackknife
--   ultrametric trees
--   functional distance cutoff.
--   lower-level and more atomic functions.
--   DMD.
--   no temporal beta yet.
-
-A description of how this software compares to other commonly-used packages in the research area.
-If related tools exist, provide a clear “build vs. contribute” justification explaining your unique scholarly contribution and why existing alternatives are insufficient.
+-   diversity is derived from entropy, following the information theory.
+-   richness estimation is not limited to Chao's estimators. The jackknife estimator is often employed to reduce diversity underestimation owing to undersampling.
+-   phylogenies must be ultrametric and no functional distance cutoff is proposed for theoretical arguments.
 
 # Software design
 
