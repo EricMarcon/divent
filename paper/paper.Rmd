@@ -35,7 +35,19 @@ It provides functions to estimate alpha, beta and gamma diversity of communities
 
 It is a reboot of the [entropart](https://ericmarcon.github.io/entropart/) package to make it easier to use and computationally more efficient.
 
-Main features.
+Data may be abundance vectors or matrices (the number of indivual per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
+Random communities can be simulated (`rcommunity`) and spatialized (`rspcommunity`).
+The main functions allow computing:
+
+-   Taxonomic entropy: HCDT entropy (`ent_tsallis`) including Shannon and Simpson's entropies.
+-   Phylogenetic (`ent_phylo`) or functional (`ent_similarity`) entropy when dissimilarities between species are taken into account in a dendrogram or a similarity matrix.
+-   Effective numbers of species, aka Hill numbers, for all entropies (`div_hill`, `div_phylo`, `div_similarity`).
+-   Diversity partitioning (`div_part`), i.e. $\alpha$, $\beta$ and $\gamma$ diversity of a set of communities.
+-   Diversity profiles (`profile_hill`, `profile_phylo`, `profile_similarity`), with respect to the order or diversity.
+-   Diversity accumulation curves (`accum_hill`) with respect to the sample size or coverage.
+-   Spatial accumulation of diversity (`accum_sp_hill`) with respect to the distance from individuals, with maps (`plot_map`).
+
+Many estimators are proposed, with sensible automatic choice, to deal with incomplete sampling.
 
 # Statement of need
 
