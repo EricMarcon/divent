@@ -73,9 +73,9 @@ Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021a] in diversity (d
 
 *divent* is built on some explicit theoretical choices that differ from those of *iNEXT.3D*:
 
--   diversity is derived from entropy [@Jost2006], following the information theory.
--   richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling.
--   phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff [@Pavoine2015a vs @Chao2019] is proposed for theoretical arguments.
+-   Diversity is derived from entropy [@Jost2006], following the information theory.
+-   Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling.
+-   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff [@Pavoine2015a vs @Chao2019] is proposed for theoretical arguments.
 
 # Software design
 
@@ -89,7 +89,8 @@ Parallel computing.
 
 Successeur de entropart, nombreuses publications.
 
-Textbook French/entropart: rewritten.
+*entropart* came with an open-access textbook [@Marcon2014d] written in French and downloaded more than 50,000 times.
+It is being rewritten in English, based on *divent*.
 
 # AI usage disclosure
 
