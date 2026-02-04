@@ -55,18 +55,18 @@ Measuring biological diversity [@Magurran2004] has been a theoretical and empiri
 A consensus emerged [@Jost2006] to derive it from the theory of information [@Shannon1948].
 Individuals are sampled and their species is recorded.
 
-Entropy is the expected amount of information brought by[@Whittaker1960] the observation of an individual.
+Entropy is the expected amount of information brought by an individual.
 Generalized entropy [@Tsallis1988] allows choosing the balance between rare and abundant species.
 Classical indices of biodiversity such as Shannon's and Simpson's indices are just special cases of generalized entropy.
 Phylogenetic and functional entropy extend the definition taking into account the dissimilarity between species summarized respectively in a dendrogram [@Marcon2014b] or a distance matrix [@Leinster2012].
 Finally, Hill numbers [@Hill1973] are the number of species with equal abundance that would have the same entropy as the data, allowing measuring diversity as a effective number.
 
 Data are generally a sample of a community, requiring estimators of entropy [@Marcon2015a].
-Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing provided by divent (converting estimated entropy into diversity is straightforward).
-When the sampling effort is not sufficient to allow estimating asymptotic diversity, standardized diversity for a chosen sampling level is necessary along with diversity accumulation with respect to the sample size [@Chao2014].
+Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing implemented in *divent* (converting estimated entropy into diversity is straightforward).
+When the sampling effort is not sufficient to allow estimating asymptotic diversity, standardized diversity for a chosen sampling level is necessary and diversity accumulation with respect to the sample size can be estimated [@Chao2014].
 
-Spatially explicit diversity raises an increasing interest [@Shimatani2001, @Marcon2023] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
-The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules [@Shen2013b, @Wiegand2017].
+Spatially-explicit diversity raises an increasing interest [ @Marcon2023] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
+The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules [@Shen2013b; @Wiegand2017].
 When individual location is not available, the partitioning of the diversity of a set of communities [@Whittaker1960], called $\gamma$ diversity, into the average diversity of communities ($\alpha$ diversity) and their divergence ($\beta$ diversity) is necessary, whatever the diversity considered, for the same purposes.
 
 The *divent* package allows computing all these features of diversity.
@@ -76,26 +76,26 @@ The *divent* package allows computing all these features of diversity.
 The *entropart* R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
 It suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
 These issues justified a complete refactoring.
-Spatially-explicit diversity [@Shimatani2001, @Marcon2023] is completely new in *divent*.
+Spatially-explicit diversity [@Shimatani2001; @Marcon2023] is completely new in *divent*.
 
 The other major R package with the same purposes is *iNEXT* [@Hsieh2014] and its update *iNEXT.3D* [@Chao2021a].
 The most important features are identical.
-Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021] in diversity (divent does not yet), while *divent* addresses spatially-explicit diversity.
-*divent* proposes more atomic functions to calculate various aspects of diversity separately (thus, faster, allowing including the results in larger analyses) while *iNEXT.3D* relies on the single, end-user oriented *estimate3D* function for all purposes.
+Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021] in diversity (*divent* does not yet), while *divent* addresses spatially-explicit diversity.
+*divent* proposes more atomic functions to calculate various aspects of diversity separately (thus faster, allowing including the results in larger analyses) while *iNEXT.3D* relies on the single, end-user oriented `estimate3D` function for all purposes.
 
 *divent* is built on some explicit theoretical choices that differ from those of *iNEXT.3D*:
 
--   Diversity is derived from entropy [@Jost2006], following the information theory.
--   Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling.
+-   Diversity is explicitely derived from entropy [@Jost2006], following the information theory.
+-   Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling. Far more estimators of entropy in general are available.
 -   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff [@Pavoine2015a vs @Chao2019] is proposed for theoretical arguments.
 
 # Software design
 
 *divent* is a written in S3, the standard R language.
-It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation with packages *roxygen2* [@Wickham2025] for R objects, *Rdpack* [@Boshnakov2026] for references and *pkgdown* [@Wickham2025a] for online manual.
+It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages *roxygen2* [@Wickham2025] for R objects, *Rdpack* [@Boshnakov2026] for references and *pkgdown* [@Wickham2025a] for online manual.
 Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
-Generic functions (e.g., `div_hill`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (`div_hill.numeric`) or objects of class `species_distributions` (`div_hill.species_distribution`), which are dataframe whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
+Generic functions (e.g., `div_hill`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric`) or objects of class `species_distributions` (function `div_hill.species_distribution`), which are dataframe whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
 Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
 # Research impact statement
@@ -110,6 +110,6 @@ No AI tools were used at any stage of the package development nor in this articl
 # Acknowledgements
 
 This work benefited from the support of “Investissements d’avenir” of the French National Agency for Research (Labex CEBA, ref. ANR-10-LABX-25-01).
-The authors thank [Bruno Hérault](https://agents.cirad.fr/Bruno+HERAULT) and [Stéphane Traissac](https://www.linkedin.com/in/st%C3%A9phane-traissac-b58511296) for their contributions to the [entropart](https://ericmarcon.github.io/entropart/) package.
+The authors thank [Bruno Hérault](https://agents.cirad.fr/Bruno+HERAULT) for his contributions to the [entropart](https://ericmarcon.github.io/entropart/) package.
 
 # References
