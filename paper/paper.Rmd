@@ -55,16 +55,21 @@ Measuring biological diversity [@Magurran2004] has been a theoretical and empiri
 A consensus emerged [@Jost2006] to derive it from the theory of information [@Shannon1948].
 Individuals are sampled and their species is recorded.
 
-Entropy is the expected amount of information brought by the observation of an individual.
+Entropy is the expected amount of information brought by[@Whittaker1960] the observation of an individual.
 Generalized entropy [@Tsallis1988] allows choosing the balance between rare and abundant species.
 Classical indices of biodiversity such as Shannon's and Simpson's indices are just special cases of generalized entropy.
 Phylogenetic and functional entropy extend the definition taking into account the dissimilarity between species summarized respectively in a dendrogram [@Marcon2014b] or a distance matrix [@Leinster2012].
 Finally, Hill numbers [@Hill1973] are the number of species with equal abundance that would have the same entropy as the data, allowing measuring diversity as a effective number.
 
-Data are generally a sample of a community, requiring estimators of entropy [@Marcon2015a]. Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing provided by divent (converting estimated entropy into diversity is straightforward). When the sampling effort is not sufficient to allow estimating asymptotic diversity, standardized diversity for a chosen sampling level is necessary along with diversity accumulation with respect to the sample size.
+Data are generally a sample of a community, requiring estimators of entropy [@Marcon2015a].
+Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing provided by divent (converting estimated entropy into diversity is straightforward).
+When the sampling effort is not sufficient to allow estimating asymptotic diversity, standardized diversity for a chosen sampling level is necessary along with diversity accumulation with respect to the sample size [@Chao2014].
 
-Spatially explicit diversity raises an increasing interest to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot. The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules . When individual location is not avaible, the partitioning of the diversity of a set of communities, called $\gamma$ diversity, into the average diversity of communities ($\alpha$ diversity) and their divergence ($\beta$ diversity) is necessary, whatever the diversity considered, for the same purposes.
+Spatially explicit diversity raises an increasing interest [@Shimatani2001, @Marcon2023] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
+The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules [@Shen2013b, @Wiegand2017].
+When individual location is not available, the partitioning of the diversity of a set of communities [@Whittaker1960], called $\gamma$ diversity, into the average diversity of communities ($\alpha$ diversity) and their divergence ($\beta$ diversity) is necessary, whatever the diversity considered, for the same purposes.
 
+The *divent* package allows computing all these features of diversity.
 
 # State of the field
 
@@ -86,11 +91,12 @@ Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021a] in diversity (d
 
 # Software design
 
-Classical R package: Roxygen, pkgdown, github
+*divent* is a written in S3, the standard R language.
+It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation with packages *roxygen2* [@Wickham2025] for R objects, *Rdpack* [@Boshnakov2026] for references and *pkgdown* [@Wickham2025a] for online manual.
+Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
-Tidy data.
-
-Parallel computing.
+Generic functions (e.g., `div_hill`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (`div_hill.numeric`) or objects of class `species_distributions` (`div_hill.species_distribution`), which are dataframe whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
+Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
 # Research impact statement
 
