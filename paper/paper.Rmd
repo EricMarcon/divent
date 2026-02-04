@@ -74,7 +74,7 @@ The *divent* package allows computing all these features of diversity.
 # State of the field
 
 The *entropart* R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
-It is widely used (around 40 citations every year according to Google Scholar) but suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
+It suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
 These issues justified a complete refactoring.
 Spatially-explicit diversity [@Shimatani2001, @Marcon2023] is completely new in *divent*.
 
@@ -100,10 +100,8 @@ Functions to convert a classical abundance matrix, a list of individuals or a po
 
 # Research impact statement
 
-Successeur de entropart, nombreuses publications.
-
-*entropart* came with an open-access textbook [@Marcon2014d] written in French and downloaded more than 50,000 times.
-It is being rewritten in English, based on *divent*.
+*divent* is a reboot of the *entropart* package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
+It came with an open-access textbook [@Marcon2014d] written in French and downloaded more than 50,000 times which is being rewritten in English, based on *divent*.
 
 # AI usage disclosure
 
