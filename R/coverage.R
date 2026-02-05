@@ -217,9 +217,11 @@ coverage.numeric <- function(
         abd_restricted <- abd[(sample_size - abd) >= level]
         the_coverage <- 1 - sum(
           abd_restricted / sample_size *
-          exp(lgamma(sample_size - abd_restricted + 1) -
-          lgamma(sample_size - abd_restricted - level + 1) -
-          lgamma(sample_size) + lgamma(sample_size - level))
+            exp(
+              lgamma(sample_size - abd_restricted + 1) -
+              lgamma(sample_size - abd_restricted - level + 1) -
+              lgamma(sample_size) + lgamma(sample_size - level)
+            )
         )
       } else {
         ### Extrapolation ----
@@ -265,6 +267,7 @@ coverage.abundances <- function(
     x,
     estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     level = NULL,
+    as_numeric = FALSE,
     ...,
     check_arguments = TRUE) {
 
@@ -285,14 +288,19 @@ coverage.abundances <- function(
     check_arguments = FALSE
   )
 
+  # Coerce the list returned by apply into a dataframe
+  the_coverages <- do.call(rbind.data.frame, coverage_list)
+
   return(
-    # Make a tibble with site, estimator and sample-coverage
-    tibble::tibble(
-      # Restore non-species columns
-      x[colnames(x) %in% non_species_columns],
-      # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, coverage_list)
-    )
+    if (as_numeric) {
+      the_coverages$coverage
+    } else {
+      tibble::tibble(
+        # Restore non-species columns
+        x[colnames(x) %in% non_species_columns],
+        the_coverages
+      )
+    }
   )
 }
 
@@ -351,10 +359,11 @@ coverage_to_size.numeric <- function(
   if (sample_coverage >= sample_coverage_actual) {
     # Extrapolation
     the_size <- round(
-      sample_size +
-        (log(sample_size / s_1) + log(1 - sample_coverage)) /
-          log(1 - chao_A(abd)
-      ) - 1
+      sample_size + (
+        log(sample_size / s_1) + log(1 - sample_coverage)
+      )
+      / log(1 - chao_A(abd))
+      - 1
     )
   } else {
     # Interpolation. Numeric resolution: minimize the function delta
