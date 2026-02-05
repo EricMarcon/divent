@@ -460,7 +460,7 @@ S_v <- function(
 #'
 #' Build the metacommunity and check that abundances are integers.
 #'
-#' See [ent_gamma_tsallis] for details.
+#' See ent_gamma_tsallis() for details.
 #' @param species_distribution An object of class [species_distribution].
 #'
 #' @returns A tibble with the estimator used and the estimated entropy.
