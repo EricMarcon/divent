@@ -65,7 +65,7 @@ Data are generally a sample of a community, requiring estimators of entropy [@Ma
 Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing implemented in *divent* (converting estimated entropy into diversity is straightforward).
 When the sampling effort is not sufficient to allow estimating asymptotic diversity, standardized diversity for a chosen sampling level is necessary and diversity accumulation with respect to the sample size can be estimated [@Chao2014].
 
-Spatially-explicit diversity raises an increasing interest [ @Marcon2023] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
+Spatially-explicit diversity raises an increasing interest [@Marcon2023] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
 The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules [@Shen2013b; @Wiegand2017].
 When individual location is not available, the partitioning of the diversity of a set of communities [@Whittaker1960], called $\gamma$ diversity, into the average diversity of communities ($\alpha$ diversity) and their divergence ($\beta$ diversity) is necessary, whatever the diversity considered, for the same purposes.
 
