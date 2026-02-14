@@ -2,7 +2,10 @@
 
 ## divent 0.5-3.9000
 
-Next version
+### Features
+
+- [`coverage.abundances()`](https://ericmarcon.github.io/divent/dev/reference/coverage.md)
+  accepts argument `as_numeric`.
 
 ## divent 0.5-3
 
