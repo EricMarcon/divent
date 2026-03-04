@@ -79,16 +79,16 @@ It suffers from its incremental development and some obsolete choices such as th
 These issues justified a complete refactoring.
 Spatially-explicit diversity [@Shimatani2001; @Marcon2023] is completely new in *divent*.
 
-The other major R package with the same purposes is *iNEXT* [@Hsieh2014] and its update *iNEXT.3D* [@Chao2021a].
+The other major R package with the same purposes is *iNEXT* [@Hsieh2014] and its update *iNEXT.3D* [@Chao2021].
 The most important features are identical.
-Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021] in diversity (*divent* does not yet), while *divent* addresses spatially-explicit diversity.
+Additionally, *iNEXT.3D* addresses temporal changes in diversity (*divent* does not yet), while *divent* addresses spatially-explicit diversity.
 *divent* proposes more atomic functions to calculate various aspects of diversity separately (thus faster, allowing including the results in larger analyses) while *iNEXT.3D* relies on the single, end-user oriented `estimate3D` function for all purposes.
 
 *divent* is built on some explicit theoretical choices that differ from those of *iNEXT.3D*:
 
 -   Diversity is explicitly derived from entropy [@Jost2006], following the information theory.
 -   Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling. Far more estimators of entropy in general are available.
--   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff following @Pavoine2015a rather than @Chao2019 for theoretical arguments.
+-   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff is proposed following @Pavoine2015a rather than @Chao2019 for theoretical arguments.
 
 # Software design
 
@@ -96,13 +96,12 @@ Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021] in diversity (*d
 It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages *roxygen2* [@Wickham2025] for R objects, *Rdpack* [@Boshnakov2026] for references and *pkgdown* [@Wickham2025a] for online manual.
 Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
-Generic functions (e.g., `div_hill`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric`) or objects of class `species_distributions` (function `div_hill.species_distribution`), which are dataframe whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
+Generic functions (e.g., `div_hill`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric`) or objects of class `species_distributions` (function `div_hill.species_distribution`), which are dataframes whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
 Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
 # Research impact statement
 
-*divent* is a reboot of the *entropart* package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
-It came with an open-access textbook [@Marcon2014d] written in French and downloaded more than 50,000 times which is being rewritten in English, based on *divent*.
+*divent* is the successor of the *entropart* package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
 
 # AI usage disclosure
 
