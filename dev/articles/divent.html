@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-3.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-3.90001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -258,7 +258,7 @@ the non-linearity of the indices:</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 ChaoJost      1    4.50</span></span></code></pre>
 <p>The best available estimator is chosen by default: its name is
 returned.</p>
-<p>Those indices are special cases of the Tsallis entropy <span class="citation">(1988)</span> or order <span class="math inline">\(q\)</span> (respectively <span class="math inline">\(q=0,1,2\)</span> for richness, Shannon,
+<p>Those indices are special cases of the Tsallis entropy <span class="citation">(1988)</span> or order <span class="math inline">\(q\)</span> (respectively <span class="math inline">\(q = 0, 1, 2\)</span> for richness, Shannon,
 Simpson):</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ent_tsallis.html">ent_tsallis</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -349,12 +349,14 @@ Simpson’s diversities:</p>
 <p>Profiles of phylogenetic diversity and similarity-based diversity are
 obtained the same way.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_phylo.html">profile_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_phylo.html">profile_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/PDiversityProfile-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Similarity matrix</span></span>
 <span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fun_similarity.html">fun_similarity</a></span><span class="op">(</span><span class="va">paracou_6_fundist</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/profile_similarity.html">profile_similarity</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, similarities <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/profile_similarity.html">profile_similarity</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, similarities <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/PDiversityProfile-2.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">

@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-3.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-3.90001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,7 +155,7 @@ the order of the jackknife estimator is chosen according to the data.
 Poorly-sampled communities are estimated by a higher-order jackknife,
 resulting in higher estimation variance.</p>
 <p>For well-sampled communities, i.e. in the domain of validity of the
-jacknife of order 1, the Chao1 estimator of richness and the Chao-Jost
+jackknife of order 1, the Chao1 estimator of richness and the Chao-Jost
 estimator of entropy are the best choices because they have the best
 mathematical support, but they will severely underestimate the diversity
 of poorly-sampled communities. They also are more
@@ -242,8 +242,8 @@ adjusted iteratively until the rarefied entropy equals the actual
 sample’s entropy, ensuring continuity between interpolation and
 extrapolation.</p>
 <p>The default arguments of all functions apply this strategy, except
-for Simpson’s diversity (<span class="math inline">\(q=2\)</span>) that
-is estimated directly without bias.</p>
+for Simpson’s diversity (<span class="math inline">\(q = 2\)</span>)
+that is estimated directly without bias.</p>
 </div>
 <div class="section level2">
 <h2 id="diversity-accumulation">Diversity accumulation<a class="anchor" aria-label="anchor" href="#diversity-accumulation"></a>
@@ -274,7 +274,7 @@ differ from the best asymptotic estimation, sometimes quite much if
 sampling level is poor.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extrapolation at 99.99% sample coverage</span></span>
-<span><span class="fu"><a href="../reference/div_hill.html">div_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, q <span class="op">=</span> <span class="fl">1</span>, level<span class="op">=</span><span class="fl">0.9999</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/div_hill.html">div_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, q <span class="op">=</span> <span class="fl">1</span>, level <span class="op">=</span> <span class="fl">0.9999</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 6</span></span></span>
 <span><span class="co">##   site      weight estimator order level diversity</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -288,11 +288,11 @@ sampling level is poor.</p>
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       1      96.3</span></span></code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Chao-Jost estimator</span></span>
-<span><span class="fu"><a href="../reference/div_hill.html">div_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, q <span class="op">=</span> <span class="fl">1</span>, Correction<span class="op">=</span><span class="st">"ChaoJost"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/div_hill.html">div_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, q <span class="op">=</span> <span class="fl">1</span>, estimator <span class="op">=</span> <span class="st">"ChaoJost"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
 <span><span class="co">##   site      weight estimator order diversity</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       1      96.3</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 ChaoJost      1      91.3</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="diversity-profiles-at-a-sampling-level">Diversity profiles at a sampling level<a class="anchor" aria-label="anchor" href="#diversity-profiles-at-a-sampling-level"></a>
@@ -320,13 +320,14 @@ asymptotic richness such that the entropy of the asymptotic distribution
 rarefied to the observed sample size equals the observed entropy of the
 data. This approach allows consistent estimation of extrapolated
 diversity at integer and non-integer orders, thus allowing consistent
-diversity profiles without discontinuities at <span class="math inline">\(q=0\)</span> and <span class="math inline">\(q=1\)</span>. The results of <em>iNEXT</em> can be
-obtained by forcing argument <code>estimator = "ChaoJost"</code>.</p>
+diversity profiles without discontinuities at <span class="math inline">\(q = 0\)</span> and <span class="math inline">\(q =
+1\)</span>. The results of <em>iNEXT</em> can be obtained by forcing
+argument <code>estimator = "ChaoJost"</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://sites.google.com/view/chao-lab-website/software/inext" class="external-link">"iNEXT"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span></span>
 <span><span class="co"># Extrapolated diversity of an example dataset</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/iNEXT/man/estimateD.html" class="external-link">estimateD</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">Girdled</span>, level<span class="op">=</span><span class="fl">300</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/iNEXT/man/estimateD.html" class="external-link">estimateD</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">Girdled</span>, level <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   Assemblage   m        Method Order.q        SC        qD    qD.LCL    qD.UCL</span></span>
 <span><span class="co">## 1       data 300 Extrapolation       0 0.9579518 33.317733 25.804082 40.831384</span></span>
 <span><span class="co">## 2       data 300 Extrapolation       1 0.9579518 12.869603 10.314593 15.424612</span></span>

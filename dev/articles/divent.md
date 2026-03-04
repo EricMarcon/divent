@@ -217,7 +217,7 @@ ent_shannon(paracou_6_abd, estimator = "ChaoJost")
 The best available estimator is chosen by default: its name is returned.
 
 Those indices are special cases of the Tsallis entropy (1988) or order
-\\q\\ (respectively \\q=0,1,2\\ for richness, Shannon, Simpson):
+\\q\\ (respectively \\q = 0, 1, 2\\ for richness, Shannon, Simpson):
 
 ``` r
 ent_tsallis(paracou_6_abd, q = 1)
@@ -339,7 +339,8 @@ Profiles of phylogenetic diversity and similarity-based diversity are
 obtained the same way.
 
 ``` r
-profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>% autoplot
+profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>% 
+  autoplot()
 ```
 
 ![](divent_files/figure-html/PDiversityProfile-1.png)
@@ -347,7 +348,8 @@ profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>% autoplot
 ``` r
 # Similarity matrix
 Z <- fun_similarity(paracou_6_fundist)
-profile_similarity(paracou_6_abd, similarities = Z) %>% autoplot
+profile_similarity(paracou_6_abd, similarities = Z) %>%
+  autoplot()
 ```
 
 ![](divent_files/figure-html/PDiversityProfile-2.png)

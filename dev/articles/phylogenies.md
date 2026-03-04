@@ -28,7 +28,7 @@ defined, with distance 1 between the first 2 and distance 2 between both
 and the last one.
 
 ``` r
-species_dist <- matrix(c(0, 1, 2, 1, 0, 2, 2, 2, 0), nrow=3, byrow=TRUE)
+species_dist <- matrix(c(0, 1, 2, 1, 0, 2, 2, 2, 0), nrow = 3, byrow = TRUE)
 row.names(species_dist) <- colnames(species_dist) <- c("A", "B", "C")
 species_dist
 ```

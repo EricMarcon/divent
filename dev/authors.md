@@ -13,13 +13,13 @@ Source:
 [`DESCRIPTION`](https://github.com/EricMarcon/divent/blob/master/DESCRIPTION)
 
 Marcon E, Puech F (2026). *divent: Entropy Partitioning to Measure
-Diversity*. R package version 0.5-3.9000,
+Diversity*. R package version 0.5-3.90001,
 <https://ericmarcon.github.io/divent/>.
 
     @Manual{,
       title = {divent: Entropy Partitioning to Measure Diversity},
       author = {Eric Marcon and Florence Puech},
       year = {2026},
-      note = {R package version 0.5-3.9000},
+      note = {R package version 0.5-3.90001},
       url = {https://ericmarcon.github.io/divent/},
     }

@@ -232,7 +232,8 @@ plot(thin_im)
 rthin(
   the_species,
   P = thin_im
-) %>% autoplot()
+) %>% 
+  autoplot()
 ```
 
 ![](simulations_files/figure-html/unnamed-chunk-5-3.png)

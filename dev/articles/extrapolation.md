@@ -85,7 +85,7 @@ communities are estimated by a higher-order jackknife, resulting in
 higher estimation variance.
 
 For well-sampled communities, i.e. in the domain of validity of the
-jacknife of order 1, the Chao1 estimator of richness and the Chao-Jost
+jackknife of order 1, the Chao1 estimator of richness and the Chao-Jost
 estimator of entropy are the best choices because they have the best
 mathematical support, but they will severely underestimate the diversity
 of poorly-sampled communities. They also are more computer-intensive.
@@ -198,7 +198,7 @@ until the rarefied entropy equals the actual sample’s entropy, ensuring
 continuity between interpolation and extrapolation.
 
 The default arguments of all functions apply this strategy, except for
-Simpson’s diversity (\\q=2\\) that is estimated directly without bias.
+Simpson’s diversity (\\q = 2\\) that is estimated directly without bias.
 
 ## Diversity accumulation
 
@@ -235,7 +235,7 @@ poor.
 
 ``` r
 # Extrapolation at 99.99% sample coverage
-div_hill(paracou_6_abd[1, ], q = 1, level=0.9999)
+div_hill(paracou_6_abd[1, ], q = 1, level = 0.9999)
 ```
 
     ## # A tibble: 1 × 6
@@ -255,13 +255,13 @@ div_hill(paracou_6_abd[1, ], q = 1)
 
 ``` r
 # Chao-Jost estimator
-div_hill(paracou_6_abd[1, ], q = 1, Correction="ChaoJost")
+div_hill(paracou_6_abd[1, ], q = 1, estimator = "ChaoJost")
 ```
 
     ## # A tibble: 1 × 5
     ##   site      weight estimator order diversity
     ##   <chr>      <dbl> <chr>     <dbl>     <dbl>
-    ## 1 subplot_1   1.56 UnveilJ       1      96.3
+    ## 1 subplot_1   1.56 ChaoJost      1      91.3
 
 ## Diversity profiles at a sampling level
 
@@ -290,15 +290,15 @@ asymptotic richness such that the entropy of the asymptotic distribution
 rarefied to the observed sample size equals the observed entropy of the
 data. This approach allows consistent estimation of extrapolated
 diversity at integer and non-integer orders, thus allowing consistent
-diversity profiles without discontinuities at \\q=0\\ and \\q=1\\. The
-results of *iNEXT* can be obtained by forcing argument
+diversity profiles without discontinuities at \\q = 0\\ and \\q = 1\\.
+The results of *iNEXT* can be obtained by forcing argument
 `estimator = "ChaoJost"`.
 
 ``` r
 library("iNEXT")
 data(spider)
 # Extrapolated diversity of an example dataset
-estimateD(spider$Girdled, level=300)
+estimateD(spider$Girdled, level = 300)
 ```
 
     ##   Assemblage   m        Method Order.q        SC        qD    qD.LCL    qD.UCL
