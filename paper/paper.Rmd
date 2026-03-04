@@ -1,5 +1,5 @@
 ---
-title: 'divent: an R Package for Diversity Measures Based on Entropy'
+title: '*divent*: an R Package for Diversity Measures Based on Entropy'
 tags:
 - R
 - biodiversity
@@ -31,7 +31,7 @@ output: pdf_document
 # Summary
 
 *divent* is a package for R dedicated to the measurement of diversity in general, and biodiversity in particular.
-It provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
+It provides functions to estimate $\alpha$, $\beta$ and $\gamma$ diversity of communities, including phylogenetic and functional diversity.
 
 It is a reboot of the R package [*entropart*](https://ericmarcon.github.io/entropart/) to make it easier to use and computationally more efficient.
 It also extends its functionality.
