@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - paper
+      - JOSS
 
 name: JOSS knitting test
 
