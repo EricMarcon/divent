@@ -216,7 +216,7 @@ ent_phylo.species_distribution <- function(
 #' Phylogenetic entropies
 #'
 #' Calculate entropies of a list of phylogenetic abundances (obtained by
-#' [phylo_abd]).
+#' phylo_abd()).
 #' Each item of the list corresponds to a phylogenetic group, i.e. an interval
 #' of the tree (where the species do not change).
 #'

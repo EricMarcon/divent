@@ -18,4 +18,9 @@ Objects of classes \link{abundances} and \link{probabilities}, that are also of 
 \link{species_distribution}, have columns named after the species they contain.
 Some columns are reserved to describe the plots and their diversity.
 }
+\examples{
+# Default values
+non_species_columns
+
+}
 \keyword{datasets}

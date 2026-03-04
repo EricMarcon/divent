@@ -1,3 +1,10 @@
+# divent 0.5-3.9001
+
+## Features
+
+- `coverage.abundances()` accepts argument `as_numeric`.
+
+
 # divent 0.5-3
 
 ## Bug correction

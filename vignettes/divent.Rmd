@@ -13,20 +13,19 @@ vignette: >
 set.seed(97310)
 ```
 
-_divent_ is a package for _R_ designed to estimate diversity based on HCDT entropy or similarity-based entropy. 
-It is a reboot of the _entropart_ package, following the tidyverse manifest and easier to use.
+*divent* is a package for *R* designed to estimate diversity based on HCDT entropy or similarity-based entropy.
+It is a reboot of the *entropart* package, following the tidyverse manifest and easier to use.
 This is a short introduction to its use.
 
 The package allows estimating biodiversity according to the framework based on HCDT entropy, the correction of its estimation-bias [@Grassberger1988; @Chao2003; @Chao2015] and its transformation into equivalent numbers of species [@Hill1973; @Jost2006; @Marcon2014a].
 Estimation of diversity at arbitrary levels of sampling, requiring interpolation or extrapolation [@Chao2014] is available.
 
-Phylogenetic or functional diversity [@Marcon2014b] can be estimated, considering phyloentropy as the average species-neutral diversity over slices of a phylogenetic or functional tree [@Pavoine2009]. 
+Phylogenetic or functional diversity [@Marcon2014b] can be estimated, considering phyloentropy as the average species-neutral diversity over slices of a phylogenetic or functional tree [@Pavoine2009].
 
-Similarity-based diversity [@Leinster2012] can be used to estimate [@Marcon2014e] functional diversity from a similarity or dissimilarity matrix between species without requiring building a dendrogram and thus preserving the topology of species  [@Pavoine2005a; @Podani2007].
+Similarity-based diversity [@Leinster2012] can be used to estimate [@Marcon2014e] functional diversity from a similarity or dissimilarity matrix between species without requiring building a dendrogram and thus preserving the topology of species [@Pavoine2005a; @Podani2007].
 
-The classical diversity estimators (Shannon and Simpson entropy) can be found in many R packages. 
-Bias correction is rarely available except in the _EntropyEstimation_ [@Cao2014] package which provides the Zhang and Grabchak's estimators of entropy and diversity and their asymptotic variance (not included in _divent_).
-
+The classical diversity estimators (Shannon and Simpson entropy) can be found in many R packages.
+Bias correction is rarely available except in the *EntropyEstimation* [@Cao2014] package which provides the Zhang and Grabchak's estimators of entropy and diversity and their asymptotic variance (not included in *divent*).
 
 # Estimating the diversity of a community
 
@@ -34,11 +33,8 @@ Bias correction is rarely available except in the _EntropyEstimation_ [@Cao2014]
 
 Community data is:
 
-- either a numeric vector containing abundances of species (the number of individual of each species) or their probabilities (the proportion of individuals of each species, summing to 1).
-This format is convenient when a single community is considered.
-- or a dataframe whose rows are communities and column are species. 
-Its values are either abundances or probabilities. 
-Special columns contain the site names, and their weights (e.g. their area or number of individuals).
+-   either a numeric vector containing abundances of species (the number of individual of each species) or their probabilities (the proportion of individuals of each species, summing to 1). This format is convenient when a single community is considered.
+-   or a dataframe whose rows are communities and column are species. Its values are either abundances or probabilities. Special columns contain the site names, and their weights (e.g. their area or number of individuals).
 
 Example data is provided in the dataset `paracou_6_abd`.
 Let's get the abundances of tree species in the 6.25-ha tropical forest plot #6 from Paracou forest station in French Guiana.
@@ -50,7 +46,6 @@ paracou_6_abd
 # Number of individuals in each community
 abd_sum(paracou_6_abd)
 ```
-
 
 The data in `paracou_6_abd` is an object of class `abundances`, i.e. a tibble with species as columns and sites as rows.
 It can be manipulated as any dataframe and plotted as a rank-abundance curve:
@@ -67,7 +62,6 @@ autoplot(rc, fit_rac = TRUE, distribution = "lnorm")
 ```
 
 The Whittaker plot (rank-abundance curve) of a random log-normal distribution of 10000 individuals simulated with default parameter ($\sigma = 1$) is produced.
-
 
 ## Diversity estimation
 
@@ -97,7 +91,7 @@ ent_shannon(paracou_6_abd, estimator = "ChaoJost")
 
 The best available estimator is chosen by default: its name is returned.
 
-Those indices are special cases of the Tsallis entropy [-@Tsallis1988] or order $q$ (respectively $q=0,1,2$ for richness, Shannon, Simpson):
+Those indices are special cases of the Tsallis entropy [-@Tsallis1988] or order $q$ (respectively $q = 0, 1, 2$ for richness, Shannon, Simpson):
 
 ```{r ent_tsallis}
 ent_tsallis(paracou_6_abd, q = 1)
@@ -142,7 +136,7 @@ div_similarity(paracou_6_abd, similarities = Z, q = 2)
 
 ## Diversity profiles
 
-Diversity can be plotted against its order to provide a diversity profile. 
+Diversity can be plotted against its order to provide a diversity profile.
 Order 0 corresponds to richness, 1 to Shannon's and 2 to Simpson's diversities:
 
 ```{r div_profile}
@@ -152,10 +146,12 @@ profile_hill(paracou_6_abd) %>% autoplot
 Profiles of phylogenetic diversity and similarity-based diversity are obtained the same way.
 
 ```{r PDiversityProfile}
-profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>% autoplot
+profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>% 
+  autoplot()
 # Similarity matrix
 Z <- fun_similarity(paracou_6_fundist)
-profile_similarity(paracou_6_abd, similarities = Z) %>% autoplot
+profile_similarity(paracou_6_abd, similarities = Z) %>%
+  autoplot()
 ```
 
 ## Diversity accumulation
@@ -199,7 +195,6 @@ accum_div_phylo(
   autoplot()
 ```
 
-
 # Estimating the diversity of a meta-community
 
 ## Meta-community data
@@ -235,7 +230,6 @@ A set of communities is built.
 (communities <- as_abundances(abd, weights = w))
 ```
 
-
 The function `metacommunity()` creates a metacommunity.
 To plot it, use argument `type = "Metacommunity` when plotting the `species_distribution`.
 
@@ -247,10 +241,9 @@ plot(communities, type = "Metacommunity")
 Each shade of grey represents a species.
 Heights correspond to the probability of species and the width of each community is its weight.
 
-
 ## Diversity estimation
 
-High level functions allow computing diversity of all communities ($\alpha$ diversity), of the meta-community ($\gamma$ diversity), and $\beta$ diversity, i.e.\ the number of effective communities (the number of communities with equal weights and no common species that would yield the observed $\beta$ diversity).
+High level functions allow computing diversity of all communities ($\alpha$ diversity), of the meta-community ($\gamma$ diversity), and $\beta$ diversity, i.e. the number of effective communities (the number of communities with equal weights and no common species that would yield the observed $\beta$ diversity).
 
 The `div_part` function calculates everything at once, for a given order of diversity $q$:
 
@@ -266,6 +259,6 @@ div_hill(paracou_6_abd, q = 1, gamma = TRUE)
 
 # Full documentation
 
-https://ericmarcon.github.io/divent/ 
+<https://ericmarcon.github.io/divent/>
 
 # References

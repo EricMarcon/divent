@@ -18,7 +18,6 @@ set.seed(97310)
 Functions to estimate entropy and diversity share many arguments, whose default value is generally the best choice.
 They are explained here.
 
-
 # Asymptotic or interpolated / extrapolated diversity
 
 ## `q`
@@ -38,10 +37,9 @@ If `level` is not `NULL`, `estimator` is ignored.
 
 ## `sample_coverage`
 
-To estimate $\gamma$ diversity, the size of a metacommunity is unknown so it has to be set according to a rule which does not ensure that its abundances are integer values. 
-Then, classical bias-correction methods do not apply. 
+To estimate $\gamma$ diversity, the size of a metacommunity is unknown so it has to be set according to a rule which does not ensure that its abundances are integer values.
+Then, classical bias-correction methods do not apply.
 Providing the sample_coverage argument allows applying the ChaoShen and Grassberger estimators to estimate quite well the entropy.
-
 
 # Unveiling
 
@@ -74,13 +72,11 @@ If the estimate of order $k+1$ is out of the confidence interval of the estimate
 Unveiling is based on the estimation of the sample coverage.
 Its estimator can be chosen.
 
-
 # General arguments
 
 ## `alpha`
 
 The risk level of tests or confidence intervals.
-
 
 ## `as_numeric`
 
@@ -95,7 +91,3 @@ To save time, `check_arguments = FALSE` skips the checks.
 ## `n_simulations`
 
 The number of simulations run to estimate confidence intervals.
-
-
-
-

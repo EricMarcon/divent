@@ -24,6 +24,7 @@ coverage(x, ...)
   x,
   estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   level = NULL,
+  as_numeric = FALSE,
   ...,
   check_arguments = TRUE
 )
