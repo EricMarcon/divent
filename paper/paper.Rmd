@@ -23,17 +23,18 @@ affiliations:
   index: 2
 - name: Université Paris-Saclay, INRAE, AgroParisTech, Paris-Saclay Applied Economics, F-91120, Palaiseau, France
   index: 3
-date: "1 February 2026"
+date: "4 March 2026"
 bibliography: ../inst/REFERENCES.bib
 output: pdf_document
 ---
 
 # Summary
 
-*divent* is a package for R dedicated to the measurement of biodiversity.
+*divent* is a package for R dedicated to the measurement of diversity in general, and biodiversity in particular.
 It provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
 
-It is a reboot of the [*entropart*](https://ericmarcon.github.io/entropart/) package to make it easier to use and computationally more efficient.
+It is a reboot of the R package [*entropart*](https://ericmarcon.github.io/entropart/) to make it easier to use and computationally more efficient.
+It also extends its functionality.
 
 Data may be abundance vectors or matrices (the number of individual per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
 Random communities can be simulated (function `rcommunity`) and spatialized (`rspcommunity`).
@@ -69,7 +70,7 @@ Spatially-explicit diversity raises an increasing interest [@Marcon2023] to addr
 The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules [@Shen2013b; @Wiegand2017].
 When individual location is not available, the partitioning of the diversity of a set of communities [@Whittaker1960], called $\gamma$ diversity, into the average diversity of communities ($\alpha$ diversity) and their divergence ($\beta$ diversity) is necessary, whatever the diversity considered, for the same purposes.
 
-The *divent* package allows computing all these features of diversity.
+The *divent* package enables all these diversity features to be computed.
 
 # State of the field
 
@@ -85,7 +86,7 @@ Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021] in diversity (*d
 
 *divent* is built on some explicit theoretical choices that differ from those of *iNEXT.3D*:
 
--   Diversity is explicitely derived from entropy [@Jost2006], following the information theory.
+-   Diversity is explicitly derived from entropy [@Jost2006], following the information theory.
 -   Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling. Far more estimators of entropy in general are available.
 -   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff following @Pavoine2015a rather than @Chao2019 for theoretical arguments.
 
