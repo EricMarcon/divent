@@ -98,6 +98,9 @@ Continuous integration including unit tests [@Wickham2011] and coverage [@Hester
 Generic functions (e.g., `div_hill`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric`) or objects of class `species_distributions` (function `div_hill.species_distribution`), which are dataframes whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
 Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
+Spatially-explicit diversity measures require counting the number of neighbors around each individual.
+This task is run by a short C++ code integrated and parallelized by the *RcppParallel* package [@Allaire2015].
+
 # Research impact statement
 
 *divent* is the successor of the *entropart* package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
