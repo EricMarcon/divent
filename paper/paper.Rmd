@@ -87,7 +87,7 @@ Additionally, *iNEXT.3D* addresses temporal changes [@Chao2021] in diversity (*d
 
 -   Diversity is explicitely derived from entropy [@Jost2006], following the information theory.
 -   Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling. Far more estimators of entropy in general are available.
--   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff [@Pavoine2015a vs @Chao2019] is proposed for theoretical arguments.
+-   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff following @Pavoine2015a rather than @Chao2019 for theoretical arguments.
 
 # Software design
 
