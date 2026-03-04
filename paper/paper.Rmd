@@ -24,7 +24,7 @@ affiliations:
 - name: Université Paris-Saclay, INRAE, AgroParisTech, Paris-Saclay Applied Economics, F-91120, Palaiseau, France
   index: 3
 date: "4 March 2026"
-bibliography: ../inst/REFERENCES.bib
+bibliography: paper.bib
 output: pdf_document
 ---
 
