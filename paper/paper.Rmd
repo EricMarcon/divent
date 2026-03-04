@@ -25,7 +25,6 @@ affiliations:
   index: 3
 date: "4 March 2026"
 bibliography: paper.bib
-output: pdf_document
 ---
 
 # Summary
