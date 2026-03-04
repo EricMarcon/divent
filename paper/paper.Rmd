@@ -108,7 +108,7 @@ No AI tools were used at any stage of the package development nor in this articl
 
 # Acknowledgements
 
-This work benefited from the support of “Investissements d’avenir” of the French National Agency for Research (Labex CEBA, ref. ANR-10-LABX-25-01).
+This work benefited from the support of "Investissements d'avenir" of the French National Agency for Research (Labex CEBA, ref. ANR-10-LABX-25-01).
 The authors thank [Bruno Hérault](https://agents.cirad.fr/Bruno+HERAULT) for his contributions to the [entropart](https://ericmarcon.github.io/entropart/) package.
 
 # References
