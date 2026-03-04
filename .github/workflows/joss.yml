@@ -1,7 +1,4 @@
-on:
-  push:
-    branches:
-      - JOSS
+on: workflow_dispatch
 
 name: JOSS knitting test
 
