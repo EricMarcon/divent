@@ -17,7 +17,7 @@ set.seed(97310)
 install_packages <- function(packages) {
   install_package <- function(package) {
     if (!package %in% installed.packages()[, 1]) {
-      install.packages(package, repos="https://cran.rstudio.com/")
+      install.packages(package, repos = "https://cran.rstudio.com/")
     }
   }
   invisible(sapply(packages, install_package))
@@ -25,7 +25,7 @@ install_packages <- function(packages) {
 install_packages(c("iNEXT"))
 ```
 
-Estimation of diversity in _divent_ relies on classical assumptions that are recalled here.
+Estimation of diversity in *divent* relies on classical assumptions that are recalled here.
 The observed data is a sample of a community (or several communities if data is a metacommunity).
 All "reduced-bias estimator" are asymptotic estimators of the community diversity: if the sample size could be extended infinitely, diversity would tend to the diversity of the whole (asymptotic) community.
 In hyperdiverse ecosystems such as evergreen forests, the asymptotic community generally does not exist in the field because of environmental variations: increasing the size of the sample results in sampling in different communities.
@@ -35,7 +35,6 @@ In other words, the asymptotic diversity is that of a community that would provi
 Diversity is accumulated as a function of sample size.
 HCDT (aka Tsallis) entropy (thus Hill numbers and phylodiversity) can be estimated at any sample size [@Chao2014], by interpolation down from the actual sample size and by extrapolation up to infinite sample size, i.e. the asymptotic estimator.
 Alternatively, sample size may be replaced by sample coverage, by interpolation from arbitrary small sample coverages to that of the actual sample, and by extrapolation up to the asymptotic estimator whose sample coverage is 1.
-
 
 # Asymptotic estimation
 
@@ -62,12 +61,12 @@ Then, the default estimator is the asymptotic one.
 div_hill(paracou_6_abd[1, ], q = 1)
 ```
 
-Several asymptotic estimators are available in the literature and implemented in _divent_.
-For consistency, _divent_ uses the jackknife estimator of richness and the unveiled jackknife estimator for entropy.
+Several asymptotic estimators are available in the literature and implemented in *divent*.
+For consistency, *divent* uses the jackknife estimator of richness and the unveiled jackknife estimator for entropy.
 The advantage of these estimators is that they provide reliable estimations even though the sampling effort is low: then, the estimation variance increases but its bias remains acceptable because the order of the jackknife estimator is chosen according to the data.
 Poorly-sampled communities are estimated by a higher-order jackknife, resulting in higher estimation variance.
 
-For well-sampled communities, i.e. in the domain of validity of the jacknife of order 1, the Chao1 estimator of richness and the Chao-Jost estimator of entropy are the best choices because they have the best mathematical support, but they will severely underestimate the diversity of poorly-sampled communities.
+For well-sampled communities, i.e. in the domain of validity of the jackknife of order 1, the Chao1 estimator of richness and the Chao-Jost estimator of entropy are the best choices because they have the best mathematical support, but they will severely underestimate the diversity of poorly-sampled communities.
 They also are more computer-intensive.
 
 ```{r}
@@ -78,7 +77,6 @@ div_richness(paracou_6_abd[1, ], estimator = "Chao1")
 # Diversity of order 1 underestimated by the Chao-Jost estimator
 div_hill(paracou_6_abd[1, ], q = 1, estimator = "ChaoJost")
 ```
-
 
 # Choosing the estimation level
 
@@ -103,7 +101,8 @@ div_hill(paracou_6_abd[1, ], q = 1, level = 0.9)
 
 If the sample size is smaller than the actual sample, entropy is interpolated.
 
-If it is higher, entropy must be extrapolated. For diversity orders equal to 0 (richness), 1 (Shannon) or 2 (Simpson), explicit, almost unbiased estimators are used. 
+If it is higher, entropy must be extrapolated.
+For diversity orders equal to 0 (richness), 1 (Shannon) or 2 (Simpson), explicit, almost unbiased estimators are used.
 Continuity of the estimation of diversity around the actual sample size is guaranteed.
 
 ```{r}
@@ -115,13 +114,12 @@ accum_hill(
   autoplot()
 ```
 
-For non-integer orders, things get more complicated. In _divent_, asymptotic entropy is estimated by the unveiled jackknife estimator and rarefied down to the actual sample size. 
+For non-integer orders, things get more complicated.
+In *divent*, asymptotic entropy is estimated by the unveiled jackknife estimator and rarefied down to the actual sample size.
 There is no reason for it to correspond exactly to the observed entropy.
 The asymptotic richness is the less robust part of the estimation thus it is adjusted iteratively until the rarefied entropy equals the actual sample's entropy, ensuring continuity between interpolation and extrapolation.
 
-The default arguments of all functions apply this strategy, except for Simpson's diversity ($q=2$) that is estimated directly without bias.
-
-
+The default arguments of all functions apply this strategy, except for Simpson's diversity ($q = 2$) that is estimated directly without bias.
 
 # Diversity accumulation
 
@@ -147,14 +145,12 @@ This means that the extrapolated diversity at a high sample coverage will differ
 
 ```{r}
 # Extrapolation at 99.99% sample coverage
-div_hill(paracou_6_abd[1, ], q = 1, level=0.9999)
+div_hill(paracou_6_abd[1, ], q = 1, level = 0.9999)
 # Unveiled Jaccknife asymptotic estimator
 div_hill(paracou_6_abd[1, ], q = 1)
 # Chao-Jost estimator
-div_hill(paracou_6_abd[1, ], q = 1, Correction="ChaoJost")
+div_hill(paracou_6_abd[1, ], q = 1, estimator = "ChaoJost")
 ```
-
-
 
 # Diversity profiles at a sampling level
 
@@ -168,20 +164,19 @@ profile_hill(paracou_6_abd[1, ], level = paracou6_1_size * 1.5) %>%
 
 Extrapolated diversity is estimated at each order such that it is continuous at the observed sample size.
 
-
 # Differences with the iNEXT package
 
-_iNEXT_ [@Hsieh2014] is designed primarily to interpolate or extrapolate diversity of integer orders.
+*iNEXT* [@Hsieh2014] is designed primarily to interpolate or extrapolate diversity of integer orders.
 Extrapolation of diversity of order 0 relies on the Chao1 estimator of richness and that of order 1 uses the Chao-Jost estimator.
-In _divent_, extrapolation relies on the estimation of the asymptotic distribution of the community with asymptotic richness such that the entropy of the asymptotic distribution rarefied to the observed sample size equals the observed entropy of the data.
-This approach allows consistent estimation of extrapolated diversity at integer and non-integer orders, thus allowing consistent diversity profiles without discontinuities at $q=0$ and $q=1$.
-The results of _iNEXT_ can be obtained by forcing argument `estimator = "ChaoJost"`.
+In *divent*, extrapolation relies on the estimation of the asymptotic distribution of the community with asymptotic richness such that the entropy of the asymptotic distribution rarefied to the observed sample size equals the observed entropy of the data.
+This approach allows consistent estimation of extrapolated diversity at integer and non-integer orders, thus allowing consistent diversity profiles without discontinuities at $q = 0$ and $q = 1$.
+The results of *iNEXT* can be obtained by forcing argument `estimator = "ChaoJost"`.
 
 ```{r}
 library("iNEXT")
 data(spider)
 # Extrapolated diversity of an example dataset
-estimateD(spider$Girdled, level=300)
+estimateD(spider$Girdled, level = 300)
 # Similar estimation by divent
 div_hill(spider$Girdled, q = 0, level = 300, estimator = "ChaoJost")
 div_hill(spider$Girdled, q = 1, level = 300, estimator = "ChaoJost")
@@ -192,11 +187,9 @@ div_hill(spider$Girdled, q = 0, level = 300)
 div_hill(spider$Girdled, q = 1, level = 300)
 ```
 
-Small differences are due to different estimators of sample coverage: _divent_ uses the more accurate `ZhangHuang` estimator by default.
+Small differences are due to different estimators of sample coverage: *divent* uses the more accurate `ZhangHuang` estimator by default.
 
-Last, confidence intervals of diversity accumulation assume normality in _iNEXT_: estimation variance is estimated by bootstrap and the confidence interval is defined as $\pm 1.96$ times the standard deviation.
-In _divent_, confidence intervals are built directly from the quantiles of bootstrapped estimations.
-
+Last, confidence intervals of diversity accumulation assume normality in *iNEXT*: estimation variance is estimated by bootstrap and the confidence interval is defined as $\pm 1.96$ times the standard deviation.
+In *divent*, confidence intervals are built directly from the quantiles of bootstrapped estimations.
 
 # References
-
