@@ -13,3 +13,5 @@
 ^vignettes\/[^\/]+_files$
 ^data-raw$
 ^README\.Rmd$
+# paper folder
+^paper$
