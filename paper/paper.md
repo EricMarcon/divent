@@ -15,7 +15,7 @@ authors:
   affiliation: "1, 2"
 - name: Florence Puech
   orcid: "0000-0002-5279-6878"
-  affiliation: 2
+  affiliation: 3
 affiliations:
 - name: AgroParisTech, Montpellier, France
   index: 1
