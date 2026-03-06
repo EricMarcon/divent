@@ -13,6 +13,7 @@ authors:
 - name: Eric Marcon
   orcid: "0000-0002-5249-321X"
   affiliation: "1, 2"
+  corresponding: true
 - name: Florence Puech
   orcid: "0000-0002-5279-6878"
   affiliation: 3
