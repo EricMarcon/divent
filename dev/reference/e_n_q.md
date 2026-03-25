@@ -49,7 +49,7 @@ e_n_q(n, q)
 #> [1] 90
 # with (empirical estimation)
 mean(rpois(1000, lambda = n)^q)
-#> [1] 107.415
+#> [1] 107.82
 # and (naive estimation)
 n^q
 #> [1] 100
