@@ -58,7 +58,7 @@ RAC plot only.}
 
 \item{ylab}{The  label of the Y-axis.}
 
-\item{palette}{The name of a color palette, recognized by \link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal}.
+\item{palette}{The name of a color palette, recognized by \link[RColorBrewer:brewer.pal]{RColorBrewer::brewer.pal}.
 RAC plot only.}
 
 \item{object}{An object of class \link{species_distribution}.}

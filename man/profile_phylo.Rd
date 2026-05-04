@@ -60,7 +60,7 @@ profile_phylo(x, tree, orders = seq(from = 0, to = 2, by = 0.1), ...)
 or an object of class \link{abundances} or \link{probabilities}.}
 
 \item{tree}{an ultrametric, phylogenetic tree.
-May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+May be an object of class \link{phylo_divent}, \link[ape:phylo]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
 \item{orders}{The orders of diversity used to build the profile.}
 

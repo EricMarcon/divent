@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{An object of class "phylo_divent".}
 
-\item{...}{Arguments passed to \link[stats:dendrogram]{stats::plot.dendrogram}.}
+\item{...}{Arguments passed to \link[stats:plot.dendrogram]{stats::plot.dendrogram}.}
 }
 \value{
 \code{NULL}. Called for side effects.

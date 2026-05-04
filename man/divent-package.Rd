@@ -28,6 +28,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Eric Marcon \email{eric.marcon@agroparistech.fr} (\href{https://orcid.org/0000-0002-5249-321X}{ORCID})
   \item Florence Puech \email{florence.puech@universite-paris-saclay.fr} (\href{https://orcid.org/0000-0002-5279-6878}{ORCID})
 }
 
