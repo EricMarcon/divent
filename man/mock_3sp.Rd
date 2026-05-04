@@ -9,7 +9,7 @@
 \title{Mock data}
 \format{
 \code{mock_3sp_abd} is a vector, \code{mock_3sp_dist} a matrix and
-\code{mock_3sp_tree} an object of class \link[ape:read.tree]{ape::phylo}.
+\code{mock_3sp_tree} an object of class \link[ape:phylo]{ape::phylo}.
 
 An object of class \code{dist} of length 3.
 

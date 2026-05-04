@@ -12,7 +12,7 @@ is_phylo_divent(x)
 }
 \arguments{
 \item{tree}{an ultrametric, phylogenetic tree.
-May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+May be an object of class \link{phylo_divent}, \link[ape:phylo]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
 \item{x}{An object of class "phylo_divent".}
 }
@@ -25,7 +25,7 @@ Methods for dendrograms of class "phylo_divent".
 }
 \details{
 \code{as_phylo_divent} calculates cuts and intervals of a phylogenetic tree and makes
-it available both in \link[stats:hclust]{stats::hclust} and \link[ape:read.tree]{ape::phylo} formats.
+it available both in \link[stats:hclust]{stats::hclust} and \link[ape:phylo]{ape::phylo} formats.
 The conversion preprocesses the tree: it calculates cuts so that the tree
 can be reused efficiently by phylodiversity functions.
 }

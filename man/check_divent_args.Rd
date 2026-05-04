@@ -165,7 +165,7 @@ the number of points (\code{size}) per area divided by \code{thomas_mu}.}
 (along each coordinate axis) of a point from its cluster center.}
 
 \item{tree}{an ultrametric, phylogenetic tree.
-May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+May be an object of class \link{phylo_divent}, \link[ape:phylo]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
 \item{use.names}{if \code{TRUE}, the names of the \code{species_distribution} are kept
 in the matrix or vector they are converted to.}

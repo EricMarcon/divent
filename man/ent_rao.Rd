@@ -41,7 +41,7 @@ or an object of class \link{abundances} or \link{probabilities}.}
 \item{distances}{a distance matrix or an object of class \link[stats:dist]{stats::dist}.}
 
 \item{tree}{an ultrametric, phylogenetic tree.
-May be an object of class \link{phylo_divent}, \link[ape:read.tree]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
+May be an object of class \link{phylo_divent}, \link[ape:phylo]{ape::phylo}, \link[ade4:phylog]{ade4::phylog} or \link[stats:hclust]{stats::hclust}.}
 
 \item{normalize}{if \code{TRUE}, phylogenetic is normalized: the height of the tree is set to 1.}
 
