@@ -12,6 +12,7 @@
 # RStudio files
 .Rproj.user/
 .Rprofile
+.positai
 # produced vignettes
 Meta
 doc
@@ -39,4 +40,3 @@ docs/
 # JOSS
 paper/paper.html
 paper/paper.pdf
-

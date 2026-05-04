@@ -1,6 +1,8 @@
 # Rstudio Rproj working files
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.positai$
+^\.claude$
 # Github actions workflows
 ^\.github$
 # pkgdown folder
