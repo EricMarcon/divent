@@ -9,9 +9,9 @@ The package allows estimating biodiversity according to the framework
 based on HCDT entropy, the correction of its estimation-bias
 (Grassberger 1988; Chao and Shen 2003; Chao and Jost 2015) and its
 transformation into equivalent numbers of species (Hill 1973; Jost 2006;
-Marcon et al. 2014). Estimation of diversity at arbitrary levels of
-sampling, requiring interpolation or extrapolation (Chao et al. 2014) is
-available.
+Marcon, Scotti, et al. 2014). Estimation of diversity at arbitrary
+levels of sampling, requiring interpolation or extrapolation (Chao et
+al. 2014) is available.
 
 Phylogenetic or functional diversity (Marcon and Hérault 2015) can be
 estimated, considering phyloentropy as the average species-neutral
@@ -19,10 +19,10 @@ diversity over slices of a phylogenetic or functional tree (Pavoine and
 Bonsall 2009).
 
 Similarity-based diversity (Leinster and Cobbold 2012) can be used to
-estimate (Marcon, Zhang, and Hérault 2014) functional diversity from a
+estimate (Marcon, Zhang, et al. 2014) functional diversity from a
 similarity or dissimilarity matrix between species without requiring
 building a dendrogram and thus preserving the topology of species
-(Pavoine, Ollier, and Dufour 2005; Podani and Schmera 2007).
+(Pavoine et al. 2005; Podani and Schmera 2007).
 
 The classical diversity estimators (Shannon and Simpson entropy) can be
 found in many R packages. Bias correction is rarely available except in
@@ -51,12 +51,14 @@ Paracou forest station in French Guiana. It is divided into 4
 equally-sized subplots:
 
 ``` r
+
 library("divent")
 ```
 
     ## Loading required package: Rcpp
 
 ``` r
+
 paracou_6_abd
 ```
 
@@ -76,6 +78,7 @@ paracou_6_abd
     ## #   Casearia_javitensis <int>, Catostemma_fragrans <int>, …
 
 ``` r
+
 # Number of individuals in each community
 abd_sum(paracou_6_abd)
 ```
@@ -93,6 +96,7 @@ tibble with species as columns and sites as rows. It can be manipulated
 as any dataframe and plotted as a rank-abundance curve:
 
 ``` r
+
 autoplot(paracou_6_abd[1, ])
 ```
 
@@ -102,6 +106,7 @@ The `rcommunity` function allows drawing random communities, e.g. a
 log-normal one (Preston 1948):
 
 ``` r
+
 rc <- rcommunity(1, size = 10000, distribution = "lnorm")
 autoplot(rc, fit_rac = TRUE, distribution = "lnorm")
 ```
@@ -118,6 +123,7 @@ The classical indices of diversity are richness (the number of species),
 Shannon’s and Simpson’s entropies:
 
 ``` r
+
 div_richness(paracou_6_abd)
 ```
 
@@ -130,6 +136,7 @@ div_richness(paracou_6_abd)
     ## 4 subplot_4   1.56 Jackknife 2     0       296
 
 ``` r
+
 ent_shannon(paracou_6_abd)
 ```
 
@@ -142,6 +149,7 @@ ent_shannon(paracou_6_abd)
     ## 4 subplot_4   1.56 UnveilJ       1    4.55
 
 ``` r
+
 ent_simpson(paracou_6_abd)
 ```
 
@@ -159,6 +167,7 @@ that indices are just calculated by applying their definition function
 to the probabilities (that is the naive, or plugin estimator).
 
 ``` r
+
 library("dplyr")
 ```
 
@@ -174,6 +183,7 @@ library("dplyr")
     ##     intersect, setdiff, setequal, union
 
 ``` r
+
 paracou_6_abd %>% 
   as_probabilities() %>% 
   ent_shannon()
@@ -191,6 +201,7 @@ When abundances are available, many estimators can be used (Marcon 2015)
 to address unobserved species and the non-linearity of the indices:
 
 ``` r
+
 ent_shannon(paracou_6_abd)
 ```
 
@@ -203,6 +214,7 @@ ent_shannon(paracou_6_abd)
     ## 4 subplot_4   1.56 UnveilJ       1    4.55
 
 ``` r
+
 ent_shannon(paracou_6_abd, estimator = "ChaoJost")
 ```
 
@@ -220,6 +232,7 @@ Those indices are special cases of the Tsallis entropy (1988) or order
 \\q\\ (respectively \\q = 0, 1, 2\\ for richness, Shannon, Simpson):
 
 ``` r
+
 ent_tsallis(paracou_6_abd, q = 1)
 ```
 
@@ -236,6 +249,7 @@ number of species with equal probabilities that would yield the observed
 entropy, called Hill (1973) numbers or simply diversity (Jost 2006).
 
 ``` r
+
 div_hill(paracou_6_abd, q = 1)
 ```
 
@@ -251,24 +265,28 @@ Diversity is the deformed exponential of order \\q\\ of entropy, and
 entropy is the deformed logarithm of of order \\q\\ of diversity:
 
 ``` r
+
 (d2 <- div_hill(paracou_6_abd, q = 2)$diversity)
 ```
 
     ## [1] 42.28417 44.58777 48.83999 36.01687
 
 ``` r
+
 ln_q(d2, q = 2)
 ```
 
     ## [1] 0.9763505 0.9775723 0.9795250 0.9722352
 
 ``` r
+
 (e2 <- ent_tsallis(paracou_6_abd, q = 2)$entropy)
 ```
 
     ## [1] 0.9763505 0.9775723 0.9795250 0.9722352
 
 ``` r
+
 exp_q(e2, q = 2)
 ```
 
@@ -279,6 +297,7 @@ taxonomy with family, genus and species) is available, phylogenetic
 entropy and diversity (Marcon and Hérault 2015) can be calculated:
 
 ``` r
+
 div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
 ```
 
@@ -295,6 +314,7 @@ containing abundances, without having to build an object of class
 `abundances`.
 
 ``` r
+
 # Richness of a community of 100 species, each of them with 10 individuals
 div_richness(rep(10, 100))
 ```
@@ -305,10 +325,11 @@ div_richness(rep(10, 100))
     ## 1 Jackknife 0     0       100
 
 With a Euclidian distance matrix between species, similarity-based
-diversity (Leinster and Cobbold 2012; Marcon, Zhang, and Hérault 2014)
-is available:
+diversity (Leinster and Cobbold 2012; Marcon, Zhang, et al. 2014) is
+available:
 
 ``` r
+
 # Similarity is computed from the functional distance matrix of Paracou species
 Z <- fun_similarity(paracou_6_fundist)
 # Calculate diversity of order 2
@@ -330,6 +351,7 @@ profile. Order 0 corresponds to richness, 1 to Shannon’s and 2 to
 Simpson’s diversities:
 
 ``` r
+
 profile_hill(paracou_6_abd) %>% autoplot
 ```
 
@@ -339,6 +361,7 @@ Profiles of phylogenetic diversity and similarity-based diversity are
 obtained the same way.
 
 ``` r
+
 profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>% 
   autoplot()
 ```
@@ -346,6 +369,7 @@ profile_phylo(paracou_6_abd, tree = paracou_6_taxo) %>%
 ![](divent_files/figure-html/PDiversityProfile-1.png)
 
 ``` r
+
 # Similarity matrix
 Z <- fun_similarity(paracou_6_fundist)
 profile_similarity(paracou_6_abd, similarities = Z) %>%
@@ -360,6 +384,7 @@ Diversity can be interpolated or extrapolated to arbitrary sampling
 levels.
 
 ``` r
+
 # Estimate the diversity of 1000 individuals
 div_hill(paracou_6_abd, q = 1, level = 1000)
 ```
@@ -376,6 +401,7 @@ The sampling level can be a sample coverage, that is converted to the
 equivalent number of individuals.
 
 ``` r
+
 # Estimate the diversity at 80% coverage
 div_hill(paracou_6_abd, q = 1, level = 0.8)
 ```
@@ -391,6 +417,7 @@ div_hill(paracou_6_abd, q = 1, level = 0.8)
 Diversity accumulation curves are available.
 
 ``` r
+
 accum_hill(
   paracou_6_abd[1, ], 
   q = 1, 
@@ -407,6 +434,7 @@ intervals of the estimation can be computed, taking into account
 sampling variability.
 
 ``` r
+
 accum_div_phylo(
   paracou_6_abd[1, ],
   tree = paracou_6_taxo,
@@ -439,6 +467,7 @@ diversity.
 Example:
 
 ``` r
+
 # Abundances of three communities with four species
 (abd <- matrix(
   c(
@@ -456,6 +485,7 @@ Example:
     ## [3,]   25   15    0    2
 
 ``` r
+
 # Community weights
 w <- c(1, 2, 1)
 ```
@@ -463,6 +493,7 @@ w <- c(1, 2, 1)
 A set of communities is built.
 
 ``` r
+
 (communities <- as_abundances(abd, weights = w))
 ```
 
@@ -479,6 +510,7 @@ creates a metacommunity. To plot it, use argument
 `type = "Metacommunity` when plotting the `species_distribution`.
 
 ``` r
+
 (mc <- metacommunity(communities))
 ```
 
@@ -488,6 +520,7 @@ creates a metacommunity. To plot it, use argument
     ## 1 metacommunity      4  24.6  45.7  56.2  15.5
 
 ``` r
+
 plot(communities, type = "Metacommunity")
 ```
 
@@ -508,6 +541,7 @@ The `div_part` function calculates everything at once, for a given order
 of diversity \\q\\:
 
 ``` r
+
 div_part(paracou_6_abd, q = 1)
 ```
 
@@ -527,6 +561,7 @@ function to obtain \\\gamma\\ diversity instead of the diversity of each
 community.
 
 ``` r
+
 div_hill(paracou_6_abd, q = 1, gamma = TRUE)
 ```
 
@@ -544,11 +579,10 @@ div_hill(paracou_6_abd, q = 1, gamma = TRUE)
 Cao, Lijuan, and Michael Grabchak. 2014. *EntropyEstimation: Estimation
 of Entropy and Related Quantities*. R Package.
 
-Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, Elizabeth L. Sander, K. H.
-Ma, Robert K. Colwell, and Aaron M. Ellison. 2014. “Rarefaction and
-Extrapolation with Hill Numbers: A Framework for Sampling and Estimation
-in Species Diversity Studies.” *Ecological Monographs* 84 (1): 45–67.
-<https://doi.org/10.1890/13-0133.1>.
+Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, et al. 2014. “Rarefaction
+and Extrapolation with Hill Numbers: A Framework for Sampling and
+Estimation in Species Diversity Studies.” *Ecological Monographs* 84
+(1): 45–67. <https://doi.org/10.1890/13-0133.1>.
 
 Chao, Anne, and Lou Jost. 2015. “Estimating Diversity and Entropy
 Profiles via Discovery Rates of New Species.” *Methods in Ecology and

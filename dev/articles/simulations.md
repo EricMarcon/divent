@@ -21,10 +21,9 @@ Distributions may be “lnorm” (log-normal), “lseries” (log-series),
 - log-normal (“lnorm”) distributions (Preston 1948) require argument
   `sd_lnorm` to set the standard deviation of the log-abundances. The
   expectation of the distribution is computed from the other arguments.
-- log-series (“lseries”) distributions (Fisher, Corbet, and
-  Williams 1943) rely on the `fisher_alpha` argument. They ignore
-  `species_number` because the number of species is given by
-  `fisher_alpha` and `size`.
+- log-series (“lseries”) distributions (Fisher et al. 1943) rely on the
+  `fisher_alpha` argument. They ignore `species_number` because the
+  number of species is given by `fisher_alpha` and `size`.
 - geometric (“geom”) distributions (Motomura 1932) have argument
   `prob_geom`. This distribution is not stochastic.
 - MacArthur’s broken stick (“bstick,” MacArthur 1957) has no argument.
@@ -37,6 +36,7 @@ Example: a single log-normal community with 300 species and standard
 deviation equal to 2 is drawn and plotted:
 
 ``` r
+
 library("dplyr")  # for `%>%`
 library("divent")
 rcommunity(1, size = 1E4, species_number = 300, distribution = "lnorm") %>% 
@@ -65,22 +65,22 @@ Arguments are :
     `abd`, these probabilities are used.
   - “Chao2013” or “Chao2015” (by default): based on the observed
     abundances (`abd` must be given), the actual probability
-    distribution is estimated following Chao, Wang, and Jost (2013) or
-    Chao and Jost (2015). Observed frequencies (normalized abundances)
-    are not directly used as estimators of the probabilities: abundant
-    species are correctly estimated but rare species are either
-    overestimated or unobserved. A model based on sample coverage is
-    used to correct this issue. The estimator of sample coverage is
-    chosen by the argument `coverage_estimator`: the sum of observed
-    probabilities equals the sample coverage. The number of unobserved
-    species is estimated and their distribution (their probabilities sum
-    to the coverage deficit) is arbitrary set as uniform (“Chao2013”) or
-    geometric (“Chao2015”).
+    distribution is estimated following Chao et al. (2013) or Chao and
+    Jost (2015). Observed frequencies (normalized abundances) are not
+    directly used as estimators of the probabilities: abundant species
+    are correctly estimated but rare species are either overestimated or
+    unobserved. A model based on sample coverage is used to correct this
+    issue. The estimator of sample coverage is chosen by the argument
+    `coverage_estimator`: the sum of observed probabilities equals the
+    sample coverage. The number of unobserved species is estimated and
+    their distribution (their probabilities sum to the coverage deficit)
+    is arbitrary set as uniform (“Chao2013”) or geometric (“Chao2015”).
 
 Example: a community based on the subplot 1 of Paracou plot 6 is drawn
 and its distribution is compared to the observed frequencies.
 
 ``` r
+
 library("ggplot2") # for `labs()`
 # Draw a large community to avoid sample bias
 rcommunity(1, size = 1E6, abd = as.numeric(paracou_6_abd[1, ])) %>% 
@@ -135,6 +135,7 @@ of 5 species. Their spatial distribution is aggregated and their size
 distribution is exponential (with default parameters).
 
 ``` r
+
 rspcommunity(
   1, 
   size = 100, 
@@ -161,6 +162,7 @@ point patterns is obtained and superimposed to make a single `wmppp`
 object.
 
 ``` r
+
 library("spatstat") # for `square()`
 library("dbmss")    # for `superimpose.wmppp()`
 library("ggplot2")  # for `labs()`
@@ -201,6 +203,7 @@ Post-simulation processing of such spatialized communities may be for
 instance thinning to reduced the local average basal area.
 
 ``` r
+
 # Basal area
 G <- (spatstat.geom::marks(the_species)$PointWeight)^2 * pi / 4E4
 sum(G)
@@ -209,6 +212,7 @@ sum(G)
     ## [1] 41.90301
 
 ``` r
+
 # Density
 G_density <- density(the_species, sigma = 10, weights = G)
 plot(G_density)
@@ -217,6 +221,7 @@ plot(G_density)
 ![](simulations_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 # Thinning: the target is at most 40m² locally
 target <- mean(G_density) * 40 / sum(G)
 thin_im <- G_density
@@ -228,6 +233,7 @@ plot(thin_im)
 ![](simulations_files/figure-html/unnamed-chunk-5-2.png)
 
 ``` r
+
 # Plot the thinned community 
 rthin(
   the_species,
@@ -244,7 +250,7 @@ Evolution* 6 (8): 873–82. <https://doi.org/10.1111/2041-210X.12349>.
 
 Chao, Anne, Yi-Ting Wang, and Lou Jost. 2013. “Entropy and the Species
 Accumulation Curve: A Novel Entropy Estimator via Discovery Rates of New
-Species.” *Methods in Ecology and Evolution* 4 (11): 1091–1100.
+Species.” *Methods in Ecology and Evolution* 4 (11): 1091–100.
 <https://doi.org/10.1111/2041-210x.12108>.
 
 Fisher, Ronald Aylmer, A. Steven Corbet, and Carrington Bonsor Williams.

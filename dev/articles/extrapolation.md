@@ -29,6 +29,7 @@ If community data is a vector of probabilities, sample size is unknown
 so the only available estimation is that of the actual sample.
 
 ``` r
+
 library("dplyr")
 library("divent")
 # Paracou plot 6, subplot 1:
@@ -52,6 +53,7 @@ paracou_6_abd[1, ] %>%
     ## #   Casearia_javitensis <dbl>, Catostemma_fragrans <dbl>, …
 
 ``` r
+
 # Diversity of order 1, no reduced-bias estimator available.
 div_hill(prob_paracou6_1, q = 1)
 ```
@@ -65,6 +67,7 @@ Further estimation requires abundances, i.e. the number of individuals
 per species. Then, the default estimator is the asymptotic one.
 
 ``` r
+
 # Diversity of order 1, default asymptotic estimator used.
 div_hill(paracou_6_abd[1, ], q = 1)
 ```
@@ -91,6 +94,7 @@ mathematical support, but they will severely underestimate the diversity
 of poorly-sampled communities. They also are more computer-intensive.
 
 ``` r
+
 # Estimation of richness relies on jackknife 3 (poor sampling)
 div_richness(paracou_6_abd[1, ])
 ```
@@ -101,6 +105,7 @@ div_richness(paracou_6_abd[1, ])
     ## 1 subplot_1   1.56 Jackknife 3     0       355
 
 ``` r
+
 # Richness is underestimated by the Chao1 estimator
 div_richness(paracou_6_abd[1, ], estimator = "Chao1")
 ```
@@ -111,6 +116,7 @@ div_richness(paracou_6_abd[1, ], estimator = "Chao1")
     ## 1 subplot_1   1.56 Chao1         0      290.
 
 ``` r
+
 # Diversity of order 1 underestimated by the Chao-Jost estimator
 div_hill(paracou_6_abd[1, ], q = 1, estimator = "ChaoJost")
 ```
@@ -127,6 +133,7 @@ comparing the diversity of poorly-sampled communities: a lower sample
 coverage can be chosen to limit the uncertainty of estimation.
 
 ``` r
+
 # Actual sample coverage
 coverage(paracou_6_abd[1, ])
 ```
@@ -140,6 +147,7 @@ The estimation level may be a sample size or a sample coverage that is
 converted internally into a sample size.
 
 ``` r
+
 # Diversity at half the sample size (interpolated)
 paracou6_1_size <- abd_sum(paracou_6_abd[1, ], as_numeric = TRUE)
 div_hill(paracou_6_abd[1, ], q = 1, level = round(paracou6_1_size / 2))
@@ -151,6 +159,7 @@ div_hill(paracou_6_abd[1, ], q = 1, level = round(paracou6_1_size / 2))
     ## 1 subplot_1   1.56 Interpolation     1   471      67.6
 
 ``` r
+
 # Sample size corresponding to 90% coverage
 coverage_to_size(paracou_6_abd[1, ], sample_coverage = 0.9)
 ```
@@ -161,6 +170,7 @@ coverage_to_size(paracou_6_abd[1, ], sample_coverage = 0.9)
     ## 1 subplot_1   1.56             0.9   819
 
 ``` r
+
 # Diversity at 90% sample coverage
 div_hill(paracou_6_abd[1, ], q = 1, level = 0.9)
 ```
@@ -179,6 +189,7 @@ unbiased estimators are used. Continuity of the estimation of diversity
 around the actual sample size is guaranteed.
 
 ``` r
+
 # Simpson diversity at levels from 0.9 to 1.1 times the sample size
 accum_hill(
   paracou_6_abd[1, ],
@@ -213,6 +224,7 @@ calculated around the estimated DAC by simulating random multinomial
 draws of the asymptotic distribution at each sample size.
 
 ``` r
+
 # Diversity at levels from 1 to twice the sample size
 accum_hill(
   paracou_6_abd[1, ], 
@@ -234,6 +246,7 @@ best asymptotic estimation, sometimes quite much if sampling level is
 poor.
 
 ``` r
+
 # Extrapolation at 99.99% sample coverage
 div_hill(paracou_6_abd[1, ], q = 1, level = 0.9999)
 ```
@@ -244,6 +257,7 @@ div_hill(paracou_6_abd[1, ], q = 1, level = 0.9999)
     ## 1 subplot_1   1.56 Chao2015      1  8615      94.0
 
 ``` r
+
 # Unveiled Jaccknife asymptotic estimator
 div_hill(paracou_6_abd[1, ], q = 1)
 ```
@@ -254,6 +268,7 @@ div_hill(paracou_6_abd[1, ], q = 1)
     ## 1 subplot_1   1.56 UnveilJ       1      96.3
 
 ``` r
+
 # Chao-Jost estimator
 div_hill(paracou_6_abd[1, ], q = 1, estimator = "ChaoJost")
 ```
@@ -269,6 +284,7 @@ Diversity profiles are usually asymptotic but they can be calculated at
 any coverage of sampling level.
 
 ``` r
+
 # Diversity at levels from 1 to twice the sample size
 profile_hill(paracou_6_abd[1, ], level = paracou6_1_size * 1.5) %>% 
   autoplot()
@@ -281,9 +297,9 @@ continuous at the observed sample size.
 
 ## Differences with the iNEXT package
 
-*iNEXT* (Hsieh, Ma, and Chao 2016) is designed primarily to interpolate
-or extrapolate diversity of integer orders. Extrapolation of diversity
-of order 0 relies on the Chao1 estimator of richness and that of order 1
+*iNEXT* (Hsieh et al. 2016) is designed primarily to interpolate or
+extrapolate diversity of integer orders. Extrapolation of diversity of
+order 0 relies on the Chao1 estimator of richness and that of order 1
 uses the Chao-Jost estimator. In *divent*, extrapolation relies on the
 estimation of the asymptotic distribution of the community with
 asymptotic richness such that the entropy of the asymptotic distribution
@@ -295,6 +311,7 @@ The results of *iNEXT* can be obtained by forcing argument
 `estimator = "ChaoJost"`.
 
 ``` r
+
 library("iNEXT")
 data(spider)
 # Extrapolated diversity of an example dataset
@@ -307,6 +324,7 @@ estimateD(spider$Girdled, level = 300)
     ## 3       data 300 Extrapolation       2 0.9579518  7.983882  5.993923  9.973841
 
 ``` r
+
 # Similar estimation by divent
 div_hill(spider$Girdled, q = 0, level = 300, estimator = "ChaoJost")
 ```
@@ -317,6 +335,7 @@ div_hill(spider$Girdled, q = 0, level = 300, estimator = "ChaoJost")
     ## 1 jackknife     0   300      33.5
 
 ``` r
+
 div_hill(spider$Girdled, q = 1, level = 300, estimator = "ChaoJost")
 ```
 
@@ -326,6 +345,7 @@ div_hill(spider$Girdled, q = 1, level = 300, estimator = "ChaoJost")
     ## 1 Chao2015      1   300      13.1
 
 ``` r
+
 # Estimation at order 2 is explicit, with no optional choice
 div_hill(spider$Girdled, q = 2, level = 300)
 ```
@@ -336,6 +356,7 @@ div_hill(spider$Girdled, q = 2, level = 300)
     ## 1 Chao2014      2   300      7.98
 
 ``` r
+
 # Default estimation of divent
 div_hill(spider$Girdled, q = 0, level = 300)
 ```
@@ -346,6 +367,7 @@ div_hill(spider$Girdled, q = 0, level = 300)
     ## 1 jackknife     0   300      33.5
 
 ``` r
+
 div_hill(spider$Girdled, q = 1, level = 300)
 ```
 
@@ -365,11 +387,10 @@ quantiles of bootstrapped estimations.
 
 ## References
 
-Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, Elizabeth L. Sander, K. H.
-Ma, Robert K. Colwell, and Aaron M. Ellison. 2014. “Rarefaction and
-Extrapolation with Hill Numbers: A Framework for Sampling and Estimation
-in Species Diversity Studies.” *Ecological Monographs* 84 (1): 45–67.
-<https://doi.org/10.1890/13-0133.1>.
+Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, et al. 2014. “Rarefaction
+and Extrapolation with Hill Numbers: A Framework for Sampling and
+Estimation in Species Diversity Studies.” *Ecological Monographs* 84
+(1): 45–67. <https://doi.org/10.1890/13-0133.1>.
 
 Hsieh, T. C., K. H. Ma, and Anne Chao. 2016. “iNEXT: An R Package for
 Interpolation and Extrapolation in Measuring Species Diversity.”

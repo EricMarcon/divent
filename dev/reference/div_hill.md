@@ -250,7 +250,7 @@ of the Partitioning of Shannon Diversity.” *Plos One*, **9**(3), e90289.
 Zhang Z, Grabchak M (2014). “Nonparametric Estimation of
 Kullback-Leibler Divergence.” *Neural computation*, **26**(11),
 2570–2593.
-[doi:10.1162/NECO_a_00646](https://doi.org/10.1162/NECO_a_00646) ,
+[doi:10.1162/NECO_a_00646](https://doi.org/10.1162/NECO_a_00646) .
 25058703.
 
 ## Examples

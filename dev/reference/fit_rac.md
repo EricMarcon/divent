@@ -73,7 +73,7 @@ Animal Population.” *Journal of Animal Ecology*, **12**, 42–58.
 MacArthur RH (1957). “On the Relative Abundance of Bird Species.”
 *Proceedings of the National Academy of Sciences of the United States of
 America*, **43**(3), 293–295.
-[doi:10.1073/pnas.43.3.293](https://doi.org/10.1073/pnas.43.3.293) ,
+[doi:10.1073/pnas.43.3.293](https://doi.org/10.1073/pnas.43.3.293) .
 89566.  
   
 Motomura I (1932). “On the statistical treatment of communities.”

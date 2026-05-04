@@ -28,6 +28,7 @@ defined, with distance 1 between the first 2 and distance 2 between both
 and the last one.
 
 ``` r
+
 species_dist <- matrix(c(0, 1, 2, 1, 0, 2, 2, 2, 0), nrow = 3, byrow = TRUE)
 row.names(species_dist) <- colnames(species_dist) <- c("A", "B", "C")
 species_dist
@@ -43,6 +44,7 @@ species_dist
 An `hclust` object is created by UPGMA hierarchical clustering.
 
 ``` r
+
 library("stats")
 plot(
   tree.hclust <- hclust(
@@ -60,6 +62,7 @@ axis(2)
 Node heights are stored in `$height`.
 
 ``` r
+
 tree.hclust$height
 ```
 
@@ -70,6 +73,7 @@ tree.hclust$height
 Conversion to a `phylo` object is straightforward.
 
 ``` r
+
 library("ape")
 plot(tree.phylo <- as.phylo(tree.hclust))
 axis(1)
@@ -81,6 +85,7 @@ Edge lengths have been divided by 2 during the conversion, as documented
 in [`?as.phylo.hclust`](https://rdrr.io/pkg/ape/man/as.phylo.html).
 
 ``` r
+
 tree.phylo$edge.length
 ```
 
@@ -91,6 +96,7 @@ by 2 after conversion, so that `phylo` objects can be identical to other
 phylogenies.
 
 ``` r
+
 tree.phylo$edge.length <- 2 * tree.phylo$edge.length
 plot(tree.phylo)
 axis(1)
@@ -103,6 +109,7 @@ axis(1)
 The last conversion is from `phylo` to `phylog`.
 
 ``` r
+
 library("ade4")
 plot(tree.phylog <- hclust2phylog(tree.hclust))
 axis(1)
@@ -117,6 +124,7 @@ are \\d\_{s,t}=\sqrt{2 \delta\_{s,t}^2}\\, where \\\delta\_{s,t}\\ is
 the distance between species \\s\\ ant \\t\\.
 
 ``` r
+
 tree.phylog$droot
 ```
 
@@ -124,6 +132,7 @@ tree.phylog$droot
     ##    2    2    2    1    0
 
 ``` r
+
 tree.phylog$Wdist^2/2
 ```
 
@@ -134,6 +143,7 @@ tree.phylog$Wdist^2/2
 `phylog` trees are supported by *divent* but are converted to `hclust`:
 
 ``` r
+
 tree2.hclust <- stats::hclust(tree.phylog$Wdist^2 / 2, "average")
 plot(tree2.hclust, hang = -0.01, axes = F)
 axis(2)
@@ -147,12 +157,14 @@ The function `as_phylo_divent` converts any object of one of the
 previous types.
 
 ``` r
+
 library("divent")
 ```
 
     ## Loading required package: Rcpp
 
 ``` r
+
 plot(tree.phylo_divent <- as_phylo_divent(tree.phylo))
 axis(2)
 ```
@@ -164,6 +176,7 @@ Its `plot` method is that of `dendrogram` objects.
 A `phylo_divent` tree is a list.
 
 ``` r
+
 tree.phylo_divent
 ```
 
@@ -223,6 +236,7 @@ that can be in turn converted to `phylo_divent` or used directly in
 *divent* functions.
 
 ``` r
+
 NewickABC <- "(C:2,(A:1,B:1):1);"
 plot(phyloABC <- ape::read.tree(text = NewickABC))
 axis(1)

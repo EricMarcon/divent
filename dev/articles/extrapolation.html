@@ -310,19 +310,18 @@ continuous at the observed sample size.</p>
 <div class="section level2">
 <h2 id="differences-with-the-inext-package">Differences with the iNEXT package<a class="anchor" aria-label="anchor" href="#differences-with-the-inext-package"></a>
 </h2>
-<p><em>iNEXT</em> <span class="citation">(Hsieh, Ma, and Chao
-2016)</span> is designed primarily to interpolate or extrapolate
-diversity of integer orders. Extrapolation of diversity of order 0
-relies on the Chao1 estimator of richness and that of order 1 uses the
-Chao-Jost estimator. In <em>divent</em>, extrapolation relies on the
-estimation of the asymptotic distribution of the community with
-asymptotic richness such that the entropy of the asymptotic distribution
-rarefied to the observed sample size equals the observed entropy of the
-data. This approach allows consistent estimation of extrapolated
-diversity at integer and non-integer orders, thus allowing consistent
-diversity profiles without discontinuities at <span class="math inline">\(q = 0\)</span> and <span class="math inline">\(q =
-1\)</span>. The results of <em>iNEXT</em> can be obtained by forcing
-argument <code>estimator = "ChaoJost"</code>.</p>
+<p><em>iNEXT</em> <span class="citation">(Hsieh et al. 2016)</span> is
+designed primarily to interpolate or extrapolate diversity of integer
+orders. Extrapolation of diversity of order 0 relies on the Chao1
+estimator of richness and that of order 1 uses the Chao-Jost estimator.
+In <em>divent</em>, extrapolation relies on the estimation of the
+asymptotic distribution of the community with asymptotic richness such
+that the entropy of the asymptotic distribution rarefied to the observed
+sample size equals the observed entropy of the data. This approach
+allows consistent estimation of extrapolated diversity at integer and
+non-integer orders, thus allowing consistent diversity profiles without
+discontinuities at <span class="math inline">\(q = 0\)</span> and <span class="math inline">\(q = 1\)</span>. The results of <em>iNEXT</em> can
+be obtained by forcing argument <code>estimator = "ChaoJost"</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://sites.google.com/view/chao-lab-website/software/inext" class="external-link">"iNEXT"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span></span>
@@ -378,13 +377,13 @@ bootstrapped estimations.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Chao2014" class="csl-entry">
-Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, Elizabeth L. Sander, K. H.
-Ma, Robert K. Colwell, and Aaron M. Ellison. 2014. <span>“Rarefaction
-and Extrapolation with <span>Hill</span> Numbers: <span>A</span>
-Framework for Sampling and Estimation in Species Diversity
-Studies.”</span> <em>Ecological Monographs</em> 84 (1): 45–67. <a href="https://doi.org/10.1890/13-0133.1" class="external-link">https://doi.org/10.1890/13-0133.1</a>.
+Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, et al. 2014.
+<span>“Rarefaction and Extrapolation with <span>Hill</span> Numbers:
+<span>A</span> Framework for Sampling and Estimation in Species
+Diversity Studies.”</span> <em>Ecological Monographs</em> 84 (1): 45–67.
+<a href="https://doi.org/10.1890/13-0133.1" class="external-link">https://doi.org/10.1890/13-0133.1</a>.
 </div>
 <div id="ref-Hsieh2014" class="csl-entry">
 Hsieh, T. C., K. H. Ma, and Anne Chao. 2016. <span>“<span class="nocase">iNEXT</span>: <span>An R</span> Package for Interpolation

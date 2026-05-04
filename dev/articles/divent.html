@@ -89,7 +89,7 @@ manifest and easier to use. This is a short introduction to its use.</p>
 <p>The package allows estimating biodiversity according to the framework
 based on HCDT entropy, the correction of its estimation-bias <span class="citation">(Grassberger 1988; Chao and Shen 2003; Chao and Jost
 2015)</span> and its transformation into equivalent numbers of species
-<span class="citation">(Hill 1973; Jost 2006; Marcon et al.
+<span class="citation">(Hill 1973; Jost 2006; Marcon, Scotti, et al.
 2014)</span>. Estimation of diversity at arbitrary levels of sampling,
 requiring interpolation or extrapolation <span class="citation">(Chao et
 al. 2014)</span> is available.</p>
@@ -99,11 +99,11 @@ the average species-neutral diversity over slices of a phylogenetic or
 functional tree <span class="citation">(Pavoine and Bonsall
 2009)</span>.</p>
 <p>Similarity-based diversity <span class="citation">(Leinster and
-Cobbold 2012)</span> can be used to estimate <span class="citation">(Marcon, Zhang, and Hérault 2014)</span> functional
+Cobbold 2012)</span> can be used to estimate <span class="citation">(Marcon, Zhang, et al. 2014)</span> functional
 diversity from a similarity or dissimilarity matrix between species
 without requiring building a dendrogram and thus preserving the topology
-of species <span class="citation">(Pavoine, Ollier, and Dufour 2005;
-Podani and Schmera 2007)</span>.</p>
+of species <span class="citation">(Pavoine et al. 2005; Podani and
+Schmera 2007)</span>.</p>
 <p>The classical diversity estimators (Shannon and Simpson entropy) can
 be found in many R packages. Bias correction is rarely available except
 in the <em>EntropyEstimation</em> <span class="citation">(Cao and
@@ -323,7 +323,7 @@ containing abundances, without having to build an object of class
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> Jackknife 0     0       100</span></span></code></pre>
 <p>With a Euclidian distance matrix between species, similarity-based
 diversity <span class="citation">(Leinster and Cobbold 2012; Marcon,
-Zhang, and Hérault 2014)</span> is available:</p>
+Zhang, et al. 2014)</span> is available:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Similarity is computed from the functional distance matrix of Paracou species</span></span>
 <span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fun_similarity.html">fun_similarity</a></span><span class="op">(</span><span class="va">paracou_6_fundist</span><span class="op">)</span></span>
@@ -512,18 +512,18 @@ of each community.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Cao2014" class="csl-entry">
 Cao, Lijuan, and Michael Grabchak. 2014.
 <em><span>EntropyEstimation</span>: <span>Estimation</span> of Entropy
 and Related Quantities</em>. R Package.
 </div>
 <div id="ref-Chao2014" class="csl-entry">
-Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, Elizabeth L. Sander, K. H.
-Ma, Robert K. Colwell, and Aaron M. Ellison. 2014. <span>“Rarefaction
-and Extrapolation with <span>Hill</span> Numbers: <span>A</span>
-Framework for Sampling and Estimation in Species Diversity
-Studies.”</span> <em>Ecological Monographs</em> 84 (1): 45–67. <a href="https://doi.org/10.1890/13-0133.1" class="external-link">https://doi.org/10.1890/13-0133.1</a>.
+Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, et al. 2014.
+<span>“Rarefaction and Extrapolation with <span>Hill</span> Numbers:
+<span>A</span> Framework for Sampling and Estimation in Species
+Diversity Studies.”</span> <em>Ecological Monographs</em> 84 (1): 45–67.
+<a href="https://doi.org/10.1890/13-0133.1" class="external-link">https://doi.org/10.1890/13-0133.1</a>.
 </div>
 <div id="ref-Chao2015" class="csl-entry">
 Chao, Anne, and Lou Jost. 2015. <span>“Estimating Diversity and Entropy
