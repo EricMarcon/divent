@@ -102,13 +102,13 @@ Functions to convert a classical abundance matrix, a list of individuals or a po
 Spatially-explicit diversity measures require counting the number of neighbors around each individual.
 This task is run by a short C++ code integrated and parallelized by the *RcppParallel* package [@Allaire2015].
 
-*divent* was first adopted by @Prunot2026 for estimating the diversity of Carabidae.
-Furthermore, the R package *MiscMetabar* [@Taudiere2023] has relied on divent for its diversity calculations since version 0.15.1.
-
 # Research impact statement
 
 *divent* is the successor of the *entropart* package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
 It is often employed in tropical forest ecology [@Rejou-Mechain2021; @Poorter2021] where correctly estimating diversity from incomplete sampling is critical, but also in other disciplines such as evolutionary [@Hafer-Hahmann2020], microbial [@Kouakou2025] or marine ecology [@Huang2024a], and even agronomy [@Mandal2018] or environmental sociology [@Dago2025].
+
+*divent* was first adopted by @Prunot2026 for estimating the diversity of Carabidae.
+Furthermore, the R package *MiscMetabar* [@Taudiere2023] has relied on divent for its diversity calculations since version 0.15.1.
 
 # AI usage disclosure
 
