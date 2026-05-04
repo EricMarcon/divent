@@ -40,13 +40,13 @@ Data may be abundance vectors or matrices (the number of individual per species,
 Random communities can be simulated (function `rcommunity`) and spatialized (`rspcommunity`).
 The main functions allow computing:
 
--   Taxonomic entropy: HCDT entropy (`ent_tsallis`) including Shannon and Simpson's entropies.
--   Phylogenetic (`ent_phylo`) or functional (`ent_similarity`) entropy when dissimilarities between species are taken into account in a dendrogram or a similarity matrix.
--   Effective numbers of species, aka Hill numbers, for all entropies (`div_hill`, `div_phylo`, `div_similarity`).
--   Diversity partitioning (`div_part`), i.e. $\alpha$, $\beta$ and $\gamma$ diversity of a set of communities.
--   Diversity profiles (`profile_hill`, `profile_phylo`, `profile_similarity`), with respect to the order or diversity.
--   Diversity accumulation curves (`accum_hill`) with respect to the sample size or coverage.
--   Spatial accumulation of diversity (`accum_sp_hill`) with respect to the distance from individuals, with maps (`plot_map`).
+- Taxonomic entropy: HCDT entropy (`ent_tsallis`) including Shannon and Simpson's entropies.
+- Phylogenetic (`ent_phylo`) or functional (`ent_similarity`) entropy when dissimilarities between species are taken into account in a dendrogram or a similarity matrix.
+- Effective numbers of species, aka Hill numbers, for all entropies (`div_hill`, `div_phylo`, `div_similarity`).
+- Diversity partitioning (`div_part`), i.e. $\alpha$, $\beta$ and $\gamma$ diversity of a set of communities.
+- Diversity profiles (`profile_hill`, `profile_phylo`, `profile_similarity`), with respect to the order or diversity.
+- Diversity accumulation curves (`accum_hill`) with respect to the sample size or coverage.
+- Spatial accumulation of diversity (`accum_sp_hill`) with respect to the distance from individuals, with maps (`plot_map`).
 
 Many estimators are proposed, with sensible automatic choice, to deal with incomplete sampling.
 
@@ -86,9 +86,9 @@ Additionally, *iNEXT.3D* addresses temporal changes in diversity (*divent* does 
 
 *divent* is built on some explicit theoretical choices that differ from those of *iNEXT.3D*:
 
--   Diversity is explicitly derived from entropy [@Jost2006], following the information theory.
--   Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling. Far more estimators of entropy in general are available.
--   Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff is proposed following @Pavoine2015a rather than @Chao2019 for theoretical arguments.
+- Diversity is explicitly derived from entropy [@Jost2006], following the information theory.
+- Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling. Far more estimators of entropy in general are available.
+- Phylogenies must be ultrametric [@Marcon2014b] and no functional distance cutoff is proposed following @Pavoine2015a rather than @Chao2019 for theoretical arguments.
 
 # Software design
 
@@ -102,10 +102,13 @@ Functions to convert a classical abundance matrix, a list of individuals or a po
 Spatially-explicit diversity measures require counting the number of neighbors around each individual.
 This task is run by a short C++ code integrated and parallelized by the *RcppParallel* package [@Allaire2015].
 
+*divent* was first adopted by @Prunot2026 for estimating the diversity of Carabidae.
+Furthermore, the R package *MiscMetabar* [@Taudiere2023] has relied on divent for its diversity calculations since version 0.15.1.
+
 # Research impact statement
 
 *divent* is the successor of the *entropart* package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
-It is often employed in tropical forest ecology [@Rejou-Mechain2021;@Poorter2021] where correctly estimating diversity from incomplete sampling is critical, but also in other disciplines such as evolutionary [@Hafer-Hahmann2020], microbial [@Kouakou2025] or marine ecology [@Huang2024a], and even agronomy [@Mandal2018] or environmental sociology [@Dago2025].
+It is often employed in tropical forest ecology [@Rejou-Mechain2021; @Poorter2021] where correctly estimating diversity from incomplete sampling is critical, but also in other disciplines such as evolutionary [@Hafer-Hahmann2020], microbial [@Kouakou2025] or marine ecology [@Huang2024a], and even agronomy [@Mandal2018] or environmental sociology [@Dago2025].
 
 # AI usage disclosure
 
