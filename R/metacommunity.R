@@ -126,7 +126,7 @@ metacommunity.abundances <- function(
   return(
     metacommunity.matrix(
       x = species_abd,
-      name = "metacommunity",
+      name = name,
       weights = x$weight,
       as_numeric = as_numeric,
       check_arguments = FALSE
