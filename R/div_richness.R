@@ -292,7 +292,8 @@ div_richness.numeric <- function(
             gene[i + 1, 2] <- gene[i + 1, 2] + ((-1)^(j + 1) *
               2^i * stats::dbinom(j, i, 0.5) + 1)^2 * abd_freq[j, 2]
           }
-          gene[i + 1, 2] <- gene[i + 1, 2] + sum(abd_freq[(i + 1):nrow(abd_freq), 2])
+          gene[i + 1, 2] <- gene[i + 1, 2] +
+            sum(abd_freq[(i + 1):nrow(abd_freq), 2])
           gene[i + 1, 2] <- sqrt(gene[i + 1, 2])
         }
         if (k > 1) {
@@ -488,12 +489,14 @@ div_richness.species_distribution <- function(
       as_numeric = as_numeric
     )
     # Calculate diversity
-    ent_0 <- dplyr::mutate(
+    if (as_numeric) {
+      the_diversity <- ent_0$entropy + 1
+    } else {
+      the_diversity <- dplyr::mutate(
       ent_0,
       diversity = .data$entropy + 1,
       .keep = "unused")
-    # return the richness
-    return(ent_0)
+    }
   } else {
     # Apply div_richness.numeric() to each site
     div_richness_sites <- apply(
@@ -514,17 +517,16 @@ div_richness.species_distribution <- function(
       check_arguments = FALSE
     )
     if (as_numeric) {
-      the_diversity = div_richness_sites
+      the_diversity <- div_richness_sites
     } else {
-        return(
-        # Make a tibble with site, estimator and richness
-        tibble::tibble(
-          # Restore non-species columns
-          x[colnames(x) %in% non_species_columns],
-          # Coerce the list returned by apply into a dataframe
-          do.call(rbind.data.frame, div_richness_sites)
-        )
+      # Make a tibble with site, estimator and richness
+      the_diversity <- tibble::tibble(
+        # Restore non-species columns
+        x[colnames(x) %in% non_species_columns],
+        # Coerce the list returned by apply into a dataframe
+        do.call(rbind.data.frame, div_richness_sites)
       )
     }
   }
+  return(the_diversity)
 }

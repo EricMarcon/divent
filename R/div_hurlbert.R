@@ -123,7 +123,6 @@ div_hurlbert.species_distribution <- function(
       .keep = "unused"
     )
   }
-
   return(the_diversity)
 }
 

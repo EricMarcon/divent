@@ -122,6 +122,5 @@ div_gen_simpson.species_distribution <- function(
       .keep = "unused"
     )
   }
-
   return(the_diversity)
 }

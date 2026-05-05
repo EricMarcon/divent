@@ -253,7 +253,7 @@ div_hill.species_distribution <- function(
     )
     # Calculate diversity
     if (as_numeric) {
-      the_diversity = exp_q(the_entropy, q = q)
+      the_diversity <- exp_q(the_entropy, q = q)
     } else {
       the_diversity <- dplyr::mutate(
         the_entropy,
