@@ -1,4 +1,9 @@
-# divent 0.5-3.9002
+# divent 0.5-3.9003
+
+## Bug correction
+
+- `metacommunity()` ignored argument `name`.
+- `div_richness(..., as_numeric = TRUE)` returned a value but did not print it. 
 
 ## Features
 
