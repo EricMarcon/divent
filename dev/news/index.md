@@ -1,6 +1,13 @@
 # Changelog
 
-## divent 0.5-3.9002
+## divent 0.5-3.9003
+
+### Bug correction
+
+- [`metacommunity()`](https://ericmarcon.github.io/divent/dev/reference/metacommunity.md)
+  ignored argument `name`.
+- `div_richness(..., as_numeric = TRUE)` returned a value but did not
+  print it.
 
 ### Features
 
