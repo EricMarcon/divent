@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,7 @@ manifest and easier to use. This is a short introduction to its use.</p>
 <p>The package allows estimating biodiversity according to the framework
 based on HCDT entropy, the correction of its estimation-bias <span class="citation">(Grassberger 1988; Chao and Shen 2003; Chao and Jost
 2015)</span> and its transformation into equivalent numbers of species
-<span class="citation">(Hill 1973; Jost 2006; Marcon et al.
+<span class="citation">(Hill 1973; Jost 2006; Marcon, Scotti, et al.
 2014)</span>. Estimation of diversity at arbitrary levels of sampling,
 requiring interpolation or extrapolation <span class="citation">(Chao et
 al. 2014)</span> is available.</p>
@@ -98,11 +98,11 @@ the average species-neutral diversity over slices of a phylogenetic or
 functional tree <span class="citation">(Pavoine and Bonsall
 2009)</span>.</p>
 <p>Similarity-based diversity <span class="citation">(Leinster and
-Cobbold 2012)</span> can be used to estimate <span class="citation">(Marcon, Zhang, and Hérault 2014)</span> functional
+Cobbold 2012)</span> can be used to estimate <span class="citation">(Marcon, Zhang, et al. 2014)</span> functional
 diversity from a similarity or dissimilarity matrix between species
 without requiring building a dendrogram and thus preserving the topology
-of species <span class="citation">(Pavoine, Ollier, and Dufour 2005;
-Podani and Schmera 2007)</span>.</p>
+of species <span class="citation">(Pavoine et al. 2005; Podani and
+Schmera 2007)</span>.</p>
 <p>The classical diversity estimators (Shannon and Simpson entropy) can
 be found in many R packages. Bias correction is rarely available except
 in the <em>EntropyEstimation</em> <span class="citation">(Cao and
@@ -257,7 +257,7 @@ the non-linearity of the indices:</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 ChaoJost      1    4.50</span></span></code></pre>
 <p>The best available estimator is chosen by default: its name is
 returned.</p>
-<p>Those indices are special cases of the Tsallis entropy <span class="citation">(1988)</span> or order <span class="math inline">\(q\)</span> (respectively <span class="math inline">\(q=0,1,2\)</span> for richness, Shannon,
+<p>Those indices are special cases of the Tsallis entropy <span class="citation">(1988)</span> or order <span class="math inline">\(q\)</span> (respectively <span class="math inline">\(q = 0, 1, 2\)</span> for richness, Shannon,
 Simpson):</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ent_tsallis.html">ent_tsallis</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -322,7 +322,7 @@ containing abundances, without having to build an object of class
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> Jackknife 0     0       100</span></span></code></pre>
 <p>With a Euclidian distance matrix between species, similarity-based
 diversity <span class="citation">(Leinster and Cobbold 2012; Marcon,
-Zhang, and Hérault 2014)</span> is available:</p>
+Zhang, et al. 2014)</span> is available:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Similarity is computed from the functional distance matrix of Paracou species</span></span>
 <span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fun_similarity.html">fun_similarity</a></span><span class="op">(</span><span class="va">paracou_6_fundist</span><span class="op">)</span></span>
@@ -348,12 +348,14 @@ Simpson’s diversities:</p>
 <p>Profiles of phylogenetic diversity and similarity-based diversity are
 obtained the same way.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_phylo.html">profile_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_phylo.html">profile_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/PDiversityProfile-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Similarity matrix</span></span>
 <span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fun_similarity.html">fun_similarity</a></span><span class="op">(</span><span class="va">paracou_6_fundist</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/profile_similarity.html">profile_similarity</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, similarities <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/profile_similarity.html">profile_similarity</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, similarities <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="divent_files/figure-html/PDiversityProfile-2.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">
@@ -509,18 +511,18 @@ of each community.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Cao2014" class="csl-entry">
 Cao, Lijuan, and Michael Grabchak. 2014.
 <em><span>EntropyEstimation</span>: <span>Estimation</span> of Entropy
 and Related Quantities</em>. R Package.
 </div>
 <div id="ref-Chao2014" class="csl-entry">
-Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, Elizabeth L. Sander, K. H.
-Ma, Robert K. Colwell, and Aaron M. Ellison. 2014. <span>“Rarefaction
-and Extrapolation with <span>Hill</span> Numbers: <span>A</span>
-Framework for Sampling and Estimation in Species Diversity
-Studies.”</span> <em>Ecological Monographs</em> 84 (1): 45–67. <a href="https://doi.org/10.1890/13-0133.1" class="external-link">https://doi.org/10.1890/13-0133.1</a>.
+Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, et al. 2014.
+<span>“Rarefaction and Extrapolation with <span>Hill</span> Numbers:
+<span>A</span> Framework for Sampling and Estimation in Species
+Diversity Studies.”</span> <em>Ecological Monographs</em> 84 (1): 45–67.
+<a href="https://doi.org/10.1890/13-0133.1" class="external-link">https://doi.org/10.1890/13-0133.1</a>.
 </div>
 <div id="ref-Chao2015" class="csl-entry">
 Chao, Anne, and Lou Jost. 2015. <span>“Estimating Diversity and Entropy

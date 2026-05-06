@@ -114,7 +114,7 @@ autoplot(ent_sp_simpsonEnvelope(X, n_simulations = 10))
 #> 10.
 #> 
 #> Done.
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
+#> Warning: Removed 10 rows containing missing values or values outside the scale range
 #> (`geom_ribbon()`).
 
 ```

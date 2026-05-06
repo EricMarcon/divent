@@ -153,7 +153,7 @@ Monographs*, **84**(1), 45–67.
 Chiu C, Wang Y, Walther BA, Chao A (2014). “An Improved Nonparametric
 Lower Bound of Species Richness via a Modified Good-Turing Frequency
 Formula.” *Biometrics*, **70**(3), 671–682.
-[doi:10.1111/biom.12200](https://doi.org/10.1111/biom.12200) , 24945937.
+[doi:10.1111/biom.12200](https://doi.org/10.1111/biom.12200) . 24945937.
 
 ## Examples
 

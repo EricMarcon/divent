@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,11 +106,10 @@ abundances.</li>
 1948)</span> require argument <code>sd_lnorm</code> to set the standard
 deviation of the log-abundances. The expectation of the distribution is
 computed from the other arguments.</li>
-<li>log-series (“lseries”) distributions <span class="citation">(Fisher,
-Corbet, and Williams 1943)</span> rely on the <code>fisher_alpha</code>
-argument. They ignore <code>species_number</code> because the number of
-species is given by <code>fisher_alpha</code> and
-<code>size</code>.</li>
+<li>log-series (“lseries”) distributions <span class="citation">(Fisher
+et al. 1943)</span> rely on the <code>fisher_alpha</code> argument. They
+ignore <code>species_number</code> because the number of species is
+given by <code>fisher_alpha</code> and <code>size</code>.</li>
 <li>geometric (“geom”) distributions <span class="citation">(Motomura
 1932)</span> have argument <code>prob_geom</code>. This distribution is
 not stochastic.</li>
@@ -157,13 +156,13 @@ If <code>prob</code> is given rather than <code>abd</code>, these
 probabilities are used.</li>
 <li>“Chao2013” or “Chao2015” (by default): based on the observed
 abundances (<code>abd</code> must be given), the actual probability
-distribution is estimated following <span class="citation">Chao, Wang,
-and Jost (2013)</span> or <span class="citation">Chao and Jost
-(2015)</span>. Observed frequencies (normalized abundances) are not
-directly used as estimators of the probabilities: abundant species are
-correctly estimated but rare species are either overestimated or
-unobserved. A model based on sample coverage is used to correct this
-issue. The estimator of sample coverage is chosen by the argument
+distribution is estimated following <span class="citation">Chao et al.
+(2013)</span> or <span class="citation">Chao and Jost (2015)</span>.
+Observed frequencies (normalized abundances) are not directly used as
+estimators of the probabilities: abundant species are correctly
+estimated but rare species are either overestimated or unobserved. A
+model based on sample coverage is used to correct this issue. The
+estimator of sample coverage is chosen by the argument
 <code>coverage_estimator</code>: the sum of observed probabilities
 equals the sample coverage. The number of unobserved species is
 estimated and their distribution (their probabilities sum to the
@@ -317,9 +316,10 @@ instance thinning to reduced the local average basal area.</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/spatstat.random/man/rthin.html" class="external-link">rthin</a></span><span class="op">(</span></span>
 <span>  <span class="va">the_species</span>,</span>
 <span>  P <span class="op">=</span> <span class="va">thin_im</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulations_files/figure-html/unnamed-chunk-5-3.png" class="r-plt" alt="" width="700"></p>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Chao2015" class="csl-entry">
 Chao, Anne, and Lou Jost. 2015. <span>“Estimating Diversity and Entropy
 Profiles via Discovery Rates of New Species.”</span> <em>Methods in
@@ -329,7 +329,7 @@ Ecology and Evolution</em> 6 (8): 873–82. <a href="https://doi.org/10.1111/204
 Chao, Anne, Yi-Ting Wang, and Lou Jost. 2013. <span>“Entropy and the
 Species Accumulation Curve: A Novel Entropy Estimator via Discovery
 Rates of New Species.”</span> <em>Methods in Ecology and Evolution</em>
-4 (11): 1091–1100. <a href="https://doi.org/10.1111/2041-210x.12108" class="external-link">https://doi.org/10.1111/2041-210x.12108</a>.
+4 (11): 1091–100. <a href="https://doi.org/10.1111/2041-210x.12108" class="external-link">https://doi.org/10.1111/2041-210x.12108</a>.
 </div>
 <div id="ref-Fisher1943" class="csl-entry">
 Fisher, Ronald Aylmer, A. Steven Corbet, and Carrington Bonsor Williams.

@@ -31,5 +31,8 @@ Useful links:
 
 Authors:
 
+- Eric Marcon <eric.marcon@agroparistech.fr>
+  ([ORCID](https://orcid.org/0000-0002-5249-321X))
+
 - Florence Puech <florence.puech@universite-paris-saclay.fr>
   ([ORCID](https://orcid.org/0000-0002-5279-6878))

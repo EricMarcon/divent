@@ -1,7 +1,7 @@
 # ggplot method to plot wmppp objects
 
 This method is from the dbmss package. See
-[dbmss::autoplot.wmppp](https://ggplot2.tidyverse.org/reference/autoplot.html).
+[dbmss::autoplot.wmppp](https://ericmarcon.github.io/dbmss/reference/autoplot.html).
 
 ## Usage
 
@@ -85,7 +85,7 @@ autoplot(
 - palette:
 
   the color palette used to display point types in maps. See
-  ggplot2::scale_colour_brewer.
+  [ggplot2::scale_colour_brewer](https://ggplot2.tidyverse.org/reference/scale_brewer.html).
 
 - windowColor:
 

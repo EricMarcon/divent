@@ -13,6 +13,7 @@ You can install the development version of divent from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("EricMarcon/divent")
 ```
@@ -27,6 +28,7 @@ naming convention, which may correspond to plots in a forest inventory
 or any data organized the same way.
 
 ``` r
+
 # Abundances of three communities with four species
 abd <- matrix(
   c(
@@ -54,6 +56,7 @@ is a 6.25ha plot of rainforest in Paracou, French Guiana, divided into 4
 subplots.
 
 ``` r
+
 paracou_6_abd |>
   autoplot()
 ```
@@ -65,6 +68,7 @@ diversity (i.e. effective number of species), aka Hill numbers, are
 estimated.
 
 ``` r
+
 # Diversity of a tropical rainforest
 div_richness(paracou_6_abd)
 #> # A tibble: 4 × 5
@@ -96,6 +100,7 @@ By default, the best available estimator of diversity is used, according
 to the data. Diversity profiles are estimated.
 
 ``` r
+
 profile_hill(paracou_6_abd) %>% autoplot
 ```
 
@@ -104,6 +109,7 @@ profile_hill(paracou_6_abd) %>% autoplot
 Communities can be simulated and plotted.
 
 ``` r
+
 rc <- rcommunity(1, size = 10000, distribution = "lnorm")
 autoplot(rc, fit_rac = TRUE, distribution = "lnorm")
 ```
@@ -115,6 +121,7 @@ Phylogenetic entropy and diversity can be calculated if a phylogenetic
 estimation-bias correction.
 
 ``` r
+
 # Phylogenetic diversity of order 1, based on the taxonomy
 div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
 #> # A tibble: 4 × 4
@@ -129,6 +136,7 @@ div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
 Similarity-based diversity is calculated, based on a similarity matrix.
 
 ``` r
+
 # Similarity is computed from the functional distance matrix of Paracou species
 Z <- fun_similarity(paracou_6_fundist)
 # Calculate diversity of order 2
@@ -147,6 +155,7 @@ partitioned into \\\alpha\\ (that of communities) and \\\beta\\
 diversities.
 
 ``` r
+
 # Partitioning of diversity of order 1 (Shannon)
 div_part(paracou_6_abd, q = 1)
 #> # A tibble: 7 × 6

@@ -246,7 +246,7 @@ Animal Population.” *Journal of Animal Ecology*, **12**, 42–58.
 MacArthur RH (1957). “On the Relative Abundance of Bird Species.”
 *Proceedings of the National Academy of Sciences of the United States of
 America*, **43**(3), 293–295.
-[doi:10.1073/pnas.43.3.293](https://doi.org/10.1073/pnas.43.3.293) ,
+[doi:10.1073/pnas.43.3.293](https://doi.org/10.1073/pnas.43.3.293) .
 89566.  
   
 Marcon E, Hérault B, Baraloto C, Lang G (2012). “The Decomposition of
@@ -264,16 +264,16 @@ Preston FW (1948). “The Commonness, and Rarity, of Species.” *Ecology*,
   
 Rennolls K, Geary DN, Rollinson TJD (1985). “Characterizing Diameter
 Distributions by the Use of the Weibull Distribution.” *Forestry*,
-**58**(1), 57–66. ISSN 0015-752X, 1464-3626,
+**58**(1), 57–66. ISSN 0015-752X, 1464-3626.
 [doi:10.1093/forestry/58.1.57](https://doi.org/10.1093/forestry/58.1.57)
 .  
   
 Thomas M (1949). “A Generalization of Poisson's Binomial Limit for Use
 in Ecology.” *Biometrika*, **36**(1/2), 18–25.
-[doi:10.2307/2332526](https://doi.org/10.2307/2332526) , 2332526.  
+[doi:10.2307/2332526](https://doi.org/10.2307/2332526) . 2332526.  
   
 Turner IM (2004). *The Ecology of Trees in the Tropical Rain Forest*,
-2nd edition. Cambridge University Press. ISBN 978-0-521-80183-6,
+2nd edition. Cambridge University Press. ISBN 978-0-521-80183-6.
 [doi:10.1017/CBO9780511542206](https://doi.org/10.1017/CBO9780511542206)
 .
 

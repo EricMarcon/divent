@@ -23,3 +23,12 @@ that are also of class
 [species_distribution](https://ericmarcon.github.io/divent/reference/species_distribution.md),
 have columns named after the species they contain. Some columns are
 reserved to describe the plots and their diversity.
+
+## Examples
+
+``` r
+# Default values
+non_species_columns
+#> [1] "site"      "weight"    "cut"       "interval"  "q"         "entropy"  
+#> [7] "diversity" "abundance" "comments" 
+```

@@ -1,5 +1,19 @@
 # Changelog
 
+## divent 0.5-4
+
+### Bug correction
+
+- [`metacommunity()`](https://ericmarcon.github.io/divent/reference/metacommunity.md)
+  ignored argument `name`.
+- `div_richness(..., as_numeric = TRUE)` returned a value but did not
+  print it.
+
+### Features
+
+- [`coverage.abundances()`](https://ericmarcon.github.io/divent/reference/coverage.md)
+  now accepts argument `as_numeric`.
+
 ## divent 0.5-3
 
 CRAN release: 2025-08-27
