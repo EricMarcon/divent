@@ -1,21 +1,19 @@
-# divent 0.5-3.9003
+# divent 0.5-4
 
 ## Bug correction
 
 - `metacommunity()` ignored argument `name`.
-- `div_richness(..., as_numeric = TRUE)` returned a value but did not print it. 
+- `div_richness(..., as_numeric = TRUE)` returned a value but did not print it.
 
 ## Features
 
-- `coverage.abundances()` accepts argument `as_numeric`.
-
+- `coverage.abundances()` now accepts argument `as_numeric`.
 
 # divent 0.5-3
 
 ## Bug correction
 
 - `species_distribution()` raised an error when input was a vector of factors.
-
 
 # divent 0.5-2
 
@@ -33,13 +31,11 @@
 
 - Replaced `Geom*$default_aes` by their values for compatibility with ggplot2 3.6.0 (PR #2 by @teunbrand)
 
-
 # divent 0.4-4
 
 ## Features
 
 - Hurlbert's diversity: `ent_hurlbert()` and `div_hurlbert()`.
-
 
 # divent 0.3-16
 
@@ -50,16 +46,14 @@
 - Rao's quadratic entropy: `ent_rao()`.
 - paracou_6_wmppp dataset.
 
-
 # divent 0.2-5
 
 ## Features
 
-- Data formats: 
-    - phylo_divent (phylogenetic tree): `as_phylo_divent()`
+- Data formats:
+  - phylo_divent (phylogenetic tree): `as_phylo_divent()`
 - Phylogenetic diversity: `ent_phylo()` and `div_phylo()`
 - species names must be valid names
-
 
 # divent 0.1-24
 
@@ -67,9 +61,9 @@
 
 ## Features
 
-- Data formats: 
-    - species distribution: `species_distribution()`
-    - metacommunity: `metacommunity()`
+- Data formats:
+  - species distribution: `species_distribution()`
+  - metacommunity: `metacommunity()`
 - Sample coverage: `coverage()`
 - Richness: `div_richness()`
 - Shannon's, Simpson's and Tsallis's entropies: `ent_shannon()`, `ent_simpson()`, `ent_tsallis()`
