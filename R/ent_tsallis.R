@@ -79,7 +79,8 @@ ent_tsallis.numeric <- function(
   }
 
   # Entropy of a vector of probabilities ----
-  if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
+  # More than one value and their sum equal to 1
+  if (sum(x > 0) > 1 && abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
     if (!is.null(level)) {
       cli::cli_abort("Entropy can't be estimated at a level without the abundance of species.")
     }
@@ -155,11 +156,10 @@ ent_tsallis.numeric <- function(
     # sample_coverage is between 0 and 1 (by check_arguments), sum(abd) must be an integer.
     # estimator may be ChaoShen or Marcon (max(ChaoShen, Grassberger))
     if (
-        !is.null(sample_coverage) &
-        is_integer_values(sample_size) &
-        (estimator == "ChaoShen" | estimator == "Marcon")
+      !is.null(sample_coverage) &
+      is_integer_values(sample_size) &
+      (estimator == "ChaoShen" | estimator == "Marcon")
     ) {
-
       cp <- sample_coverage * abd / sample_size
       chao_shen <- -sum(cp^q * ln_q(cp, q = q) / (1 - (1 - cp)^sample_size))
       if (estimator == "Marcon") {

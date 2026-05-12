@@ -72,7 +72,8 @@ ent_gen_simpson.numeric <- function(
   }
 
   # Entropy of a vector of probabilities ----
-  if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
+  # More than one value and their sum equal to 1
+  if (sum(x > 0) > 1 && abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
     # Probabilities sum to 1, allowing rounding error
     the_entropy <- sum(x * (1 - x)^k)
     if (as_numeric) {

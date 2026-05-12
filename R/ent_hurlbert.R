@@ -60,7 +60,8 @@ ent_hurlbert.numeric <- function(
   }
 
   # Entropy of a vector of probabilities ----
-  if (abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
+  # More than one value and their sum equal to 1
+  if (sum(x > 0) > 1 && abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
     the_entropy <- sum(1 - (1 - x)^k)
     if (as_numeric) {
       return(the_entropy)

@@ -257,7 +257,7 @@ accum_sp_tsallis <- function(
             for (order in seq_along(orders)) {
               # Suppress the warnings for Coverage=0 every time neighbors are singletons only.
               suppressWarnings(
-                ent_nbhood_q[order, community] <- ent_tsallis(
+                ent_nbhood_q[order, community] <- ent_tsallis.numeric(
                   neighbor_communities[community, ],
                   q = orders[order],
                   level = the_extrapolation[community],
