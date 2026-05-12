@@ -31,6 +31,7 @@ NULL
 #' @param ... Additional arguments to be passed to [plot], or, in `plot_map()`,
 #' to [spatstat.explore::bw.smoothppp] and [spatstat.explore::density.ppp] to
 #' control the kernel smoothing and to [spatstat.geom::plot.im] to plot the image.
+#' @param q the order of diversity to plot; by default: the first available.
 #' @param type plotting parameter. Default is "l".
 #' @param main main title of the plot.
 #' @param xlab X-axis label.
