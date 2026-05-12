@@ -68,7 +68,7 @@ plot_map(
 to \link[spatstat.explore:bw.smoothppp]{spatstat.explore::bw.smoothppp} and \link[spatstat.explore:density.ppp]{spatstat.explore::density.ppp} to
 control the kernel smoothing and to \link[spatstat.geom:plot.im]{spatstat.geom::plot.im} to plot the image.}
 
-\item{q}{a number: the order of diversity.}
+\item{q}{the order of diversity to plot; by default: the first available.}
 
 \item{type}{plotting parameter. Default is "l".}
 
@@ -153,7 +153,9 @@ These objects are lists:
 \item \code{X} contains the \link[dbmss:wmppp]{dbmss::wmppp} point pattern,
 \item \code{accumulation} is a 3-dimensional array, with orders of diversity in rows,
 neighborhood size (number of points or distance) in columns and a single slice
-for the observed entropy, diversity or mixing.
+for the observed entropy, diversity or mixing. If simulations of a null
+hypothesis were run, slices 2 to 4 contain respectively the theoretical (i.e,
+mean simulated) value, the lower and upper bounds of the confidence interval.
 \item \code{neighborhoods} is a similar 3-dimensional array with one slice per point
 of \code{X}.
 }
