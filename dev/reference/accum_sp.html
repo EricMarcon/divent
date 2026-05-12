@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-3.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,7 +121,7 @@ control the kernel smoothing and to <a href="https://rdrr.io/pkg/spatstat.geom/m
 
 
 <dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
-<dd><p>a number: the order of diversity.</p></dd>
+<dd><p>the order of diversity to plot; by default: the first available.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
@@ -255,7 +255,9 @@ mixing (<code>accum_sp_mixing</code> objects) at distances from the individuals.
 <p>These objects are lists:</p><ul><li><p><code>X</code> contains the <a href="https://ericmarcon.github.io/dbmss/reference/wmppp.html" class="external-link">dbmss::wmppp</a> point pattern,</p></li>
 <li><p><code>accumulation</code> is a 3-dimensional array, with orders of diversity in rows,
 neighborhood size (number of points or distance) in columns and a single slice
-for the observed entropy, diversity or mixing.</p></li>
+for the observed entropy, diversity or mixing. If simulations of a null
+hypothesis were run, slices 2 to 4 contain respectively the theoretical (i.e,
+mean simulated) value, the lower and upper bounds of the confidence interval.</p></li>
 <li><p><code>neighborhoods</code> is a similar 3-dimensional array with one slice per point
 of <code>X</code>.</p></li>
 </ul><p>They can be plotted or mapped.</p>

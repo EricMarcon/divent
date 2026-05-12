@@ -578,6 +578,7 @@ div_hill(paracou_6_abd, q = 1, gamma = TRUE)
 
 Cao, Lijuan, and Michael Grabchak. 2014. *EntropyEstimation: Estimation
 of Entropy and Related Quantities*. R Package.
+<https://doi.org/10.32614/CRAN.package.EntropyEstimation>.
 
 Chao, Anne, Nicholas J. Gotelli, T. C. Hsieh, et al. 2014. “Rarefaction
 and Extrapolation with Hill Numbers: A Framework for Sampling and

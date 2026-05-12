@@ -1,6 +1,16 @@
 # Changelog
 
-## divent 0.5-3.9003
+## divent 0.5-4.9000
+
+### Bug correction
+
+- species distributions made of a single individuals were not recognized
+  correctly as abundance vectors, preventing the estimation of their
+  diversity at a level.
+
+## divent 0.5-4
+
+CRAN release: 2026-05-06
 
 ### Bug correction
 
@@ -12,7 +22,7 @@
 ### Features
 
 - [`coverage.abundances()`](https://ericmarcon.github.io/divent/dev/reference/coverage.md)
-  accepts argument `as_numeric`.
+  now accepts argument `as_numeric`.
 
 ## divent 0.5-3
 

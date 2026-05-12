@@ -80,7 +80,7 @@ plot_map(
 
 - q:
 
-  a number: the order of diversity.
+  the order of diversity to plot; by default: the first available.
 
 - type:
 
@@ -227,7 +227,10 @@ These objects are lists:
 
 - `accumulation` is a 3-dimensional array, with orders of diversity in
   rows, neighborhood size (number of points or distance) in columns and
-  a single slice for the observed entropy, diversity or mixing.
+  a single slice for the observed entropy, diversity or mixing. If
+  simulations of a null hypothesis were run, slices 2 to 4 contain
+  respectively the theoretical (i.e, mean simulated) value, the lower
+  and upper bounds of the confidence interval.
 
 - `neighborhoods` is a similar 3-dimensional array with one slice per
   point of `X`.
