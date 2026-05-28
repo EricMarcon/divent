@@ -2,7 +2,7 @@
 
 ## Bug correction
 
-- species distributions made of a single individuals were not recognized correctly as abundance vectors, preventing the estimation of their diversity at a level.
+- species distributions made of a single individual were not recognized correctly as abundance vectors, preventing the estimation of their diversity at a level.
 
 # divent 0.5-4
 
