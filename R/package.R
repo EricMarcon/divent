@@ -261,6 +261,7 @@ utils::globalVariables("non_species_columns")
 #' @param distribution The distribution of species abundances.
 #' May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 #' "bstick" (broken stick).
+#' @param entropy_estimator an estimator of asymptotic entropy, diversity or richness.
 #' @param estimator an estimator of asymptotic entropy, diversity or richness.
 #' @param fisher_alpha Fisher's \eqn{\alpha} in the log-series distribution.
 #' @param gamma if `TRUE`, \eqn{\gamma} diversity, i.e. diversity of the metacommunity, is computed.
@@ -497,6 +498,7 @@ check_divent_args <- function(
   }
   # correction is checked by match.arg()
   # coverage_estimator is checked by match.arg()
+  # entropy_estimator is checked by match.arg()
   # estimator is checked by match.arg()
   # distances
   if (!is.na(names(args["distances"]))) {

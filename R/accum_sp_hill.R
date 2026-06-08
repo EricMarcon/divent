@@ -6,6 +6,17 @@
 #' `accum_sp_hill()` or `accum_sp_tsallis()` estimate the diversity or entropy
 #' accumulation curve of a distribution.
 #'
+#' Argument `entropy_estimator` is used to estimate asymptotic entropy or diversity
+#' when argument `correction` is "extrapolation".
+#' Then, `richness_estimator` is used if needed to estimate entropy.
+#' If the jackknife is chosen, `jack_alpha` sets the uncertainty level that decides
+#' increasing the jackknife estimator order, and `jack_max` is the highest
+#' order allowed.
+#' If `entropy_estimator` is an unveiled one, then `probability_estimator` and
+#' `unveiling` define the method.
+#' `coverage_estimator` sets the estimator of sample coverage.
+#' In general, the default values of these arguments are a good choice.
+#'
 #' @inheritParams check_divent_args
 #'
 #' @name accum_sp_hill
@@ -15,11 +26,11 @@ NULL
 #' @rdname accum_sp_hill
 #'
 #' @export
-#' @param orders A numeric vector: the diversity orders to address. Default is 0.
-#' @param neighbors A vector of integers.
+#' @param orders a numeric vector: the diversity orders to address. Default is 0.
+#' @param neighbors a vector of integers.
 #' Entropy will be accumulated along this number of neighbors around each individual.
 #' Default is 10% of the individuals.
-#' @param r A vector of distances.
+#' @param r a vector of distances.
 #' If `NULL` accumulation is along `n`, else neighbors are accumulated in circles of radius `r`.
 #' @param correction The edge-effect correction to apply when estimating
 #' the entropy of a neighborhood community that does not fit in the window.
@@ -27,9 +38,11 @@ NULL
 #' Default is "none".
 #' "extrapolation" extrapolates the observed diversity up to the number of individuals
 #' estimated in the full area of the neighborhood, which is slow.
+#' @param entropy_estimator The asymptotic estimator of entropy
+#' when `correction` is "extrapolation".
 #' @param individual If `TRUE`, individual neighborhood entropies are returned.
 #'
-#' @return An [accum_sp] object, that is also either an [accum_sp_diversity],
+#' @return an [accum_sp] object, that is also either an [accum_sp_diversity],
 #' [accum_sp_entropy] or [accum_sp_mixing] object.
 #'
 #' @export
@@ -50,12 +63,21 @@ accum_sp_tsallis <- function(
     neighbors = 1:ceiling(X$n / 2),
     r = NULL,
     correction = c("none", "extrapolation"),
+    entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov",
+                          "Grassberger", "Marcon", "UnveilC", "UnveiliC",
+                          "ZhangGrabchak", "naive", "Bonachela", "Holste"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    jack_alpha  = 0.05,
+    jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     individual = FALSE,
     show_progress = TRUE,
     check_arguments = TRUE) {
 
   # Check arguments
+  entropy_estimator <- match.arg(entropy_estimator)
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
   if (any(check_arguments)) {
@@ -259,8 +281,14 @@ accum_sp_tsallis <- function(
                 ent_nbhood_q[order, community] <- ent_tsallis.numeric(
                   neighbor_communities[community, ],
                   q = orders[order],
+                  estimator = entropy_estimator,
                   level = the_extrapolation[community],
-                  richness_estimator = richness_estimator, # TODO: check estimator
+                  probability_estimator = probability_estimator,
+                  unveiling = unveiling,
+                  richness_estimator = richness_estimator,
+                  jack_alpha = jack_alpha,
+                  jack_max = jack_max,
+                  coverage_estimator = coverage_estimator,
                   as_numeric = TRUE,
                   check_arguments = FALSE
                 )
@@ -323,7 +351,15 @@ accum_sp_hill <- function(
     neighbors = 1:ceiling(X$n / 2),
     r = NULL,
     correction = c("none", "extrapolation"),
+    entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov",
+                          "Grassberger", "Marcon", "UnveilC", "UnveiliC",
+                          "ZhangGrabchak", "naive", "Bonachela", "Holste"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    jack_alpha  = 0.05,
+    jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     h0 = c("none", "multinomial", "random location", "binomial"),
     alpha = 0.05,
     n_simulations = 100,
@@ -332,6 +368,7 @@ accum_sp_hill <- function(
     check_arguments = TRUE) {
 
   # Check arguments
+  entropy_estimator <- match.arg(entropy_estimator)
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
@@ -357,7 +394,13 @@ accum_sp_hill <- function(
     neighbors = neighbors,
     r = r,
     correction = correction,
+    entropy_estimator = entropy_estimator,
     richness_estimator = richness_estimator,
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    jack_alpha = jack_alpha,
+    jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     individual = individual,
     show_progress = (show_progress & (h0 == "none" | h0 == "multinomial")),
     check_arguments = FALSE
@@ -370,7 +413,7 @@ accum_sp_hill <- function(
     is_h0_found <- FALSE
     # Rename accumulation
     names(the_diversity)[2] <- "Entropy"
-    # Put the entropy into a 4-D array.
+    # Put the diversity into a 3-D array.
     # 4 z-values: observed, expected under H0, lower and upper bounds of H0.
     the_diversity$accumulation <- rep(the_diversity$Entropy, 4)
     dim(the_diversity$accumulation) <- c(length(orders), n_cols, 4)
@@ -425,7 +468,13 @@ accum_sp_hill <- function(
       h0_values <- accum_hill.numeric(
         abd,
         q = as.numeric(orders[order]),
-        levels = the_seq,              # TODO: missing arguments for accum_hill.numeric
+        levels = the_seq,
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        richness_estimator = richness_estimator,
+        jack_alpha = jack_alpha,
+        jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         n_simulations = n_simulations,
         alpha = alpha,
         show_progress = FALSE,
@@ -465,7 +514,13 @@ accum_sp_hill <- function(
         neighbors = neighbors,
         r = r,
         correction = correction,
+        entropy_estimator = entropy_estimator,
         richness_estimator = richness_estimator,
+        probability_estimator = probability_estimator,
+        unveiling = unveiling,
+        jack_alpha = jack_alpha,
+        jack_max = jack_max,
+        coverage_estimator = coverage_estimator,
         h0 = "none",
         alpha = alpha,
         n_simulations = 0,
@@ -510,7 +565,15 @@ accum_mixing <- function(
     neighbors = 1:ceiling(X$n / 2),
     r = NULL,
     correction = c("none", "extrapolation"),
+    entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov",
+                          "Grassberger", "Marcon", "UnveilC", "UnveiliC",
+                          "ZhangGrabchak", "naive", "Bonachela", "Holste"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    unveiling = c("geometric", "uniform", "none"),
+    jack_alpha  = 0.05,
+    jack_max = 10,
+    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
     h0 = c("none", "multinomial", "random location", "binomial"),
     alpha = 0.05,
     n_simulations = 100,
@@ -519,6 +582,7 @@ accum_mixing <- function(
     check_arguments = TRUE) {
 
   # Check arguments
+  entropy_estimator <- match.arg(entropy_estimator)
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
@@ -533,11 +597,17 @@ accum_mixing <- function(
     neighbors = neighbors,
     r = r,
     correction = correction,
+    entropy_estimator = entropy_estimator,
     richness_estimator = richness_estimator,
+    probability_estimator = probability_estimator,
+    unveiling = unveiling,
+    jack_alpha = jack_alpha,
+    jack_max = jack_max,
+    coverage_estimator = coverage_estimator,
     h0 = h0,
     alpha = alpha,
     n_simulations = n_simulations,
-    individual = show_progress,
+    individual = individual,
     show_progress = show_progress,
     check_arguments = FALSE
   )
