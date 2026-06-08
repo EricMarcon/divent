@@ -50,7 +50,7 @@ accum_sp_tsallis <- function(
     neighbors = 1:ceiling(X$n / 2),
     r = NULL,
     correction = c("none", "extrapolation"),
-    richness_estimator = c("iChao1", "Chao1", "rarefy", "jackknife", "naive"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     individual = FALSE,
     show_progress = TRUE,
     check_arguments = TRUE) {
@@ -323,7 +323,7 @@ accum_sp_hill <- function(
     neighbors = 1:ceiling(X$n / 2),
     r = NULL,
     correction = c("none", "extrapolation"),
-    richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     h0 = c("none", "multinomial", "random location", "binomial"),
     alpha = 0.05,
     n_simulations = 100,
@@ -422,7 +422,7 @@ accum_sp_hill <- function(
     abd <- as_abundances.wmppp(X)
     for (order in seq_along(orders)) {
       # Rarefy the community to the sizes of neighborhoods
-      h0_values <- accum_hill(
+      h0_values <- accum_hill.numeric(
         abd,
         q = as.numeric(orders[order]),
         levels = the_seq,              # TODO: missing arguments for accum_hill.numeric
@@ -510,7 +510,7 @@ accum_mixing <- function(
     neighbors = 1:ceiling(X$n / 2),
     r = NULL,
     correction = c("none", "extrapolation"),
-    richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     h0 = c("none", "multinomial", "random location", "binomial"),
     alpha = 0.05,
     n_simulations = 100,
