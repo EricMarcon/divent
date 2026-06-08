@@ -22,7 +22,6 @@ profile_similarity(
     "naive"),
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
@@ -99,12 +98,6 @@ profile_similarity(
   the probabilities of the unobserved species (see
   [probabilities](https://ericmarcon.github.io/divent/dev/reference/probabilities.md)).
   Used only for extrapolation.
-
-- richness_estimator:
-
-  an estimator of richness to evaluate the total number of species, see
-  [div_richness](https://ericmarcon.github.io/divent/dev/reference/div_richness.md).
-  used for interpolation and extrapolation.
 
 - jack_alpha:
 

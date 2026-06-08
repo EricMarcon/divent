@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Spatial Diversity Accumulation of a Community — accum_sp_hill"><meta name="description" content="Spatial Diversity and Entropy Accumulation Curves represent the accumulation of
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Spatial Diversity Accumulation of a Community — accum_sp_hill"><meta name="description" content="Spatial Diversity and Entropy Accumulation Curves represent the accumulation of
 entropy and diversity with respect to the distance from individuals"><meta property="og:description" content="Spatial Diversity and Entropy Accumulation Curves represent the accumulation of
 entropy and diversity with respect to the distance from individuals"><meta property="og:image" content="https://ericmarcon.github.io/divent/logo.png"><meta name="robots" content="noindex"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -15,7 +15,7 @@ entropy and diversity with respect to the distance from individuals"><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,14 @@ entropy and diversity with respect to the distance from individuals</p>
 <span>  neighbors <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">X</span><span class="op">$</span><span class="va">n</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  correction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"extrapolation"</span><span class="op">)</span>,</span>
-<span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rarefy"</span>, <span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  entropy_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UnveilJ"</span>, <span class="st">"ChaoJost"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"GenCov"</span>, <span class="st">"Grassberger"</span>,</span>
+<span>    <span class="st">"Marcon"</span>, <span class="st">"UnveilC"</span>, <span class="st">"UnveiliC"</span>, <span class="st">"ZhangGrabchak"</span>, <span class="st">"naive"</span>, <span class="st">"Bonachela"</span>, <span class="st">"Holste"</span><span class="op">)</span>,</span>
+<span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"rarefy"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chao2015"</span>, <span class="st">"Chao2013"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  individual <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  show_progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -73,7 +80,14 @@ entropy and diversity with respect to the distance from individuals</p>
 <span>  neighbors <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">X</span><span class="op">$</span><span class="va">n</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  correction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"extrapolation"</span><span class="op">)</span>,</span>
-<span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rarefy"</span>, <span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  entropy_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UnveilJ"</span>, <span class="st">"ChaoJost"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"GenCov"</span>, <span class="st">"Grassberger"</span>,</span>
+<span>    <span class="st">"Marcon"</span>, <span class="st">"UnveilC"</span>, <span class="st">"UnveiliC"</span>, <span class="st">"ZhangGrabchak"</span>, <span class="st">"naive"</span>, <span class="st">"Bonachela"</span>, <span class="st">"Holste"</span><span class="op">)</span>,</span>
+<span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"rarefy"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chao2015"</span>, <span class="st">"Chao2013"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  h0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"multinomial"</span>, <span class="st">"random location"</span>, <span class="st">"binomial"</span><span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  n_simulations <span class="op">=</span> <span class="fl">100</span>,</span>
@@ -88,7 +102,14 @@ entropy and diversity with respect to the distance from individuals</p>
 <span>  neighbors <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">X</span><span class="op">$</span><span class="va">n</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  correction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"extrapolation"</span><span class="op">)</span>,</span>
-<span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rarefy"</span>, <span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  entropy_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UnveilJ"</span>, <span class="st">"ChaoJost"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"GenCov"</span>, <span class="st">"Grassberger"</span>,</span>
+<span>    <span class="st">"Marcon"</span>, <span class="st">"UnveilC"</span>, <span class="st">"UnveiliC"</span>, <span class="st">"ZhangGrabchak"</span>, <span class="st">"naive"</span>, <span class="st">"Bonachela"</span>, <span class="st">"Holste"</span><span class="op">)</span>,</span>
+<span>  richness_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jackknife"</span>, <span class="st">"iChao1"</span>, <span class="st">"Chao1"</span>, <span class="st">"rarefy"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  probability_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chao2015"</span>, <span class="st">"Chao2013"</span>, <span class="st">"ChaoShen"</span>, <span class="st">"naive"</span><span class="op">)</span>,</span>
+<span>  unveiling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geometric"</span>, <span class="st">"uniform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  jack_alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  jack_max <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  coverage_estimator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ZhangHuang"</span>, <span class="st">"Chao"</span>, <span class="st">"Turing"</span>, <span class="st">"Good"</span><span class="op">)</span>,</span>
 <span>  h0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"multinomial"</span>, <span class="st">"random location"</span>, <span class="st">"binomial"</span><span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  n_simulations <span class="op">=</span> <span class="fl">100</span>,</span>
@@ -108,17 +129,17 @@ entropy and diversity with respect to the distance from individuals</p>
 
 
 <dt id="arg-orders">orders<a class="anchor" aria-label="anchor" href="#arg-orders"></a></dt>
-<dd><p>A numeric vector: the diversity orders to address. Default is 0.</p></dd>
+<dd><p>a numeric vector: the diversity orders to address. Default is 0.</p></dd>
 
 
 <dt id="arg-neighbors">neighbors<a class="anchor" aria-label="anchor" href="#arg-neighbors"></a></dt>
-<dd><p>A vector of integers.
+<dd><p>a vector of integers.
 Entropy will be accumulated along this number of neighbors around each individual.
 Default is 10% of the individuals.</p></dd>
 
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
-<dd><p>A vector of distances.
+<dd><p>a vector of distances.
 If <code>NULL</code> accumulation is along <code>n</code>, else neighbors are accumulated in circles of radius <code>r</code>.</p></dd>
 
 
@@ -131,9 +152,38 @@ Default is "none".
 estimated in the full area of the neighborhood, which is slow.</p></dd>
 
 
+<dt id="arg-entropy-estimator">entropy_estimator<a class="anchor" aria-label="anchor" href="#arg-entropy-estimator"></a></dt>
+<dd><p>The asymptotic estimator of entropy
+when <code>correction</code> is "extrapolation".</p></dd>
+
+
 <dt id="arg-richness-estimator">richness_estimator<a class="anchor" aria-label="anchor" href="#arg-richness-estimator"></a></dt>
 <dd><p>an estimator of richness to evaluate the total number of species,
 see <a href="div_richness.html">div_richness</a>. used for interpolation and extrapolation.</p></dd>
+
+
+<dt id="arg-probability-estimator">probability_estimator<a class="anchor" aria-label="anchor" href="#arg-probability-estimator"></a></dt>
+<dd><p>a string containing one of the possible estimators
+of the probability distribution (see <a href="probabilities.html">probabilities</a>).
+Used only for extrapolation.</p></dd>
+
+
+<dt id="arg-unveiling">unveiling<a class="anchor" aria-label="anchor" href="#arg-unveiling"></a></dt>
+<dd><p>a string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see <a href="probabilities.html">probabilities</a>).
+Used only for extrapolation.</p></dd>
+
+
+<dt id="arg-jack-alpha">jack_alpha<a class="anchor" aria-label="anchor" href="#arg-jack-alpha"></a></dt>
+<dd><p>the risk level, 5% by default, used to optimize the jackknife order.</p></dd>
+
+
+<dt id="arg-jack-max">jack_max<a class="anchor" aria-label="anchor" href="#arg-jack-max"></a></dt>
+<dd><p>the highest jackknife order allowed. Default is 10.</p></dd>
+
+
+<dt id="arg-coverage-estimator">coverage_estimator<a class="anchor" aria-label="anchor" href="#arg-coverage-estimator"></a></dt>
+<dd><p>an estimator of sample coverage used by <a href="coverage.html">coverage</a>.</p></dd>
 
 
 <dt id="arg-individual">individual<a class="anchor" aria-label="anchor" href="#arg-individual"></a></dt>
@@ -168,13 +218,23 @@ in the window (a binomial point process is a Poisson point process conditionally
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An <a href="accum_sp.html">accum_sp</a> object, that is also either an <a href="accum_sp.html">accum_sp_diversity</a>,
+    <p>an <a href="accum_sp.html">accum_sp</a> object, that is also either an <a href="accum_sp.html">accum_sp_diversity</a>,
 <a href="accum_sp.html">accum_sp_entropy</a> or <a href="accum_sp.html">accum_sp_mixing</a> object.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>accum_sp_hill()</code> or <code>accum_sp_tsallis()</code> estimate the diversity or entropy
 accumulation curve of a distribution.</p>
+<p>Argument <code>entropy_estimator</code> is used to estimate asymptotic entropy or diversity
+when argument <code>correction</code> is "extrapolation".
+Then, <code>richness_estimator</code> is used if needed to estimate entropy.
+If the jackknife is chosen, <code>jack_alpha</code> sets the uncertainty level that decides
+increasing the jackknife estimator order, and <code>jack_max</code> is the highest
+order allowed.
+If <code>entropy_estimator</code> is an unveiled one, then <code>probability_estimator</code> and
+<code>unveiling</code> define the method.
+<code>coverage_estimator</code> sets the estimator of sample coverage.
+In general, the default values of these arguments are a good choice.</p>
     </div>
 
     <div class="section level2">

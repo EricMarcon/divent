@@ -16,6 +16,7 @@ check_divent_args(
   coverage_estimator = NULL,
   distances = NULL,
   distribution = NULL,
+  entropy_estimator = NULL,
   estimator = NULL,
   fisher_alpha = NULL,
   gamma = NULL,
@@ -113,6 +114,10 @@ check_divent_args(
 
   The distribution of species abundances. May be "lnorm" (log-normal),
   "lseries" (log-series), "geom" (geometric) or "bstick" (broken stick).
+
+- entropy_estimator:
+
+  an estimator of asymptotic entropy, diversity or richness.
 
 - estimator:
 

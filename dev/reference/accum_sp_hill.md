@@ -13,7 +13,14 @@ accum_sp_tsallis(
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
-  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   individual = FALSE,
   show_progress = TRUE,
   check_arguments = TRUE
@@ -25,7 +32,14 @@ accum_sp_hill(
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
-  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   h0 = c("none", "multinomial", "random location", "binomial"),
   alpha = 0.05,
   n_simulations = 100,
@@ -40,7 +54,14 @@ accum_mixing(
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
-  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   h0 = c("none", "multinomial", "random location", "binomial"),
   alpha = 0.05,
   n_simulations = 100,
@@ -60,16 +81,16 @@ accum_mixing(
 
 - orders:
 
-  A numeric vector: the diversity orders to address. Default is 0.
+  a numeric vector: the diversity orders to address. Default is 0.
 
 - neighbors:
 
-  A vector of integers. Entropy will be accumulated along this number of
+  a vector of integers. Entropy will be accumulated along this number of
   neighbors around each individual. Default is 10% of the individuals.
 
 - r:
 
-  A vector of distances. If `NULL` accumulation is along `n`, else
+  a vector of distances. If `NULL` accumulation is along `n`, else
   neighbors are accumulated in circles of radius `r`.
 
 - correction:
@@ -81,11 +102,43 @@ accum_mixing(
   number of individuals estimated in the full area of the neighborhood,
   which is slow.
 
+- entropy_estimator:
+
+  The asymptotic estimator of entropy when `correction` is
+  "extrapolation".
+
 - richness_estimator:
 
   an estimator of richness to evaluate the total number of species, see
   [div_richness](https://ericmarcon.github.io/divent/dev/reference/div_richness.md).
   used for interpolation and extrapolation.
+
+- probability_estimator:
+
+  a string containing one of the possible estimators of the probability
+  distribution (see
+  [probabilities](https://ericmarcon.github.io/divent/dev/reference/probabilities.md)).
+  Used only for extrapolation.
+
+- unveiling:
+
+  a string containing one of the possible unveiling methods to estimate
+  the probabilities of the unobserved species (see
+  [probabilities](https://ericmarcon.github.io/divent/dev/reference/probabilities.md)).
+  Used only for extrapolation.
+
+- jack_alpha:
+
+  the risk level, 5% by default, used to optimize the jackknife order.
+
+- jack_max:
+
+  the highest jackknife order allowed. Default is 10.
+
+- coverage_estimator:
+
+  an estimator of sample coverage used by
+  [coverage](https://ericmarcon.github.io/divent/dev/reference/coverage.md).
 
 - individual:
 
@@ -120,7 +173,7 @@ accum_mixing(
 
 ## Value
 
-An
+an
 [accum_sp](https://ericmarcon.github.io/divent/dev/reference/accum_sp.md)
 object, that is also either an
 [accum_sp_diversity](https://ericmarcon.github.io/divent/dev/reference/accum_sp.md),
@@ -133,6 +186,16 @@ object.
 
 `accum_sp_hill()` or `accum_sp_tsallis()` estimate the diversity or
 entropy accumulation curve of a distribution.
+
+Argument `entropy_estimator` is used to estimate asymptotic entropy or
+diversity when argument `correction` is "extrapolation". Then,
+`richness_estimator` is used if needed to estimate entropy. If the
+jackknife is chosen, `jack_alpha` sets the uncertainty level that
+decides increasing the jackknife estimator order, and `jack_max` is the
+highest order allowed. If `entropy_estimator` is an unveiled one, then
+`probability_estimator` and `unveiling` define the method.
+`coverage_estimator` sets the estimator of sample coverage. In general,
+the default values of these arguments are a good choice.
 
 ## Examples
 

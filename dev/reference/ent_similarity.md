@@ -51,7 +51,7 @@ ent_similarity(
 
 - x:
 
-  An object, that may be a numeric vector containing abundances or
+  an object, that may be a numeric vector containing abundances or
   probabilities, or an object of class
   [abundances](https://ericmarcon.github.io/divent/dev/reference/species_distribution.md)
   or
@@ -72,7 +72,7 @@ ent_similarity(
 
 - ...:
 
-  Unused.
+  unused.
 
 - estimator:
 
