@@ -15,11 +15,11 @@
 #' state of the art.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object, that may be a numeric vector containing abundances or probabilities,
+#' @param x an object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
 #' If it is a numeric vector, then its length must equal the dimensions of the
 #' `similarities` matrix: species are assumed to be in the same order.
-#' @param ... Unused.
+#' @param ... unused.
 #'
 #' @returns A tibble with the site names, the estimators used and the estimated entropy.
 #'
@@ -84,6 +84,17 @@ ent_similarity.numeric <- function(
       )
   }
 
+  # Eliminate 0
+  abd <- x[x > 0]
+  similarities <- similarities[x > 0, x > 0]
+  # Sample size
+  sample_size <- sum(abd)
+  # Calculate ordinariness
+  prob <- abd / sample_size
+  ordinariness <- as.numeric(similarities %*% prob)
+  # Number of observed species
+  s_obs <- length(abd)
+
   # Entropy of a vector of probabilities ----
   # More than one value and their sum equal to 1
   if (sum(x > 0) > 1 && abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
@@ -106,18 +117,6 @@ ent_similarity.numeric <- function(
       )
     }
   }
-
-  # Eliminate 0
-  abd <- x[x > 0]
-  similarities <- similarities[x > 0, x > 0]
-  # Sample size
-  sample_size <- sum(abd)
-  # Calculate ordinariness
-  prob <- abd / sample_size
-  ordinariness <- as.numeric(similarities %*% prob)
-  # Number of observed species
-  s_obs <- length(abd)
-
 
   # Entropy of a vector of abundances ----
   ## Exit if x contains no or a single species ----
