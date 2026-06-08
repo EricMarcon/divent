@@ -15,6 +15,7 @@ check_divent_args(
   coverage_estimator = NULL,
   distances = NULL,
   distribution = NULL,
+  entropy_estimator = NULL,
   estimator = NULL,
   fisher_alpha = NULL,
   gamma = NULL,
@@ -87,6 +88,8 @@ the number of neighbors.}
 \item{distribution}{The distribution of species abundances.
 May be "lnorm" (log-normal), "lseries" (log-series), "geom" (geometric) or
 "bstick" (broken stick).}
+
+\item{entropy_estimator}{an estimator of asymptotic entropy, diversity or richness.}
 
 \item{estimator}{an estimator of asymptotic entropy, diversity or richness.}
 
@@ -193,8 +196,6 @@ Used only for extrapolation.}
 \item{win}{the window containing the point pattern.
 It is an \link[spatstat.geom:owin]{spatstat.geom::owin} object.
 Default is a 1x1 square.}
-
-\item{entropy_estimator}{an estimator of asymptotic entropy, diversity or richness.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.

@@ -21,7 +21,6 @@ profile_similarity(
     "naive"),
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
@@ -75,9 +74,6 @@ Used only for extrapolation.}
 \item{unveiling}{a string containing one of the possible unveiling methods
 to estimate the probabilities of the unobserved species (see \link{probabilities}).
 Used only for extrapolation.}
-
-\item{richness_estimator}{an estimator of richness to evaluate the total number of species,
-see \link{div_richness}. used for interpolation and extrapolation.}
 
 \item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
 

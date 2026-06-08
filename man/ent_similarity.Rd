@@ -43,7 +43,7 @@ ent_similarity(x, similarities, q = 1, ...)
 )
 }
 \arguments{
-\item{x}{An object, that may be a numeric vector containing abundances or probabilities,
+\item{x}{an object, that may be a numeric vector containing abundances or probabilities,
 or an object of class \link{abundances} or \link{probabilities}.
 If it is a numeric vector, then its length must equal the dimensions of the
 \code{similarities} matrix: species are assumed to be in the same order.}
@@ -53,7 +53,7 @@ Its default value is the identity matrix.}
 
 \item{q}{a number: the order of diversity.}
 
-\item{...}{Unused.}
+\item{...}{unused.}
 
 \item{estimator}{An estimator of entropy.}
 
