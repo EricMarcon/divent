@@ -1,8 +1,13 @@
-# divent 0.5-4.9000
+# divent 0.5-4.9001
 
 ## Bug correction
 
 - species distributions made of a single individual were not recognized correctly as abundance vectors, preventing the estimation of their diversity at a level.
+- all arguments are available in `accum_sp_hill()`.
+
+## Improvement
+
+- argument `richness_estimator` has the same default value across functions.
 
 # divent 0.5-4
 
