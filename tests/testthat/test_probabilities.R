@@ -22,11 +22,14 @@ testthat::test_that(
                 eval(formals(divent:::probabilities.numeric)$coverage_estimator),
                 function(coverage_estimator) {
                   # print(paste(estimator, unveiling, richness_estimator, coverage_estimator))
-                  # Forbidden combination raises an error
-                  if ((richness_estimator == "rarefy" & unveiling == "none")) {
-                    NULL
-                  } else {
-                    suppressWarnings(
+                  suppressWarnings(
+                    # Do not run incompatible argument combinations
+                    if (
+                      !(
+                        (richness_estimator == "rarefy" & unveiling == "none") |
+                        (richness_estimator == "rarefy" & estimator == "GenCov")
+                      )
+                    ) {
                       probabilities(
                         abundances,
                         estimator = estimator,
@@ -38,8 +41,8 @@ testthat::test_that(
                         q = 0,
                         check_arguments = TRUE
                       )
-                    )
-                  }
+                    }
+                  )
                 }
               )
               # Make a dataframe with the list to avoid nested lists

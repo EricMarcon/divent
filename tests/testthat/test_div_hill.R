@@ -30,7 +30,12 @@ testthat::test_that(
                         # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
                         suppressWarnings(
                           # Do not run incompatible argument combinations
-                          if (richness_estimator != "rarefy" | unveiling != "none") {
+                          if (
+                            !(
+                              (richness_estimator == "rarefy" & unveiling == "none") |
+                              (richness_estimator == "rarefy" & estimator == "GenCov")
+                            )
+                          ) {
                             div_hill(
                               abundances,
                               q = q,
@@ -109,7 +114,11 @@ testthat::test_that(
                         # print(paste(probability_estimator, unveiling, richness_estimator, q, level))
                         suppressWarnings(
                           # Do not run incompatible argument combinations
-                          if (richness_estimator != "rarefy" | unveiling != "none") {
+                          if (
+                            !(
+                              (richness_estimator == "rarefy" & unveiling == "none")
+                            )
+                          ) {
                             div_hill(
                               abundances,
                               q = q,
