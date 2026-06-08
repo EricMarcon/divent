@@ -516,7 +516,7 @@ ent_shannon.numeric <- function(
         estimator = estimator,
         as_numeric = TRUE,
         check_arguments = FALSE
-        )
+      )
     } else {
       # Unveil so that the estimation of H is similar to that of non-integer entropy
       prob_unv <- probabilities.numeric(
