@@ -31,18 +31,21 @@ testthat::test_that(
                       function(unveiling) {
                         # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
                         suppressWarnings(
-                          div_phylo(
-                            abundances,
-                            tree = tree,
-                            q = q,
-                            estimator = estimator,
-                            level = NULL,
-                            probability_estimator = probability_estimator,
-                            unveiling = unveiling,
-                            richness_estimator = richness_estimator,
-                            as_numeric = FALSE,
-                            check_arguments = TRUE
-                          )
+                          # Do not run incompatible argument combinations
+                          if (richness_estimator != "rarefy" | unveiling != "none") {
+                            div_phylo(
+                              abundances,
+                              tree = tree,
+                              q = q,
+                              estimator = estimator,
+                              level = NULL,
+                              probability_estimator = probability_estimator,
+                              unveiling = unveiling,
+                              richness_estimator = richness_estimator,
+                              as_numeric = FALSE,
+                              check_arguments = TRUE
+                            )
+                          }
                         )
                       }
                     )
@@ -109,19 +112,22 @@ testthat::test_that(
                       function(unveiling) {
                         # print(paste(probability_estimator, unveiling, richness_estimator, q, level))
                         suppressWarnings(
-                          div_phylo(
-                            abundances,
-                            tree = tree,
-                            q = q,
-                            # Estimator is not used
-                            estimator = "naive",
-                            level = level,
-                            probability_estimator = probability_estimator,
-                            unveiling = unveiling,
-                            richness_estimator = richness_estimator,
-                            as_numeric = FALSE,
-                            check_arguments = TRUE
-                          )
+                          # Do not run incompatible argument combinations
+                          if (richness_estimator != "rarefy" | unveiling != "none") {
+                            div_phylo(
+                              abundances,
+                              tree = tree,
+                              q = q,
+                              # Estimator is not used
+                              estimator = "naive",
+                              level = level,
+                              probability_estimator = probability_estimator,
+                              unveiling = unveiling,
+                              richness_estimator = richness_estimator,
+                              as_numeric = FALSE,
+                              check_arguments = TRUE
+                            )
+                          }
                         )
                       }
                     )
