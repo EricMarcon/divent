@@ -346,6 +346,7 @@ check_divent_args <- function(
     coverage_estimator = NULL,
     distances = NULL,
     distribution = NULL,
+    entropy_estimator = NULL,
     estimator = NULL,
     fisher_alpha = NULL,
     gamma = NULL,
