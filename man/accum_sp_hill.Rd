@@ -12,7 +12,14 @@ accum_sp_tsallis(
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
-  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   individual = FALSE,
   show_progress = TRUE,
   check_arguments = TRUE
@@ -24,7 +31,14 @@ accum_sp_hill(
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
-  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   h0 = c("none", "multinomial", "random location", "binomial"),
   alpha = 0.05,
   n_simulations = 100,
@@ -39,7 +53,14 @@ accum_mixing(
   neighbors = 1:ceiling(X$n/2),
   r = NULL,
   correction = c("none", "extrapolation"),
-  richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+  entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
+    "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive", "Bonachela", "Holste"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   h0 = c("none", "multinomial", "random location", "binomial"),
   alpha = 0.05,
   n_simulations = 100,
@@ -52,13 +73,13 @@ accum_mixing(
 \item{X}{a spatialized community
 (A \link[dbmss:wmppp]{dbmss::wmppp} object with \code{PointType} values as species names.)}
 
-\item{orders}{A numeric vector: the diversity orders to address. Default is 0.}
+\item{orders}{a numeric vector: the diversity orders to address. Default is 0.}
 
-\item{neighbors}{A vector of integers.
+\item{neighbors}{a vector of integers.
 Entropy will be accumulated along this number of neighbors around each individual.
 Default is 10\% of the individuals.}
 
-\item{r}{A vector of distances.
+\item{r}{a vector of distances.
 If \code{NULL} accumulation is along \code{n}, else neighbors are accumulated in circles of radius \code{r}.}
 
 \item{correction}{The edge-effect correction to apply when estimating
@@ -68,8 +89,25 @@ Default is "none".
 "extrapolation" extrapolates the observed diversity up to the number of individuals
 estimated in the full area of the neighborhood, which is slow.}
 
+\item{entropy_estimator}{The asymptotic estimator of entropy
+when \code{correction} is "extrapolation".}
+
 \item{richness_estimator}{an estimator of richness to evaluate the total number of species,
 see \link{div_richness}. used for interpolation and extrapolation.}
+
+\item{probability_estimator}{a string containing one of the possible estimators
+of the probability distribution (see \link{probabilities}).
+Used only for extrapolation.}
+
+\item{unveiling}{a string containing one of the possible unveiling methods
+to estimate the probabilities of the unobserved species (see \link{probabilities}).
+Used only for extrapolation.}
+
+\item{jack_alpha}{the risk level, 5\% by default, used to optimize the jackknife order.}
+
+\item{jack_max}{the highest jackknife order allowed. Default is 10.}
+
+\item{coverage_estimator}{an estimator of sample coverage used by \link{coverage}.}
 
 \item{individual}{If \code{TRUE}, individual neighborhood entropies are returned.}
 
@@ -90,7 +128,7 @@ in the window (a binomial point process is a Poisson point process conditionally
 \item{n_simulations}{the number of simulations used to estimate the confidence envelope.}
 }
 \value{
-An \link{accum_sp} object, that is also either an \link{accum_sp_diversity},
+an \link{accum_sp} object, that is also either an \link{accum_sp_diversity},
 \link{accum_sp_entropy} or \link{accum_sp_mixing} object.
 }
 \description{
@@ -100,6 +138,17 @@ entropy and diversity with respect to the distance from individuals
 \details{
 \code{accum_sp_hill()} or \code{accum_sp_tsallis()} estimate the diversity or entropy
 accumulation curve of a distribution.
+
+Argument \code{entropy_estimator} is used to estimate asymptotic entropy or diversity
+when argument \code{correction} is "extrapolation".
+Then, \code{richness_estimator} is used if needed to estimate entropy.
+If the jackknife is chosen, \code{jack_alpha} sets the uncertainty level that decides
+increasing the jackknife estimator order, and \code{jack_max} is the highest
+order allowed.
+If \code{entropy_estimator} is an unveiled one, then \code{probability_estimator} and
+\code{unveiling} define the method.
+\code{coverage_estimator} sets the estimator of sample coverage.
+In general, the default values of these arguments are a good choice.
 }
 \examples{
 # Generate a random community

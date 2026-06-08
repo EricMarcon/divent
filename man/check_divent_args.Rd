@@ -193,6 +193,8 @@ Used only for extrapolation.}
 \item{win}{the window containing the point pattern.
 It is an \link[spatstat.geom:owin]{spatstat.geom::owin} object.
 Default is a 1x1 square.}
+
+\item{entropy_estimator}{an estimator of asymptotic entropy, diversity or richness.}
 }
 \value{
 Returns \code{TRUE} or stops if a problem is detected.
