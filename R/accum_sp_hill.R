@@ -50,7 +50,7 @@ accum_sp_tsallis <- function(
     neighbors = 1:ceiling(X$n / 2),
     r = NULL,
     correction = c("none", "extrapolation"),
-    richness_estimator = c("rarefy", "jackknife", "iChao1", "Chao1", "naive"),
+    richness_estimator = c("iChao1", "Chao1", "rarefy", "jackknife", "naive"),
     individual = FALSE,
     show_progress = TRUE,
     check_arguments = TRUE) {
@@ -91,7 +91,6 @@ accum_sp_tsallis <- function(
           Point = row.names(X$marks)
         )
       )
-
     } else {
       ent_q_nr_individuals <- NA
     }
@@ -113,7 +112,7 @@ accum_sp_tsallis <- function(
           sapply(
             orders,
             function(q) {
-              ent_tsallis(
+              ent_tsallis.species_distribution(
                 as_abundances.character(community),
                 q = q,
                 estimator = "naive",
@@ -216,7 +215,7 @@ accum_sp_tsallis <- function(
             vapply(
               orders,
               FUN = function(q) {
-                ent_tsallis(
+                ent_tsallis.species_distribution(
                   as_abundances.numeric(community),
                   q = q,
                   estimator = "naive",
@@ -270,7 +269,7 @@ accum_sp_tsallis <- function(
           }
         } else {
           cli::cli_abort(
-            "The edge-effect correction argument correction has not been recognized."
+            "The edge-effect correction (argument: correction) has not been recognized."
           )
         }
       }
@@ -468,7 +467,8 @@ accum_sp_hill <- function(
         correction = correction,
         richness_estimator = richness_estimator,
         h0 = "none",
-        n_simulations = 0,                 # TODO: check argument list
+        alpha = alpha,
+        n_simulations = 0,
         individual = FALSE,
         show_progress = FALSE,
         check_arguments = FALSE
@@ -535,7 +535,8 @@ accum_mixing <- function(
     correction = correction,
     richness_estimator = richness_estimator,
     h0 = h0,
-    n_simulations = n_simulations,                 # TODO: check argument list
+    alpha = alpha,
+    n_simulations = n_simulations,
     individual = show_progress,
     show_progress = show_progress,
     check_arguments = FALSE
