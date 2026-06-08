@@ -7,15 +7,15 @@ testthat::test_that(
     # Estimate diversity systematically
     ent_shannon.list <- lapply(
       # All estimators
-      eval(formals(divent:::ent_shannon.numeric)$estimator), 
+      eval(formals(divent:::ent_shannon.numeric)$estimator),
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All probability estimators
-          eval(formals(divent:::ent_shannon.numeric)$probability_estimator), 
+          eval(formals(divent:::ent_shannon.numeric)$probability_estimator),
           function(probability_estimator) {
             the_list <- lapply(
               # All unveilings
-              eval(formals(divent:::ent_shannon.numeric)$unveiling), 
+              eval(formals(divent:::ent_shannon.numeric)$unveiling),
               function(unveiling) {
                 # print(paste(estimator, probability_estimator, unveiling))
                 suppressWarnings(
@@ -32,7 +32,7 @@ testthat::test_that(
                   )
                 )
               }
-            ) 
+            )
             # Make a dataframe with the list to avoid nested lists
             the_df <- do.call(rbind, the_list)
           }
@@ -43,12 +43,12 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     ent_shannon.dataframe <- do.call(rbind, ent_shannon.list)
-    
+
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(ent_shannon.dataframe$entropy),
       ent_shannon(
-        abundances, 
+        abundances,
         probability_estimator = "Chao2013",
         unveiling = "none"
       )$entropy
@@ -67,15 +67,15 @@ testthat::test_that(
     # Estimate diversity systematically
     ent_shannon.list <- lapply(
       # All probability estimators
-      eval(formals(divent:::ent_shannon.numeric)$probability_estimator), 
+      eval(formals(divent:::ent_shannon.numeric)$probability_estimator),
       function(probability_estimator) {
         the_list <- lapply(
           # All unveilings
-          eval(formals(divent:::ent_shannon.numeric)$unveiling), 
+          eval(formals(divent:::ent_shannon.numeric)$unveiling),
           function(unveiling) {
-            the_list <-lapply(
+            the_list <- lapply(
               # All levels
-              levels, 
+              levels,
               function(level) {
                 # print(paste(probability_estimator, unveiling, level))
                 suppressWarnings(
@@ -103,12 +103,12 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     ent_shannon.dataframe <- do.call(rbind, ent_shannon.list)
-    
+
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(ent_shannon.dataframe$entropy),
       ent_shannon(
-        abundances, 
+        abundances,
         probability_estimator = "Chao2013",
         unveiling = "none",
         level = 1413

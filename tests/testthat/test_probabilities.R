@@ -7,19 +7,19 @@ testthat::test_that(
     # Estimate diversity systematically
     probabilities.list <- lapply(
       # All estimators
-      eval(formals(divent:::probabilities.numeric)$estimator), 
+      eval(formals(divent:::probabilities.numeric)$estimator),
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All unveilings
-          eval(formals(divent:::probabilities.numeric)$unveiling), 
+          eval(formals(divent:::probabilities.numeric)$unveiling),
           function(unveiling) {
           the_list <- lapply(
             # All richness estimators
-            eval(formals(divent:::probabilities.numeric)$richness_estimator), 
+            eval(formals(divent:::probabilities.numeric)$richness_estimator),
             function(richness_estimator) {
               the_list <- lapply(
                 # All coverage estimators
-                eval(formals(divent:::probabilities.numeric)$coverage_estimator), 
+                eval(formals(divent:::probabilities.numeric)$coverage_estimator),
                 function(coverage_estimator) {
                   # print(paste(estimator, unveiling, richness_estimator, coverage_estimator))
                   # Forbidden combination raises an error
@@ -32,7 +32,7 @@ testthat::test_that(
                         estimator = estimator,
                         unveiling = unveiling,
                         richness_estimator = richness_estimator,
-                        jack_alpha = 0.05, 
+                        jack_alpha = 0.05,
                         jack_max = 10,
                         coverage_estimator = coverage_estimator,
                         q = 0,
@@ -41,7 +41,7 @@ testthat::test_that(
                     )
                   }
                 }
-              ) 
+              )
               # Make a dataframe with the list to avoid nested lists
               the_df <- dplyr::bind_rows(the_list)
              }
@@ -56,7 +56,7 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     probabilities.dataframe <- dplyr::bind_rows(probabilities.list)
-    
+
     # All probabilities must be below 1
     testthat::expect_lte(
       max(probabilities.dataframe$weight),

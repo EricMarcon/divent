@@ -11,19 +11,19 @@ testthat::test_that(
     # Estimate diversity systematically
     div_similarity.list <- lapply(
       # All estimators
-      eval(formals(divent:::div_similarity.numeric)$estimator), 
+      eval(formals(divent:::div_similarity.numeric)$estimator),
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All probability estimators
-          eval(formals(divent:::div_similarity.numeric)$probability_estimator), 
+          eval(formals(divent:::div_similarity.numeric)$probability_estimator),
           function(probability_estimator) {
-            the_list <-lapply(
+            the_list <- lapply(
               # All q's
-              orders, 
+              orders,
               function(q) {
                 the_list <- lapply(
                   # All unveilings
-                  eval(formals(divent:::div_similarity.numeric)$unveiling), 
+                  eval(formals(divent:::div_similarity.numeric)$unveiling),
                   function(unveiling) {
                     # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
                     suppressWarnings(
@@ -39,7 +39,7 @@ testthat::test_that(
                       )
                     )
                   }
-                ) 
+                )
                 # Make a dataframe with the list to avoid nested lists
                 the_df <- do.call(rbind, the_list)
               }
@@ -54,14 +54,14 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     div_similarity.dataframe <- do.call(rbind, div_similarity.list)
-    
+
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_similarity.dataframe$diversity, na.rm = TRUE),
       div_similarity(
-        abundances, 
+        abundances,
         similarities = Z,
-        q = 0.5, 
+        q = 0.5,
         probability_estimator = "Chao2013",
         unveiling = "none"
       )$diversity

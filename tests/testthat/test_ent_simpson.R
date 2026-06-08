@@ -7,15 +7,15 @@ testthat::test_that(
     # Estimate diversity systematically
     ent_simpson.list <- lapply(
       # All estimators
-      eval(formals(divent:::ent_simpson.numeric)$estimator), 
+      eval(formals(divent:::ent_simpson.numeric)$estimator),
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All probability estimators
-          eval(formals(divent:::ent_simpson.numeric)$probability_estimator), 
+          eval(formals(divent:::ent_simpson.numeric)$probability_estimator),
           function(probability_estimator) {
             the_list <- lapply(
               # All unveilings
-              eval(formals(divent:::ent_simpson.numeric)$unveiling), 
+              eval(formals(divent:::ent_simpson.numeric)$unveiling),
               function(unveiling) {
                 # print(paste(estimator, probability_estimator, unveiling))
                 suppressWarnings(
@@ -32,7 +32,7 @@ testthat::test_that(
                   )
                 )
               }
-            ) 
+            )
             # Make a dataframe with the list to avoid nested lists
             the_df <- do.call(rbind, the_list)
           }
@@ -43,12 +43,12 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     ent_simpson.dataframe <- do.call(rbind, ent_simpson.list)
-    
+
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(ent_simpson.dataframe$entropy),
       ent_simpson(
-        abundances, 
+        abundances,
         estimator = "UnveilC",
         probability_estimator = "Chao2013",
         unveiling = "none"
@@ -68,15 +68,15 @@ testthat::test_that(
     # Estimate diversity systematically
     ent_simpson.list <- lapply(
       # All probability estimators
-      eval(formals(divent:::ent_simpson.numeric)$probability_estimator), 
+      eval(formals(divent:::ent_simpson.numeric)$probability_estimator),
       function(probability_estimator) {
         the_list <- lapply(
           # All unveilings
-          eval(formals(divent:::ent_simpson.numeric)$unveiling), 
+          eval(formals(divent:::ent_simpson.numeric)$unveiling),
           function(unveiling) {
-            the_list <-lapply(
+            the_list <- lapply(
               # All levels
-              levels, 
+              levels,
               function(level) {
                 # print(paste(estimator, probability_estimator, unveiling, level))
                 suppressWarnings(
@@ -104,7 +104,7 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     ent_simpson.dataframe <- do.call(rbind, ent_simpson.list)
-    
+
     # The min value must be at level 471, no matter the arguments
     testthat::expect_equal(
       min(ent_simpson.dataframe$entropy),

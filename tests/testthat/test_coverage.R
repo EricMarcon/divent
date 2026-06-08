@@ -72,7 +72,7 @@ testthat::test_that(
       # All estimators
       eval(formals(divent:::coverage.numeric)$estimator),
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # Two levels
           levels,
           function(level) {

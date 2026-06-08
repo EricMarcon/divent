@@ -9,23 +9,23 @@ testthat::test_that(
     # Estimate diversity systematically
     div_hill.list <- lapply(
       # All estimators
-      eval(formals(divent:::div_hill.numeric)$estimator), 
+      eval(formals(divent:::div_hill.numeric)$estimator),
       function(estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All probability estimators
-          eval(formals(divent:::div_hill.numeric)$probability_estimator), 
+          eval(formals(divent:::div_hill.numeric)$probability_estimator),
           function(probability_estimator) {
-            the_list <-lapply(
+            the_list <- lapply(
               # All richness estimators
-              eval(formals(divent:::div_hill.numeric)$richness_estimator), 
+              eval(formals(divent:::div_hill.numeric)$richness_estimator),
               function(richness_estimator) {
-                the_list <-lapply(
+                the_list <- lapply(
                   # All q's
-                  orders, 
+                  orders,
                   function(q) {
                     the_list <- lapply(
                       # All unveilings
-                      eval(formals(divent:::div_hill.numeric)$unveiling), 
+                      eval(formals(divent:::div_hill.numeric)$unveiling),
                       function(unveiling) {
                         # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
                         suppressWarnings(
@@ -42,7 +42,7 @@ testthat::test_that(
                           )
                         )
                       }
-                    ) 
+                    )
                     # Make a dataframe with the list to avoid nested lists
                     the_df <- do.call(rbind, the_list)
                   }
@@ -61,13 +61,13 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     div_hill.dataframe <- do.call(rbind, div_hill.list)
-    
+
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_hill.dataframe$diversity, na.rm = TRUE),
       div_hill(
-        abundances, 
-        q = max(orders), 
+        abundances,
+        q = max(orders),
         probability_estimator = "Chao2013",
         unveiling = "none"
       )$diversity
@@ -85,23 +85,23 @@ testthat::test_that(
     # Estimate diversity systematically
     div_hill.list <- lapply(
       # All probability estimators
-      eval(formals(divent:::div_hill.numeric)$probability_estimator), 
+      eval(formals(divent:::div_hill.numeric)$probability_estimator),
       function(probability_estimator) {
-        the_list <-lapply(
+        the_list <- lapply(
           # All richness estimators
-          eval(formals(divent:::div_hill.numeric)$richness_estimator), 
+          eval(formals(divent:::div_hill.numeric)$richness_estimator),
           function(richness_estimator) {
-            the_list <-lapply(
+            the_list <- lapply(
               # All levels
-              levels, 
+              levels,
               function(level) {
                 the_list <- lapply(
                   # All q's
-                  orders, 
+                  orders,
                   function(q) {
                     the_list <- lapply(
                       # All unveilings
-                      eval(formals(divent:::div_hill.numeric)$unveiling), 
+                      eval(formals(divent:::div_hill.numeric)$unveiling),
                       function(unveiling) {
                         # print(paste(probability_estimator, unveiling, richness_estimator, q, level))
                         suppressWarnings(
@@ -119,7 +119,7 @@ testthat::test_that(
                           )
                         )
                       }
-                    ) 
+                    )
                     # Make a dataframe with the list to avoid nested lists
                     the_df <- do.call(rbind, the_list)
                   }
@@ -138,13 +138,13 @@ testthat::test_that(
     )
     # Coerce to a dataframe
     div_hill.dataframe <- do.call(rbind, div_hill.list)
-    
+
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_hill.dataframe$diversity, na.rm = TRUE),
       div_hill(
-        abundances, 
-        q = max(orders), 
+        abundances,
+        q = max(orders),
         level = min(levels)
       )$diversity
     )
