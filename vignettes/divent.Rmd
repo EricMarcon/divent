@@ -33,8 +33,8 @@ Bias correction is rarely available except in the *EntropyEstimation* [@Cao2014]
 
 Community data is:
 
--   either a numeric vector containing abundances of species (the number of individual of each species) or their probabilities (the proportion of individuals of each species, summing to 1). This format is convenient when a single community is considered.
--   or a dataframe whose rows are communities and column are species. Its values are either abundances or probabilities. Special columns contain the site names, and their weights (e.g. their area or number of individuals).
+- either a numeric vector containing abundances of species (the number of individual of each species) or their probabilities (the proportion of individuals of each species, summing to 1). This format is convenient when a single community is considered.
+- or a dataframe whose rows are communities and column are species. Its values are either abundances or probabilities. Special columns contain the site names, and their weights (e.g. their area or number of individuals).
 
 Example data is provided in the dataset `paracou_6_abd`.
 Let's get the abundances of tree species in the 6.25-ha tropical forest plot #6 from Paracou forest station in French Guiana.
@@ -199,7 +199,7 @@ accum_div_phylo(
 
 ## Meta-community data
 
-A metacommunity is the assemblage several communities.
+A metacommunity is the assemblage of several communities.
 
 The set of communities is described by the abundances of their species and their weight.
 

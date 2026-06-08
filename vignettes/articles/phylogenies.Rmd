@@ -135,12 +135,12 @@ tree.phylo_divent
 
 It contains:
 
--   `$phylo`: the tree as a `phylo` object.
--   `$hclust`: the tree as a `hclust` object.
--   `$height`: the height of the tree.
--   `$cuts`: the heights of the nodes of the tree.
--   `$intervals`: the intervals between the cuts.
--   `$phylo_groups`: a matrix that describes the ancestors of species in each interval. The column names give the most recent cut of each interval. Values are the group each present species belongs to in each interval. In the example above, species A and B belong to the same group in the interval starting at 1.
+- `$phylo`: the tree as a `phylo` object.
+- `$hclust`: the tree as a `hclust` object.
+- `$height`: the height of the tree.
+- `$cuts`: the heights of the nodes of the tree.
+- `$intervals`: the intervals between the cuts.
+- `$phylo_groups`: a matrix that describes the ancestors of species in each interval. The column names give the most recent cut of each interval. Values are the group each present species belongs to in each interval. In the example above, species A and B belong to the same group in the interval starting at 1.
 
 # Newick dendrograms
 
