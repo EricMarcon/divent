@@ -388,22 +388,6 @@ check_divent_args <- function(
     X = NULL,
     win = NULL) {
 
-  # Verify that the package is attached
-  if (!"divent" %in% .packages()) {
-    cli::cli_alert_warning(
-      paste(
-        "Function arguments cannot be checked because the package",
-        "{.pkg divent} is not attached."
-      )
-    )
-    cli::cli_alert(
-      paste(
-        "Add {.code check_arguments=FALSE} to suppress this warning or",
-        "run {.code library('divent')}."
-      )
-    )
-    return(TRUE)
-  }
   # Get the list of arguments of the parent function
   parent_function <- sys.call(-1)[[1]]
   # If apply() or similar was used, the function name is not in parent_function: sys.call(-1)[[1]] returns "FUN"
