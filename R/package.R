@@ -524,7 +524,7 @@ check_divent_args <- function(
           parent_function
         )
       }
-      if (any(diag(distances != 0))) {
+      if (any(diag(distances) != 0)) {
         error_message(
           "distances must be zero between a species and itself",
           distances,
@@ -940,7 +940,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(diag(similarities != 1))) {
+    if (any(diag(similarities) != 1)) {
       error_message(
         "similarities must be 1 between a species and itself",
         similarities,
