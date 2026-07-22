@@ -27,7 +27,7 @@ fun_similarity <- function(
     rate = 1,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     # Names
     if (xor(is.null(colnames(distances)), is.null(rownames(distances)))) {

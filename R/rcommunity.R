@@ -81,7 +81,7 @@ rcommunity <- function(
   bootstrap <- match.arg(bootstrap)
   distribution <- match.arg(distribution)
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (!is.null(prob) & !is.null(abd)) {
       cli::cli_abort("{.code prob} and {.code abd} can't be both given.")
@@ -215,7 +215,7 @@ rspcommunity <- function(
   distribution <- match.arg(distribution)
   coverage_estimator <- match.arg(coverage_estimator)
   spatial <- match.arg(spatial)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (!is.null(prob) & !is.null(abd)) {
       cli::cli_abort("{.code prob} and {.code abd} can't be both given.")

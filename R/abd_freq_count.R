@@ -45,7 +45,7 @@ abd_freq_count <- function(
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(check_arguments)) check_divent_args()
+  if (check_arguments) check_divent_args()
 
   # Convert to integer values
   if (length(abd) == 0) {

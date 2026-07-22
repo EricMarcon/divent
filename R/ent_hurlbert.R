@@ -52,7 +52,7 @@ ent_hurlbert.numeric <- function(
 
   # Check arguments
   estimator <- match.arg(estimator)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")
@@ -147,7 +147,7 @@ ent_hurlbert.species_distribution <- function(
 
   # Check arguments
   estimator <- match.arg(estimator)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")
