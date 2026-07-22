@@ -398,7 +398,7 @@ check_divent_args <- function(
     )
     cli::cli_alert(
       paste(
-        "Add {.code CheckArguments=FALSE} to suppress this warning or",
+        "Add {.code check_arguments=FALSE} to suppress this warning or",
         "run {.code library('divent')}."
       )
     )
