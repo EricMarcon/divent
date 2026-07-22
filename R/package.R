@@ -392,7 +392,7 @@ check_divent_args <- function(
   parent_function <- sys.call(-1)[[1]]
   # If apply() or similar was used, the function name is not in parent_function: sys.call(-1)[[1]] returns "FUN"
   if (parent_function == "FUN") {
-    warning("Function arguments cannot be checked, probably because you used apply(). Add CheckArguments=FALSE to suppress this warning.")
+    warning("Function arguments cannot be checked, probably because you used apply(). Add check_arguments=FALSE to suppress this warning.")
     return(TRUE)
   }
 
