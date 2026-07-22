@@ -629,7 +629,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(!is_integer_values(k))) {
+    if (!is_integer_values(k)) {
       error_message(
         "k must be an integer",
         k,
@@ -796,7 +796,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(!is_integer_values(q_threshold))) {
+    if (!is_integer_values(q_threshold)) {
       error_message(
         "q_threshold must be an integer",
         q_threshold,
