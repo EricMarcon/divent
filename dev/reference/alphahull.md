@@ -59,8 +59,8 @@ if (require(spatstat.random)) {
 #> Loading required package: spatstat.univar
 #> spatstat.univar 3.2-0
 #> Loading required package: spatstat.geom
-#> spatstat.geom 3.8-1
-#> spatstat.random 3.5-0
+#> spatstat.geom 3.8-2
+#> spatstat.random 3.5-1
 
 #> Error in as_igraph_vs(graph, to): Invalid vertex names
 ```
