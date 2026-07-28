@@ -1,9 +1,10 @@
-# divent 0.5-4.9002
+# divent 0.5-4.9003
 
 ## Bug correction
 
 - species distributions made of a single individual were not recognized correctly as abundance vectors, preventing the estimation of their diversity at a level.
 - all arguments are available in `accum_sp_hill()`.
+- similarities and distances were not checked correctly (#6 by @Bisaloo).
 
 ## Improvement
 
