@@ -113,7 +113,7 @@ Similarity among Multiple Communities.” *Oikos*, **76**(1), 5–13.
 [doi:10.2307/3545743](https://doi.org/10.2307/3545743) .  
   
 Rao CR (1982). “Diversity and Dissimilarity Coefficients: A Unified
-Approach.” *Theoretical Population Biology*, **21**, 24–43.
+Approach.” *Theoretical Population Biology*, **21**(1), 24–43.
 [doi:10.1016/0040-5809(82)90004-1](https://doi.org/10.1016/0040-5809%2882%2990004-1)
 .
 

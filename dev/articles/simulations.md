@@ -199,8 +199,8 @@ autoplot(the_species) +
 
 ![](simulations_files/figure-html/unnamed-chunk-4-1.png)
 
-Post-simulation processing of such spatialized communities may be for
-instance thinning to reduced the local average basal area.
+Post-simulation processing of such spatialized communities include
+thinning to reduce the local average basal area.
 
 ``` r
 

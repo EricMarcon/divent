@@ -450,7 +450,7 @@ accum_div_phylo(
 
 ### Meta-community data
 
-A metacommunity is the assemblage several communities.
+A metacommunity is the assemblage of several communities.
 
 The set of communities is described by the abundances of their species
 and their weight.

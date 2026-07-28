@@ -1,6 +1,6 @@
 # Changelog
 
-## divent 0.5-4.9002
+## divent 0.5-4.9003
 
 ### Bug correction
 
@@ -9,6 +9,9 @@
   diversity at a level.
 - all arguments are available in
   [`accum_sp_hill()`](https://ericmarcon.github.io/divent/dev/reference/accum_sp_hill.md).
+- similarities and distances were not checked correctly
+  ([\#6](https://github.com/EricMarcon/divent/issues/6) by
+  [@Bisaloo](https://github.com/Bisaloo)).
 
 ### Improvement
 
