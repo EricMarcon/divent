@@ -69,7 +69,7 @@ div_similarity.numeric <- function(
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")
@@ -130,7 +130,7 @@ div_similarity.species_distribution <- function(
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")

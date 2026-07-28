@@ -53,7 +53,7 @@ metacommunity.matrix <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (length(weights != nrow(x))) {
       cli::cli_abort("The length of 'weights' must be the number of communities")
@@ -110,7 +110,7 @@ metacommunity.abundances <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")

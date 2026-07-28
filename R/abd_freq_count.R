@@ -45,16 +45,14 @@ abd_freq_count <- function(
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
-  if (any(check_arguments)) check_divent_args()
+  if (check_arguments) check_divent_args()
 
   # Convert to integer values
   if (length(abd) == 0) {
     # abd may contain no species. Return NA.
     return(NA)
-  } else {
-    abd_int <- round(abd)
   }
-  if (any(abs(abd_int - abd) > 2 * .Machine$double.eps)) {
+  if (!is_integer_values(abd)) {
     cli::cli_alert_warning(
       "The abundance frequency count requires integer abundances."
     )
@@ -62,6 +60,7 @@ abd_freq_count <- function(
       "Abundances have been rounded."
     )
   }
+  abd_int <- round(abd)
 
   # Eliminate 0
   abd_int <- abd_int[abd_int > 0]

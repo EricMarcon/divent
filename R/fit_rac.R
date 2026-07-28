@@ -47,7 +47,7 @@ fit_rac.numeric <- function(
 
   # Check arguments
   distribution <- match.arg(distribution)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")
@@ -158,7 +158,7 @@ fit_rac.species_distribution <- function(
 
   # Check arguments
   distribution <- match.arg(distribution)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")

@@ -388,27 +388,11 @@ check_divent_args <- function(
     X = NULL,
     win = NULL) {
 
-  # Verify that the package is attached
-  if (!"divent" %in% .packages()) {
-    cli::cli_alert_warning(
-      paste(
-        "Function arguments cannot be checked because the package",
-        "{.pkg divent} is not attached."
-      )
-    )
-    cli::cli_alert(
-      paste(
-        "Add {.code CheckArguments=FALSE} to suppress this warning or",
-        "run {.code library('divent')}."
-      )
-    )
-    return(TRUE)
-  }
   # Get the list of arguments of the parent function
   parent_function <- sys.call(-1)[[1]]
   # If apply() or similar was used, the function name is not in parent_function: sys.call(-1)[[1]] returns "FUN"
   if (parent_function == "FUN") {
-    warning("Function arguments cannot be checked, probably because you used apply(). Add CheckArguments=FALSE to suppress this warning.")
+    warning("Function arguments cannot be checked, probably because you used apply(). Add check_arguments=FALSE to suppress this warning.")
     return(TRUE)
   }
 
@@ -459,14 +443,14 @@ check_divent_args <- function(
   # alpha
   if (!is.na(names(args["alpha"]))) {
     alpha <- eval(expression(alpha), parent.frame())
-    if (!is.numeric(alpha) | length(alpha) != 1) {
+    if (!is.numeric(alpha) || length(alpha) != 1) {
       error_message(
         "alpha must be a number.",
         alpha,
         parent_function
       )
     }
-    if (any(alpha < 0) | any(alpha > 1)) {
+    if (any(alpha < 0 | alpha > 1)) {
       error_message(
         "alpha must be between 0 and 1",
         alpha,
@@ -477,7 +461,7 @@ check_divent_args <- function(
   # as_numeric
   if (!is.na(names(args["as_numeric"]))) {
     as_numeric <- eval(expression(as_numeric), parent.frame())
-    if (!is.logical(as_numeric) | length(as_numeric) != 1) {
+    if (!is.logical(as_numeric) || length(as_numeric) != 1) {
       error_message(
         "as_numeric must be TRUE or FALSE",
         as_numeric,
@@ -489,7 +473,7 @@ check_divent_args <- function(
   # check_arguments
   if (!is.na(names(args["check_arguments"]))) {
     check_arguments <- eval(expression(check_arguments), parent.frame())
-    if (!is.logical(check_arguments) | length(check_arguments) != 1) {
+    if (!is.logical(check_arguments) || length(check_arguments) != 1) {
       error_message(
         "check_arguments must be TRUE or FALSE",
         check_arguments,
@@ -540,7 +524,7 @@ check_divent_args <- function(
           parent_function
         )
       }
-      if (any(diag(distances != 0))) {
+      if (any(diag(distances) != 0)) {
         error_message(
           "distances must be zero between a species and itself",
           distances,
@@ -573,7 +557,7 @@ check_divent_args <- function(
   # gamma
   if (!is.na(names(args["gamma"]))) {
     gamma <- eval(expression(gamma), parent.frame())
-    if (!is.logical(gamma) | length(gamma) != 1) {
+    if (!is.logical(gamma) || length(gamma) != 1) {
       error_message(
         "gamma must be TRUE or FALSE",
         gamma,
@@ -584,7 +568,7 @@ check_divent_args <- function(
   # global
   if (!is.na(names(args["global"]))) {
     global <- eval(expression(global), parent.frame())
-    if (!is.logical(global) | length(global) != 1) {
+    if (!is.logical(global) || length(global) != 1) {
       error_message(
         "global must be TRUE or FALSE",
         global,
@@ -595,14 +579,14 @@ check_divent_args <- function(
   # jack_alpha
   if (!is.na(names(args["jack_alpha"]))) {
     jack_alpha <- eval(expression(jack_alpha), parent.frame())
-    if (!is.numeric(jack_alpha) | length(jack_alpha) != 1) {
+    if (!is.numeric(jack_alpha) || length(jack_alpha) != 1) {
       error_message(
         "jack_alpha must be a number.",
         jack_alpha,
         parent_function
       )
     }
-    if (any(jack_alpha <= 0) | any(jack_alpha >= 1)) {
+    if (any(jack_alpha <= 0 | jack_alpha >= 1)) {
       error_message(
         "jack_alpha must be between 0 and 1",
         jack_alpha,
@@ -613,14 +597,14 @@ check_divent_args <- function(
   # jack_max
   if (!is.na(names(args["jack_max"]))) {
     jack_max <- eval(expression(jack_max), parent.frame())
-    if (!is.numeric(jack_max) | length(jack_max) != 1) {
+    if (!is.numeric(jack_max) || length(jack_max) != 1) {
       error_message(
         "jack_max must be a number.",
         jack_max,
         parent_function
       )
     }
-    if (any(jack_max < 1) | any(jack_max > 10)) {
+    if (any(jack_max < 1 | jack_max > 10)) {
       error_message(
         "jack_max must be between 1 and 10",
         jack_max,
@@ -631,7 +615,7 @@ check_divent_args <- function(
   # k
   if (!is.na(names(args["k"]))) {
     k <- eval(expression(k), parent.frame())
-    if (!is.numeric(k) | length(k) != 1) {
+    if (!is.numeric(k) || length(k) != 1) {
       error_message(
         "k must be a number.",
         k,
@@ -645,7 +629,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(!is_integer_values(k))) {
+    if (!is_integer_values(k)) {
       error_message(
         "k must be an integer",
         k,
@@ -657,7 +641,7 @@ check_divent_args <- function(
   if (!is.na(names(args["level"]))) {
     level <- eval(expression(level), parent.frame())
     if (!is.null(level)) {
-      if (!is.numeric(level) | length(level) != 1) {
+      if (!is.numeric(level) || length(level) != 1) {
         error_message(
           "level must be a number.",
           level,
@@ -677,7 +661,7 @@ check_divent_args <- function(
   if (!is.na(names(args["n"]))) {
     n <- eval(expression(n), parent.frame())
     if (!is.null(n)) {
-      if (!is.numeric(n) | length(n) != 1) {
+      if (!is.numeric(n) || length(n) != 1) {
         error_message(
           "n must be a number.",
           n,
@@ -696,7 +680,7 @@ check_divent_args <- function(
   # n_simulations
   if (!is.na(names(args["n_simulations"]))) {
     n_simulations <- eval(expression(n_simulations), parent.frame())
-    if (!is.numeric(n_simulations) | length(n_simulations) != 1) {
+    if (!is.numeric(n_simulations) || length(n_simulations) != 1) {
       error_message(
         "n_simulations must be a number.",
         n_simulations,
@@ -714,7 +698,7 @@ check_divent_args <- function(
   # normalize
   if (!is.na(names(args["normalize"]))) {
     normalize <- eval(expression(normalize), parent.frame())
-    if (!is.logical(normalize) | length(normalize) != 1) {
+    if (!is.logical(normalize) || length(normalize) != 1) {
       error_message(
         "normalize must be TRUE or FALSE",
         normalize,
@@ -767,14 +751,14 @@ check_divent_args <- function(
   if (!is.na(names(args["prob_geom"]))) {
     prob_geom <- eval(expression(prob_geom), parent.frame())
     if (!is.null(prob_geom)) {
-      if (!is.numeric(prob_geom) | length(prob_geom) != 1) {
+      if (!is.numeric(prob_geom) || length(prob_geom) != 1) {
         error_message(
           "prob_geom must be a number.",
           prob_geom,
           parent_function
         )
       }
-      if (any(prob_geom < 0) | any(prob_geom > 1)) {
+      if (any(prob_geom < 0 | prob_geom > 1)) {
         error_message(
           "prob_geom must be between 0 and 1",
           prob_geom,
@@ -787,7 +771,7 @@ check_divent_args <- function(
   # q
   if (!is.na(names(args["q"]))) {
     q <- eval(expression(q), parent.frame())
-    if (!is.numeric(q) | length(q) != 1) {
+    if (!is.numeric(q) || length(q) != 1) {
       error_message(
         "q must be a number.",
         q,
@@ -798,7 +782,7 @@ check_divent_args <- function(
   # q_threshold
   if (!is.na(names(args["q_threshold"]))) {
     q_threshold <- eval(expression(q_threshold), parent.frame())
-    if (!is.numeric(q_threshold) | length(q_threshold) != 1) {
+    if (!is.numeric(q_threshold) || length(q_threshold) != 1) {
       error_message(
         "q_threshold must be a number.",
         q_threshold,
@@ -812,7 +796,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(!is_integer_values(q_threshold))) {
+    if (!is_integer_values(q_threshold)) {
       error_message(
         "q_threshold must be an integer",
         q_threshold,
@@ -858,7 +842,7 @@ check_divent_args <- function(
   if (!is.na(names(args["rate"]))) {
     rate <- eval(expression(rate), parent.frame())
     if (!is.null(rate)) {
-      if (!is.numeric(rate) | length(rate) != 1) {
+      if (!is.numeric(rate) || length(rate) != 1) {
         error_message(
           "rate must be a number.",
           rate,
@@ -878,14 +862,14 @@ check_divent_args <- function(
   if (!is.na(names(args["sample_coverage"]))) {
     sample_coverage <- eval(expression(sample_coverage), parent.frame())
     if (!is.null(sample_coverage)) {
-      if (!is.numeric(sample_coverage) | length(sample_coverage) != 1) {
+      if (!is.numeric(sample_coverage) || length(sample_coverage) != 1) {
         error_message(
           "sample_coverage must be a number.",
           sample_coverage,
           parent_function
         )
       }
-      if (any(sample_coverage <= 0) | any(sample_coverage >= 1)) {
+      if (any(sample_coverage <= 0 | sample_coverage >= 1)) {
         error_message(
           "sample_coverage must be between 0 and 1",
           sample_coverage,
@@ -898,7 +882,7 @@ check_divent_args <- function(
   if (!is.na(names(args["sd_lnorm"]))) {
     sd_lnorm <- eval(expression(sd_lnorm), parent.frame())
     if (!is.null(sd_lnorm)) {
-      if (!is.numeric(sd_lnorm) | length(sd_lnorm) != 1) {
+      if (!is.numeric(sd_lnorm) || length(sd_lnorm) != 1) {
         error_message(
           "sd_lnorm must be a number.",
           sd_lnorm,
@@ -917,7 +901,7 @@ check_divent_args <- function(
   # show_progress
   if (!is.na(names(args["show_progress"]))) {
     show_progress <- eval(expression(show_progress), parent.frame())
-    if (!is.logical(show_progress) | length(show_progress) != 1) {
+    if (!is.logical(show_progress) || length(show_progress) != 1) {
       error_message(
         "show_progress must be TRUE or FALSE",
         show_progress,
@@ -956,7 +940,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(diag(similarities != 1))) {
+    if (any(diag(similarities) != 1)) {
       error_message(
         "similarities must be 1 between a species and itself",
         similarities,
@@ -968,7 +952,7 @@ check_divent_args <- function(
   if (!is.na(names(args["size"]))) {
     size <- eval(expression(size), parent.frame())
     if (!is.null(size)) {
-      if (!is.numeric(size) | length(size) != 1) {
+      if (!is.numeric(size) || length(size) != 1) {
         error_message(
           "size must be a number.",
           size,
@@ -999,7 +983,7 @@ check_divent_args <- function(
   if (!is.na(names(args["species_number"]))) {
     species_number <- eval(expression(species_number), parent.frame())
     if (!is.null(species_number)) {
-      if (!is.numeric(species_number) | length(species_number) != 1) {
+      if (!is.numeric(species_number) || length(species_number) != 1) {
         error_message(
           "species_number must be a number.",
           species_number,
@@ -1019,7 +1003,7 @@ check_divent_args <- function(
   if (!is.na(names(args["thomas_mu"]))) {
     thomas_mu <- eval(expression(thomas_mu), parent.frame())
     if (!is.null(thomas_mu)) {
-      if (!is.numeric(thomas_mu) | length(thomas_mu) != 1) {
+      if (!is.numeric(thomas_mu) || length(thomas_mu) != 1) {
         error_message(
           "thomas_mu must be a number.",
           thomas_mu,
@@ -1039,7 +1023,7 @@ check_divent_args <- function(
   if (!is.na(names(args["thomas_scale"]))) {
     thomas_scale <- eval(expression(thomas_scale), parent.frame())
     if (!is.null(thomas_scale)) {
-      if (!is.numeric(thomas_scale) | length(thomas_scale) != 1) {
+      if (!is.numeric(thomas_scale) || length(thomas_scale) != 1) {
         error_message(
           "thomas_scale must be a number.",
           thomas_scale,
@@ -1097,7 +1081,7 @@ check_divent_args <- function(
   if (!is.na(names(args["w_max"]))) {
     w_max <- eval(expression(w_max), parent.frame())
     if (!is.null(w_max)) {
-      if (!is.numeric(w_max) | length(w_max) != 1) {
+      if (!is.numeric(w_max) || length(w_max) != 1) {
         error_message(
           "w_max must be a number.",
           w_max,
@@ -1117,7 +1101,7 @@ check_divent_args <- function(
   if (!is.na(names(args["w_mean"]))) {
     w_mean <- eval(expression(w_mean), parent.frame())
     if (!is.null(w_mean)) {
-      if (!is.numeric(w_mean) | length(w_mean) != 1) {
+      if (!is.numeric(w_mean) || length(w_mean) != 1) {
         error_message(
           "w_mean must be a number.",
           w_mean,
@@ -1137,7 +1121,7 @@ check_divent_args <- function(
   if (!is.na(names(args["w_min"]))) {
     w_min <- eval(expression(w_min), parent.frame())
     if (!is.null(w_min)) {
-      if (!is.numeric(w_min) | length(w_min) != 1) {
+      if (!is.numeric(w_min) || length(w_min) != 1) {
         error_message(
           "w_min must be a number.",
           w_min,
@@ -1157,7 +1141,7 @@ check_divent_args <- function(
   if (!is.na(names(args["weibull_scale"]))) {
     weibull_scale <- eval(expression(weibull_scale), parent.frame())
     if (!is.null(weibull_scale)) {
-      if (!is.numeric(weibull_scale) | length(weibull_scale) != 1) {
+      if (!is.numeric(weibull_scale) || length(weibull_scale) != 1) {
         error_message(
           "weibull_scale must be a number.",
           weibull_scale,
@@ -1177,7 +1161,7 @@ check_divent_args <- function(
   if (!is.na(names(args["weibull_shape"]))) {
     weibull_shape <- eval(expression(weibull_shape), parent.frame())
     if (!is.null(weibull_shape)) {
-      if (!is.numeric(weibull_shape) | length(weibull_shape) != 1) {
+      if (!is.numeric(weibull_shape) || length(weibull_shape) != 1) {
         error_message(
           "weibull_shape must be a number.",
           weibull_shape,
