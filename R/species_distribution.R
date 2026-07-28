@@ -73,7 +73,7 @@ species_distribution <- function(
     check_arguments = TRUE) {
 
   # Check the data ----
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (!is.numeric(x)) {
       cli::cli_abort("{.code x} must be numeric")
@@ -230,7 +230,7 @@ as_species_distribution.data.frame <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (check_arguments) check_divent_args()
   # Check the data
   if (any(x < 0)) {
     cli::cli_abort("All numeric values of the dataframe must be positive.")
@@ -512,7 +512,7 @@ abundances <- function(
     weights = NULL,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (!is.numeric(x)) {
       cli::cli_abort("{.code x} must be numeric")
@@ -554,7 +554,7 @@ as_abundances.numeric <- function(
     ...,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
       cli::cli_abort("Species abundances must be positive.")

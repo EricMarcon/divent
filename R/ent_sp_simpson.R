@@ -36,7 +36,7 @@ ent_sp_simpson <- function(
 
   # Check arguments
   correction <- match.arg(correction)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
   }
 
@@ -156,7 +156,7 @@ ent_sp_simpsonEnvelope <- function(
   # Check arguments
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
   }
 

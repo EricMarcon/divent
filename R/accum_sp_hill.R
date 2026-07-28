@@ -80,7 +80,7 @@ accum_sp_tsallis <- function(
   entropy_estimator <- match.arg(entropy_estimator)
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
   }
 
@@ -372,7 +372,7 @@ accum_sp_hill <- function(
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
   }
 
@@ -586,7 +586,7 @@ accum_mixing <- function(
   richness_estimator <- match.arg(richness_estimator)
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
   }
 

@@ -26,7 +26,7 @@ abd_species <- function(
     abundances,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (check_arguments) check_divent_args()
 
   return(
     abundances[, !colnames(abundances) %in% non_species_columns]
@@ -42,7 +42,7 @@ abd_sum <- function(
     as_numeric = FALSE,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (check_arguments) check_divent_args()
 
   the_abd_sum <- rowSums(
     abundances[, !colnames(abundances) %in% non_species_columns]
@@ -69,7 +69,7 @@ prob_species <- function(
     species_distribution,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) check_divent_args()
+  if (check_arguments) check_divent_args()
 
   abundances <- species_distribution[
     ,

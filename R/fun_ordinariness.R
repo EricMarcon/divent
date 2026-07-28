@@ -34,7 +34,7 @@ fun_ordinariness <- function(
     as_numeric = FALSE,
     check_arguments = TRUE) {
 
-  if (any(check_arguments)) {
+  if (check_arguments) {
     check_divent_args()
     # Check species names
     similarities <- checked_matrix(similarities, species_distribution)
