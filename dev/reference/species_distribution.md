@@ -16,7 +16,13 @@ species_distribution(x, names = NULL, weights = NULL, check_arguments = TRUE)
 as_species_distribution(x, ...)
 
 # S3 method for class 'numeric'
-as_species_distribution(x, ..., check_arguments = TRUE)
+as_species_distribution(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 # S3 method for class 'matrix'
 as_species_distribution(
@@ -31,20 +37,38 @@ as_species_distribution(
 as_species_distribution(x, ..., check_arguments = TRUE)
 
 # S3 method for class 'wmppp'
-as_species_distribution(x, ..., check_arguments = TRUE)
+as_species_distribution(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 # S3 method for class 'character'
-as_species_distribution(x, ..., check_arguments = TRUE)
+as_species_distribution(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 # S3 method for class 'factor'
-as_species_distribution(x, ..., check_arguments = TRUE)
+as_species_distribution(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 is_species_distribution(x)
 
 as_probabilities(x, ...)
 
 # S3 method for class 'numeric'
-as_probabilities(x, ..., check_arguments = TRUE)
+as_probabilities(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 # S3 method for class 'matrix'
 as_probabilities(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
@@ -53,13 +77,13 @@ as_probabilities(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 as_probabilities(x, ..., check_arguments = TRUE)
 
 # S3 method for class 'wmppp'
-as_probabilities(x, ..., check_arguments = TRUE)
+as_probabilities(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 # S3 method for class 'character'
-as_probabilities(x, ..., check_arguments = TRUE)
+as_probabilities(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 # S3 method for class 'factor'
-as_probabilities(x, ..., check_arguments = TRUE)
+as_probabilities(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 is_probabilities(x)
 
@@ -74,7 +98,14 @@ abundances(
 as_abundances(x, ...)
 
 # S3 method for class 'numeric'
-as_abundances(x, round = TRUE, ..., check_arguments = TRUE)
+as_abundances(
+  x,
+  round = TRUE,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 # S3 method for class 'matrix'
 as_abundances(
@@ -90,13 +121,13 @@ as_abundances(
 as_abundances(x, ..., check_arguments = TRUE)
 
 # S3 method for class 'wmppp'
-as_abundances(x, ..., check_arguments = TRUE)
+as_abundances(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 # S3 method for class 'character'
-as_abundances(x, ..., check_arguments = TRUE)
+as_abundances(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 # S3 method for class 'factor'
-as_abundances(x, ..., check_arguments = TRUE)
+as_abundances(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 is_abundances(x)
 

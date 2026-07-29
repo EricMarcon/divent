@@ -27,7 +27,7 @@ All other column names are considered as species names.'><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,13 @@ All other column names are considered as species names.</p>
 <span><span class="fu">as_species_distribution</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'numeric'</span></span>
-<span><span class="fu">as_species_distribution</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_species_distribution</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'matrix'</span></span>
 <span><span class="fu">as_species_distribution</span><span class="op">(</span></span>
@@ -93,20 +99,38 @@ All other column names are considered as species names.</p>
 <span><span class="fu">as_species_distribution</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'wmppp'</span></span>
-<span><span class="fu">as_species_distribution</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_species_distribution</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'character'</span></span>
-<span><span class="fu">as_species_distribution</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_species_distribution</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">as_species_distribution</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_species_distribution</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">is_species_distribution</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'numeric'</span></span>
-<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'matrix'</span></span>
 <span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -115,13 +139,13 @@ All other column names are considered as species names.</p>
 <span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'wmppp'</span></span>
-<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'character'</span></span>
-<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_probabilities</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">is_probabilities</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
@@ -136,7 +160,14 @@ All other column names are considered as species names.</p>
 <span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'numeric'</span></span>
-<span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, round <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_abundances</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  round <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'matrix'</span></span>
 <span><span class="fu">as_abundances</span><span class="op">(</span></span>
@@ -152,13 +183,13 @@ All other column names are considered as species names.</p>
 <span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'wmppp'</span></span>
-<span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'character'</span></span>
-<span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_abundances</span><span class="op">(</span><span class="va">x</span>, names <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, check_arguments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">is_abundances</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
