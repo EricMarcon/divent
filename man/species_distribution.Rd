@@ -36,7 +36,13 @@ species_distribution(x, names = NULL, weights = NULL, check_arguments = TRUE)
 
 as_species_distribution(x, ...)
 
-\method{as_species_distribution}{numeric}(x, ..., check_arguments = TRUE)
+\method{as_species_distribution}{numeric}(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 \method{as_species_distribution}{matrix}(
   x,
@@ -48,27 +54,45 @@ as_species_distribution(x, ...)
 
 \method{as_species_distribution}{data.frame}(x, ..., check_arguments = TRUE)
 
-\method{as_species_distribution}{wmppp}(x, ..., check_arguments = TRUE)
+\method{as_species_distribution}{wmppp}(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
-\method{as_species_distribution}{character}(x, ..., check_arguments = TRUE)
+\method{as_species_distribution}{character}(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
-\method{as_species_distribution}{factor}(x, ..., check_arguments = TRUE)
+\method{as_species_distribution}{factor}(
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 is_species_distribution(x)
 
 as_probabilities(x, ...)
 
-\method{as_probabilities}{numeric}(x, ..., check_arguments = TRUE)
+\method{as_probabilities}{numeric}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 \method{as_probabilities}{matrix}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 \method{as_probabilities}{data.frame}(x, ..., check_arguments = TRUE)
 
-\method{as_probabilities}{wmppp}(x, ..., check_arguments = TRUE)
+\method{as_probabilities}{wmppp}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
-\method{as_probabilities}{character}(x, ..., check_arguments = TRUE)
+\method{as_probabilities}{character}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
-\method{as_probabilities}{factor}(x, ..., check_arguments = TRUE)
+\method{as_probabilities}{factor}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 is_probabilities(x)
 
@@ -82,7 +106,14 @@ abundances(
 
 as_abundances(x, ...)
 
-\method{as_abundances}{numeric}(x, round = TRUE, ..., check_arguments = TRUE)
+\method{as_abundances}{numeric}(
+  x,
+  round = TRUE,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+)
 
 \method{as_abundances}{matrix}(
   x,
@@ -95,11 +126,11 @@ as_abundances(x, ...)
 
 \method{as_abundances}{data.frame}(x, ..., check_arguments = TRUE)
 
-\method{as_abundances}{wmppp}(x, ..., check_arguments = TRUE)
+\method{as_abundances}{wmppp}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
-\method{as_abundances}{character}(x, ..., check_arguments = TRUE)
+\method{as_abundances}{character}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
-\method{as_abundances}{factor}(x, ..., check_arguments = TRUE)
+\method{as_abundances}{factor}(x, names = NULL, weights = NULL, ..., check_arguments = TRUE)
 
 is_abundances(x)
 

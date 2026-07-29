@@ -1,4 +1,4 @@
-# divent 0.5-4.9003
+# divent 0.5-4.9004
 
 ## Bug correction
 
@@ -9,6 +9,7 @@
 ## Improvement
 
 - argument `richness_estimator` has the same default value across functions.
+- arguments `names` and `weights` are supported in all functions that create `species_distribution` objects.
 
 # divent 0.5-4
 
