@@ -92,7 +92,7 @@ Additionally, *iNEXT.3D* addresses temporal changes in diversity (*divent* does 
 
 # Software design
 
-*divent* is a written in S3, the standard R language.
+*divent* is a written in S3, the object-oriented programming framework provided directly within base R.
 It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages *roxygen2* [@Wickham2025] for R objects, *Rdpack* [@Boshnakov2026] for references and *pkgdown* [@Wickham2025a] for online manual.
 Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
