@@ -194,7 +194,7 @@ profile_hill.numeric <- function(
       if (show_progress & interactive()) cli::cli_progress_update()
     }
     # Recenter simulated values
-    div_means <- apply(profile_hills, 2, mean)
+    div_means <- colMeans(profile_hills)
     profile_hills <- t(
       t(profile_hills) - div_means + the_profile_hill$diversity
     )
