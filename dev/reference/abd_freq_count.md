@@ -106,7 +106,7 @@ Discovery Rates of New Species.” *Methods in Ecology and Evolution*,
 abd_freq_count(as.numeric(paracou_6_abd[1, ]))
 #> # A tibble: 25 × 2
 #>    abundance number_of_species
-#>        <dbl>         <int[1d]>
+#>        <int>             <int>
 #>  1         1                84
 #>  2         2                35
 #>  3         3                19
