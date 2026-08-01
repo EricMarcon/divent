@@ -71,15 +71,15 @@ prob_species <- function(
 
   if (check_arguments) check_divent_args()
 
-  abundances <- species_distribution[
+  the_abundances <- species_distribution[
     ,
     !colnames(species_distribution) %in% non_species_columns
   ]
-  sample_sizes <- rowSums(abundances)
+  sample_sizes <- rowSums(the_abundances)
   # Divide each column by sample_sizes
   return(
     dplyr::mutate(
-      abundances,
+      the_abundances,
       dplyr::across(
         dplyr::everything(),
         ~ .x / sample_sizes
