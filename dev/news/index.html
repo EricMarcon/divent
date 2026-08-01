@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,15 +46,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5-4.9004" id="divent-05-49004">divent 0.5-4.9004<a class="anchor" aria-label="anchor" href="#divent-05-49004"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5-4.9006" id="divent-05-49006">divent 0.5-4.9006<a class="anchor" aria-label="anchor" href="#divent-05-49006"></a></h2>
 <div class="section level3">
-<h3 id="bug-correction-0-5-4-9004">Bug correction<a class="anchor" aria-label="anchor" href="#bug-correction-0-5-4-9004"></a></h3>
+<h3 id="bug-correction-0-5-4-9006">Bug correction<a class="anchor" aria-label="anchor" href="#bug-correction-0-5-4-9006"></a></h3>
 <ul><li>species distributions made of a single individual were not recognized correctly as abundance vectors, preventing the estimation of their diversity at a level.</li>
 <li>all arguments are available in <code><a href="../reference/accum_sp_hill.html">accum_sp_hill()</a></code>.</li>
 <li>similarities and distances were not checked correctly (<a href="https://github.com/EricMarcon/divent/issues/6" class="external-link">#6</a> by <a href="https://github.com/Bisaloo" class="external-link">@Bisaloo</a>).</li>
+<li>unnamed distance matrices could not always be used to compute similarity-based diversity.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvement-0-5-4-9004">Improvement<a class="anchor" aria-label="anchor" href="#improvement-0-5-4-9004"></a></h3>
+<h3 id="improvement-0-5-4-9006">Improvement<a class="anchor" aria-label="anchor" href="#improvement-0-5-4-9006"></a></h3>
 <ul><li>argument <code>richness_estimator</code> has the same default value across functions.</li>
 <li>arguments <code>names</code> and <code>weights</code> are supported in all functions that create <code>species_distribution</code> objects.</li>
 </ul></div>

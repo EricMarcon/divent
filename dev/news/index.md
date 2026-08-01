@@ -1,6 +1,6 @@
 # Changelog
 
-## divent 0.5-4.9004
+## divent 0.5-4.9006
 
 ### Bug correction
 
@@ -12,6 +12,8 @@
 - similarities and distances were not checked correctly
   ([\#6](https://github.com/EricMarcon/divent/issues/6) by
   [@Bisaloo](https://github.com/Bisaloo)).
+- unnamed distance matrices could not always be used to compute
+  similarity-based diversity.
 
 ### Improvement
 
