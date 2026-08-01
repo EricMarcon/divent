@@ -745,10 +745,7 @@ is_abundances <- function(x) {
 as.matrix.species_distribution <- function(x, use.names = TRUE, ...) {
   # Delete non-species columns
   the_matrix <- as.matrix.data.frame(x[, !colnames(x) %in% non_species_columns])
-  if (use.names) {
-    # Name rows beyond columns
-    rownames(the_matrix) <- colnames(the_matrix)
-  } else {
+  if (!use.names) {
     # Delete the names
     colnames(the_matrix) <- NULL
   }
