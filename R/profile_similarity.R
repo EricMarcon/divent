@@ -137,7 +137,7 @@ profile_similarity.numeric <- function(
     }
   )
   # Make a tibble with the list
-  the_profile_similarity <- do.call(rbind.data.frame, the_profile_similarity)
+  the_profile_similarity <- dplyr::bind_rows(the_profile_similarity)
 
   if (n_simulations > 0) {
     # Simulations ----
@@ -301,7 +301,7 @@ profile_similarity.species_distribution <- function(
     the_profile_similarity <- tibble::tibble(
       site = rep(x$site, each = length(orders)),
       # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, profile_similarity_list)
+      dplyr::bind_rows(profile_similarity_list)
     )
   }
   class(the_profile_similarity) <- c("profile", class(the_profile_similarity))

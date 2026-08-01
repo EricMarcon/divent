@@ -204,7 +204,7 @@ ent_allen.species_distribution <- function(
       # Restore non-species columns
       x[colnames(x) %in% non_species_columns],
       # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, ent_allen_list)
+      dplyr::bind_rows(ent_allen_list)
     )
     if (as_numeric) {
       return(the_entropy$entropy)

@@ -182,7 +182,7 @@ div_pd.species_distribution <- function(
       # Restore non-species columns
       x[colnames(x) %in% non_species_columns],
       # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, div_pd_list)
+      dplyr::bind_rows(div_pd_list)
     )
     if (as_numeric) {
       return(the_diversity$diversity)
