@@ -1,5 +1,5 @@
 # Combine all parameters
-abundances <- paracou_6_abd[1, ]
+the_abundances <- paracou_6_abd[1, ]
 # Tree
 tree <- paracou_6_taxo
 # integer and non-integer q's
@@ -39,7 +39,7 @@ testthat::test_that(
                             )
                           ) {
                             div_phylo(
-                              abundances,
+                              the_abundances,
                               tree = tree,
                               q = q,
                               estimator = estimator,
@@ -55,29 +55,29 @@ testthat::test_that(
                       }
                     )
                     # Make a dataframe with the list to avoid nested lists
-                    the_df <- do.call(rbind, the_list)
+                    the_df <- dplyr::bind_rows(the_list)
                   }
                 )
                 # Make a dataframe with the list to avoid nested lists
-                the_df <- do.call(rbind, the_list)
+                the_df <- dplyr::bind_rows(the_list)
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    div_phylo.dataframe <- do.call(rbind, div_phylo.list)
+    div_phylo.dataframe <- dplyr::bind_rows(div_phylo.list)
 
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_phylo.dataframe$diversity, na.rm = TRUE),
       div_phylo(
-        abundances,
+        the_abundances,
         tree = tree,
         q = max(orders),
         probability_estimator = "Chao2013",
@@ -88,7 +88,7 @@ testthat::test_that(
 )
 
 # Interpolation and extrapolation
-sample_size <- abd_sum(abundances, as_numeric = TRUE)
+sample_size <- abd_sum(the_abundances, as_numeric = TRUE)
 levels <- c(0.7, round(sample_size * 1.5))
 
 testthat::test_that(
@@ -124,7 +124,7 @@ testthat::test_that(
                             )
                           ) {
                             div_phylo(
-                              abundances,
+                              the_abundances,
                               tree = tree,
                               q = q,
                               # Estimator is not used
@@ -141,29 +141,29 @@ testthat::test_that(
                       }
                     )
                     # Make a dataframe with the list to avoid nested lists
-                    the_df <- do.call(rbind, the_list)
+                    the_df <- dplyr::bind_rows(the_list)
                   }
                 )
                 # Make a dataframe with the list to avoid nested lists
-                the_df <- do.call(rbind, the_list)
+                the_df <- dplyr::bind_rows(the_list)
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    div_phylo.dataframe <- do.call(rbind, div_phylo.list)
+    div_phylo.dataframe <- dplyr::bind_rows(div_phylo.list)
 
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_phylo.dataframe$diversity, na.rm = TRUE),
       div_phylo(
-        abundances,
+        the_abundances,
         tree = tree,
         q = max(orders),
         level = min(levels)

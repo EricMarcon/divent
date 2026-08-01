@@ -1,5 +1,5 @@
 # Combine all parameters
-abundances <- paracou_6_abd[1, ]
+the_abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
   "No estimator fails", {
@@ -31,7 +31,7 @@ testthat::test_that(
                       )
                     ) {
                       probabilities(
-                        abundances,
+                        the_abundances,
                         estimator = estimator,
                         unveiling = unveiling,
                         richness_estimator = richness_estimator,

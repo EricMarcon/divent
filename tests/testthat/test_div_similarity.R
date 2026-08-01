@@ -1,5 +1,5 @@
 # Combine all parameters
-abundances <- paracou_6_abd[1, ]
+the_abundances <- paracou_6_abd[1, ]
 # Similarities
 Z <- fun_similarity(paracou_6_fundist)
 # integer and non-integer q's
@@ -28,7 +28,7 @@ testthat::test_that(
                     # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
                     suppressWarnings(
                       div_similarity(
-                        abundances,
+                        the_abundances,
                         similarities = Z,
                         q = q,
                         estimator = estimator,
@@ -41,25 +41,25 @@ testthat::test_that(
                   }
                 )
                 # Make a dataframe with the list to avoid nested lists
-                the_df <- do.call(rbind, the_list)
+                the_df <- dplyr::bind_rows(the_list)
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    div_similarity.dataframe <- do.call(rbind, div_similarity.list)
+    div_similarity.dataframe <- dplyr::bind_rows(div_similarity.list)
 
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_similarity.dataframe$diversity, na.rm = TRUE),
       div_similarity(
-        abundances,
+        the_abundances,
         similarities = Z,
         q = 0.5,
         probability_estimator = "Chao2013",
