@@ -55,7 +55,7 @@ metacommunity.matrix <- function(
 
   if (check_arguments) {
     check_divent_args()
-    if (length(weights != nrow(x))) {
+    if (length(weights) != nrow(x)) {
       cli::cli_abort("The length of 'weights' must be the number of communities")
     }
     if (any(x < 0)) {
