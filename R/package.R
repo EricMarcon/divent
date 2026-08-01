@@ -1266,20 +1266,31 @@ checked_matrix <- function(
     sim_dist_matrix,
     species_distribution) {
 
+  # Standardize the data to simplify the tests
   if (inherits(sim_dist_matrix, "dist")) {
     # dist objects are supported but the remainder assumes a matrix
     sim_dist_matrix <- as.matrix(sim_dist_matrix)
   }
+  if (!is_species_distribution(species_distribution)) {
+    # species_distribution objects and abundance vectors are supported,
+    # but the remainder assumes a species_distribution
+    species_distribution <- as_species_distribution(species_distribution)
+  }
+  # Stop if empty data
+  if (length(sim_dist_matrix) == 0) {
+    cli::cli_abort("The silimarity matrix is empty")
+  }
+  # Get the distribution species names
+  is_species_col <- !(colnames(species_distribution) %in% non_species_columns)
+  species_names <- names(species_distribution)[is_species_col]
+  if (length(species_names) == 0) {
+    cli::cli_abort("The distribution contains no species")
+  }
 
-  # No names needed
-  if (
-    # No names in the matrix
-    is.null(colnames(sim_dist_matrix)) |
-    # No names in the distribution that may be a tibble or a vector
-    (is.null(colnames(species_distribution)) & is.null(names(species_distribution)))
-  ) {
-    # The matrix may not be named
-    if (ncol(sim_dist_matrix) == length(species_distribution)) {
+  # No names in the matrix
+  if (is.null(colnames(sim_dist_matrix))) {
+    # Then, sizes must match
+    if (ncol(sim_dist_matrix) == length(species_names)) {
       # Do not change the matrix
       return(sim_dist_matrix)
     } else {
@@ -1292,18 +1303,8 @@ checked_matrix <- function(
     }
   }
 
-  # Get species names
-  if (is_species_distribution(species_distribution)) {
-    is_species_column <- !colnames(species_distribution) %in% non_species_columns
-    species_names <- colnames(species_distribution)[is_species_column]
-  } else if (is.vector(species_distribution)) {
-    species_names <- names(species_distribution)
-  }
-
-  # Stop if some species are not in the matrix
-  if (length(species_names) == 0) {
-    cli::cli_abort("There are no species in the distribution")
-  }
+  # If the matrix is named, then
+  # all species of the distribution must be in the matrix
   if (length(setdiff(species_names, colnames(sim_dist_matrix))) != 0) {
     cli::cli_abort("Some species are missing in the similarity matrix.")
   }
