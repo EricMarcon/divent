@@ -61,18 +61,18 @@ abd_freq_count <- function(
     )
   }
   abd_int <- round(abd)
-
   # Eliminate 0
   abd_int <- abd_int[abd_int > 0]
+
   # Calculate abundance distribution
-  abd_distribution <- tapply(abd_int, INDEX = abd_int, FUN = length)
+  abd_distribution <- table(abd_int)
 
   if (is.null(level)) {
     # No extrapolation. Prepare a two-column matrix ----
     return(
       tibble::tibble(
-        abundance = as.numeric(names(abd_distribution)),
-        number_of_species = abd_distribution
+        abundance = as.integer(names(abd_distribution)),
+        number_of_species = as.integer(abd_distribution)
       )
     )
   } else {
@@ -116,7 +116,8 @@ abd_freq_count <- function(
           richness_estimator = richness_estimator,
           jack_alpha = jack_alpha,
           jack_max = jack_max,
-          check_arguments = TRUE
+          as_numeric = TRUE,
+          check_arguments = FALSE
         )
         # Extrapolate
         s_nu <- vapply(
