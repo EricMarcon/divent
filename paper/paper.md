@@ -33,7 +33,7 @@ bibliography: ../inst/REFERENCES.bib
 *divent* is a package for R dedicated to the measurement of diversity in general, and biodiversity in particular.
 It provides functions to estimate $\alpha$, $\beta$ and $\gamma$ diversity of communities, including phylogenetic and functional diversity.
 
-It is a reboot of the R package [*entropart*](https://ericmarcon.github.io/entropart/) to make it easier to use and computationally more efficient.
+It is a reboot of the R package [*entropart*](https://cloud.r-project.org/package=entropart) to make it easier to use and computationally more efficient.
 It also extends its functionality.
 
 Data may be abundance vectors or matrices (the number of individual per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
@@ -92,7 +92,7 @@ Additionally, *iNEXT.3D* addresses temporal changes in diversity (*divent* does 
 
 # Software design
 
-*divent* is a written in S3, the standard R language.
+*divent* is a written in S3, the object-oriented programming framework provided directly within base R.
 It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages *roxygen2* [@Wickham2025] for R objects, *Rdpack* [@Boshnakov2026] for references and *pkgdown* [@Wickham2025a] for online manual.
 Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
