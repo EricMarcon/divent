@@ -1281,8 +1281,8 @@ checked_matrix <- function(
     cli::cli_abort("The silimarity matrix is empty")
   }
   # Get the distribution species names
-  is_species_col <- !(colnames(species_distribution) %in% non_species_columns)
-  species_names <- names(species_distribution)[is_species_col]
+  col_names <- colnames(species_distribution)
+  species_names <- col_names[!col_names %in% non_species_columns]
   if (length(species_names) == 0) {
     cli::cli_abort("The distribution contains no species")
   }
