@@ -17,12 +17,13 @@ jobs:
       - name: Install pandoc
         uses: r-lib/actions/setup-pandoc@v2
       - name: Install dependencies
-        run: |
-          options(pkgType = "binary")
-          options(install.packages.check.source = "no")
-          install.packages(c("remotes", "rcmdcheck", "covr", "pkgdown", "roxygen2"))
-          remotes::install_deps(dependencies = TRUE)
-        shell: Rscript {0}
+        uses: r-lib/actions/setup-r-dependencies@v2
+          with:
+            extra-packages:
+              any::rcmdcheck
+            needs:
+              website
+              coverage
       - name: Roxygenize
         run: roxygen2::roxygenize()
         shell: Rscript {0}
