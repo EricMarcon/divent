@@ -216,9 +216,11 @@ accum_sp_tsallis <- function(
     # At each distance, calculate the entropy of
     # all points' neighborhood for each q
     for (d in 2:length(r)) {
-      # Neighbor communities of each point at distance r: 1 species per column
+      # Neighbor communities of each point at distance r:
+      # 1 point per row, 1 species per column:
+      # sum neighborhoods at distances 1 to d
       neighbor_communities <- rowSums(
-        aperm(neighbors.array[, 1:d, , drop = FALSE], c(1, 3, 2)),
+        aperm(neighbors.array[, 1:d, , drop = FALSE], perm = c(1, 3, 2)),
         dims = 2
       )
       # Calculate entropy of each community and all q values
