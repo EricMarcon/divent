@@ -744,7 +744,7 @@ ent_tsallis.species_distribution <- function(
           # Restore non-species columns
           x[colnames(x) %in% non_species_columns],
           # Coerce the list returned by apply into a dataframe
-          do.call(rbind.data.frame, ent_tsallis_sites)
+          dplyr::bind_rows(ent_tsallis_sites)
         )
       )
     }

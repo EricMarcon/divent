@@ -1,5 +1,5 @@
 # Combine all parameters
-abundances <- paracou_6_abd[1, ]
+the_abundances <- paracou_6_abd[1, ]
 # integer and non-integer q's
 orders <- (0:6) / 2
 
@@ -37,7 +37,7 @@ testthat::test_that(
                             )
                           ) {
                             div_hill(
-                              abundances,
+                              the_abundances,
                               q = q,
                               estimator = estimator,
                               level = NULL,
@@ -52,29 +52,29 @@ testthat::test_that(
                       }
                     )
                     # Make a dataframe with the list to avoid nested lists
-                    the_df <- do.call(rbind, the_list)
+                    the_df <- dplyr::bind_rows(the_list)
                   }
                 )
                 # Make a dataframe with the list to avoid nested lists
-                the_df <- do.call(rbind, the_list)
+                the_df <- dplyr::bind_rows(the_list)
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    div_hill.dataframe <- do.call(rbind, div_hill.list)
+    div_hill.dataframe <- dplyr::bind_rows(div_hill.list)
 
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_hill.dataframe$diversity, na.rm = TRUE),
       div_hill(
-        abundances,
+        the_abundances,
         q = max(orders),
         probability_estimator = "Chao2013",
         unveiling = "none"
@@ -84,7 +84,7 @@ testthat::test_that(
 )
 
 # Interpolation and extrapolation
-sample_size <- abd_sum(abundances, as_numeric = TRUE)
+sample_size <- abd_sum(the_abundances, as_numeric = TRUE)
 levels <- c(0.7, round(sample_size * 1.5))
 
 testthat::test_that(
@@ -120,7 +120,7 @@ testthat::test_that(
                             )
                           ) {
                             div_hill(
-                              abundances,
+                              the_abundances,
                               q = q,
                               # Estimator is not used
                               estimator = "naive",
@@ -136,29 +136,29 @@ testthat::test_that(
                       }
                     )
                     # Make a dataframe with the list to avoid nested lists
-                    the_df <- do.call(rbind, the_list)
+                    the_df <- dplyr::bind_rows(the_list)
                   }
                 )
                 # Make a dataframe with the list to avoid nested lists
-                the_df <- do.call(rbind, the_list)
+                the_df <- dplyr::bind_rows(the_list)
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    div_hill.dataframe <- do.call(rbind, div_hill.list)
+    div_hill.dataframe <- dplyr::bind_rows(div_hill.list)
 
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(div_hill.dataframe$diversity, na.rm = TRUE),
       div_hill(
-        abundances,
+        the_abundances,
         q = max(orders),
         level = min(levels)
       )$diversity

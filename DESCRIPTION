@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.5-4.9004
+Version: 0.5-4.9009
 Authors@R: c(
   person("Eric", "Marcon", email = "eric.marcon@agroparistech.fr", role = c("aut", "cre"), comment = c(ORCID="0000-0002-5249-321X")),
   person("Florence", "Puech", email = "florence.puech@universite-paris-saclay.fr", role = "aut", comment = c(ORCID = "0000-0002-5279-6878"))
@@ -45,13 +45,15 @@ Suggests:
 LinkingTo: 
   Rcpp,
   RcppParallel
-Config/testthat/edition: 3
-Encoding: UTF-8
-LazyData: true
-RdMacros: Rdpack
-Roxygen: list(markdown = TRUE)
 SystemRequirements: 
   GNU make,
   pandoc
+RdMacros: Rdpack
 VignetteBuilder: knitr
+Encoding: UTF-8
+LazyData: true
 Config/roxygen2/version: 8.0.0
+Config/testthat/edition: 3
+Config/Needs/coverage: covr
+Config/Needs/website: iNEXT, spatstat
+Roxygen: list(markdown = TRUE)

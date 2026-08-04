@@ -289,7 +289,7 @@ coverage.abundances <- function(
   )
 
   # Coerce the list returned by apply into a dataframe
-  the_coverages <- do.call(rbind.data.frame, coverage_list)
+  the_coverages <- dplyr::bind_rows(coverage_list)
 
   return(
     if (as_numeric) {
@@ -425,7 +425,7 @@ coverage_to_size.abundances <- function(
       # Restore non-species columns
       x[colnames(x) %in% non_species_columns],
       # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, size_list)
+      dplyr::bind_rows(size_list)
     )
   )
 }

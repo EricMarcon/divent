@@ -16,12 +16,12 @@ testthat::test_that(
     testthat::skip_on_cran()
     # Chao
     testthat::expect_lt(
-      abs(coverage(seq_len(5), estimator="Chao")$coverage - coverage(seq_len(5))$coverage),
+      abs(coverage(seq_len(5), estimator = "Chao")$coverage - coverage(seq_len(5))$coverage),
       1/1000
     )
     # Turing
     testthat::expect_lt(
-      abs(coverage(seq_len(5), Estimator="turing")$coverage - coverage(seq_len(5))$coverage),
+      abs(coverage(seq_len(5), estimator = "Turing")$coverage - coverage(seq_len(5))$coverage),
       1/100
     )
   }
@@ -51,7 +51,7 @@ testthat::test_that(
       }
     )
     # Coerce to a dataframe
-    coverage.dataframe <- do.call(rbind, coverage.list)
+    coverage.dataframe <- dplyr::bind_rows(coverage.list)
     # All values must be < 1
     testthat::expect_gt(
       1,
@@ -89,11 +89,11 @@ testthat::test_that(
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    coverage.dataframe <- do.call(rbind, coverage.list)
+    coverage.dataframe <- dplyr::bind_rows(coverage.list)
     # All values must be < 1
     testthat::expect_gt(
       1,

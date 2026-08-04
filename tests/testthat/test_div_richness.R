@@ -37,7 +37,7 @@ testthat::test_that(
 ichao <- div_richness(abd, estimator = "iChao")
 chao1 <- div_richness(abd, estimator = "Chao1")
 testthat::test_that(
-  "iChao estimator is greater than Chao1", 
+  "iChao estimator is greater than Chao1",
   {
     testthat::skip_on_cran()
     testthat::expect_gt(
@@ -50,7 +50,7 @@ testthat::test_that(
 # Rarefy
 rarefy <- div_richness(paracou_6_abd, estimator = "rarefy")
 testthat::test_that(
-  "The rarefy estimator is reported correctly", 
+  "The rarefy estimator is reported correctly",
   {
     testthat::skip_on_cran()
     testthat::expect_equal(
@@ -61,7 +61,7 @@ testthat::test_that(
 )
 
 # Combine all parameters
-abundances <- paracou_6_abd[1, ]
+the_abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
   "No estimator fails", {
@@ -69,15 +69,15 @@ testthat::test_that(
     # Estimate diversity systematically
     div_richness.list <- lapply(
       # All estimators
-      eval(formals(divent:::div_richness.numeric)$estimator), 
+      eval(formals(divent:::div_richness.numeric)$estimator),
       function(estimator) {
         the_list <- lapply(
           # All probability estimators
-          eval(formals(divent:::div_richness.numeric)$probability_estimator), 
+          eval(formals(divent:::div_richness.numeric)$probability_estimator),
           function(probability_estimator) {
             the_list <- lapply(
               # All unveilings
-              eval(formals(divent:::div_richness.numeric)$unveiling), 
+              eval(formals(divent:::div_richness.numeric)$unveiling),
               function(unveiling) {
                 # Forbidden combination raises an error
                 if ((estimator == "rarefy" & unveiling == "none")) {
@@ -86,7 +86,7 @@ testthat::test_that(
                   # print(paste(estimator, probability_estimator, unveiling))
                   suppressWarnings(
                     div_richness(
-                      abundances,
+                      the_abundances,
                       estimator = estimator,
                       jack_alpha = 0.05,
                       jack_max = 10,
@@ -99,18 +99,18 @@ testthat::test_that(
                   )
                 }
               }
-            ) 
+            )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    div_richness.dataframe <- do.call(rbind, div_richness.list)
-    
+    div_richness.dataframe <- dplyr::bind_rows(div_richness.list)
+
     # The min value must be the number of observed species
     testthat::expect_equal(
       min(div_richness.dataframe$diversity),
@@ -121,7 +121,7 @@ testthat::test_that(
 
 
 # Interpolation and extrapolation
-sample_size <- abd_sum(abundances, as_numeric = TRUE)
+sample_size <- abd_sum(the_abundances, as_numeric = TRUE)
 levels <- c(sample_size / 2, round(sample_size * 1.5))
 
 testthat::test_that(
@@ -130,19 +130,19 @@ testthat::test_that(
     # Estimate diversity systematically
     div_richness.list <- lapply(
       # All estimators
-      eval(formals(divent:::div_richness.numeric)$estimator), 
+      eval(formals(divent:::div_richness.numeric)$estimator),
       function(estimator) {
         the_list <- lapply(
           # All probability estimators
-          eval(formals(divent:::div_richness.numeric)$probability_estimator), 
+          eval(formals(divent:::div_richness.numeric)$probability_estimator),
           function(probability_estimator) {
             the_list <- lapply(
               # All unveilings
-              eval(formals(divent:::div_richness.numeric)$unveiling), 
+              eval(formals(divent:::div_richness.numeric)$unveiling),
               function(unveiling) {
                 the_list <- lapply(
                   # All levels
-                  levels, 
+                  levels,
                   function(level) {
                     # Forbidden combination raises an error
                     if ((estimator == "rarefy" & unveiling == "none")) {
@@ -151,7 +151,7 @@ testthat::test_that(
                       # print(paste(estimator, probability_estimator, unveiling, level))
                       suppressWarnings(
                         div_richness(
-                          abundances,
+                          the_abundances,
                           estimator = estimator,
                           jack_alpha = 0.05,
                           jack_max = 10,
@@ -166,20 +166,20 @@ testthat::test_that(
                   }
                 )
                 # Make a dataframe with the list to avoid nested lists
-                the_df <- do.call(rbind, the_list)
+                the_df <- dplyr::bind_rows(the_list)
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    div_richness.dataframe <- do.call(rbind, div_richness.list)
-    
+    div_richness.dataframe <- dplyr::bind_rows(div_richness.list)
+
     # The min value must be over 134 species
     testthat::expect_gt(
       min(div_richness.dataframe$diversity),

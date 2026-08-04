@@ -1,5 +1,5 @@
 # Combine all parameters
-abundances <- paracou_6_abd[1, ]
+the_abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
   "No estimator fails", {
@@ -7,11 +7,11 @@ testthat::test_that(
     # Estimate diversity systematically
     div_hurlbert.list <- lapply(
       # All estimators
-      eval(formals(divent:::div_hurlbert.numeric)$estimator), 
+      eval(formals(divent:::div_hurlbert.numeric)$estimator),
       FUN = function(estimator) {
         suppressWarnings(
           div_hurlbert(
-            abundances,
+            the_abundances,
             estimator = estimator,
             as_numeric = FALSE,
             check_arguments = TRUE
@@ -20,13 +20,13 @@ testthat::test_that(
       }
     )
     # Coerce to a dataframe
-    div_hurlbert.dataframe <- do.call(rbind, div_hurlbert.list)
-    
+    div_hurlbert.dataframe <- dplyr::bind_rows(div_hurlbert.list)
+
     # The min value must be naive
     testthat::expect_equal(
       min(div_hurlbert.dataframe$diversity),
       div_hurlbert(
-        abundances, 
+        the_abundances,
         estimator = "naive"
       )$diversity
     )

@@ -139,7 +139,7 @@ profile_hill.numeric <- function(
     }
   )
   # Make a tibble with the list
-  the_profile_hill <- do.call(rbind.data.frame, the_profile_hill)
+  the_profile_hill <- dplyr::bind_rows(the_profile_hill)
 
   if (n_simulations > 0) {
     # Simulations ----
@@ -312,7 +312,7 @@ profile_hill.species_distribution <- function(
     the_profile_hill <- tibble::tibble(
       site = rep(x$site, each = length(orders)),
       # Coerce the list returned by apply into a dataframe
-      do.call(rbind.data.frame, profile_hill_list)
+      dplyr::bind_rows(profile_hill_list)
     )
   }
   class(the_profile_hill) <- c("profile", class(the_profile_hill))

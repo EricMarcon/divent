@@ -174,7 +174,7 @@ ent_gen_simpson.species_distribution <- function(
           # Restore non-species columns
           x[colnames(x) %in% non_species_columns],
           # Coerce the list returned by apply into a dataframe
-          do.call(rbind.data.frame, ent_simpson_sites)
+          dplyr::bind_rows(ent_simpson_sites)
         )
       )
     }

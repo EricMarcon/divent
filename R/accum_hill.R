@@ -387,7 +387,7 @@ accum_tsallis.abundances <- function(
   the_accum_tsallis <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
     # Coerce the list returned by apply into a dataframe
-    do.call(rbind.data.frame, accum_tsallis_list)
+    dplyr::bind_rows(accum_tsallis_list)
   )
   class(the_accum_tsallis) <- c("accumulation", class(the_accum_tsallis))
 
@@ -542,7 +542,7 @@ accum_hill.abundances <- function(
   the_accum_hill <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
     # Coerce the list returned by apply into a dataframe
-    do.call(rbind.data.frame, accum_hill_list)
+    dplyr::bind_rows(accum_hill_list)
   )
   class(the_accum_hill) <- c("accumulation", class(the_accum_hill))
 

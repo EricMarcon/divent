@@ -1,5 +1,5 @@
 # Combine all parameters
-abundances <- paracou_6_abd[1, ]
+the_abundances <- paracou_6_abd[1, ]
 
 testthat::test_that(
   "No estimator fails", {
@@ -20,7 +20,7 @@ testthat::test_that(
                 # print(paste(estimator, probability_estimator, unveiling))
                 suppressWarnings(
                   ent_simpson(
-                    abundances,
+                    the_abundances,
                     estimator = estimator,
                     jack_alpha = 0.05,
                     jack_max = 10,
@@ -34,21 +34,21 @@ testthat::test_that(
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    ent_simpson.dataframe <- do.call(rbind, ent_simpson.list)
+    ent_simpson.dataframe <- dplyr::bind_rows(ent_simpson.list)
 
     # The min value must be UnveilJ / Chao2013 without unveiling
     testthat::expect_equal(
       min(ent_simpson.dataframe$entropy),
       ent_simpson(
-        abundances,
+        the_abundances,
         estimator = "UnveilC",
         probability_estimator = "Chao2013",
         unveiling = "none"
@@ -59,7 +59,7 @@ testthat::test_that(
 
 
 # Interpolation and extrapolation
-sample_size <- abd_sum(abundances, as_numeric = TRUE)
+sample_size <- abd_sum(the_abundances, as_numeric = TRUE)
 levels <- c(sample_size / 2, round(sample_size * 1.5))
 
 testthat::test_that(
@@ -81,7 +81,7 @@ testthat::test_that(
                 # print(paste(estimator, probability_estimator, unveiling, level))
                 suppressWarnings(
                   ent_simpson(
-                    abundances,
+                    the_abundances,
                     estimator = "naive",
                     jack_alpha = 0.05,
                     jack_max = 10,
@@ -95,15 +95,15 @@ testthat::test_that(
               }
             )
             # Make a dataframe with the list to avoid nested lists
-            the_df <- do.call(rbind, the_list)
+            the_df <- dplyr::bind_rows(the_list)
           }
         )
         # Make a dataframe with the list to avoid nested lists
-        the_df <- do.call(rbind, the_list)
+        the_df <- dplyr::bind_rows(the_list)
       }
     )
     # Coerce to a dataframe
-    ent_simpson.dataframe <- do.call(rbind, ent_simpson.list)
+    ent_simpson.dataframe <- dplyr::bind_rows(ent_simpson.list)
 
     # The min value must be at level 471, no matter the arguments
     testthat::expect_equal(
