@@ -28,6 +28,7 @@ abd_species <- function(
 
   if (check_arguments) check_divent_args()
 
+  # Keep species columns only
   return(
     abundances[, !colnames(abundances) %in% non_species_columns]
   )
@@ -44,6 +45,7 @@ abd_sum <- function(
 
   if (check_arguments) check_divent_args()
 
+  # Keep species columns only
   the_abd_sum <- rowSums(
     abundances[, !colnames(abundances) %in% non_species_columns]
   )
@@ -71,14 +73,15 @@ prob_species <- function(
 
   if (check_arguments) check_divent_args()
 
-  abundances <- species_distribution[
+  # Keep species columns only
+  the_abundances <- species_distribution[
     ,
     !colnames(species_distribution) %in% non_species_columns
   ]
-  sample_sizes <- rowSums(abundances)
-  # Divide each column by sample_sizes
-  abundances <- abundances / sample_sizes
-  class(abundances) <- class(species_distribution)
+  sample_sizes <- rowSums(the_abundances)
+  # Divide each column by sample_sizes. Restore tibble class.
+  the_abundances <- tibble::as_tibble(the_abundances / sample_sizes)
+  class(the_abundances) <- class(species_distribution)
 
-  return(abundances)
+  return(the_abundances)
 }
