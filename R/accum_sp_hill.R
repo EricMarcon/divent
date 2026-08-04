@@ -156,12 +156,7 @@ accum_sp_tsallis <- function(
       if (is.null(dim(ent_nbhood_q))) {
         ent_nbhood_q <- t(ent_nbhood_q)
       }
-      ent_q_nr_observed[, k + 1, 1] <- apply(
-        t(t(ent_nbhood_q)),
-        MARGIN = 1,
-        FUN = mean,
-        na.rm = TRUE
-      )
+      ent_q_nr_observed[, k + 1, 1] <- rowMeans(ent_nbhood_q, na.rm = TRUE)
       if (show_progress & interactive()) cli::cli_progress_update()
     }
     if (show_progress & interactive()) cli::cli_progress_done()
@@ -222,10 +217,9 @@ accum_sp_tsallis <- function(
     # all points' neighborhood for each q
     for (d in 2:length(r)) {
       # Neighbor communities of each point at distance r: 1 species per column
-      neighbor_communities <- vapply(
-        1:species_number,
-        FUN = function(i) rowSums(neighbors.array[, 1:d, i]),
-        FUN.VALUE = numeric(X$n)
+      neighbor_communities <- rowSums(
+        aperm(neighbors.array[, 1:d, , drop = FALSE], c(1, 3, 2)),
+        dims = 2
       )
       # Calculate entropy of each community and all q values
       if (correction == "none") {
@@ -311,12 +305,7 @@ accum_sp_tsallis <- function(
       if (is.null(dim(ent_nbhood_q))) {
         ent_nbhood_q <- t(ent_nbhood_q)
       }
-      ent_q_nr_observed[, d, 1] <- apply(
-        t(t(ent_nbhood_q)),
-        MARGIN = 1,
-        FUN = mean,
-        na.rm = TRUE
-      )
+      ent_q_nr_observed[, d, 1] <- rowMeans(ent_nbhood_q, na.rm = TRUE)
       if (show_progress & interactive()) cli::cli_progress_update()
     }
     if (show_progress & interactive()) cli::cli_progress_done()

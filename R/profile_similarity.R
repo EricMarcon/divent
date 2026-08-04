@@ -191,7 +191,7 @@ profile_similarity.numeric <- function(
       if (show_progress & interactive()) cli::cli_progress_update()
     }
     # Recenter simulated values
-    div_means <- apply(profile_similarities, 2, mean)
+    div_means <- colMeans(profile_similarities)
     profile_similarities <- t(
       t(profile_similarities) - div_means + the_profile_similarity$diversity
     )

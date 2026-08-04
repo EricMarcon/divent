@@ -77,13 +77,8 @@ prob_species <- function(
   ]
   sample_sizes <- rowSums(abundances)
   # Divide each column by sample_sizes
-  return(
-    dplyr::mutate(
-      abundances,
-      dplyr::across(
-        dplyr::everything(),
-        ~ .x / sample_sizes
-      )
-    )
-  )
+  abundances <- abundances / sample_sizes
+  class(abundances) <- class(species_distribution)
+
+  return(abundances)
 }
