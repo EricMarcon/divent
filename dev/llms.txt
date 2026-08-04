@@ -367,7 +367,8 @@ and Partition Diversity. *Journal of Statistical Software*. 67(8): 1-26.
 
 - [Common Arguments of divent
   Functions](https://ericmarcon.github.io/divent/dev/articles/arguments.md):
-- [divent](https://ericmarcon.github.io/divent/dev/articles/divent.md):
+- [Introduction to
+  divent](https://ericmarcon.github.io/divent/dev/articles/divent.md):
 - [Asymptotic Estimation, Interpolation and
   Extrapolation](https://ericmarcon.github.io/divent/dev/articles/extrapolation.md)
   :

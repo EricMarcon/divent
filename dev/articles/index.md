@@ -4,7 +4,8 @@
 
 - [Common Arguments of divent
   Functions](https://ericmarcon.github.io/divent/dev/articles/arguments.md):
-- [divent](https://ericmarcon.github.io/divent/dev/articles/divent.md):
+- [Introduction to
+  divent](https://ericmarcon.github.io/divent/dev/articles/divent.md):
 - [Asymptotic Estimation, Interpolation and
   Extrapolation](https://ericmarcon.github.io/divent/dev/articles/extrapolation.md)
   :

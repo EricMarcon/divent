@@ -1,4 +1,4 @@
-# divent
+# Introduction to divent
 
 *divent* is a package for *R* designed to estimate diversity based on
 HCDT entropy or similarity-based entropy. It is a reboot of the
