@@ -1,5 +1,5 @@
 ---
-title: "divent"
+title: "Introduction to divent"
 subtitle: "Measures of Diversity based on Entropy"
 bibliography: ../inst/REFERENCES.bib
 output: rmarkdown::html_vignette
