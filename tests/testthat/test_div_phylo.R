@@ -34,8 +34,8 @@ testthat::test_that(
                           # Do not run incompatible argument combinations
                           if (
                             !(
-                              (richness_estimator == "rarefy" & unveiling == "none") |
-                              (richness_estimator == "rarefy" & estimator == "GenCov")
+                              (richness_estimator == "rarefy" && unveiling == "none") |
+                              (richness_estimator == "rarefy" && estimator == "GenCov")
                             )
                           ) {
                             div_phylo(
@@ -120,7 +120,7 @@ testthat::test_that(
                           # Do not run incompatible argument combinations
                           if (
                             !(
-                              (richness_estimator == "rarefy" & unveiling == "none")
+                              (richness_estimator == "rarefy" && unveiling == "none")
                             )
                           ) {
                             div_phylo(

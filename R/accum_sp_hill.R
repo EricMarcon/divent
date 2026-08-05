@@ -93,7 +93,7 @@ accum_sp_tsallis <- function(
     neighbors.matrix <- cbind(Reference = 1:X$n, neighbors.matrix)
 
     # Prepare a progress bar and the result arrays
-    if (show_progress & interactive()) {
+    if (show_progress && interactive()) {
       cli::cli_progress_bar("Computing entropy", total = length(neighbors))
     }
     # 3D array: q, n, observed entropy in a single slice
@@ -157,9 +157,9 @@ accum_sp_tsallis <- function(
         ent_nbhood_q <- t(ent_nbhood_q)
       }
       ent_q_nr_observed[, k + 1, 1] <- rowMeans(ent_nbhood_q, na.rm = TRUE)
-      if (show_progress & interactive()) cli::cli_progress_update()
+      if (show_progress && interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive()) cli::cli_progress_done()
+    if (show_progress && interactive()) cli::cli_progress_done()
 
     # Entropy of a single individual is 0.
     # This is the default value of the arrays so don't run.
@@ -189,7 +189,7 @@ accum_sp_tsallis <- function(
     dim(neighbors.array) <- c(X$n, length(r), species_number)
 
     # Prepare a progress bar and the result arrays
-    if (show_progress & interactive()) {
+    if (show_progress && interactive()) {
       cli::cli_progress_bar("Computing entropy", total = length(r))
     }
     # 3D array: q, r, observed entropy in a single slice
@@ -308,9 +308,9 @@ accum_sp_tsallis <- function(
         ent_nbhood_q <- t(ent_nbhood_q)
       }
       ent_q_nr_observed[, d, 1] <- rowMeans(ent_nbhood_q, na.rm = TRUE)
-      if (show_progress & interactive()) cli::cli_progress_update()
+      if (show_progress && interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive()) cli::cli_progress_done()
+    if (show_progress && interactive()) cli::cli_progress_done()
     # Entropy at r=0 is 0. This is the default value of the arrays so don't run.
     #  ent_q_nr_observed[, 1, 1] <- 0
     #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
@@ -393,7 +393,7 @@ accum_sp_hill <- function(
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     individual = individual,
-    show_progress = (show_progress & (h0 == "none" | h0 == "multinomial")),
+    show_progress = (show_progress && (h0 == "none" || h0 == "multinomial")),
     check_arguments = FALSE
   )
 
@@ -448,7 +448,7 @@ accum_sp_hill <- function(
     }
     is_h0_found <- TRUE
     # Prepare a progress bar
-    if (show_progress & interactive()) {
+    if (show_progress && interactive()) {
       cli::cli_progress_bar("Running simulations", total = length(orders))
     }
 
@@ -475,14 +475,14 @@ accum_sp_hill <- function(
       the_diversity$accumulation[order, , 2] <- h0_values$diversity
       the_diversity$accumulation[order, , 3] <- h0_values$inf
       the_diversity$accumulation[order, , 4] <- h0_values$sup
-      if (show_progress & interactive()) cli::cli_progress_update()
+      if (show_progress && interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive()) cli::cli_progress_done()
+    if (show_progress && interactive()) cli::cli_progress_done()
   }
-  if (h0 == "random location" | h0 == "binomial") {
+  if (h0 == "random location" || h0 == "binomial") {
     is_h0_found <- TRUE
     # Prepare a progress bar
-    if (show_progress & interactive()) {
+    if (show_progress && interactive()) {
       cli::cli_progress_bar("Running simulations", total = n_simulations)
     }
     # Prepare a 3-D array to store results. Rows are q, columns are r or n,
@@ -519,9 +519,9 @@ accum_sp_hill <- function(
         show_progress = FALSE,
         check_arguments = FALSE
       )$accumulation[, , 1]
-      if (show_progress & interactive()) cli::cli_progress_update()
+      if (show_progress && interactive()) cli::cli_progress_update()
     }
-    if (show_progress & interactive()) cli::cli_progress_done()
+    if (show_progress && interactive()) cli::cli_progress_done()
     # Calculate quantiles
     for (q in seq_along(orders)) {
       for (r in seq_along(r)) {

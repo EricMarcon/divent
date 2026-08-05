@@ -211,7 +211,7 @@ accum_ent_phylo.abundances <- function(
     )
   }
   # Prepare the progress bar
-  if (show_progress & interactive()) {
+  if (show_progress && interactive()) {
     cli::cli_progress_bar(
       "Computing entropy",
       total = (length(the_phylo_abd) * n_communities) * (1 + n_simulations))
@@ -300,7 +300,7 @@ accum_ent_phylo.abundances <- function(
           check_arguments = FALSE
         )$entropy
         # Progress bar
-        if (show_progress & interactive()) cli::cli_progress_update()
+        if (show_progress && interactive()) cli::cli_progress_update()
       }
       if (n_simulations > 0) {
         for (y_community in seq_len(n_communities)) {
@@ -317,10 +317,10 @@ accum_ent_phylo.abundances <- function(
       }
 
       # Progress bar
-      if (show_progress & interactive()) cli::cli_progress_update()
+      if (show_progress && interactive()) cli::cli_progress_update()
     }
   }
-  if (show_progress & interactive()) cli::cli_progress_done()
+  if (show_progress && interactive()) cli::cli_progress_done()
 
   # Average entropy
   # Actual data

@@ -259,7 +259,7 @@ ent_similarity.numeric <- function(
   }
 
   ## MarconZhang ----
-  if (estimator == "MarconZhang" | estimator == "Max") {
+  if (estimator == "MarconZhang" || estimator == "Max") {
     V <- seq_len(sample_size - 1)
     # p_V_Ns is an array, containing (1 - (n_s-1)/(n-j)) for each species (lines)
     # and all j from 1 to n-1
@@ -268,7 +268,7 @@ ent_similarity.numeric <- function(
     p_V_Ns <- apply(p_V_Ns, 1, cumprod)
   }
 
-  if (estimator == "ChaoShen" | estimator == "Max") {
+  if (estimator == "ChaoShen" || estimator == "Max") {
     # Horvitz-Thomson multiplier
     HT_C_P <- prob_cov / (1 - (1 - prob_cov)^sample_size)
     # Force 0/0=0 and 0log0=0
@@ -277,7 +277,7 @@ ent_similarity.numeric <- function(
     ent_chao_shen <- (sum(HT_C_P * ln_q(1 / Z_p, q = q)))
   }
 
-  if ((estimator == "MarconZhang" | estimator == "Max") & (q != 1)) {
+  if ((estimator == "MarconZhang" || estimator == "Max") && (q != 1)) {
     Zpqm1 <- Z_p^(q - 1)
     # Force 0^(q-1) = 0
     Zpqm1[Z_p == 0] <- 0
@@ -304,7 +304,7 @@ ent_similarity.numeric <- function(
     ent_marcon_zhang <- ((K + U - 1) / (1 - q))
   }
 
-  if ((estimator == "MarconZhang" | estimator == "Max") & (q == 1)) {
+  if ((estimator == "MarconZhang" || estimator == "Max") && (q == 1)) {
     L <- -sum(prob_cov * log(Z_p))
     # Weights
     w_v <- ((1 - sim_mean)^V) / V

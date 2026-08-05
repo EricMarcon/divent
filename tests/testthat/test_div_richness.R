@@ -80,7 +80,7 @@ testthat::test_that(
               eval(formals(divent:::div_richness.numeric)$unveiling),
               function(unveiling) {
                 # Forbidden combination raises an error
-                if ((estimator == "rarefy" & unveiling == "none")) {
+                if ((estimator == "rarefy" && unveiling == "none")) {
                   NULL
                 } else {
                   # print(paste(estimator, probability_estimator, unveiling))
@@ -145,7 +145,7 @@ testthat::test_that(
                   levels,
                   function(level) {
                     # Forbidden combination raises an error
-                    if ((estimator == "rarefy" & unveiling == "none")) {
+                    if ((estimator == "rarefy" && unveiling == "none")) {
                       NULL
                     } else {
                       # print(paste(estimator, probability_estimator, unveiling, level))

@@ -538,7 +538,7 @@ check_divent_args <- function(
   if (!is.na(names(args["fisher_alpha"]))) {
     fisher_alpha <- eval(expression(fisher_alpha), parent.frame())
     if (!is.null(fisher_alpha)) {
-      if (!is.numeric(fisher_alpha) | length(fisher_alpha) != 1) {
+      if (!is.numeric(fisher_alpha) || length(fisher_alpha) != 1) {
         error_message(
           "fisher_alpha must be a number.",
           fisher_alpha,
@@ -1374,7 +1374,7 @@ ent_gamma_tsallis <- function(
 
   # Compute the entropy. Call the appropriate function for its estimators.
   # Richness estimators are specific
-  if (q == 0 & estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
+  if (q == 0 && estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
     the_diversity <- div_richness.numeric(
       abd,
       estimator = estimator,
@@ -1397,7 +1397,7 @@ ent_gamma_tsallis <- function(
     if (as_numeric) {
       the_entropy <- the_entropy$entropy
     }
-  } else if (q == 1 & is.null(sample_coverage)) {
+  } else if (q == 1 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_shannon.numeric(
       abd,
@@ -1412,7 +1412,7 @@ ent_gamma_tsallis <- function(
       as_numeric = as_numeric,
       check_arguments = FALSE
     )
-  } else if (q == 2 & is.null(sample_coverage)) {
+  } else if (q == 2 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_simpson.numeric(
       abd,

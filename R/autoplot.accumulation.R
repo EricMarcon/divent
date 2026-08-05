@@ -58,7 +58,7 @@ autoplot.accumulation <-  function(
   }
 
   # Confidence envelope
-  if ("sup" %in% colnames(object) & "inf" %in% colnames(object)) {
+  if ("sup" %in% colnames(object) && "inf" %in% colnames(object)) {
     the_plot <- the_plot +
       ggplot2::geom_ribbon(
         ggplot2::aes(

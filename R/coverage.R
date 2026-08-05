@@ -157,7 +157,7 @@ coverage.numeric <- function(
     }
 
     ## Turing's estimator ----
-    if (estimator == "Turing" | estimator == "Good") {
+    if (estimator == "Turing" || estimator == "Good") {
       the_coverage <- 1 - s_1 / sample_size
       if (as_numeric) {
         return(the_coverage)
@@ -180,7 +180,7 @@ coverage.numeric <- function(
     }
 
     ## Turing or Zhang & Huang's estimator ----
-    if (estimator == "Turing" | estimator == "ZhangHuang") {
+    if (estimator == "Turing" || estimator == "ZhangHuang") {
       cli::cli_alert_warning(
         "Turing and ZhangHuang estimators do not allow interpolation or extrapolation."
       )

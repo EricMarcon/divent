@@ -103,7 +103,7 @@ accum_tsallis.numeric <- function(
   ent_level <- numeric(length(levels))
   ent_estimator <- character(length(levels))
   # Prepare the progress bar
-  if (show_progress & interactive()) {
+  if (show_progress && interactive()) {
     cli::cli_progress_bar("Running estimations", total = length(levels))
   }
   # i must be initialized if the accumulation contains extrapolation only
@@ -123,7 +123,7 @@ accum_tsallis.numeric <- function(
       check_arguments = FALSE
     )
     ent_estimator[i] <- "Interpolation"
-    if (show_progress & interactive()) cli::cli_progress_update(set = i)
+    if (show_progress && interactive()) cli::cli_progress_update(set = i)
   }
 
   # level == Sample Size ----
@@ -136,7 +136,7 @@ accum_tsallis.numeric <- function(
       check_arguments = FALSE
     )
     ent_estimator[i] <- "Sample"
-    if (show_progress & interactive()) cli::cli_progress_update(set = i)
+    if (show_progress && interactive()) cli::cli_progress_update(set = i)
   }
 
   # Extrapolation ----
@@ -172,7 +172,7 @@ accum_tsallis.numeric <- function(
         ent_level[(i + 1):length(levels)] <- s_obs - 1
       }
       ent_estimator[(i + 1):length(levels)] <- richness_estimator
-      if (show_progress & interactive()) {
+      if (show_progress && interactive()) {
         cli::cli_progress_bar("Running estimations", total = length(levels))
       }
     } else {
@@ -186,7 +186,7 @@ accum_tsallis.numeric <- function(
         ent_level[(i + 1):length(levels)] <- sample_size / levels_extrap * ent_obs +
           (levels_extrap - sample_size) / levels_extrap * ent_est
         ent_estimator[(i + 1):length(levels)] <- richness_estimator
-        if (show_progress & interactive()) {
+        if (show_progress && interactive()) {
           cli::cli_progress_bar("Running estimations", total = length(levels))
         }
       } else {
@@ -205,7 +205,7 @@ accum_tsallis.numeric <- function(
               (1 - 1 / levels_extrap) * sum(abd * (abd - 1)) / sample_size / (sample_size - 1)
           }
           ent_estimator[(i + 1):length(levels)] <- "Chao2014"
-          if (show_progress & interactive()) {
+          if (show_progress && interactive()) {
             cli::cli_progress_bar("Running estimations", total = length(levels))
           }
         } else {
@@ -227,7 +227,7 @@ accum_tsallis.numeric <- function(
             i <- which(levels == level)
             ent_level[i] <- (sum((seq_len(level) / level)^q * s_nu) - 1) / (1 - q)
             ent_estimator[i] <- richness_estimator
-            if (show_progress & interactive()) cli::cli_progress_update(set = i)
+            if (show_progress && interactive()) cli::cli_progress_update(set = i)
           }
         }
       }
@@ -236,7 +236,7 @@ accum_tsallis.numeric <- function(
 
   # Simulations ----
   # Generate distributions from the unveiled probabilities
-  if (n_simulations > 0 & (probability_estimator == "naive" | unveiling == "none")) {
+  if (n_simulations > 0 && (probability_estimator == "naive" || unveiling == "none")) {
     cli::cli_alert_warning(
       paste(
         "Accumulation confidence interval can't be estimated without",
@@ -250,7 +250,7 @@ accum_tsallis.numeric <- function(
   if (n_simulations > 0) {
     # Prepare the result matrix
     ent_sim_quantiles <- matrix(0, nrow = length(levels), ncol = 2)
-    if (show_progress & interactive()) {
+    if (show_progress && interactive()) {
       cli::cli_progress_bar("Running simulations", total = length(levels))
     }
     if (is.null(prob_unv)) {
@@ -288,7 +288,7 @@ accum_tsallis.numeric <- function(
         ent_sim,
         probs = c(alpha / 2, 1 - alpha / 2)
       )
-      if (show_progress & interactive()) cli::cli_progress_update(set = i)
+      if (show_progress && interactive()) cli::cli_progress_update(set = i)
     }
   }
 

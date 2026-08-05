@@ -47,7 +47,7 @@ rlseries <- function(
   # Prepare the corresponding number of abundances
   abd <- numeric(n)
   # Prepare a progress bar
-  if (show_progress & interactive()) {
+  if (show_progress && interactive()) {
     cli::cli_progress_bar(
       total = as.integer(n),
       format = "{cli::pb_spin} Drawing log-series values {cli::pb_current}/{cli::pb_total}"
@@ -69,7 +69,7 @@ rlseries <- function(
       # Increment the next value
       next_value <- next_value + 1
       # Update the progress bar
-      if (show_progress & interactive()) cli::cli_progress_update()
+      if (show_progress && interactive()) cli::cli_progress_update()
     } else {
       # Probability at k+1 obtained from that at k
       P <- P * k * x / (k + 1)
@@ -79,6 +79,6 @@ rlseries <- function(
       k <- k + 1
     }
   }
-  if (show_progress & interactive()) cli::cli_progress_done()
+  if (show_progress && interactive()) cli::cli_progress_done()
   return(abd)
 }

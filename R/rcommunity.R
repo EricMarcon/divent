@@ -83,7 +83,7 @@ rcommunity <- function(
   coverage_estimator <- match.arg(coverage_estimator)
   if (check_arguments) {
     check_divent_args()
-    if (!is.null(prob) & !is.null(abd)) {
+    if (!is.null(prob) && !is.null(abd)) {
       cli::cli_abort("{.code prob} and {.code abd} can't be both given.")
     }
   }
@@ -91,7 +91,7 @@ rcommunity <- function(
   the_prob <- the_abd <- NULL
 
   # Generate a distribution (prob and abd are null) or use prob or build probabilities from abd
-  if (is.null(prob) & is.null(abd)) {
+  if (is.null(prob) && is.null(abd)) {
     # Draw in a distribution
     name <- distribution
     # Other distributions: draw probabilities
@@ -217,10 +217,10 @@ rspcommunity <- function(
   spatial <- match.arg(spatial)
   if (check_arguments) {
     check_divent_args()
-    if (!is.null(prob) & !is.null(abd)) {
+    if (!is.null(prob) && !is.null(abd)) {
       cli::cli_abort("{.code prob} and {.code abd} can't be both given.")
     }
-    if (weight_distribution == "Uniform" & (w_min > w_max)) {
+    if (weight_distribution == "Uniform" && (w_min > w_max)) {
       # Check w_max only in uniform distributions
       cli::cli_abort("{.code w_max} must be greater of equal to {.code w_min}.")
     }

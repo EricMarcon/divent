@@ -156,7 +156,7 @@ probabilities.numeric <- function(
     }
 
     ## Tune the probabilities of observed species ----
-    if (sample_coverage == 0 | sample_coverage == 1) {
+    if (sample_coverage == 0 || sample_coverage == 1) {
       # Sample coverage equal to 1, do not tune. If 0, unable to tune.
       prob_tuned <- prob
     } else {
@@ -417,7 +417,7 @@ estimate_prob_s_0 <- function(
       the_prob_s_0 <- alpha * beta^i
       # Sometimes fails when the distribution is very uneven (sometimes r < 1)
       # Then, fall back to the uniform distribution
-      if (any(is.na(the_prob_s_0)) | any(the_prob_s_0 <= 0)) {
+      if (any(is.na(the_prob_s_0)) || any(the_prob_s_0 <= 0)) {
         unveiling <- "uniform"
       }
     }

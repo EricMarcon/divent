@@ -161,7 +161,7 @@ profile_hill.numeric <- function(
       check_arguments = FALSE
     )
     # Prepare the progress bar
-    if (show_progress & interactive()) {
+    if (show_progress && interactive()) {
       cli::cli_progress_bar("Running simulations", total = n_simulations)
     }
     # Prepare the result matrix
@@ -191,7 +191,7 @@ profile_hill.numeric <- function(
         mc.allow.recursive = FALSE
       )
       profile_hills[i, ] <- simplify2array(profiles_list)
-      if (show_progress & interactive()) cli::cli_progress_update()
+      if (show_progress && interactive()) cli::cli_progress_update()
     }
     # Recenter simulated values
     div_means <- colMeans(profile_hills)

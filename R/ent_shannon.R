@@ -200,7 +200,7 @@ ent_shannon.numeric <- function(
         )
       }
     }
-    if (estimator == "ChaoShen" | estimator == "Marcon") {
+    if (estimator == "ChaoShen" || estimator == "Marcon") {
       sample_coverage <- coverage.numeric(
         abd,
         estimator = coverage_estimator,
@@ -230,10 +230,10 @@ ent_shannon.numeric <- function(
         check_arguments = FALSE
       )
     }
-    if (estimator == "ChaoShen" | estimator == "Marcon" | estimator == "GenCov") {
+    if (estimator == "ChaoShen" || estimator == "Marcon" || estimator == "GenCov") {
       ent_cov <- -sum(prob_cov * log(prob_cov) / (1 - (1 - prob_cov)^sample_size))
     }
-    if (estimator == "ChaoShen" | estimator == "GenCov") {
+    if (estimator == "ChaoShen" || estimator == "GenCov") {
       if (as_numeric) {
         return(ent_cov)
       } else {
@@ -246,7 +246,7 @@ ent_shannon.numeric <- function(
         )
       }
     }
-    if (estimator == "Grassberger" | estimator == "Marcon") {
+    if (estimator == "Grassberger" || estimator == "Marcon") {
       # (-1)^n is problematic for long vectors (returns NA for large values).
       # It is replaced by 1 - n %%2 * 2 (abd is rounded if is not an integer)
       ent_Grassberger <- sum(
@@ -281,7 +281,7 @@ ent_shannon.numeric <- function(
         )
       }
     }
-    if (estimator == "Grassberger2003" | estimator == "Schurmann") {
+    if (estimator == "Grassberger2003" || estimator == "Schurmann") {
       # Define a function to calculate the integral in the bias formula for each value of abd
       integral <- function(n, upper) {
         stats::integrate(function(t, n) t^(n - 1) / (1 + t), 0, upper, n)
@@ -307,7 +307,7 @@ ent_shannon.numeric <- function(
         )["value",]
       )
     }
-    if (estimator == "Grassberger2003" | estimator == "Schurmann") {
+    if (estimator == "Grassberger2003" || estimator == "Schurmann") {
       the_entropy <- sum(
         abd / sample_size *
         (digamma(sample_size) - digamma(abd) - (1 - abd %% 2 * 2) * integral_value)
@@ -324,7 +324,7 @@ ent_shannon.numeric <- function(
         )
       }
     }
-    if (estimator == "Holste" | estimator == "Bonachela") {
+    if (estimator == "Holste" || estimator == "Bonachela") {
       seq_l <- seq_len(length(abd) + sample_size)
       inv_l <- 1 / seq_l
       cumul_l <- function(n) {sum(inv_l[n:length(inv_l)])}
@@ -422,7 +422,7 @@ ent_shannon.numeric <- function(
       }
     }
 
-    if (estimator == "UnveilC" | estimator == "UnveiliC" | estimator == "UnveilJ") {
+    if (estimator == "UnveilC" || estimator == "UnveiliC" || estimator == "UnveilJ") {
       # Unveil probabilities
       prob_unv <- probabilities.numeric(
         abd,

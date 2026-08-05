@@ -158,7 +158,7 @@ ent_tsallis.numeric <- function(
     if (
       !is.null(sample_coverage) &
       is_integer_values(sample_size) &
-      (estimator == "ChaoShen" | estimator == "Marcon")
+      (estimator == "ChaoShen" || estimator == "Marcon")
     ) {
       cp <- sample_coverage * abd / sample_size
       chao_shen <- -sum(cp^q * ln_q(cp, q = q) / (1 - (1 - cp)^sample_size))
@@ -227,7 +227,7 @@ ent_tsallis.numeric <- function(
     }
 
     # Common code for ZhangGrabchak. Useless if EntropyEstimation is used.
-    # if (estimator == "ZhangGrabchak" | estimator == "ChaoWangJost" | estimator == "ChaoJost") {
+    # if (estimator == "ZhangGrabchak" || estimator == "ChaoWangJost" || estimator == "ChaoJost") {
     #   prob <- abd / sample_size
     #   V <- seq_len(sample_size - 1)
     #   # p_V_abd is an array, containing (1 - (s_obs - 1) / (sample_size - j))
@@ -266,7 +266,7 @@ ent_tsallis.numeric <- function(
     }
 
     ## Not Shannon ----
-    if (estimator == "ZhangGrabchak" | estimator == "ChaoJost") {
+    if (estimator == "ZhangGrabchak" || estimator == "ChaoJost") {
       # Weights. Useless here if package EntropyEstimation is used,
       # but weights are necessary for ChaoJost
       # i <- seq_len(abd)
@@ -338,7 +338,7 @@ ent_tsallis.numeric <- function(
         )
       }
     }
-    if (estimator == "ChaoShen" | estimator == "Marcon") {
+    if (estimator == "ChaoShen" || estimator == "Marcon") {
       sample_coverage <- coverage.numeric(
         abd,
         estimator = coverage_estimator,
@@ -372,10 +372,10 @@ ent_tsallis.numeric <- function(
         check_arguments = FALSE
       )
     }
-    if (estimator == "ChaoShen" | estimator == "Marcon" | estimator == "GenCov") {
+    if (estimator == "ChaoShen" || estimator == "Marcon" || estimator == "GenCov") {
       ent_cov <- -sum(prob_cov^q * ln_q(prob_cov, q) / (1 - (1 - prob_cov)^sample_size))
     }
-    if (estimator == "ChaoShen" | estimator == "GenCov") {
+    if (estimator == "ChaoShen" || estimator == "GenCov") {
       if (as_numeric) {
         return(ent_cov)
       } else {
@@ -388,7 +388,7 @@ ent_tsallis.numeric <- function(
         )
       }
     }
-    if (estimator == "Grassberger" | estimator == "Marcon") {
+    if (estimator == "Grassberger" || estimator == "Marcon") {
       ent_Grassberger <- (1 - sample_size^(-q) * sum(e_n_q(abd, q))) / (q - 1)
     }
     if (estimator == "Grassberger") {
@@ -448,7 +448,7 @@ ent_tsallis.numeric <- function(
         )
       }
     }
-    if (estimator == "UnveilC" | estimator == "UnveiliC" | estimator == "UnveilJ") {
+    if (estimator == "UnveilC" || estimator == "UnveiliC" || estimator == "UnveilJ") {
       # Unveil the probabilities
       prob_unv <- probabilities.numeric(
         abd,
@@ -490,7 +490,7 @@ ent_tsallis.numeric <- function(
   # Entropy at a level ----
 
   # Single species.
-  if (s_obs == 1 | level == 1) {
+  if (s_obs == 1 || level == 1) {
     if (as_numeric) {
       return(0)
     } else {

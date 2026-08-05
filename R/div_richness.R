@@ -209,7 +209,7 @@ div_richness.numeric <- function(
 
 
     ## Chao1 and iChao1 ----
-    if ((estimator == "Chao1") | (estimator == "iChao1")) {
+    if ((estimator == "Chao1") || (estimator == "iChao1")) {
       if (is.na(s_1)) {
         s_1 <- 0
       }
