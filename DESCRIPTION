@@ -52,7 +52,7 @@ RdMacros: Rdpack
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3
 Config/Needs/coverage: covr
 Config/Needs/website: iNEXT, spatstat
