@@ -11,6 +11,8 @@
 #' \insertAllCited{}
 "_PACKAGE"
 
+# Imported functions
+#' @importFrom doFuture %dofuture%
 
 # C code ----
 #' @importFrom Rcpp sourceCpp
