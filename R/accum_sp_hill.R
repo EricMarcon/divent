@@ -134,7 +134,7 @@ accum_sp_tsallis <- function(
           sapply(
             orders,
             function(q) {
-              ent_tsallis.species_distribution(
+              ent_tsallis(
                 as_abundances.character(community),
                 q = q,
                 estimator = "naive",
@@ -188,10 +188,6 @@ accum_sp_tsallis <- function(
     # The array of neighbor communities is built from the vector returned.
     dim(neighbors.array) <- c(X$n, length(r), species_number)
 
-    # Prepare a progress bar and the result arrays
-    if (show_progress && interactive()) {
-      cli::cli_progress_bar("Computing entropy", total = length(r))
-    }
     # 3D array: q, r, observed entropy in a single slice
     ent_q_nr_observed <- array(
       0,
@@ -213,9 +209,15 @@ accum_sp_tsallis <- function(
       ent_q_nr_individuals <- NA
     }
 
+    # Define the progressor
+    progress <- progressr::progressor(steps = length(r) - 1)
+
     # At each distance, calculate the entropy of
     # all points' neighborhood for each q
-    for (d in 2:length(r)) {
+    ent_nbhood_q_d <- foreach::foreach(
+      d = 2:length(r),
+      .options.future = list(seed = TRUE)
+    ) %dofuture% {
       # Neighbor communities of each point at distance r:
       # 1 point per row, 1 species per column:
       # sum neighborhoods at distances 1 to d
@@ -223,18 +225,18 @@ accum_sp_tsallis <- function(
         aperm(neighbors.array[, 1:d, , drop = FALSE], perm = c(1, 3, 2)),
         dims = 2
       )
-      # Calculate entropy of each community and all q values
+      # Calculate entropy of each community (columns) and all q values (rows)
       if (correction == "none") {
         # No edge-effect correction
-        ent_nbhood_q <-  apply(
+        ent_nbhood_q <- apply(
           neighbor_communities,
           MARGIN = 1,
           FUN = function(community) {
             vapply(
               orders,
               FUN = function(q) {
-                ent_tsallis.species_distribution(
-                  as_abundances.numeric(community),
+                ent_tsallis(
+                  as_abundances(community),
                   q = q,
                   estimator = "naive",
                   as_numeric = TRUE,
@@ -245,75 +247,32 @@ accum_sp_tsallis <- function(
             )
           }
         )
-      } else {
-        if (correction == "extrapolation") {
-          # Number of neighbors of each point
-          neighbors.matrix <- rowSums(neighbor_communities)
-          # Edge effects
-          the_extrapolation <- integer(X$n)
-          for (i in 1:X$n) {
-            # Intersection between the point's neighborhood and the window
-            the_intersection <- spatstat.geom::area(
-              spatstat.geom::intersect.owin(
-                X$window,
-                spatstat.geom::disc(radius = r[d], centre = c(X$x[i], X$y[i]))
-              )
-            )
-            # the_extrapolation ratio is that of the whole disc
-            # to the part of the disc inside the window
-            the_extrapolation[i] <- as.integer(
-              neighbors.matrix[i] * pi * r[d]^2 / the_intersection
-            )
-          }
-          # Prepare an array to store the results
-          ent_nbhood_q <- array(
-            0,
-            dim = c(length(orders), nrow(neighbor_communities))
-          )
-          for (community in 1:nrow(neighbor_communities)) {
-            for (order in seq_along(orders)) {
-              # Suppress the warnings for Coverage=0 every time neighbors are singletons only.
-              suppressWarnings(
-                ent_nbhood_q[order, community] <- ent_tsallis.numeric(
-                  neighbor_communities[community, ],
-                  q = orders[order],
-                  estimator = entropy_estimator,
-                  level = the_extrapolation[community],
-                  probability_estimator = probability_estimator,
-                  unveiling = unveiling,
-                  richness_estimator = richness_estimator,
-                  jack_alpha = jack_alpha,
-                  jack_max = jack_max,
-                  coverage_estimator = coverage_estimator,
-                  as_numeric = TRUE,
-                  check_arguments = FALSE
-                )
-              )
-            }
-          }
-        } else {
-          cli::cli_abort(
-            "The edge-effect correction (argument: correction) has not been recognized."
-          )
-        }
       }
+      # Progressor
+      progress()
+      # Save the results in a list
+      ent_nbhood_q
+    }
+    # Deal with the list of results
+    for (d in 2:length(r)) {
+      # Extract the neighborhood diversity
+      the_ent_nbhood_q <- ent_nbhood_q_d[[d - 1]]
       # Keep individual neighborhood values
       if (individual) {
-        ent_q_nr_individuals[, d, ] <- ent_nbhood_q
+        ent_q_nr_individuals[, d, ] <- the_ent_nbhood_q
       }
       # Mean entropy.
       # If ent_nbhood_q is a vector (i.e. a single value of q is provided),
       # transpose it to get a 1-row matrix.
-      if (is.null(dim(ent_nbhood_q))) {
-        ent_nbhood_q <- t(ent_nbhood_q)
+      if (is.null(dim(the_ent_nbhood_q))) {
+        the_ent_nbhood_q <- t(the_ent_nbhood_q)
       }
-      ent_q_nr_observed[, d, 1] <- rowMeans(ent_nbhood_q, na.rm = TRUE)
-      if (show_progress && interactive()) cli::cli_progress_update()
+      ent_q_nr_observed[, d, 1] <- rowMeans(the_ent_nbhood_q, na.rm = TRUE)
     }
-    if (show_progress && interactive()) cli::cli_progress_done()
     # Entropy at r=0 is 0. This is the default value of the arrays so don't run.
     #  ent_q_nr_observed[, 1, 1] <- 0
     #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
+
   }
 
   entAccum <- list(
