@@ -15,7 +15,8 @@
 #' library("doFuture")
 #' plan(multisession, workers = availableCores(omit = 1))
 #' ```
-#' A progress bar can be displayed by package [progressr].
+#' If argument `show_progress` is `TRUE`, a progress bar can be displayed
+#' by package [progressr].
 #' Since all progress bars rely on package [cli] in *divent*, the "cli" handler
 #' is a good choice.
 #'
@@ -135,7 +136,9 @@ accum_sp_tsallis <- function(
     }
 
     # Define the progressor
-    progress <- progressr::progressor(steps = length(neighbors))
+    if (show_progress && interactive()) {
+      progress <- progressr::progressor(steps = length(neighbors))
+    }
 
     # At each number of neighbors, calculate the entropy of
     # all points' neighborhood for each q
@@ -169,7 +172,9 @@ accum_sp_tsallis <- function(
         }
       )
       # Progressor
-      progress()
+      if (show_progress && interactive()) {
+        progress()
+      }
       # Save the results in a list
       ent_nbhood_q
     }
@@ -241,7 +246,9 @@ accum_sp_tsallis <- function(
     }
 
     # Define the progressor
-    progress <- progressr::progressor(steps = length(r) - 1)
+    if (show_progress && interactive()) {
+      progress <- progressr::progressor(steps = length(r) - 1)
+    }
 
     # At each distance, calculate the entropy of
     # all points' neighborhood for each q
@@ -331,7 +338,9 @@ accum_sp_tsallis <- function(
         }
       }
       # Progressor
-      progress()
+      if (show_progress && interactive()) {
+        progress()
+      }
       # Save the results in a list
       ent_nbhood_q
     }

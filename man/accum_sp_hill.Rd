@@ -142,12 +142,14 @@ accumulation curve of a distribution.
 These functions can compute the entropy of the neighborhood of points in parallel
 thanks to package \link[doFuture:doFuture]{doFuture}.
 A parallel plan must be chosen with function \code{\link[future:plan]{future::plan()}}.
+To use all cores but one on a personal computer, run:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{library("doFuture")
 plan(multisession, workers = availableCores(omit = 1))
 }\if{html}{\out{</div>}}
 
-A progress bar can be displayed with package \link[progressr:progressr]{progressr}.
+If argument \code{show_progress} is \code{TRUE}, a progress bar can be displayed
+by package \link[progressr:progressr]{progressr}.
 Since all progress bars rely on package \link[cli:cli]{cli} in \emph{divent}, the "cli" handler
 is a good choice.
 
@@ -155,6 +157,9 @@ is a good choice.
 handlers(global = TRUE)
 handlers("cli")
 }\if{html}{\out{</div>}}
+
+Those code chunks must be run before \code{accum_sp_hill()} or \code{accum_sp_tsallis()}
+with large point patterns such as \link{paracou_6_wmppp}.
 
 Argument \code{entropy_estimator} is used to estimate asymptotic entropy or diversity
 when argument \code{correction} is "extrapolation".
