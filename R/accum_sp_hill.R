@@ -157,9 +157,9 @@ accum_sp_tsallis <- function(
         neighbor_communities,
         MARGIN = 2,
         FUN = function(community) {
-          sapply(
+          vapply(
             orders,
-            function(q) {
+            FUN = function(q) {
               ent_tsallis(
                 as_abundances(community),
                 q = q,
@@ -167,7 +167,8 @@ accum_sp_tsallis <- function(
                 as_numeric = TRUE,
                 check_arguments = FALSE
               )
-            }
+            },
+            FUN.VALUE = 0
           )
         }
       )
