@@ -1,14 +1,14 @@
 ---
-title: '*divent*: an R Package for Diversity Measures Based on Entropy'
+title: 'divent: An R Package for Diversity Measures Based on Entropy'
 tags:
 - R
-- biodiversity
-- phylogenetic diversity
-- functional diversity
-- entropy
+- Biodiversity
+- Phylogenetic diversity
+- Functional diversity
+- Entropy
 - Hill numbers
-- estimation
-- partitioning
+- Estimation
+- Partitioning
 authors:
 - name: Eric Marcon
   orcid: "0000-0002-5249-321X"
@@ -30,23 +30,23 @@ bibliography: ../inst/REFERENCES.bib
 
 # Summary
 
-*divent* is a package for R dedicated to the measurement of diversity in general, and biodiversity in particular.
+`divent` is an R package dedicated to the measurement of diversity in general, and biodiversity in particular.
 It provides functions to estimate $\alpha$, $\beta$ and $\gamma$ diversity of communities, including phylogenetic and functional diversity.
 
-It is a reboot of the R package [*entropart*](https://cloud.r-project.org/package=entropart) to make it easier to use and computationally more efficient.
+It is a reboot of the [`entropart`](https://cloud.r-project.org/package=entropart) R package to make it easier to use and computationally more efficient.
 It also extends its functionality.
 
 Data may be abundance vectors or matrices (the number of individual per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
-Random communities can be simulated (function `rcommunity()`) and spatialized (`rspcommunity()`).
+Random communities can be simulated (function `rcommunity()`) and spatialized (function `rspcommunity()`).
 The main functions allow computing:
 
 - Taxonomic entropy: HCDT entropy (`ent_tsallis()`) including Shannon and Simpson's entropies.
-- Phylogenetic (`ent_phylo``()`) or functional (`ent_similarity``()`) entropy when dissimilarities between species are taken into account in a dendrogram or a similarity matrix.
-- Effective numbers of species, aka Hill numbers, for all entropies (`div_hill``()`, `div_phylo``()`, `div_similarity``()`).
-- Diversity partitioning (`div_part``()`), i.e. $\alpha$, $\beta$ and $\gamma$ diversity of a set of communities.
-- Diversity profiles (`profile_hill``()`, `profile_phylo``()`, `profile_similarity``()`), with respect to the order or diversity.
-- Diversity accumulation curves (`accum_hill``()`) with respect to the sample size or coverage.
-- Spatial accumulation of diversity (`accum_sp_hill``()`) with respect to the distance from individuals, with maps (`plot_map``()`).
+- Phylogenetic (`ent_phylo()`) or functional (`ent_similarity()`) entropy when dissimilarities between species are taken into account in a dendrogram or a similarity matrix.
+- Effective numbers of species, aka Hill numbers, for all entropies (`div_hill()`, `div_phylo()`, `div_similarity()`).
+- Diversity partitioning (`div_part()`), i.e. $\alpha$, $\beta$ and $\gamma$ diversity of a set of communities.
+- Diversity profiles (`profile_hill()`, `profile_phylo()`, `profile_similarity()`), with respect to the order or diversity.
+- Diversity accumulation curves (`accum_hill()`) with respect to the sample size or coverage.
+- Spatial accumulation of diversity (`accum_sp_hill()`) with respect to the distance from individuals, with maps (`plot_map()`).
 
 Many estimators are proposed, with sensible automatic choice, to deal with incomplete sampling.
 
@@ -63,28 +63,28 @@ Phylogenetic and functional entropy extend the definition taking into account th
 Finally, Hill numbers [@Hill1973] are the number of species with equal abundance that would have the same entropy as the data, allowing measuring diversity as a effective number.
 
 Data are generally a sample of a community, requiring estimators of entropy [@Marcon2015a].
-Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing implemented in *divent* (converting estimated entropy into diversity is straightforward).
+Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing implemented in `divent` (converting estimated entropy into diversity is straightforward).
 When the sampling effort is not sufficient to allow estimating asymptotic diversity, standardized diversity for a chosen sampling level is necessary and diversity accumulation with respect to the sample size can be estimated [@Chao2014].
 
 Spatially-explicit diversity raises an increasing interest [@Wiegand2017] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
 The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules [@Shen2013b; @Wiegand2017].
 When individual location is not available, the partitioning of the diversity of a set of communities [@Whittaker1960], called $\gamma$ diversity, into the average diversity of communities ($\alpha$ diversity) and their divergence ($\beta$ diversity) is necessary, whatever the diversity considered, for the same purposes.
 
-The *divent* package enables all these diversity features to be computed.
+The `divent` R package enables all these diversity features to be computed.
 
 # State of the field
 
-The *entropart* R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
+The `entropart` R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
 It suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
 These issues justified a complete refactoring.
-Spatially-explicit diversity [@Shimatani2001; @Marcon2023] is completely new in *divent*.
+Spatially-explicit diversity [@Shimatani2001; @Marcon2023] is completely new in `divent`.
 
-The other major R package with the same purposes is *iNEXT* [@Hsieh2014] and its update *iNEXT.3D* [@Chao2021].
+The other major R package with the same purposes is `iNEXT` [@Hsieh2014] and its update `iNEXT.3D` [@Chao2021].
 The most important features are identical.
-Additionally, *iNEXT.3D* addresses temporal changes in diversity (*divent* does not yet), while *divent* addresses spatially-explicit diversity.
-*divent* proposes more atomic functions to calculate various aspects of diversity separately (thus faster, allowing including the results in larger analyses) while *iNEXT.3D* relies on the single, end-user oriented `estimate3D` function for all purposes.
+Additionally, `iNEXT.3D` addresses temporal changes in diversity (`divent` does not yet), while `divent` addresses spatially-explicit diversity.
+`divent` proposes more atomic functions to calculate various aspects of diversity separately (thus faster, allowing including the results in larger analyses) while `iNEXT.3D` relies on the single, end-user oriented `estimate3D()` function for all purposes.
 
-*divent* is built on some explicit theoretical choices that differ from those of *iNEXT.3D*:
+`divent` is built on some explicit theoretical choices that differ from those of `iNEXT.3D`:
 
 - Diversity is explicitly derived from entropy [@Jost2006], following the information theory.
 - Richness estimation is not limited to Chao's estimators [@Marcon2015a]. The jackknife estimator [@Burnham1979] is often employed to reduce diversity underestimation owing to undersampling. Far more estimators of entropy in general are available.
@@ -92,11 +92,11 @@ Additionally, *iNEXT.3D* addresses temporal changes in diversity (*divent* does 
 
 # Software design
 
-*divent* is a written in S3, the object-oriented programming framework provided directly within base R.
-It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages *roxygen2* [@Wickham2025] for R objects, *Rdpack* [@Boshnakov2026] for references and *pkgdown* [@Wickham2025a] for online manual.
+`divent` is a written in S3, the object-oriented programming framework provided directly within base R.
+It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages `roxygen2` [@Wickham2025] for R objects, `Rdpack` [@Boshnakov2026] for references and `pkgdown` [@Wickham2025a] for online manual.
 Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
-Generic functions (e.g., `div_hill``()`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric``()`) or objects of class `species_distributions` (function `div_hill.species_distribution``()`), which are dataframes whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
+Generic functions (e.g., `div_hill()`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric()`) or objects of class `species_distributions` (function `div_hill.species_distribution()`), which are `data.frames` whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
 Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
 Spatially-explicit diversity measures require counting the number of neighbors around each individual.
@@ -104,11 +104,11 @@ This task is run by a short C++ code integrated and parallelized by the *RcppPar
 
 # Research impact statement
 
-*divent* is the successor of the *entropart* package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
+`divent` is the successor of the `entropart` R package [@Marcon2014c] that is widely used (around 40 citations every year according to Google Scholar).
 It is often employed in tropical forest ecology [@Rejou-Mechain2021; @Poorter2021] where correctly estimating diversity from incomplete sampling is critical, but also in other disciplines such as evolutionary [@Hafer-Hahmann2020], microbial [@Kouakou2025] or marine ecology [@Huang2024a], and even agronomy [@Mandal2018] or environmental sociology [@Dago2025].
 
-*divent* was first adopted by @Prunot2026 for estimating the diversity of Carabidae.
-Furthermore, the R package *MiscMetabar* [@Taudiere2023] has relied on divent for its diversity calculations since version 0.15.1.
+`divent` was first adopted by @Prunot2026 for estimating the diversity of Carabidae.
+Furthermore, the `MiscMetabar` R package [@Taudiere2023] has relied on `divent` for its diversity calculations since version 0.15.1.
 
 # AI usage disclosure
 
