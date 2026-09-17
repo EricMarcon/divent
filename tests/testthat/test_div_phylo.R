@@ -119,9 +119,7 @@ testthat::test_that(
                         suppressWarnings(
                           # Do not run incompatible argument combinations
                           if (
-                            !(
-                              (richness_estimator == "rarefy" && unveiling == "none")
-                            )
+                            !(richness_estimator == "rarefy" && unveiling == "none")
                           ) {
                             div_phylo(
                               the_abundances,

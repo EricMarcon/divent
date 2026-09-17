@@ -122,7 +122,7 @@ coverage.numeric <- function(
     ## Zhang & Huang's estimator ----
     if (estimator == "ZhangHuang") {
       prob <- abd/sample_size
-      if (any(prob >= .5)) {
+      if (any(prob >= 0.5)) {
         estimator <- "Chao"
       } else {
         nu <- as.integer(names(abd_distribution))

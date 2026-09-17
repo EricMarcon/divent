@@ -270,7 +270,7 @@ accum_sp_tsallis <- function(
             0,
             dim = c(length(orders), nrow(neighbor_communities))
           )
-          for (community in 1:nrow(neighbor_communities)) {
+          for (community in seq_len(nrow(neighbor_communities))) {
             for (order in seq_along(orders)) {
               # Suppress the warnings for Coverage=0 every time neighbors are singletons only.
               suppressWarnings(
