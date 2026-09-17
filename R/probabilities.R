@@ -417,7 +417,7 @@ estimate_prob_s_0 <- function(
       the_prob_s_0 <- alpha * beta^i
       # Sometimes fails when the distribution is very uneven (sometimes r < 1)
       # Then, fall back to the uniform distribution
-      if (any(is.na(the_prob_s_0)) || any(the_prob_s_0 <= 0)) {
+      if (anyNA(the_prob_s_0) || any(the_prob_s_0 <= 0)) {
         unveiling <- "uniform"
       }
     }
@@ -426,7 +426,7 @@ estimate_prob_s_0 <- function(
     # Add s_0 unobserved species with equal probabilities
     the_prob_s_0 <- rep((1 - sum(prob_tuned)) / s_0, s_0)
   }
-  if (any(is.na(the_prob_s_0))) {
+  if (anyNA(the_prob_s_0)) {
     cli::cli_alert_warning("Unveiling method was not recognized")
     return(NA)
   } else {

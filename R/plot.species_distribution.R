@@ -119,7 +119,7 @@ plot.species_distribution <- function(
     if (nrow(x) > 1) {
       graphics::legend(
         "topright",
-        inset = .02,
+        inset = 0.02,
         legend = x$site,
         col = cols,
         lty = 1,
@@ -159,7 +159,7 @@ plot.species_distribution <- function(
         prob_metacommunity
       ),
       beside = FALSE,
-      width = c(weights, .5, 1),
+      width = c(weights, 0.5, 1),
       names.arg = c(x.probabilities$site, "", "Metacommunity"),
       main = main,
       ylab = ylab,
