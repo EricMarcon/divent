@@ -135,7 +135,7 @@ accum_sp_tsallis <- function(
             orders,
             FUN = function(q) {
               ent_tsallis(
-                as_abundances.character(community),
+                as_abundances(community),
                 q = q,
                 estimator = "naive",
                 as_numeric = TRUE,
