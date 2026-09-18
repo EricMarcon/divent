@@ -60,10 +60,10 @@ rlseries <- function(
   # Calculate the probability at k=1
   P <- -x / log(1 - x)
   # Store it in the cumulative function
-  F <- P
+  F_k <- P
   # Repeat while all values are not drawn
   while (next_value <= n) {
-    if (F > u[next_value]) {
+    if (F_k > u[next_value]) {
       # Retain k as the next value
       abd[next_value] <- k
       # Increment the next value
@@ -74,7 +74,7 @@ rlseries <- function(
       # Probability at k+1 obtained from that at k
       P <- P * k * x / (k + 1)
       # Increment the cumulated probability
-      F <- F + P
+      F_k <- F_k + P
       # Increment k
       k <- k + 1
     }
