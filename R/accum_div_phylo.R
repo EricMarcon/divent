@@ -303,16 +303,14 @@ accum_ent_phylo.abundances <- function(
         if (show_progress && interactive()) cli::cli_progress_update()
       }
       if (n_simulations > 0) {
-        for (y_community in seq_len(n_communities)) {
-          for (z_level in seq_along(levels)) {
-            # Quantiles, recentered
-            ent_phylo_envelope[x_interval, y_community, z_level, ] <- stats::quantile(
-              ent_phylo_sim[x_interval, y_community, z_level, ],
-              probs = c(alpha / 2, 1 - alpha / 2),
-              na.rm = TRUE
-            ) - mean(ent_phylo_sim[x_interval, y_community, z_level, ]) +
-              ent_phylo_abd[x_interval, y_community, z_level]
-          }
+        for (z_level in seq_along(levels)) {
+          # Quantiles, recentered
+          ent_phylo_envelope[x_interval, y_community, z_level, ] <- stats::quantile(
+            ent_phylo_sim[x_interval, y_community, z_level, ],
+            probs = c(alpha / 2, 1 - alpha / 2),
+            na.rm = TRUE
+          ) - mean(ent_phylo_sim[x_interval, y_community, z_level, ]) +
+            ent_phylo_abd[x_interval, y_community, z_level]
         }
       }
 
