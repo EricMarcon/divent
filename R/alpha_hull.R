@@ -114,7 +114,7 @@ alphahull <- function(X, alpha = NULL) {
   # This is an index into the points
   X_path <- as.numeric(igraph::V(graph_cut)[unlist(path)]$name)
   # Join the ends to restore circularity
-  X_path = c(X_path, X_path[1])
+  X_path <- c(X_path, X_path[1])
 
   # Get the points from the ashape object, make an owin.
   # Manage reverse by tryCatch

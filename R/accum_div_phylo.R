@@ -348,7 +348,7 @@ accum_ent_phylo.abundances <- function(
   )
   # Add the estimator
   sample_sizes <- rowSums(x[, species_names])
-  names(sample_sizes) = x$site
+  names(sample_sizes) <- x$site
   the_profile_phylo <- dplyr::mutate(
     the_profile_phylo,
     estimator = dplyr::case_when(
