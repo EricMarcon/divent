@@ -199,7 +199,7 @@ probabilities.numeric <- function(
     # Restore the species names
     if (is.null(species_names)) {
       # No names: create them
-      names(prob_tuned) <- paste("sp", seq_along(prob_tuned), sep = "")
+      names(prob_tuned) <- paste0("sp", seq_along(prob_tuned))
     } else {
       # Restore the names
       names(prob_tuned) <- species_names[abd_int > 0]
