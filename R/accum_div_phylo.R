@@ -63,7 +63,7 @@ accum_ent_phylo.numeric <- function(
     q = 0,
     normalize = TRUE,
     levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     jack_alpha  = 0.05,
@@ -137,7 +137,7 @@ accum_ent_phylo.abundances <- function(
     q = 0,
     normalize = TRUE,
     levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     jack_alpha  = 0.05,
@@ -348,7 +348,7 @@ accum_ent_phylo.abundances <- function(
   )
   # Add the estimator
   sample_sizes <- rowSums(x[, species_names])
-  names(sample_sizes) = x$site
+  names(sample_sizes) <- x$site
   the_profile_phylo <- dplyr::mutate(
     the_profile_phylo,
     estimator = dplyr::case_when(
@@ -399,7 +399,7 @@ accum_div_phylo.numeric <- function(
     q = 0,
     normalize = TRUE,
     levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     jack_alpha  = 0.05,
@@ -473,7 +473,7 @@ accum_div_phylo.abundances <- function(
     q = 0,
     normalize = TRUE,
     levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
     jack_alpha  = 0.05,

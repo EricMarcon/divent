@@ -10,7 +10,8 @@ mock_3sp_dist <- as.dist(mock_3sp)
 
 # phylo tree
 mock_3sp_tree <- ape::as.phylo(hclust(mock_3sp_dist, method = "average"))
-plot(mock_3sp_tree); axis(1)
+plot(mock_3sp_tree)
+axis(1)
 
 # Abundance vector
 mock_3sp_abd <- 3:1

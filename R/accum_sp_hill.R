@@ -89,7 +89,7 @@ accum_sp_tsallis <- function(
                           "Grassberger", "Marcon", "UnveilC", "UnveiliC",
                           "ZhangGrabchak", "naive", "Bonachela", "Holste"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     jack_alpha  = 0.05,
     jack_max = 10,
@@ -160,8 +160,13 @@ accum_sp_tsallis <- function(
           vapply(
             orders,
             FUN = function(q) {
+<<<<<<< HEAD
               ent_tsallis(
                 as_abundances(community),
+=======
+              ent_tsallis.species_distribution(
+                as_abundances.character(community),
+>>>>>>> origin/master
                 q = q,
                 estimator = "naive",
                 as_numeric = TRUE,
@@ -397,7 +402,7 @@ accum_sp_hill <- function(
                           "Grassberger", "Marcon", "UnveilC", "UnveiliC",
                           "ZhangGrabchak", "naive", "Bonachela", "Holste"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     jack_alpha  = 0.05,
     jack_max = 10,
@@ -611,7 +616,7 @@ accum_mixing <- function(
                           "Grassberger", "Marcon", "UnveilC", "UnveiliC",
                           "ZhangGrabchak", "naive", "Bonachela", "Holste"),
     richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013","ChaoShen", "naive"),
+    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
     unveiling = c("geometric", "uniform", "none"),
     jack_alpha  = 0.05,
     jack_max = 10,
