@@ -105,7 +105,7 @@ div_gen_simpson.species_distribution <- function(
     }
   }
 
-  the_entropy <- ent_gen_simpson.species_distribution(
+  the_entropy <- ent_gen_simpson(
     x,
     k = k,
     estimator = estimator,

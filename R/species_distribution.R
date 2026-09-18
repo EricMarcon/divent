@@ -775,7 +775,7 @@ as.double.species_distribution <- function(x, use.names = TRUE, ...) {
 #'
 #' @export
 as.numeric.species_distribution <- function(x, use.names = TRUE, ...) {
-  return(as.double.species_distribution(x, use.names, ...))
+  return(as.double(x, use.names, ...))
 }
 
 

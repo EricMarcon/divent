@@ -123,7 +123,7 @@ div_part <- function(
   )
 
   # Site diversity
-  div_sites <- div_hill.species_distribution(
+  div_sites <- div_hill(
     x = abundances,
     q = q,
     estimator = estimator,

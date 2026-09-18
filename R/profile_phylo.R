@@ -101,8 +101,8 @@ profile_phylo.numeric <- function(
     )
   }
 
-  # Call the .species_distribution method
-  the_profile_phylo <- profile_phylo.species_distribution(
+  # Call profile_phylo.species_distribution()
+  the_profile_phylo <- profile_phylo(
     x = as_species_distribution(x, check_arguments = FALSE),
     tree = tree,
     orders = orders,
@@ -255,7 +255,7 @@ profile_phylo.species_distribution <- function(
     }
     for (z_order in seq_along(orders)) {
       # Actual data
-      ent_phylo_abd[x_interval, , z_order] <- ent_tsallis.species_distribution(
+      ent_phylo_abd[x_interval, , z_order] <- ent_tsallis(
         x = as_abundances(t(the_phylo_abd[[x_interval]])),
         q = orders[z_order],
         estimator = estimator,
@@ -272,7 +272,7 @@ profile_phylo.species_distribution <- function(
 
       for (t_simulation in seq_len(n_simulations)) {
         # Entropy of simulated communities
-        ent_phylo_sim[x_interval, , z_order, t_simulation] <- ent_tsallis.species_distribution(
+        ent_phylo_sim[x_interval, , z_order, t_simulation] <- ent_tsallis(
           x = as_abundances(t(comm_sim[, , t_simulation])),
           q = orders[z_order],
           estimator = estimator,

@@ -134,7 +134,7 @@ accum_sp_tsallis <- function(
           vapply(
             orders,
             FUN = function(q) {
-              ent_tsallis.species_distribution(
+              ent_tsallis(
                 as_abundances.character(community),
                 q = q,
                 estimator = "naive",
@@ -234,7 +234,7 @@ accum_sp_tsallis <- function(
             vapply(
               orders,
               FUN = function(q) {
-                ent_tsallis.species_distribution(
+                ent_tsallis(
                   as_abundances(community),
                   q = q,
                   estimator = "naive",

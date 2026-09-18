@@ -236,7 +236,7 @@ div_hill.species_distribution <- function(
     }
   } else {
     # Estimate diversity and transform it into diversity
-    the_entropy <- ent_tsallis.species_distribution(
+    the_entropy <- ent_tsallis(
       x,
       q = q,
       estimator = estimator,

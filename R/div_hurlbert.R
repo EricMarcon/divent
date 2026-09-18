@@ -106,7 +106,7 @@ div_hurlbert.species_distribution <- function(
     }
   }
 
-  the_entropy <- ent_hurlbert.species_distribution(
+  the_entropy <- ent_hurlbert(
     x,
     k = k,
     estimator = estimator,

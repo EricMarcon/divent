@@ -165,7 +165,7 @@ div_phylo.species_distribution <- function(
     }
   }
 
-  the_entropy <- ent_phylo.species_distribution(
+  the_entropy <- ent_phylo(
     x,
     tree = tree,
     normalize = TRUE,

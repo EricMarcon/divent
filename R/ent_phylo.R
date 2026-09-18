@@ -94,7 +94,7 @@ ent_phylo.numeric <- function(
   species_distribution <- as_species_distribution(x)
 
   # Entropy
-  the_entropy <- ent_phylo.species_distribution(
+  the_entropy <- ent_phylo(
     species_distribution,
     tree = tree,
     q = q,
@@ -252,7 +252,7 @@ phylo_entropy.phylo_abd <- function(
         # Obtain a list.
         phylo_abd,
         FUN = function(group) {
-          ent_tsallis.species_distribution(
+          ent_tsallis(
             as_abundances(t(group)),
             q = q,
             estimator = estimator,
