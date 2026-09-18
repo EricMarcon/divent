@@ -54,7 +54,7 @@ NULL
 #' accum_n <- accum_sp_hill(X)
 #' plot(accum_n, q = 0)
 #' # along distance
-#' accum_r <- accum_sp_hill(X, orders = 1, r = seq(0, .5, .05))
+#' accum_r <- accum_sp_hill(X, orders = 1, r = seq(0, 0.5, 0.05))
 #' autoplot(accum_r, q = 1)
 #'
 accum_sp_tsallis <- function(
