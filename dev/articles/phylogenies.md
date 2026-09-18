@@ -46,13 +46,14 @@ An `hclust` object is created by UPGMA hierarchical clustering.
 ``` r
 
 library("stats")
+tree.hclust <- hclust(
+  as.dist(species_dist), 
+  method = "average"
+)
 plot(
-  tree.hclust <- hclust(
-    as.dist(species_dist), 
-    method = "average"
-  ), 
+  tree.hclust,
   hang = -0.01, 
-  axes = F
+  axes = FALSE
 )
 axis(2)
 ```
@@ -75,7 +76,8 @@ Conversion to a `phylo` object is straightforward.
 ``` r
 
 library("ape")
-plot(tree.phylo <- as.phylo(tree.hclust))
+tree.phylo <- as.phylo(tree.hclust)
+plot(tree.phylo)
 axis(1)
 ```
 
@@ -111,7 +113,8 @@ The last conversion is from `phylo` to `phylog`.
 ``` r
 
 library("ade4")
-plot(tree.phylog <- hclust2phylog(tree.hclust))
+tree.phylog <- hclust2phylog(tree.hclust)
+plot(tree.phylog)
 axis(1)
 ```
 
@@ -145,7 +148,7 @@ tree.phylog$Wdist^2/2
 ``` r
 
 tree2.hclust <- stats::hclust(tree.phylog$Wdist^2 / 2, "average")
-plot(tree2.hclust, hang = -0.01, axes = F)
+plot(tree2.hclust, hang = -0.01, axes = FALSE)
 axis(2)
 ```
 
@@ -165,7 +168,8 @@ library("divent")
 
 ``` r
 
-plot(tree.phylo_divent <- as_phylo_divent(tree.phylo))
+tree.phylo_divent <- as_phylo_divent(tree.phylo)
+plot(tree.phylo_divent)
 axis(2)
 ```
 
@@ -238,7 +242,8 @@ that can be in turn converted to `phylo_divent` or used directly in
 ``` r
 
 NewickABC <- "(C:2,(A:1,B:1):1);"
-plot(phyloABC <- ape::read.tree(text = NewickABC))
+phyloABC <- ape::read.tree(text = NewickABC)
+plot(phyloABC)
 axis(1)
 ```
 
