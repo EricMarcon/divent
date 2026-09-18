@@ -141,7 +141,7 @@ ent_simpson.numeric <- function(
       # Probabilities instead of abundances
       if (sample_size < 2) {
         cli::cli_alert_warning(
-          "Entropy estimators can't apply to probability data.",
+          "Entropy estimators can't apply to probability data."
         )
         cli::cli_alert("{.code estimator} forced to 'naive'.")
         estimator <- "naive"
