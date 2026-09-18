@@ -524,12 +524,12 @@ accum_sp_hill <- function(
     if (show_progress && interactive()) cli::cli_progress_done()
     # Calculate quantiles
     for (q in seq_along(orders)) {
-      for (r in seq_along(r)) {
-        the_diversity$accumulation[q, r, 3:4] <- stats::quantile(
-          h0_diversity[q, r, ], c(alpha, 1 - alpha), na.rm = TRUE
+      for (r_i in seq_along(r)) {
+        the_diversity$accumulation[q, r_i, 3:4] <- stats::quantile(
+          h0_diversity[q, r_i, ], c(alpha, 1 - alpha), na.rm = TRUE
         )
-        the_diversity$accumulation[q, r, 2] <- mean(
-          h0_diversity[q, r, ], na.rm = TRUE
+        the_diversity$accumulation[q, r_i, 2] <- mean(
+          h0_diversity[q, r_i, ], na.rm = TRUE
         )
       }
     }
