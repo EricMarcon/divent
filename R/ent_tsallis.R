@@ -156,8 +156,8 @@ ent_tsallis.numeric <- function(
     # sample_coverage is between 0 and 1 (by check_arguments), sum(abd) must be an integer.
     # estimator may be ChaoShen or Marcon (max(ChaoShen, Grassberger))
     if (
-      !is.null(sample_coverage) &
-      is_integer_values(sample_size) &
+      !is.null(sample_coverage) &&
+      is_integer_values(sample_size) &&
       (estimator == "ChaoShen" || estimator == "Marcon")
     ) {
       cp <- sample_coverage * abd / sample_size

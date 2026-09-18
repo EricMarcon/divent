@@ -138,8 +138,8 @@ probabilities.numeric <- function(
       check_arguments = FALSE
       )
     if (
-      estimator == "Chao2015" |
-      unveiling != "none" |
+      estimator == "Chao2015" ||
+      unveiling != "none" ||
       richness_estimator == "Rarefy") {
       # Sample coverage of order 2 required
       s_1 <- sum(abd == 1)

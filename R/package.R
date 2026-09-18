@@ -1044,9 +1044,9 @@ check_divent_args <- function(
     tree <- eval(expression(tree), parent.frame())
     if (!is.null(tree)) {
       if (
-        !inherits(tree, "phylo_divent") &
-        !inherits(tree, "phylo") &
-        !inherits(tree, "phylog") &
+        !inherits(tree, "phylo_divent") &&
+        !inherits(tree, "phylo") &&
+        !inherits(tree, "phylog") &&
         !inherits(tree, "hclust")) {
         error_message(
           "tree must be an object of class 'phylo_divent', 'phylo', 'phylog' or 'hclust'",
