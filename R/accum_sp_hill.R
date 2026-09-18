@@ -131,9 +131,9 @@ accum_sp_tsallis <- function(
         neighbor_communities,
         MARGIN = 2,
         FUN = function(community) {
-          sapply(
+          vapply(
             orders,
-            function(q) {
+            FUN = function(q) {
               ent_tsallis.species_distribution(
                 as_abundances.character(community),
                 q = q,
@@ -141,7 +141,8 @@ accum_sp_tsallis <- function(
                 as_numeric = TRUE,
                 check_arguments = FALSE
               )
-            }
+            },
+            FUN.VALUE = 0
           )
         }
       )
