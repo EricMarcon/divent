@@ -100,11 +100,8 @@ accum_ent_phylo.numeric <- function(
     }
   }
 
-  # Make a species_distribution
-  the_species_distribution <- as_species_distribution(x)
-
   # Entropy accumulation
-  the_entropy <- accum_ent_phylo.abundances(
+  the_entropy <- accum_ent_phylo(
     x = the_species_distribution,
     tree = tree,
     q = q,
@@ -436,11 +433,8 @@ accum_div_phylo.numeric <- function(
     }
   }
 
-  # Make a the_species_distribution
-  the_species_distribution <- as_species_distribution(x)
-
   # Diversity accumulation
-  the_diversity <- accum_div_phylo.abundances(
+  the_diversity <- accum_div_phylo(
     x = the_species_distribution,
     tree = tree,
     q = q,
@@ -515,7 +509,7 @@ accum_div_phylo.abundances <- function(
     }
   }
 
-  the_entropy <- accum_ent_phylo.abundances(
+  the_entropy <- accum_ent_phylo(
     x,
     tree = tree,
     q = q,

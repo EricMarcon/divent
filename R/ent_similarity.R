@@ -479,12 +479,15 @@ ent_gamma_similarity <- function(
     as_numeric) {
 
   # Build the metacommunity
-  abd <- metacommunity.abundances(
+  if (!is_abundances(species_distribution)) {
+    cli::cli_abort("Computing gamma requires abundances, not probabilities.")
+  }
+  abundances <- metacommunity(
     species_distribution,
     as_numeric = TRUE,
     check_arguments = FALSE
   )
-  if (is_integer_values(abd)) {
+  if (is_integer_values(abundances)) {
     # Sample coverage is useless
     sample_coverage <- NULL
   } else {
@@ -507,7 +510,7 @@ ent_gamma_similarity <- function(
 
   # Compute the entropy.
   the_entropy <- ent_similarity(
-    abd,
+    abundances,
     similarities = similarities,
     q = q,
     estimator = estimator,

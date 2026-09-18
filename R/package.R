@@ -1346,12 +1346,15 @@ ent_gamma_tsallis <- function(
     as_numeric) {
 
   # Build the metacommunity
-  abd <- metacommunity.abundances(
+  if (!is_abundances(species_distribution)) {
+    cli::cli_abort("Computing gamma entropy requires abundances, not probabilities.")
+  }
+  abundances <- metacommunity(
     species_distribution,
     as_numeric = TRUE,
     check_arguments = FALSE
   )
-  if (is_integer_values(abd)) {
+  if (is_integer_values(abundances)) {
     # Sample coverage is useless
     sample_coverage <- NULL
   } else {
@@ -1376,7 +1379,7 @@ ent_gamma_tsallis <- function(
   # Richness estimators are specific
   if (q == 0 && estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
     the_diversity <- div_richness(
-      abd,
+      abundances,
       estimator = estimator,
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
@@ -1400,7 +1403,7 @@ ent_gamma_tsallis <- function(
   } else if (q == 1 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_shannon(
-      abd,
+      abundances,
       estimator = estimator,
       level = level,
       probability_estimator = probability_estimator,
@@ -1415,7 +1418,7 @@ ent_gamma_tsallis <- function(
   } else if (q == 2 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
     the_entropy <- ent_simpson(
-      abd,
+      abundances,
       estimator = estimator,
       level = level,
       probability_estimator = probability_estimator,
@@ -1429,7 +1432,7 @@ ent_gamma_tsallis <- function(
     )
   } else {
     the_entropy <- ent_tsallis(
-      abd,
+      abundances,
       q = q,
       estimator = estimator,
       level = level,
