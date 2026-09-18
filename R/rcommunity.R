@@ -96,19 +96,29 @@ rcommunity <- function(
     name <- distribution
     # Other distributions: draw probabilities
     the_prob <- switch(distribution,
-      geom = prob_geom /
-        (1 - (1 - prob_geom) ^ species_number) * (1 - prob_geom) ^ (0:(species_number - 1)),
-      lnorm = (the_abd <- stats::rlnorm(species_number, meanlog = 0, sdlog = sd_lnorm)) /
-        sum(the_abd),
-      lseries = (
+      geom = {
+        prob_geom /
+          (1 - (1 - prob_geom) ^ species_number) *
+          (1 - prob_geom) ^ (0:(species_number - 1))
+      },
+      lnorm = {
+        the_abd <- stats::rlnorm(species_number, meanlog = 0, sdlog = sd_lnorm)
+        the_abd / sum(the_abd)
+      },
+      lseries = {
+        species_number <- fisher_alpha * log(1 + size / fisher_alpha)
         the_abd <-
           rlseries(
-            species_number <- fisher_alpha * log(1 + size / fisher_alpha),
-            fisher_alpha = fisher_alpha,
-            size = size
+            species_number,
+            size = size,
+            fisher_alpha = fisher_alpha
           )
-        ) / sum(the_abd),
-      bstick = c(cuts <- sort(stats::runif(species_number - 1)), 1) - c(0, cuts)
+        the_abd / sum(the_abd)
+      },
+      bstick = {
+        cuts <- sort(stats::runif(species_number - 1))
+        c(cuts , 1) - c(0, cuts)
+      }
     )
   } else {
     # Simulation from a distribution
