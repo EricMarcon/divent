@@ -454,7 +454,7 @@ accum_sp_hill <- function(
     }
 
     # Prepare the distribution of the abundances of species.
-    abd <- as_abundances.wmppp(X)
+    abd <- as_abundances(X)
     for (order in seq_along(orders)) {
       # Rarefy the community to the sizes of neighborhoods
       h0_values <- accum_hill(
