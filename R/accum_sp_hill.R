@@ -160,13 +160,8 @@ accum_sp_tsallis <- function(
           vapply(
             orders,
             FUN = function(q) {
-<<<<<<< HEAD
-              ent_tsallis(
-                as_abundances(community),
-=======
               ent_tsallis.species_distribution(
                 as_abundances.character(community),
->>>>>>> origin/master
                 q = q,
                 estimator = "naive",
                 as_numeric = TRUE,
