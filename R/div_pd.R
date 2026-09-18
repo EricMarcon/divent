@@ -149,7 +149,7 @@ div_pd.species_distribution <- function(
       as_numeric = TRUE,
       check_arguments = FALSE
     )
-    the_diversity <- div_pd.numeric(
+    the_diversity <- div_pd(
       abd,
       tree = tree,
       as_numeric = as_numeric,
@@ -170,7 +170,7 @@ div_pd.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = div_pd.numeric,
+      FUN = div_pd,
       # Arguments
       tree = tree,
       prune = prune,

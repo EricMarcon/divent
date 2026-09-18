@@ -131,7 +131,7 @@ probabilities.numeric <- function(
     sample_size <- sum(abd)
     prob <- abd / sample_size
     # Sample coverage
-    sample_coverage <- coverage.numeric(
+    sample_coverage <- coverage(
       abd,
       estimator = coverage_estimator,
       as_numeric = TRUE,
@@ -212,7 +212,7 @@ probabilities.numeric <- function(
         cli::cli_abort("Arguments richness_estimator='rarefy' and unveiling='none' are not compatible")
       }
       # Estimation of the number of unobserved species to initialize optimization
-      s_0 <- div_richness.numeric(
+      s_0 <- div_richness(
         abd,
         estimator = "jackknife",
         jack_alpha  = jack_alpha,
@@ -221,7 +221,7 @@ probabilities.numeric <- function(
         check_arguments = FALSE
       ) - s_obs
       # Estimate the number of unobserved species by iterations
-      ent_target <- ent_tsallis.numeric(
+      ent_target <- ent_tsallis(
         abd,
         q = q,
         estimator = "naive",
@@ -246,7 +246,7 @@ probabilities.numeric <- function(
       )
     } else {
       s_est <- ceiling(
-        div_richness.numeric(
+        div_richness(
           abd,
           estimator = richness_estimator,
           jack_alpha = jack_alpha,
@@ -328,7 +328,7 @@ probabilities.abundances <- function(
     x[, !colnames(x) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = probabilities.numeric,
+    FUN = probabilities,
     # Arguments
     estimator = estimator,
     unveiling = unveiling,

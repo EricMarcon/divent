@@ -143,7 +143,7 @@ ent_gen_simpson.species_distribution <- function(
       )
     }
     return(
-      ent_gen_simpson.numeric(
+      ent_gen_simpson(
         x = abd,
         k = k,
         estimator = estimator,
@@ -158,7 +158,7 @@ ent_gen_simpson.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_gen_simpson.numeric,
+      FUN = ent_gen_simpson,
       # Arguments
       k = k,
       estimator = estimator,

@@ -90,7 +90,7 @@ div_phylo.numeric <- function(
     }
   }
 
-  the_entropy <- ent_phylo.numeric(
+  the_entropy <- ent_phylo(
     x,
     tree = tree,
     q = q,

@@ -266,7 +266,7 @@ accum_ent_phylo.abundances <- function(
     for (y_community in seq_len(n_communities)) {
       # Calculate the profile of each community
       # Actual data
-      ent_phylo_abd[x_interval, y_community, ] <- accum_tsallis.numeric(
+      ent_phylo_abd[x_interval, y_community, ] <- accum_tsallis(
         x = the_phylo_abd[[x_interval]][, y_community],
         q = q,
         levels = levels,
@@ -284,7 +284,7 @@ accum_ent_phylo.abundances <- function(
 
       for (t_simulation in seq_len(n_simulations)) {
         # Entropy of simulated communities
-        ent_phylo_sim[x_interval, y_community, , t_simulation] <- accum_tsallis.numeric(
+        ent_phylo_sim[x_interval, y_community, , t_simulation] <- accum_tsallis(
           x = comm_sim[, y_community, t_simulation],
           q = q,
           levels = levels,

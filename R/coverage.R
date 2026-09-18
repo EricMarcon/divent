@@ -281,7 +281,7 @@ coverage.abundances <- function(
     x[, !colnames(x) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = coverage.numeric,
+    FUN = coverage,
     # Arguments
     estimator = estimator,
     level = level,
@@ -349,7 +349,7 @@ coverage_to_size.numeric <- function(
   }
 
   # Actual coverage
-  sample_coverage_actual <- coverage.numeric(
+  sample_coverage_actual <- coverage(
     abd,
     estimator = estimator,
     as_numeric = TRUE,
@@ -411,7 +411,7 @@ coverage_to_size.abundances <- function(
     x[, !colnames(x) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = coverage_to_size.numeric,
+    FUN = coverage_to_size,
     # Arguments
     sample_coverage = sample_coverage,
     estimator = estimator,
@@ -446,7 +446,7 @@ chao_delta <- function(
     size,
     target_coverage) {
   abs(
-    coverage.numeric(
+    coverage(
       x = abd,
       estimator = "Chao",
       level = size,

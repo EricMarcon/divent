@@ -186,7 +186,7 @@ ent_simpson.numeric <- function(
   # Entropy at a level ----
   # If level is coverage, get size
   if (level < 1) {
-    level <- coverage_to_size.numeric(
+    level <- coverage_to_size(
       abd,
       sample_coverage = level,
       estimator = coverage_estimator,
@@ -285,7 +285,7 @@ ent_simpson.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_simpson.numeric,
+      FUN = ent_simpson,
       # Arguments
       estimator = estimator,
       level = level,

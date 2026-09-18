@@ -182,7 +182,7 @@ ent_shannon.numeric <- function(
 
     ## Other estimators ----
     if (estimator == "Miller") {
-      the_entropy <- ent_shannon.numeric(
+      the_entropy <- ent_shannon(
           prob,
           as_numeric = TRUE,
           check_arguments = FALSE
@@ -201,7 +201,7 @@ ent_shannon.numeric <- function(
       }
     }
     if (estimator == "ChaoShen" || estimator == "Marcon") {
-      sample_coverage <- coverage.numeric(
+      sample_coverage <- coverage(
         abd,
         estimator = coverage_estimator,
         as_numeric = TRUE,
@@ -218,7 +218,7 @@ ent_shannon.numeric <- function(
           )
         )
       }
-      prob_cov <- probabilities.numeric(
+      prob_cov <- probabilities(
         abd,
         estimator = probability_estimator,
         unveiling = "none",
@@ -424,7 +424,7 @@ ent_shannon.numeric <- function(
 
     if (estimator == "UnveilC" || estimator == "UnveiliC" || estimator == "UnveilJ") {
       # Unveil probabilities
-      prob_unv <- probabilities.numeric(
+      prob_unv <- probabilities(
         abd,
         estimator = probability_estimator,
         unveiling = unveiling,
@@ -465,7 +465,7 @@ ent_shannon.numeric <- function(
   # Entropy at a level ----
   # If level is coverage, get size
   if (level < 1) {
-    level <- coverage_to_size.numeric(
+    level <- coverage_to_size(
       abd,
       sample_coverage = level,
       estimator = coverage_estimator,
@@ -511,7 +511,7 @@ ent_shannon.numeric <- function(
     # Estimate the asymptotic entropy
     if (probability_estimator == "naive") {
       # Don't unveil the asymptotic distribution, use the asymptotic estimator
-      ent_est <- ent_shannon.numeric(
+      ent_est <- ent_shannon(
         abd,
         estimator = estimator,
         as_numeric = TRUE,
@@ -519,7 +519,7 @@ ent_shannon.numeric <- function(
       )
     } else {
       # Unveil so that the estimation of H is similar to that of non-integer entropy
-      prob_unv <- probabilities.numeric(
+      prob_unv <- probabilities(
         abd,
         estimator = probability_estimator,
         unveiling = unveiling,
@@ -610,7 +610,7 @@ ent_shannon.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_shannon.numeric,
+      FUN = ent_shannon,
       # Arguments
       estimator = estimator,
       level = level,

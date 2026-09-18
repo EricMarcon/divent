@@ -1357,7 +1357,7 @@ ent_gamma_tsallis <- function(
   } else {
     # Non-integer values in the metacommunity.
     # Calculate the sample coverage and change the estimator.
-    sample_coverage <- coverage.numeric(
+    sample_coverage <- coverage(
       colSums(
         species_distribution[
           , !colnames(species_distribution) %in% non_species_columns
@@ -1375,7 +1375,7 @@ ent_gamma_tsallis <- function(
   # Compute the entropy. Call the appropriate function for its estimators.
   # Richness estimators are specific
   if (q == 0 && estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
-    the_diversity <- div_richness.numeric(
+    the_diversity <- div_richness(
       abd,
       estimator = estimator,
       jack_alpha  = jack_alpha,
@@ -1399,7 +1399,7 @@ ent_gamma_tsallis <- function(
     }
   } else if (q == 1 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
-    the_entropy <- ent_shannon.numeric(
+    the_entropy <- ent_shannon(
       abd,
       estimator = estimator,
       level = level,
@@ -1414,7 +1414,7 @@ ent_gamma_tsallis <- function(
     )
   } else if (q == 2 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
-    the_entropy <- ent_simpson.numeric(
+    the_entropy <- ent_simpson(
       abd,
       estimator = estimator,
       level = level,
@@ -1428,7 +1428,7 @@ ent_gamma_tsallis <- function(
       check_arguments = FALSE
     )
   } else {
-    the_entropy <- ent_tsallis.numeric(
+    the_entropy <- ent_tsallis(
       abd,
       q = q,
       estimator = estimator,

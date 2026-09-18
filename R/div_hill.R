@@ -137,7 +137,7 @@ div_hill.numeric <- function(
       )
     }
   } else {
-    the_entropy <- ent_tsallis.numeric(
+    the_entropy <- ent_tsallis(
       x,
       q = q,
       estimator = estimator,

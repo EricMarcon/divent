@@ -63,7 +63,7 @@ div_hurlbert.numeric <- function(
     }
   }
 
-  the_entropy <- ent_hurlbert.numeric(
+  the_entropy <- ent_hurlbert(
     x,
     k = k,
     estimator = estimator,

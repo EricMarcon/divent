@@ -62,7 +62,7 @@ div_gen_simpson.numeric <- function(
     }
   }
 
-  the_entropy <- ent_gen_simpson.numeric(
+  the_entropy <- ent_gen_simpson(
     x,
     k = k,
     estimator = estimator,

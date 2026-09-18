@@ -250,7 +250,7 @@ ent_tsallis.numeric <- function(
     ## Shannon ----
     if (q == 1) {
       return(
-        ent_shannon.numeric(
+        ent_shannon(
           abd,
           estimator = estimator,
           probability_estimator = probability_estimator,
@@ -339,7 +339,7 @@ ent_tsallis.numeric <- function(
       }
     }
     if (estimator == "ChaoShen" || estimator == "Marcon") {
-      sample_coverage <- coverage.numeric(
+      sample_coverage <- coverage(
         abd,
         estimator = coverage_estimator,
         as_numeric = TRUE,
@@ -359,7 +359,7 @@ ent_tsallis.numeric <- function(
           "{.code unveiling} is forced to 'none' with estimator 'GenCov'."
         )
       }
-      prob_cov <- probabilities.numeric(
+      prob_cov <- probabilities(
         abd,
         estimator = probability_estimator,
         unveiling = "none",
@@ -450,7 +450,7 @@ ent_tsallis.numeric <- function(
     }
     if (estimator == "UnveilC" || estimator == "UnveiliC" || estimator == "UnveilJ") {
       # Unveil the probabilities
-      prob_unv <- probabilities.numeric(
+      prob_unv <- probabilities(
         abd,
         estimator = probability_estimator,
         unveiling = unveiling,
@@ -507,7 +507,7 @@ ent_tsallis.numeric <- function(
 
   # If level is coverage, get size
   if (level < 1) {
-    level <- coverage_to_size.numeric(
+    level <- coverage_to_size(
       abd,
       sample_coverage = level,
       estimator = coverage_estimator,
@@ -536,7 +536,7 @@ ent_tsallis.numeric <- function(
   ## Integer q ----
   if (q == 0) {
     # Richness - 1. Same result as general formula but faster
-    the_richness <- div_richness.numeric(
+    the_richness <- div_richness(
       abd,
       # Unused
       estimator = richness_estimator,
@@ -621,7 +621,7 @@ ent_tsallis.numeric <- function(
   } else {
     ### Extrapolation ----
     # Unveil the full distribution that rarefies to the observed entropy
-    prob_unv <- probabilities.numeric(
+    prob_unv <- probabilities(
       abd,
       estimator = probability_estimator,
       unveiling = unveiling,
@@ -721,7 +721,7 @@ ent_tsallis.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_tsallis.numeric,
+      FUN = ent_tsallis,
       # Arguments
       q = q,
       estimator = estimator,
