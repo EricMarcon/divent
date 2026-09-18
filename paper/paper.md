@@ -24,7 +24,7 @@ affiliations:
   index: 2
 - name: Université Paris-Saclay, INRAE, AgroParisTech, Paris-Saclay Applied Economics, F-91120, Palaiseau, France
   index: 3
-date: "4 March 2026"
+date: "18 September 2026"
 bibliography: ../inst/REFERENCES.bib
 ---
 
@@ -96,7 +96,7 @@ Additionally, `iNEXT.3D` addresses temporal changes in diversity (`divent` does 
 It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages `roxygen2` [@Wickham2025] for R objects, `Rdpack` [@Boshnakov2026] for references and `pkgdown` [@Wickham2025a] for online manual.
 Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
-Generic functions (e.g., `div_hill()`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric()`) or objects of class `species_distributions` (function `div_hill.species_distribution()`), which are `data.frames` whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
+Generic functions (e.g., `div_hill()`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric()`) or objects of class `species_distributions` (function `div_hill.species_distribution()`), which are `data.frame`s whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
 Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
 Spatially-explicit diversity measures require counting the number of neighbors around each individual.
