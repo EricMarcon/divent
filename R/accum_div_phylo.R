@@ -102,7 +102,7 @@ accum_ent_phylo.numeric <- function(
 
   # Entropy accumulation
   the_entropy <- accum_ent_phylo(
-    x = the_species_distribution,
+    x,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -435,7 +435,7 @@ accum_div_phylo.numeric <- function(
 
   # Diversity accumulation
   the_diversity <- accum_div_phylo(
-    x = the_species_distribution,
+    x,
     tree = tree,
     q = q,
     normalize = normalize,
