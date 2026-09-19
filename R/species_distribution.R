@@ -403,7 +403,7 @@ as_probabilities.matrix <- function(
   prob <- x / rowSums(x)
 
   # Build the species distribution
-  the_probabilities <- as_species_distribution.matrix(
+  the_probabilities <- as_species_distribution(
     prob,
     names = names,
     weights = weights,
@@ -629,7 +629,7 @@ as_abundances.matrix <- function(
     x <- round(x)
   }
 
-  the_abundances <- as_species_distribution.matrix(
+  the_abundances <- as_species_distribution(
     x,
     names = names,
     weights = weights,
