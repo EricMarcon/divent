@@ -143,7 +143,7 @@ metacommunity.species_distribution <- function(
     the_metacommunity <- tibble::as_tibble(
       cbind(
         data.frame(site = name, weight = sum(x$weight)),
-        as.data.frame(abd)
+        as.data.frame(abd_prob)
       )
     )
     # Classes
