@@ -123,16 +123,17 @@ metacommunity.species_distribution <- function(
   # Extract abundances
   species_abd_prob <- as.matrix(x[, species_columns])
   # Sample size
-  sample_size <- sum(species_abd_prob)
+  if (is_abundances(x)) {
+    sample_size <- sum(species_abd_prob)
+  } else {
+    # Probabilities
+    sample_size <- 1
+  }
   # Aggregate abundances:
   # Multiply abundances by weights and normalize so that
   # sample_size is the sum of sample sizes
-  abd_prob <- x$weight %*% species_abd_prob * sample_size /
-    as.numeric(x$weight %*% rowSums(species_abd_prob))
-  # Probabilities must still be divided by the number of communities
-  if (is_probabilities(x)) {
-    abd_prob <- abd_prob / nrow(species_abd_prob)
-  }
+  abd_prob <- x$weight %*% species_abd_prob *
+    sample_size / as.numeric(x$weight %*% rowSums(species_abd_prob))
 
   if (as_numeric) {
     # Return a named vector (abd_prob is a 1-row matrix)
@@ -150,4 +151,3 @@ metacommunity.species_distribution <- function(
     return(the_metacommunity)
   }
 }
-

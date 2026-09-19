@@ -219,6 +219,7 @@ utils::globalVariables("non_species_columns")
 # Names of variables inside functions:
 # abd: a numeric vector of abundances
 # prob: a numeric vector of probabilities
+# abd_prob: possibly abd or prob
 # prob_unv : unveiled probabilities
 # abundances / probabilities: an object of class abundances / probabilities
 # s_0, s_1,  ...: species observed 0, 1, ... times

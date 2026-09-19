@@ -26,8 +26,9 @@ metacommunity(x, name = "metacommunity", ...)
 )
 }
 \arguments{
-\item{x}{An object of class \link{abundances} that contains several communities or
-a matrix of abundances with communities in rows and species in columns.}
+\item{x}{An object of class \link{species_distribution} that contains several
+communities or a matrix of abundances with communities in rows and species
+in columns.}
 
 \item{name}{The name of the metacommunity}
 
@@ -41,8 +42,8 @@ a matrix of abundances with communities in rows and species in columns.}
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}
 }
 \value{
-An object of class \link{abundances} with a single row or a named vector
-if \code{as_numeric = TRUE}.
+An object of class \link{abundances} or \link{probabilities} with a single
+row, or a named vector if \code{as_numeric = TRUE}.
 }
 \description{
 Abundances of communities are summed according to their weights to obtain
