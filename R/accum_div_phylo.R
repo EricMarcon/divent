@@ -100,9 +100,12 @@ accum_ent_phylo.numeric <- function(
     }
   }
 
+  # Make an abundances object
+  abundances <- as_abundances(x)
+
   # Entropy accumulation
   the_entropy <- accum_ent_phylo(
-    x,
+    abundances,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -433,9 +436,12 @@ accum_div_phylo.numeric <- function(
     }
   }
 
+  # Make an abundances object
+  abundances <- as_abundances(x)
+
   # Diversity accumulation
   the_diversity <- accum_div_phylo(
-    x,
+    abundances,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -488,7 +494,7 @@ accum_div_phylo.abundances <- function(
   if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
-      cli::cli_abort("Species probabilities or abundances must be positive.")
+      cli::cli_abort("Species abundances must be positive.")
     }
     # Prepare the tree
     tree <- as_phylo_divent(tree)
