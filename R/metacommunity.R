@@ -15,13 +15,14 @@
 #' estimators.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object of class [abundances] that contains several communities or
-#' a matrix of abundances with communities in rows and species in columns.
+#' @param x An object of class [species_distribution] that contains several
+#' communities or a matrix of abundances with communities in rows and species
+#' in columns.
 #' @param name The name of the metacommunity
 #' @param ... Unused.
 #'
-#' @returns An object of class [abundances] with a single row or a named vector
-#' if `as_numeric = TRUE`.
+#' @returns An object of class [abundances] or [probabilities] with a single
+#' row, or a named vector if `as_numeric = TRUE`.
 #'
 #' @examples
 #' metacommunity(paracou_6_abd)
@@ -103,7 +104,7 @@ metacommunity.matrix <- function(
 #' @rdname metacommunity
 #' @export
 #'
-metacommunity.abundances <- function(
+metacommunity.species_distribution <- function(
     x,
     name = "metacommunity",
     as_numeric = FALSE,
@@ -113,23 +114,40 @@ metacommunity.abundances <- function(
   if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
-      cli::cli_abort("Species probabilities or abundances must be positive.")
+      cli::cli_abort("Species abundances must be positive.")
     }
   }
 
   # Select species columns
   species_columns <- !colnames(x) %in% non_species_columns
   # Extract abundances
-  species_abd <- as.matrix(x[, species_columns])
+  species_abd_prob <- as.matrix(x[, species_columns])
+  # Sample size
+  sample_size <- sum(species_abd_prob)
+  # Aggregate abundances:
+  # Multiply abundances by weights and normalize so that
+  # sample_size is the sum of sample sizes
+  abd_prob <- x$weight %*% species_abd_prob * sample_size /
+    as.numeric(x$weight %*% rowSums(species_abd_prob))
+  # Probabilities must still be divided by the number of communities
+  if (is_probabilities(x)) {
+    abd_prob <- abd_prob / nrow(species_abd_prob)
+  }
 
-  # Call .matrix method
-  return(
-    metacommunity.matrix(
-      x = species_abd,
-      name = name,
-      weights = x$weight,
-      as_numeric = as_numeric,
-      check_arguments = FALSE
+  if (as_numeric) {
+    # Return a named vector (abd_prob is a 1-row matrix)
+    return(abd_prob[1, ])
+  } else {
+    # Build the tibble
+    the_metacommunity <- tibble::as_tibble(
+      cbind(
+        data.frame(site = name, weight = sum(x$weight)),
+        as.data.frame(abd)
+      )
     )
-  )
+    # Classes
+    class(the_metacommunity) <- class(x)
+    return(the_metacommunity)
+  }
 }
+

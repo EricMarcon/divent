@@ -3,7 +3,7 @@
 \name{metacommunity}
 \alias{metacommunity}
 \alias{metacommunity.matrix}
-\alias{metacommunity.abundances}
+\alias{metacommunity.species_distribution}
 \title{Aggregate communities into a metacommunity}
 \usage{
 metacommunity(x, name = "metacommunity", ...)
@@ -17,7 +17,7 @@ metacommunity(x, name = "metacommunity", ...)
   check_arguments = TRUE
 )
 
-\method{metacommunity}{abundances}(
+\method{metacommunity}{species_distribution}(
   x,
   name = "metacommunity",
   as_numeric = FALSE,
