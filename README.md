@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Diversity measures based on Entropy<img src="man/figures/logo.png" align="right" alt="" width="120" />
+# Diversity measures based on Entropy<img src="man/figures/logo.png" align="right" width="120"/>
 
 <!-- badges: start -->
 
@@ -13,16 +13,24 @@
 version](https://www.r-pkg.org/badges/version/divent)](https://CRAN.r-project.org/package=divent)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/divent)](https://CRAN.R-project.org/package=divent)
 [![](https://cranlogs.r-pkg.org/badges/divent)](https://CRAN.R-project.org/package=divent)
+
 <!-- badges: end -->
 
-**divent** is an R package that provides functions to estimate alpha,
-beta and gamma diversity of communities, including phylogenetic and
+`divent` is an R package that provides functions to estimate alpha, beta
+and gamma diversity of communities, including phylogenetic and
 functional diversity.
 
-It is a reboot of the package **entropart** to make it tidy, easier to
-use and optimize the code that has been added along years of research.
+It is a reboot of the `entropart` package to make it tidy, easier to use
+and optimize the code that has been added along years of research.
 
 ## Installation
+
+Install the package from CRAN. The current version is in the CRAN badge
+above.
+
+``` r
+install.packages("divent")
+```
 
 You can install the development version of divent from
 [GitHub](https://github.com/) with:
@@ -32,7 +40,9 @@ You can install the development version of divent from
 pak::pak("EricMarcon/divent")
 ```
 
-## Details
+## Overview
+
+### Data organisation
 
 In the divent package, individuals of different *species* are counted in
 several *communities* which may (or not) be aggregated to define a
@@ -62,18 +72,30 @@ abd |>
   plot(type = "Metacommunity")
 ```
 
-<img src="man/figures/README-MetaCommunitydf-1.png" width="100%" />
+<img src="man/figures/README-MetaCommunitydf-1.png" alt="" width="100%" />
 
-Basic functions allow computing diversity of a community. Example data
-is a 6.25ha plot of rainforest in Paracou, French Guiana, divided into 4
-subplots.
+Communities can be simulated and plotted.
+
+``` r
+rc <- rcommunity(1, size = 10000, distribution = "lnorm")
+autoplot(rc, fit_rac = TRUE, distribution = "lnorm")
+```
+
+<img src="man/figures/README-rcommunity-1.png" alt="" width="100%" />
+
+Example data is a 6.25-ha plot of rainforest in Paracou, French Guiana,
+divided into 4 subplots.
 
 ``` r
 paracou_6_abd |>
   autoplot()
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-paracou6-1.png" alt="" width="100%" />
+
+### Taxonomic diversity
+
+Basic functions allow computing diversity of a community.
 
 Entropies such as Shannon’s, Simpson’s, or Hurlbert’s, and explicit
 diversity (i.e. effective number of species), aka Hill numbers, are
@@ -114,16 +136,9 @@ to the data. Diversity profiles are estimated.
 profile_hill(paracou_6_abd) %>% autoplot
 ```
 
-<img src="man/figures/README-div_profile-1.png" width="100%" />
+<img src="man/figures/README-div_profile-1.png" alt="" width="100%" />
 
-Communities can be simulated and plotted.
-
-``` r
-rc <- rcommunity(1, size = 10000, distribution = "lnorm")
-autoplot(rc, fit_rac = TRUE, distribution = "lnorm")
-```
-
-<img src="man/figures/README-rcommunity-1.png" width="100%" />
+### Phylogenetic diversity
 
 Phylogenetic entropy and diversity can be calculated if a phylogenetic
 (or functional), ultrametric tree is provided, with the state-of-the-art
@@ -141,6 +156,8 @@ div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
 #> 4 subplot_4   1.56 UnveilJ        43.2
 ```
 
+### Functional diversity
+
 Similarity-based diversity is calculated, based on a similarity matrix.
 
 ``` r
@@ -156,6 +173,8 @@ div_similarity(paracou_6_abd, similarities = Z, q = 2)
 #> 3 subplot_3   1.56 UnveilJ       2      1.32
 #> 4 subplot_4   1.56 UnveilJ       2      1.30
 ```
+
+### Diversity partitioning
 
 The diversity of a metacommunity, i.e. $\gamma$ diversity, can be
 partitioned into $\alpha$ (that of communities) and $\beta$ diversities.
@@ -175,7 +194,7 @@ div_part(paracou_6_abd, q = 1)
 #> 7 subplot_4     community "UnveilJ"     1     94.6    1.56
 ```
 
-## Vignettes
+## Documentation
 
 A quick
 [introduction](https://ericmarcon.github.io/divent/articles/divent.html)
@@ -187,7 +206,7 @@ the web site of the vignette.
 The [documentation of the development
 version](https://EricMarcon.github.io/divent/dev/) is also available.
 
-## Reference
+## Citation
 
-Marcon, E. and Herault, B. (2015). entropart: An R Package to Measure
-and Partition Diversity. *Journal of Statistical Software*. 67(8): 1-26.
+Marcon, E. & Puech, F. (under review). divent : An R Package for
+Diversity Measures Based on Entropy. *Journal of Open Source Software*.
