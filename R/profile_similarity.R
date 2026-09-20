@@ -97,7 +97,7 @@ profile_similarity.numeric <- function(
     the_profile_similarity <- vapply(
       orders,
       FUN = function(q) {
-        div_similarity.numeric(
+        div_similarity(
           x,
           similarities = similarities,
           q = q,
@@ -121,7 +121,7 @@ profile_similarity.numeric <- function(
   the_profile_similarity <- lapply(
     orders,
     FUN = function(q) {
-      div_similarity.numeric(
+      div_similarity(
         x,
         similarities = similarities,
         q = q,
@@ -170,7 +170,7 @@ profile_similarity.numeric <- function(
       profiles_list <- parallel::mclapply(
         orders,
         FUN = function(q) {
-          div_similarity.numeric(
+          div_similarity(
             communities[i, !colnames(communities) %in% non_species_columns],
             similarities = similarities,
             q = q,
@@ -252,8 +252,8 @@ profile_similarity.species_distribution <- function(
   }
 
   if (gamma) {
-    the_profile_similarity <- profile_similarity.numeric(
-      metacommunity.abundances(
+    the_profile_similarity <- profile_similarity(
+      metacommunity(
         x = x,
         as_numeric = TRUE,
         check_arguments = FALSE
@@ -281,7 +281,7 @@ profile_similarity.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = profile_similarity.numeric,
+      FUN = profile_similarity,
       # Arguments
       similarities = similarities,
       orders = orders,

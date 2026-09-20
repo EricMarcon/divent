@@ -254,12 +254,12 @@ ent_rao.species_distribution <- function(
 
   if (gamma) {
     # Build the metacommunity
-    abd <- metacommunity.abundances(
+    abd <- metacommunity(
       x,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
-    the_entropy <- ent_rao.numeric(
+    the_entropy <- ent_rao(
       abd,
       distances = distances,
       tree = tree,
@@ -283,7 +283,7 @@ ent_rao.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_rao.numeric,
+      FUN = ent_rao,
       # Arguments
       distances = distances,
       tree = tree,

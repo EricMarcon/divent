@@ -171,7 +171,7 @@ fit_rac.species_distribution <- function(
     x[, !colnames(x) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = fit_rac.numeric,
+    FUN = fit_rac,
     # Arguments
     distribution = distribution,
     check_arguments = FALSE

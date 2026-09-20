@@ -77,7 +77,7 @@ div_similarity.numeric <- function(
     similarities <- checked_matrix(similarities, x)
   }
 
-  the_entropy <- ent_similarity.numeric(
+  the_entropy <- ent_similarity(
     x,
     similarities = similarities,
     q = q,
@@ -138,7 +138,7 @@ div_similarity.species_distribution <- function(
     similarities <- checked_matrix(similarities, x)
   }
 
-  the_entropy <- ent_similarity.species_distribution(
+  the_entropy <- ent_similarity(
     x,
     similarities = similarities,
     q = q,

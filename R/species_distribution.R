@@ -403,7 +403,7 @@ as_probabilities.matrix <- function(
   prob <- x / rowSums(x)
 
   # Build the species distribution
-  the_probabilities <- as_species_distribution.matrix(
+  the_probabilities <- as_species_distribution(
     prob,
     names = names,
     weights = weights,
@@ -425,7 +425,7 @@ as_probabilities.data.frame <- function(
     check_arguments = TRUE) {
 
   # Build the species distribution to add site and weight columns if needed
-  abundances <- as_species_distribution.data.frame(
+  abundances <- as_species_distribution(
     x,
     check_arguments = check_arguments
   )
@@ -445,7 +445,7 @@ as_probabilities.data.frame <- function(
   colnames(the_probabilities[, species_columns]) <- colnames(abundances[, species_columns])
 
   # Build the species distribution again for the classes
-  the_probabilities <- as_species_distribution.data.frame(
+  the_probabilities <- as_species_distribution(
     the_probabilities,
     check_arguments = FALSE
   )
@@ -629,7 +629,7 @@ as_abundances.matrix <- function(
     x <- round(x)
   }
 
-  the_abundances <- as_species_distribution.matrix(
+  the_abundances <- as_species_distribution(
     x,
     names = names,
     weights = weights,
@@ -649,7 +649,7 @@ as_abundances.data.frame <- function(
     ...,
     check_arguments = TRUE) {
 
-  the_abundances <- as_species_distribution.data.frame(
+  the_abundances <- as_species_distribution(
     x,
     check_arguments = check_arguments
   )
@@ -775,7 +775,7 @@ as.double.species_distribution <- function(x, use.names = TRUE, ...) {
 #'
 #' @export
 as.numeric.species_distribution <- function(x, use.names = TRUE, ...) {
-  return(as.double.species_distribution(x, use.names, ...))
+  return(as.double(x, use.names, ...))
 }
 
 

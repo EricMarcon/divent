@@ -100,12 +100,12 @@ accum_ent_phylo.numeric <- function(
     }
   }
 
-  # Make a species_distribution
-  the_species_distribution <- as_species_distribution(x)
+  # Make an abundances object
+  abundances <- as_abundances(x)
 
   # Entropy accumulation
-  the_entropy <- accum_ent_phylo.abundances(
-    x = the_species_distribution,
+  the_entropy <- accum_ent_phylo(
+    abundances,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -266,7 +266,7 @@ accum_ent_phylo.abundances <- function(
     for (y_community in seq_len(n_communities)) {
       # Calculate the profile of each community
       # Actual data
-      ent_phylo_abd[x_interval, y_community, ] <- accum_tsallis.numeric(
+      ent_phylo_abd[x_interval, y_community, ] <- accum_tsallis(
         x = the_phylo_abd[[x_interval]][, y_community],
         q = q,
         levels = levels,
@@ -284,7 +284,7 @@ accum_ent_phylo.abundances <- function(
 
       for (t_simulation in seq_len(n_simulations)) {
         # Entropy of simulated communities
-        ent_phylo_sim[x_interval, y_community, , t_simulation] <- accum_tsallis.numeric(
+        ent_phylo_sim[x_interval, y_community, , t_simulation] <- accum_tsallis(
           x = comm_sim[, y_community, t_simulation],
           q = q,
           levels = levels,
@@ -436,12 +436,12 @@ accum_div_phylo.numeric <- function(
     }
   }
 
-  # Make a the_species_distribution
-  the_species_distribution <- as_species_distribution(x)
+  # Make an abundances object
+  abundances <- as_abundances(x)
 
   # Diversity accumulation
-  the_diversity <- accum_div_phylo.abundances(
-    x = the_species_distribution,
+  the_diversity <- accum_div_phylo(
+    abundances,
     tree = tree,
     q = q,
     normalize = normalize,
@@ -494,7 +494,7 @@ accum_div_phylo.abundances <- function(
   if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
-      cli::cli_abort("Species probabilities or abundances must be positive.")
+      cli::cli_abort("Species abundances must be positive.")
     }
     # Prepare the tree
     tree <- as_phylo_divent(tree)
@@ -515,7 +515,7 @@ accum_div_phylo.abundances <- function(
     }
   }
 
-  the_entropy <- accum_ent_phylo.abundances(
+  the_entropy <- accum_ent_phylo(
     x,
     tree = tree,
     q = q,

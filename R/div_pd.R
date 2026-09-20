@@ -144,13 +144,13 @@ div_pd.species_distribution <- function(
 
   if (gamma) {
     # Build the metacommunity
-    abd <- metacommunity.abundances(
+    abundances <- metacommunity(
       x,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
-    the_diversity <- div_pd.numeric(
-      abd,
+    the_diversity <- div_pd(
+      abundances,
       tree = tree,
       as_numeric = as_numeric,
       check_arguments = FALSE
@@ -170,7 +170,7 @@ div_pd.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = div_pd.numeric,
+      FUN = div_pd,
       # Arguments
       tree = tree,
       prune = prune,

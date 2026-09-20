@@ -96,7 +96,7 @@ profile_hill.numeric <- function(
     the_profile_hill <- vapply(
       orders,
       FUN = function(q) {
-        div_hill.numeric(
+        div_hill(
           x,
           q = q,
           estimator = estimator,
@@ -121,7 +121,7 @@ profile_hill.numeric <- function(
   the_profile_hill <- lapply(
     orders,
     FUN = function(q) {
-      div_hill.numeric(
+      div_hill(
         x,
         q = q,
         estimator = estimator,
@@ -172,7 +172,7 @@ profile_hill.numeric <- function(
       profiles_list <- parallel::mclapply(
         orders,
         FUN = function(q) {
-          div_hill.numeric(
+          div_hill(
             communities[i, !colnames(communities) %in% non_species_columns],
             q = q,
             estimator = estimator,
@@ -258,8 +258,8 @@ profile_hill.species_distribution <- function(
   }
 
   if (gamma) {
-    the_profile_hill <- profile_hill.numeric(
-      metacommunity.abundances(
+    the_profile_hill <- profile_hill(
+      metacommunity(
         x = x,
         as_numeric = TRUE,
         check_arguments = FALSE
@@ -289,7 +289,7 @@ profile_hill.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = profile_hill.numeric,
+      FUN = profile_hill,
       # Arguments
       orders = orders,
       estimator = estimator,

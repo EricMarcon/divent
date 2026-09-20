@@ -132,7 +132,7 @@ rcommunity <- function(
     # Subsample in given abundances.
     # Generate probabilities according to the chosen method.
     if (bootstrap == "Chao2015") {
-      the_prob <- probabilities.numeric(
+      the_prob <- probabilities(
         abd,
         estimator = "Chao2015",
         unveiling = "geometric",
@@ -141,7 +141,7 @@ rcommunity <- function(
         check_arguments = FALSE)
     }
     if (bootstrap == "Chao2013") {
-      the_prob <- probabilities.numeric(
+      the_prob <- probabilities(
         abd,
         estimator = "Chao2013",
         unveiling = "uniform",
@@ -159,7 +159,7 @@ rcommunity <- function(
   the_abd <- t(stats::rmultinom(n, size = size, prob = the_prob))
 
   return(
-    as_abundances.numeric(
+    as_abundances(
       the_abd,
       names = paste(
         name,

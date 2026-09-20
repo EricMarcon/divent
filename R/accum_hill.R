@@ -115,7 +115,7 @@ accum_tsallis.numeric <- function(
   for (level in levels_interp) {
     # Calculate Entropy
     i <- which(levels == level)
-    ent_level[i] <- ent_tsallis.numeric(
+    ent_level[i] <- ent_tsallis(
       abd,
       q = q,
       level = level,
@@ -129,7 +129,7 @@ accum_tsallis.numeric <- function(
   # level == Sample Size ----
   if (any(levels == sample_size)) {
     i <- which(levels == sample_size)
-    ent_level[i] <- ent_tsallis.numeric(
+    ent_level[i] <- ent_tsallis(
       prob,
       q = q,
       as_numeric = TRUE,
@@ -145,7 +145,7 @@ accum_tsallis.numeric <- function(
   prob_unv <- NULL
   if (length(levels_extrap) > 0) {
     # Unveil the full distribution that rarefies to the observed entropy (or other options)
-    prob_unv <- probabilities.numeric(
+    prob_unv <- probabilities(
       abd,
       estimator = probability_estimator,
       unveiling = unveiling,
@@ -255,7 +255,7 @@ accum_tsallis.numeric <- function(
     }
     if (is.null(prob_unv)) {
       # Unveil the full distribution if not done before
-      prob_unv <- probabilities.numeric(
+      prob_unv <- probabilities(
         abd,
         estimator = probability_estimator,
         unveiling = unveiling,
@@ -277,7 +277,7 @@ accum_tsallis.numeric <- function(
       ent_sim <- apply(
         communities,
         MARGIN = 2,
-        FUN = ent_tsallis.numeric,
+        FUN = ent_tsallis,
         q = q,
         as_numeric = TRUE,
         check_arguments = FALSE
@@ -360,7 +360,7 @@ accum_tsallis.abundances <- function(
     x[, !colnames(x) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = accum_tsallis.numeric,
+    FUN = accum_tsallis,
     # Arguments
     q = q,
     levels = levels,
@@ -435,7 +435,7 @@ accum_hill.numeric <- function(
   }
 
   # Accumulate entropy
-  the_accum_tsallis <- accum_tsallis.numeric(
+  the_accum_tsallis <- accum_tsallis(
     x,
     q = q,
     levels = levels,
@@ -515,7 +515,7 @@ accum_hill.abundances <- function(
     x[, !colnames(x) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = accum_hill.numeric,
+    FUN = accum_hill,
     # Arguments
     q = q,
     levels = levels,

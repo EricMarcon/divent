@@ -163,7 +163,7 @@ ent_similarity.numeric <- function(
     estimator <- "ChaoShen"
   } else {
     # Calculate sample coverage
-    sample_coverage <- coverage.numeric(
+    sample_coverage <- coverage(
       abd,
       estimator = coverage_estimator,
       as_numeric = TRUE,
@@ -199,7 +199,7 @@ ent_similarity.numeric <- function(
 
   ## Unveiled estimator ----
   if (estimator %in% c("UnveilJ", "UnveilC", "UnveiliC")) {
-    prob_unv <- probabilities.numeric(
+    prob_unv <- probabilities(
       abd,
       estimator = probability_estimator,
       unveiling = unveiling,
@@ -404,7 +404,7 @@ ent_similarity.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_similarity.numeric,
+      FUN = ent_similarity,
       # Arguments
       similarities = similarities,
       q = q,
@@ -479,18 +479,18 @@ ent_gamma_similarity <- function(
     as_numeric) {
 
   # Build the metacommunity
-  abd <- metacommunity.abundances(
+  abundances <- metacommunity(
     species_distribution,
     as_numeric = TRUE,
     check_arguments = FALSE
   )
-  if (is_integer_values(abd)) {
+  if (is_integer_values(abundances)) {
     # Sample coverage is useless
     sample_coverage <- NULL
   } else {
     # Non-integer values in the metacommunity.
     # Calculate the sample coverage and change the estimator.
-    sample_coverage <- coverage.numeric(
+    sample_coverage <- coverage(
       colSums(
         species_distribution[
           , !colnames(species_distribution) %in% non_species_columns
@@ -506,8 +506,8 @@ ent_gamma_similarity <- function(
   }
 
   # Compute the entropy.
-  the_entropy <- ent_similarity.numeric(
-    abd,
+  the_entropy <- ent_similarity(
+    abundances,
     similarities = similarities,
     q = q,
     estimator = estimator,

@@ -179,7 +179,7 @@ div_richness.numeric <- function(
     ## Rarefaction estimator ----
     if (estimator == "rarefy") {
       the_richness <- length(
-        probabilities.numeric(
+        probabilities(
           abd,
           estimator = probability_estimator,
           unveiling = unveiling,
@@ -350,7 +350,7 @@ div_richness.numeric <- function(
   # Diversity at a level ----
   # If level is coverage, get size
   if (level < 1) {
-    level <- coverage_to_size.numeric(
+    level <- coverage_to_size(
       abd,
       sample_coverage = level,
       estimator = coverage_estimator,
@@ -398,7 +398,7 @@ div_richness.numeric <- function(
       # Estimate the number of unobserved species
       if (probability_estimator == "naive") {
         # Don't unveil the asymptotic distribution, use the asymptotic estimator
-        s_0 <- div_richness.numeric(
+        s_0 <- div_richness(
           abd,
           estimator = estimator,
           jack_alpha = jack_alpha,
@@ -408,7 +408,7 @@ div_richness.numeric <- function(
         ) - s_obs
       } else {
         # Unveil so that the estimation of richness is similar to that of non-integer entropy
-        prob_s_0 <- probabilities.numeric(
+        prob_s_0 <- probabilities(
           abd,
           estimator = probability_estimator,
           unveiling = unveiling,
@@ -505,7 +505,7 @@ div_richness.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = div_richness.numeric,
+      FUN = div_richness,
       # Arguments
       estimator = estimator,
       jack_alpha  = jack_alpha,

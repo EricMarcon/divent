@@ -160,7 +160,7 @@ ent_hurlbert.species_distribution <- function(
     x[, !colnames(x) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = ent_hurlbert.numeric,
+    FUN = ent_hurlbert,
     # Arguments
     k = k,
     estimator = estimator,

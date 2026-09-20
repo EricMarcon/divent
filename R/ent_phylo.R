@@ -94,7 +94,7 @@ ent_phylo.numeric <- function(
   species_distribution <- as_species_distribution(x)
 
   # Entropy
-  the_entropy <- ent_phylo.species_distribution(
+  the_entropy <- ent_phylo(
     species_distribution,
     tree = tree,
     q = q,
@@ -252,8 +252,8 @@ phylo_entropy.phylo_abd <- function(
         # Obtain a list.
         phylo_abd,
         FUN = function(group) {
-          ent_tsallis.species_distribution(
-            as_abundances.numeric(t(group)),
+          ent_tsallis(
+            as_abundances(t(group)),
             q = q,
             estimator = estimator,
             level = level,
@@ -285,7 +285,7 @@ phylo_entropy.phylo_abd <- function(
             group,
             # Calculate entropy of each column of the matrix, i.e. community.
             MARGIN = 2,
-            FUN = ent_tsallis.numeric,
+            FUN = ent_tsallis,
             # Arguments
             q = q,
             estimator = estimator,

@@ -134,8 +134,8 @@ accum_sp_tsallis <- function(
           vapply(
             orders,
             FUN = function(q) {
-              ent_tsallis.species_distribution(
-                as_abundances.character(community),
+              ent_tsallis(
+                as_abundances(community),
                 q = q,
                 estimator = "naive",
                 as_numeric = TRUE,
@@ -234,8 +234,8 @@ accum_sp_tsallis <- function(
             vapply(
               orders,
               FUN = function(q) {
-                ent_tsallis.species_distribution(
-                  as_abundances.numeric(community),
+                ent_tsallis(
+                  as_abundances(community),
                   q = q,
                   estimator = "naive",
                   as_numeric = TRUE,
@@ -275,7 +275,7 @@ accum_sp_tsallis <- function(
             for (order in seq_along(orders)) {
               # Suppress the warnings for Coverage=0 every time neighbors are singletons only.
               suppressWarnings(
-                ent_nbhood_q[order, community] <- ent_tsallis.numeric(
+                ent_nbhood_q[order, community] <- ent_tsallis(
                   neighbor_communities[community, ],
                   q = orders[order],
                   estimator = entropy_estimator,
@@ -454,10 +454,10 @@ accum_sp_hill <- function(
     }
 
     # Prepare the distribution of the abundances of species.
-    abd <- as_abundances.wmppp(X)
+    abd <- as_abundances(X)
     for (order in seq_along(orders)) {
       # Rarefy the community to the sizes of neighborhoods
-      h0_values <- accum_hill.numeric(
+      h0_values <- accum_hill(
         abd,
         q = as.numeric(orders[order]),
         levels = the_seq,

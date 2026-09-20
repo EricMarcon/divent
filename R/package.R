@@ -219,6 +219,7 @@ utils::globalVariables("non_species_columns")
 # Names of variables inside functions:
 # abd: a numeric vector of abundances
 # prob: a numeric vector of probabilities
+# abd_prob: possibly abd or prob
 # prob_unv : unveiled probabilities
 # abundances / probabilities: an object of class abundances / probabilities
 # s_0, s_1,  ...: species observed 0, 1, ... times
@@ -1346,18 +1347,18 @@ ent_gamma_tsallis <- function(
     as_numeric) {
 
   # Build the metacommunity
-  abd <- metacommunity.abundances(
+  abundances <- metacommunity(
     species_distribution,
     as_numeric = TRUE,
     check_arguments = FALSE
   )
-  if (is_integer_values(abd)) {
+  if (is_integer_values(abundances)) {
     # Sample coverage is useless
     sample_coverage <- NULL
   } else {
     # Non-integer values in the metacommunity.
     # Calculate the sample coverage and change the estimator.
-    sample_coverage <- coverage.numeric(
+    sample_coverage <- coverage(
       colSums(
         species_distribution[
           , !colnames(species_distribution) %in% non_species_columns
@@ -1375,8 +1376,8 @@ ent_gamma_tsallis <- function(
   # Compute the entropy. Call the appropriate function for its estimators.
   # Richness estimators are specific
   if (q == 0 && estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
-    the_diversity <- div_richness.numeric(
-      abd,
+    the_diversity <- div_richness(
+      abundances,
       estimator = estimator,
       jack_alpha  = jack_alpha,
       jack_max = jack_max,
@@ -1399,8 +1400,8 @@ ent_gamma_tsallis <- function(
     }
   } else if (q == 1 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
-    the_entropy <- ent_shannon.numeric(
-      abd,
+    the_entropy <- ent_shannon(
+      abundances,
       estimator = estimator,
       level = level,
       probability_estimator = probability_estimator,
@@ -1414,8 +1415,8 @@ ent_gamma_tsallis <- function(
     )
   } else if (q == 2 && is.null(sample_coverage)) {
     # Non-integer values in the metacommunity are supported only by ent_tsallis
-    the_entropy <- ent_simpson.numeric(
-      abd,
+    the_entropy <- ent_simpson(
+      abundances,
       estimator = estimator,
       level = level,
       probability_estimator = probability_estimator,
@@ -1428,8 +1429,8 @@ ent_gamma_tsallis <- function(
       check_arguments = FALSE
     )
   } else {
-    the_entropy <- ent_tsallis.numeric(
-      abd,
+    the_entropy <- ent_tsallis(
+      abundances,
       q = q,
       estimator = estimator,
       level = level,

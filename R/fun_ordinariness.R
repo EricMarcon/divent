@@ -42,10 +42,16 @@ fun_ordinariness <- function(
 
   # Calculate species probabilities
   is_species_column <- !colnames(species_distribution) %in% non_species_columns
-  prob <- probabilities.abundances(species_distribution)[, is_species_column]
+  if (is_abundances(species_distribution)) {
+    # Calculate probabilities
+    probabilities <- probabilities(species_distribution)[, is_species_column]
+  } else {
+    # Just keep species columns
+    probabilities <- species_distribution[, is_species_column]
+  }
 
   # Calculate ordinariness
-  the_ordinariness <- tcrossprod(as.matrix(prob), similarities)
+  the_ordinariness <- tcrossprod(as.matrix(probabilities), similarities)
 
   if (as_numeric) {
     return(the_ordinariness)

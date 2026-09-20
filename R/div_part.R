@@ -73,13 +73,13 @@ div_part <- function(
   div_gamma <- dplyr::bind_cols(scale = "gamma", div_gamma)
 
   # Alpha diversity ----
-  # Apply div_hill.numeric() to each site
+  # Apply div_hill() to each site
   ent_sites <- apply(
     # Eliminate site and weight columns
     abundances[, !colnames(abundances) %in% non_species_columns],
     # Apply to each row
     MARGIN = 1,
-    FUN = ent_tsallis.numeric,
+    FUN = ent_tsallis,
     # Arguments
     q = q,
     estimator = estimator,
@@ -123,7 +123,7 @@ div_part <- function(
   )
 
   # Site diversity
-  div_sites <- div_hill.species_distribution(
+  div_sites <- div_hill(
     x = abundances,
     q = q,
     estimator = estimator,

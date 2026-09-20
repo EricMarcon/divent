@@ -162,12 +162,12 @@ ent_allen.species_distribution <- function(
 
   if (gamma) {
     # Build the metacommunity
-    abd <- metacommunity.abundances(
+    abd <- metacommunity(
       x,
       as_numeric = TRUE,
       check_arguments = FALSE
     )
-    the_entropy <- ent_allen.numeric(
+    the_entropy <- ent_allen(
       abd,
       tree = tree,
       q = q,
@@ -190,7 +190,7 @@ ent_allen.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_allen.numeric,
+      FUN = ent_allen,
       # Arguments
       tree = tree,
       q = q,

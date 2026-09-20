@@ -78,7 +78,7 @@ abd_freq_count <- function(
   } else {
     # If level is coverage, get size
     if (level < 1) {
-      level <- coverage_to_size.numeric(
+      level <- coverage_to_size(
         abd,
         sample_coverage = level,
         estimator = coverage_estimator,
@@ -109,7 +109,7 @@ abd_freq_count <- function(
         s_nu <- c(rep(0, level - 1), 1)
       } else {
         # Unveil the full distribution
-        prob_s_0 <- probabilities.numeric(
+        prob_s_0 <- probabilities(
           abd_int,
           estimator = probability_estimator,
           unveiling = unveiling,

@@ -133,8 +133,8 @@ ent_gen_simpson.species_distribution <- function(
 
   if (gamma) {
     # Build the metacommunity
-    abd <- metacommunity.abundances(x, as_numeric = TRUE, check_arguments = FALSE)
-    if (estimator != "naive" && !is_integer_values(abd)) {
+    abundances <- metacommunity(x, as_numeric = TRUE, check_arguments = FALSE)
+    if (estimator != "naive" && !is_integer_values(abundances)) {
       cli::cli_abort(
         paste(
           "The weights of communities yield non-integer abundances in",
@@ -143,8 +143,8 @@ ent_gen_simpson.species_distribution <- function(
       )
     }
     return(
-      ent_gen_simpson.numeric(
-        x = abd,
+      ent_gen_simpson(
+        x = abundances,
         k = k,
         estimator = estimator,
         as_numeric = as_numeric,
@@ -158,7 +158,7 @@ ent_gen_simpson.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = ent_gen_simpson.numeric,
+      FUN = ent_gen_simpson,
       # Arguments
       k = k,
       estimator = estimator,

@@ -134,11 +134,16 @@ plot.species_distribution <- function(
       ylab <- "Species frequencies"
     }
     # Prepare data: community probabilities
-    x.probabilities <- probabilities.abundances(
-      x,
-      estimator = "naive",
-      check_arguments = FALSE
-    )
+    if (is_abundances(x)) {
+      x.probabilities <- probabilities(
+        x,
+        estimator = "naive",
+        check_arguments = FALSE
+      )
+    } else {
+      x.probabilities <- x
+    }
+
     prob_communities <- t(
       x.probabilities[, !colnames(x.probabilities) %in% non_species_columns]
     )

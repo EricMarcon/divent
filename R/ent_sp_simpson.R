@@ -102,7 +102,7 @@ ent_sp_simpson <- function(
   # Build a dataframe with r, theoretical value and S(r)
   Shi.df <- data.frame(
     r = r,
-    Simpson = ent_simpson.numeric(abd, as_numeric = TRUE),
+    Simpson = ent_simpson(abd, as_numeric = TRUE),
     S_r = Shi_r
   )
 
