@@ -252,9 +252,6 @@ profile_similarity.species_distribution <- function(
   }
 
   if (gamma) {
-    if (!is_abundances(x)) {
-      cli::cli_abort("Argument gamma = TRUE requires abundances, not probabilities.")
-    }
     the_profile_similarity <- profile_similarity(
       metacommunity(
         x = x,

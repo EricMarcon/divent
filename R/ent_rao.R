@@ -253,9 +253,6 @@ ent_rao.species_distribution <- function(
   }
 
   if (gamma) {
-    if (!is_abundances(x)) {
-      cli::cli_abort("Argument gamma = TRUE requires abundances, not probabilities.")
-    }
     # Build the metacommunity
     abd <- metacommunity(
       x,

@@ -258,9 +258,6 @@ profile_hill.species_distribution <- function(
   }
 
   if (gamma) {
-    if (!is_abundances(x)) {
-      cli::cli_abort("Argument gamma = TRUE requires abundances, not probabilities.")
-    }
     the_profile_hill <- profile_hill(
       metacommunity(
         x = x,

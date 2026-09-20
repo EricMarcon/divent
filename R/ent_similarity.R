@@ -479,9 +479,6 @@ ent_gamma_similarity <- function(
     as_numeric) {
 
   # Build the metacommunity
-  if (!is_abundances(species_distribution)) {
-    cli::cli_abort("Computing gamma requires abundances, not probabilities.")
-  }
   abundances <- metacommunity(
     species_distribution,
     as_numeric = TRUE,

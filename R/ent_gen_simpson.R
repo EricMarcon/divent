@@ -132,9 +132,6 @@ ent_gen_simpson.species_distribution <- function(
   }
 
   if (gamma) {
-    if (!is_abundances(x)) {
-      cli::cli_abort("Argument gamma = TRUE requires abundances, not probabilities.")
-    }
     # Build the metacommunity
     abundances <- metacommunity(x, as_numeric = TRUE, check_arguments = FALSE)
     if (estimator != "naive" && !is_integer_values(abundances)) {
