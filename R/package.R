@@ -332,7 +332,6 @@ utils::globalVariables("non_species_columns")
 #'
 #' @returns Returns `TRUE` or stops if a problem is detected.
 #'
-#' @export
 #'
 #' @keywords internal
 #'
