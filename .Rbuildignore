@@ -30,3 +30,7 @@
 
 # codemeta
 ^codemeta\.json$
+
+# CITATION.cff
+^CITATION\.cff$
+
