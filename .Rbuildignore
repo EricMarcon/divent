@@ -3,21 +3,30 @@
 ^\.Rproj\.user$
 ^\.positai$
 ^\.claude$
+
 # Github actions workflows
 ^\.github$
+
 # pkgdown folder
 ^pkgdown$
+
 # docs folder for local pkgdown
 ^docs$
+
 # Vignette cache and articles for pkgdown
 ^vignettes\/articles$
 ^vignettes\/[^\/]+_cache$
 ^vignettes\/[^\/]+_files$
 ^data-raw$
 ^README\.Rmd$
-# paper folder
+
+# JOSS paper folder
 ^paper$
+
 # Package documentation
 ^LICENSE\.md$
 ^CONTRIBUTING\.md$
 ^NEWS\.md$
+
+# codemeta
+^codemeta\.json$

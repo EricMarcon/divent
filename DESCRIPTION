@@ -1,10 +1,23 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.5-4.9014
-Authors@R: c(
-  person("Eric", "Marcon", email = "eric.marcon@agroparistech.fr", role = c("aut", "cre"), comment = c(ORCID="0000-0002-5249-321X")),
-  person("Florence", "Puech", email = "florence.puech@universite-paris-saclay.fr", role = "aut", comment = c(ORCID = "0000-0002-5279-6878"))
+Version: 0.5-4.9015
+Authors@R: 
+  c(
+    person(
+      given = "Eric", 
+      family  = "Marcon", 
+      email = "eric.marcon@agroparistech.fr", 
+      role = c("aut", "cre"), 
+      comment = c(ORCID="0000-0002-5249-321X")
+    ),
+    person(
+      given = "Florence", 
+      family = "Puech", 
+      email = "florence.puech@universite-paris-saclay.fr", 
+      role = "aut", 
+      comment = c(ORCID = "0000-0002-5279-6878")
+    )
   )
 Description: Measurement and partitioning of diversity, based on Tsallis entropy, following Marcon and Herault (2015) <doi:10.18637/jss.v067.i08>.
   'divent' provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
