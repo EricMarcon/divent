@@ -1522,7 +1522,7 @@ phylo_abd <- function(
   tree
 ) {
   # Calculate abundances along the tree, that are a list of matrices
-  sapply(
+  lapply(
     # Each phylogenetic group yields an item of the list
     colnames(tree$phylo_groups),
     function(group) {
@@ -1540,7 +1540,6 @@ phylo_abd <- function(
           )
         }
       )
-    },
-    simplify = FALSE
+    }
   )
 }
