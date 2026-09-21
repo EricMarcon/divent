@@ -244,6 +244,8 @@ rthin(
 
 ![](simulations_files/figure-html/unnamed-chunk-5-3.png)
 
+## References
+
 Chao, Anne, and Lou Jost. 2015. “Estimating Diversity and Entropy
 Profiles via Discovery Rates of New Species.” *Methods in Ecology and
 Evolution* 6 (8): 873–82. <https://doi.org/10.1111/2041-210X.12349>.

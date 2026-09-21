@@ -15,7 +15,7 @@ the abundances of the metacommunity."><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@ the abundances of the metacommunity.</p>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'abundances'</span></span>
+<span><span class="co"># S3 method for class 'species_distribution'</span></span>
 <span><span class="fu">metacommunity</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"metacommunity"</span>,</span>
@@ -82,8 +82,9 @@ the abundances of the metacommunity.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>An object of class <a href="species_distribution.html">abundances</a> that contains several communities or
-a matrix of abundances with communities in rows and species in columns.</p></dd>
+<dd><p>An object of class <a href="species_distribution.html">species_distribution</a> that contains several
+communities or a matrix of abundances with communities in rows and species
+in columns.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
@@ -109,8 +110,8 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <a href="species_distribution.html">abundances</a> with a single row or a named vector
-if <code>as_numeric = TRUE</code>.</p>
+    <p>An object of class <a href="species_distribution.html">abundances</a> or <a href="probabilities.html">probabilities</a> with a single
+row, or a named vector if <code>as_numeric = TRUE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

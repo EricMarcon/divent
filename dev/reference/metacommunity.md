@@ -18,7 +18,7 @@ metacommunity(
   check_arguments = TRUE
 )
 
-# S3 method for class 'abundances'
+# S3 method for class 'species_distribution'
 metacommunity(
   x,
   name = "metacommunity",
@@ -33,7 +33,7 @@ metacommunity(
 - x:
 
   An object of class
-  [abundances](https://ericmarcon.github.io/divent/dev/reference/species_distribution.md)
+  [species_distribution](https://ericmarcon.github.io/divent/dev/reference/species_distribution.md)
   that contains several communities or a matrix of abundances with
   communities in rows and species in columns.
 
@@ -63,7 +63,9 @@ metacommunity(
 
 An object of class
 [abundances](https://ericmarcon.github.io/divent/dev/reference/species_distribution.md)
-with a single row or a named vector if `as_numeric = TRUE`.
+or
+[probabilities](https://ericmarcon.github.io/divent/dev/reference/probabilities.md)
+with a single row, or a named vector if `as_numeric = TRUE`.
 
 ## Details
 

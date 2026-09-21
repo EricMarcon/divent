@@ -10,16 +10,14 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/EricMarcon/divent/blob/master/DESCRIPTION)
+[`inst/CITATION`](https://github.com/EricMarcon/divent/blob/master/inst/CITATION)
 
-Marcon E, Puech F (2026). *divent: Entropy Partitioning to Measure
-Diversity*. R package version 0.5-4.9013,
-<https://ericmarcon.github.io/divent/>.
+Marcon, E. & Puech, F. (under revision). divent: An R Package for
+Diversity Measures Based on Entropy. Journal of Open Source Software.
 
-    @Manual{,
-      title = {divent: Entropy Partitioning to Measure Diversity},
+    @Article{,
+      title = {divent: An {R} Package for Diversity Measures Based on Entropy},
       author = {Eric Marcon and Florence Puech},
-      year = {2026},
-      note = {R package version 0.5-4.9013},
-      url = {https://ericmarcon.github.io/divent/},
+      journal = {Journal of Open Source Software},
+      year = {under revision},
     }

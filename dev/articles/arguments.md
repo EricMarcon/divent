@@ -54,9 +54,9 @@ If `unveiling` is “none”, they are ignored.
 
 The number of unobserved species is estimated by `richness_estimator`.
 
-### `jack_alpha` and `jackmax`
+### `jack_alpha` and `jack_max`
 
-If `richness_estimator` is `jackknife`, `jackmax` is the maximum order
+If `richness_estimator` is “jackknife”, `jack_max` is the maximum order
 allowed. `jack_alpha` is the risk level of the confidence interval of
 the estimation.
 
