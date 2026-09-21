@@ -49,21 +49,28 @@ ent_similarity <- function(x, similarities, q = 1, ...) {
 #'
 #' @export
 ent_similarity.numeric <- function(
-    x,
-    similarities = diag(length(x)),
-    q = 1,
-    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang",
-                  "UnveilC", "UnveiliC", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    sample_coverage = NULL,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  similarities = diag(length(x)),
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "Max",
+    "ChaoShen",
+    "MarconZhang",
+    "UnveilC",
+    "UnveiliC",
+    "naive"
+  ),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  sample_coverage = NULL,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -81,7 +88,7 @@ ent_similarity.numeric <- function(
   if (length(x) != ncol(similarities)) {
     cli::cli_abort(
       "The length of 'x' must be equal to the dimension of the similarities."
-      )
+    )
   }
 
   # Eliminate 0
@@ -173,7 +180,9 @@ ent_similarity.numeric <- function(
 
   ## Naive estimator ----
   if (!is_integer_values(abd)) {
-    cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
+    cli::cli_alert_warning(
+      "The estimator can't be applied to non-integer values."
+    )
     cli::cli_alert("{.code estimator} forced to 'naive.'")
     estimator <- "naive"
   }
@@ -182,7 +191,9 @@ ent_similarity.numeric <- function(
       # Limit value
       the_entropy <- as.numeric(-prob %*% log(ordinariness))
     } else {
-      the_entropy <- as.numeric((1 - (prob %*% (ordinariness^(q - 1)))) / (q - 1))
+      the_entropy <- as.numeric(
+        (1 - (prob %*% (ordinariness^(q - 1)))) / (q - 1)
+      )
     }
     if (as_numeric) {
       return(the_entropy)
@@ -286,19 +297,21 @@ ent_similarity.numeric <- function(
     i <- seq_len(sample_size)
     w_vi <- (1 - sim_mean) * (i - q) / i
     w_v <- cumprod(w_vi)
-    Taylor <- 1 + sum(
-      prob * vapply(
-        seq_len(s_obs),
-        FUN = S_v,
-        # Arguments
-        abd = abd,
-        sample_size = sample_size,
-        w_v = w_v,
-        p_V_Ns = p_V_Ns,
-        # Value
-        FUN.VALUE = 0
+    Taylor <- 1 +
+      sum(
+        prob *
+          vapply(
+            seq_len(s_obs),
+            FUN = S_v,
+            # Arguments
+            abd = abd,
+            sample_size = sample_size,
+            w_v = w_v,
+            p_V_Ns = p_V_Ns,
+            # Value
+            FUN.VALUE = 0
+          )
       )
-    )
     FirstTerms <- prob_cov * (sim_mean + (1 - sim_mean) * prob_cov)^(q - 1)
     U <- Taylor - sum(FirstTerms)
     ent_marcon_zhang <- ((K + U - 1) / (1 - q))
@@ -308,19 +321,21 @@ ent_similarity.numeric <- function(
     L <- -sum(prob_cov * log(Z_p))
     # Weights
     w_v <- ((1 - sim_mean)^V) / V
-    Taylor <- 1 + sum(
-      prob * vapply(
-        seq_len(s_obs),
-        FUN = S_v,
-        # Arguments
-        abd = abd,
-        sample_size = sample_size,
-        w_v = w_v,
-        p_V_Ns = p_V_Ns,
-        # Value
-        FUN.VALUE = 0
+    Taylor <- 1 +
+      sum(
+        prob *
+          vapply(
+            seq_len(s_obs),
+            FUN = S_v,
+            # Arguments
+            abd = abd,
+            sample_size = sample_size,
+            w_v = w_v,
+            p_V_Ns = p_V_Ns,
+            # Value
+            FUN.VALUE = 0
+          )
       )
-    )
     FirstTerms <- -prob_cov * log(sim_mean + (1 - sim_mean) * prob_cov)
     X <- Taylor - sum(FirstTerms)
     ent_marcon_zhang <- L + X
@@ -352,21 +367,28 @@ ent_similarity.numeric <- function(
 #'
 #' @export
 ent_similarity.species_distribution <- function(
-    x,
-    similarities = diag(sum(!colnames(x) %in% non_species_columns)),
-    q = 1,
-    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang",
-                  "UnveilC", "UnveiliC", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  similarities = diag(sum(!colnames(x) %in% non_species_columns)),
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "Max",
+    "ChaoShen",
+    "MarconZhang",
+    "UnveilC",
+    "UnveiliC",
+    "naive"
+  ),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -391,7 +413,7 @@ ent_similarity.species_distribution <- function(
         estimator = estimator,
         probability_estimator = probability_estimator,
         unveiling = unveiling,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         as_numeric = as_numeric
@@ -411,13 +433,13 @@ ent_similarity.species_distribution <- function(
       estimator = estimator,
       probability_estimator = probability_estimator,
       unveiling = unveiling,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       as_numeric = FALSE,
       check_arguments = FALSE
     )
     # Make a tibble with site, estimator and entropy
-    the_entropy <-  tibble::tibble(
+    the_entropy <- tibble::tibble(
       # Restore non-species columns
       x[colnames(x) %in% non_species_columns],
       # Coerce the list returned by apply into a dataframe
@@ -445,11 +467,11 @@ ent_similarity.species_distribution <- function(
 #' @returns A number.
 #' @noRd
 S_v <- function(
-    species_index,
-    abd,
-    sample_size,
-    w_v,
-    p_V_Ns
+  species_index,
+  abd,
+  sample_size,
+  w_v,
+  p_V_Ns
 ) {
   v_used <- seq_len(sample_size - abd[species_index])
   return(sum(w_v[v_used] * p_V_Ns[v_used, species_index]))
@@ -467,17 +489,17 @@ S_v <- function(
 #' @noRd
 #'
 ent_gamma_similarity <- function(
-    species_distribution,
-    similarities,
-    q,
-    estimator,
-    probability_estimator,
-    unveiling,
-    jack_alpha,
-    jack_max,
-    coverage_estimator,
-    as_numeric) {
-
+  species_distribution,
+  similarities,
+  q,
+  estimator,
+  probability_estimator,
+  unveiling,
+  jack_alpha,
+  jack_max,
+  coverage_estimator,
+  as_numeric
+) {
   # Build the metacommunity
   abundances <- metacommunity(
     species_distribution,
@@ -492,8 +514,8 @@ ent_gamma_similarity <- function(
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage(
       colSums(
-        species_distribution[
-          , !colnames(species_distribution) %in% non_species_columns
+        species_distribution[,
+          !colnames(species_distribution) %in% non_species_columns
         ]
       ),
       estimator = coverage_estimator,
@@ -513,7 +535,7 @@ ent_gamma_similarity <- function(
     estimator = estimator,
     probability_estimator = probability_estimator,
     unveiling = unveiling,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     sample_coverage = sample_coverage,
     as_numeric = as_numeric,

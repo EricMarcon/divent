@@ -43,13 +43,13 @@ ent_hurlbert <- function(x, k = 2, ...) {
 #'
 #' @export
 ent_hurlbert.numeric <- function(
-    x,
-    k = 2,
-    estimator = c("Hurlbert", "naive"),
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 2,
+  estimator = c("Hurlbert", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -90,7 +90,9 @@ ent_hurlbert.numeric <- function(
 
   # Entropy of a vector of abundances ----
   if (!is_integer_values(abd)) {
-    cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
+    cli::cli_alert_warning(
+      "The estimator can't be applied to non-integer values."
+    )
     cli::cli_alert("{.code estimator} forced to 'naive.'")
     estimator <- "naive"
   }
@@ -133,18 +135,17 @@ ent_hurlbert.numeric <- function(
 }
 
 
-
 #' @rdname ent_hurlbert
 #'
 #' @export
 ent_hurlbert.species_distribution <- function(
-    x,
-    k = 2,
-    estimator = c("Hurlbert", "naive"),
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 2,
+  estimator = c("Hurlbert", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {

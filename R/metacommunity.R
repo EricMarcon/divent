@@ -35,9 +35,10 @@ NULL
 #'
 #' @export
 metacommunity <- function(
-    x,
-    name = "metacommunity",
-    ...) {
+  x,
+  name = "metacommunity",
+  ...
+) {
   UseMethod("metacommunity")
 }
 
@@ -47,17 +48,19 @@ metacommunity <- function(
 #'
 #'
 metacommunity.matrix <- function(
-    x,
-    name = "metacommunity",
-    weights = rep(1, nrow(x)),
-    as_numeric = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  name = "metacommunity",
+  weights = rep(1, nrow(x)),
+  as_numeric = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     if (length(weights) != nrow(x)) {
-      cli::cli_abort("The length of 'weights' must be the number of communities")
+      cli::cli_abort(
+        "The length of 'weights' must be the number of communities"
+      )
     }
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")
@@ -95,7 +98,11 @@ metacommunity.matrix <- function(
       )
     )
     # Classes
-    class(the_metacommunity) <- c("abundances", "species_distribution", class(the_metacommunity))
+    class(the_metacommunity) <- c(
+      "abundances",
+      "species_distribution",
+      class(the_metacommunity)
+    )
     return(the_metacommunity)
   }
 }
@@ -105,12 +112,12 @@ metacommunity.matrix <- function(
 #' @export
 #'
 metacommunity.species_distribution <- function(
-    x,
-    name = "metacommunity",
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  name = "metacommunity",
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
@@ -132,8 +139,10 @@ metacommunity.species_distribution <- function(
   # Aggregate abundances:
   # Multiply abundances by weights and normalize so that
   # sample_size is the sum of sample sizes
-  abd_prob <- x$weight %*% species_abd_prob *
-    sample_size / as.numeric(x$weight %*% rowSums(species_abd_prob))
+  abd_prob <- x$weight %*%
+    species_abd_prob *
+    sample_size /
+    as.numeric(x$weight %*% rowSums(species_abd_prob))
 
   if (as_numeric) {
     # Return a named vector (abd_prob is a 1-row matrix)

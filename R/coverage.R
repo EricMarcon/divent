@@ -63,16 +63,18 @@ coverage <- function(x, ...) {
 #'
 #' @export
 coverage.numeric <- function(
-    x,
-    estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    level = NULL,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  level = NULL,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
-  if (check_arguments) check_divent_args()
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Round values
   abd <- as.integer(round(x))
@@ -121,13 +123,14 @@ coverage.numeric <- function(
 
     ## Zhang & Huang's estimator ----
     if (estimator == "ZhangHuang") {
-      prob <- abd/sample_size
+      prob <- abd / sample_size
       if (any(prob >= 0.5)) {
         estimator <- "Chao"
       } else {
         nu <- as.integer(names(abd_distribution))
         # Use nu %% 2 * 2 - 1 for (-1)^(Nu + 1)
-        the_coverage <- 1 - sum((nu %% 2 * 2 - 1) / choose(sample_size, nu) * abd_distribution)
+        the_coverage <- 1 -
+          sum((nu %% 2 * 2 - 1) / choose(sample_size, nu) * abd_distribution)
         if (as_numeric) {
           return(the_coverage)
         } else {
@@ -215,14 +218,17 @@ coverage.numeric <- function(
       if (level < sample_size) {
         ### Interpolation ----
         abd_restricted <- abd[(sample_size - abd) >= level]
-        the_coverage <- 1 - sum(
-          abd_restricted / sample_size *
-            exp(
-              lgamma(sample_size - abd_restricted + 1) -
-              lgamma(sample_size - abd_restricted - level + 1) -
-              lgamma(sample_size) + lgamma(sample_size - level)
-            )
-        )
+        the_coverage <- 1 -
+          sum(
+            abd_restricted /
+              sample_size *
+              exp(
+                lgamma(sample_size - abd_restricted + 1) -
+                  lgamma(sample_size - abd_restricted - level + 1) -
+                  lgamma(sample_size) +
+                  lgamma(sample_size - level)
+              )
+          )
       } else {
         ### Extrapolation ----
         if (is.na(s_1)) {
@@ -240,8 +246,7 @@ coverage.numeric <- function(
           }
         } else {
           the_coverage <- 1 -
-            s_1 / sample_size *
-            (1 - chao_A(abd))^(level - sample_size + 1)
+            s_1 / sample_size * (1 - chao_A(abd))^(level - sample_size + 1)
         }
       }
       if (as_numeric) {
@@ -264,16 +269,18 @@ coverage.numeric <- function(
 #'
 #' @export
 coverage.abundances <- function(
-    x,
-    estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    level = NULL,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  level = NULL,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
-  if (check_arguments) check_divent_args()
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Apply coverage.numeric() to each site
   coverage_list <- apply(
@@ -318,16 +325,18 @@ coverage_to_size <- function(x, ...) {
 #'
 #' @export
 coverage_to_size.numeric <- function(
-    x,
-    sample_coverage,
-    estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    as_numeric  = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  sample_coverage,
+  estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
-  if (check_arguments) check_divent_args()
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Round values
   abd <- as.integer(round(x))
@@ -359,11 +368,10 @@ coverage_to_size.numeric <- function(
   if (sample_coverage >= sample_coverage_actual) {
     # Extrapolation
     the_size <- round(
-      sample_size + (
-        log(sample_size / s_1) + log(1 - sample_coverage)
-      )
-      / log(1 - chao_A(abd))
-      - 1
+      sample_size +
+        (log(sample_size / s_1) + log(1 - sample_coverage)) /
+          log(1 - chao_A(abd)) -
+        1
     )
   } else {
     # Interpolation. Numeric resolution: minimize the function delta
@@ -395,15 +403,17 @@ coverage_to_size.numeric <- function(
 #'
 #' @export
 coverage_to_size.abundances <- function(
-    x,
-    sample_coverage,
-    estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  sample_coverage,
+  estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
-  if (check_arguments) check_divent_args()
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Apply coverage_to_size.numeric() to each site
   size_list <- apply(
@@ -442,9 +452,10 @@ coverage_to_size.abundances <- function(
 #' @noRd
 #'
 chao_delta <- function(
-    abd,
-    size,
-    target_coverage) {
+  abd,
+  size,
+  target_coverage
+) {
   abs(
     coverage(
       x = abd,
@@ -452,6 +463,7 @@ chao_delta <- function(
       level = size,
       as_numeric = TRUE,
       check_arguments = FALSE
-    ) - target_coverage
+    ) -
+      target_coverage
   )
 }

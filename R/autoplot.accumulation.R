@@ -20,17 +20,17 @@
 #' # Species accumulation curve
 #' autoplot(accum_hill(mock_3sp_abd))
 #'
-autoplot.accumulation <-  function(
-    object,
-    ...,
-    main = NULL,
-    xlab = "Sample Size",
-    ylab = NULL,
-    shade_color = "grey75",
-    alpha = 0.3,
-    lty = 1,
-    lwd = 0.5){
-
+autoplot.accumulation <- function(
+  object,
+  ...,
+  main = NULL,
+  xlab = "Sample Size",
+  ylab = NULL,
+  shade_color = "grey75",
+  alpha = 0.3,
+  lty = 1,
+  lwd = 0.5
+) {
   # Add a site column if needed
   if (!"site" %in% colnames(object)) {
     object <- dplyr::mutate(object, site = "Unique site")
@@ -93,14 +93,20 @@ autoplot.accumulation <-  function(
       the_plot <- the_plot +
         ggplot2::geom_hline(
           data = actual,
-          mapping = ggplot2::aes(yintercept = .data$diversity, color = .data$site),
+          mapping = ggplot2::aes(
+            yintercept = .data$diversity,
+            color = .data$site
+          ),
           linetype = 2
         )
     } else {
       the_plot <- the_plot +
         ggplot2::geom_hline(
           data = actual,
-          mapping = ggplot2::aes(yintercept = .data$entropy, color = .data$site),
+          mapping = ggplot2::aes(
+            yintercept = .data$entropy,
+            color = .data$site
+          ),
           linetype = 2
         )
     }

@@ -27,13 +27,13 @@
 #' fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist, rate = 100))
 #'
 fun_ordinariness <- function(
-    species_distribution,
-    similarities = diag(
-      sum(!colnames(species_distribution) %in% non_species_columns)
-    ),
-    as_numeric = FALSE,
-    check_arguments = TRUE) {
-
+  species_distribution,
+  similarities = diag(
+    sum(!colnames(species_distribution) %in% non_species_columns)
+  ),
+  as_numeric = FALSE,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     # Check species names

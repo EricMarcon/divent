@@ -29,11 +29,11 @@ NULL
 #' autoplot(ent_sp_simpson(X))
 #'
 ent_sp_simpson <- function(
-    X,
-    r = NULL,
-    correction = c("isotropic", "translate", "none"),
-    check_arguments = TRUE) {
-
+  X,
+  r = NULL,
+  correction = c("isotropic", "translate", "none"),
+  check_arguments = TRUE
+) {
   # Check arguments
   correction <- match.arg(correction)
   if (check_arguments) {
@@ -44,7 +44,8 @@ ent_sp_simpson <- function(
   abd <- tapply(
     spatstat.geom::marks(X)$PointType,
     spatstat.geom::marks(X)$PointType,
-    length)
+    length
+  )
   abd <- abd[!is.na(abd)]
   sample_size <- sum(abd)
   prob <- abd / sample_size
@@ -61,7 +62,8 @@ ent_sp_simpson <- function(
         seq(45, 100, 5),
         seq(110, 200, 10),
         seq(220, 400, 20)
-      ) / 800
+      ) /
+      800
   }
   # K all points
   K_all <- correction_fv(
@@ -94,10 +96,13 @@ ent_sp_simpson <- function(
   K_PointType[is.na(K_PointType)] <- 0
 
   # Result: Shilmatani's function of r
-  Shi_r <- (1 - rowSums(
-    (K_PointType * rep(abd * (abd - 1), each = dim(K_PointType)[1])) /
-      (K_all * sample_size * (sample_size - 1)))
-  ) * (sample_size - 1) / sample_size
+  Shi_r <- (1 -
+    rowSums(
+      (K_PointType * rep(abd * (abd - 1), each = dim(K_PointType)[1])) /
+        (K_all * sample_size * (sample_size - 1))
+    )) *
+    (sample_size - 1) /
+    sample_size
 
   # Build a dataframe with r, theoretical value and S(r)
   Shi.df <- data.frame(
@@ -119,11 +124,11 @@ ent_sp_simpson <- function(
     labl = labl,
     desc = desc,
     unitname = X$window$unit,
-    fname = "Simpson's Entropy")
+    fname = "Simpson's Entropy"
+  )
   spatstat.explore::fvnames(the_entropy, ".") <- colnames(Shi.df)[-1]
   return(the_entropy)
 }
-
 
 
 #' @rdname ent_sp_simpson
@@ -144,15 +149,15 @@ ent_sp_simpson <- function(
 #' autoplot(ent_sp_simpsonEnvelope(X, n_simulations = 10))
 #'
 ent_sp_simpsonEnvelope <- function(
-    X,
-    r = NULL,
-    n_simulations = 100,
-    alpha = 0.05,
-    correction = c("isotropic", "translate", "none"),
-    h0 = c("RandomPosition", "RandomLabeling"),
-    global = FALSE,
-    check_arguments = TRUE) {
-
+  X,
+  r = NULL,
+  n_simulations = 100,
+  alpha = 0.05,
+  correction = c("isotropic", "translate", "none"),
+  h0 = c("RandomPosition", "RandomLabeling"),
+  global = FALSE,
+  check_arguments = TRUE
+) {
   # Check arguments
   correction <- match.arg(correction)
   h0 <- match.arg(h0)
@@ -163,8 +168,14 @@ ent_sp_simpsonEnvelope <- function(
   # Choose the null hypothesis
   X_sim <- switch(
     h0,
-    RandomPosition = expression(dbmss::rRandomPositionK(X, CheckArguments = FALSE)),
-    RandomLabeling = expression(dbmss::rRandomLabeling(X, CheckArguments = FALSE))
+    RandomPosition = expression(dbmss::rRandomPositionK(
+      X,
+      CheckArguments = FALSE
+    )),
+    RandomLabeling = expression(dbmss::rRandomLabeling(
+      X,
+      CheckArguments = FALSE
+    ))
   )
   if (is.null(X_sim)) {
     cli::cli_abort(
@@ -189,7 +200,11 @@ ent_sp_simpsonEnvelope <- function(
     RandomLabeling = "Random Labeling"
   )
   # Calculate confidence intervals
-  the_envelope <- dbmss::FillEnvelope(the_envelope, Alpha = alpha, Global = global)
+  the_envelope <- dbmss::FillEnvelope(
+    the_envelope,
+    Alpha = alpha,
+    Global = global
+  )
   # Return the envelope
   return(the_envelope)
 }

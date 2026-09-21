@@ -72,18 +72,18 @@ div_richness <- function(x, ...) {
 #'
 #' @export
 div_richness.numeric <- function(
-    x,
-    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -207,7 +207,6 @@ div_richness.numeric <- function(
     s_1 <- as.integer(abd_freq[abd_freq[, 1] == 1, 2])
     s_2 <- as.integer(abd_freq[abd_freq[, 1] == 2, 2])
 
-
     ## Chao1 and iChao1 ----
     if ((estimator == "Chao1") || (estimator == "iChao1")) {
       if (is.na(s_1)) {
@@ -274,7 +273,7 @@ div_richness.numeric <- function(
         m <- max(abd_freq[, 1])
         # Complete the abundance frequency count for all counts between 1 and m
         n_temp <- cbind(seq_len(m), rep(0, m))
-        n_temp[abd_freq$abundance , 2] <- abd_freq$number_of_species
+        n_temp[abd_freq$abundance, 2] <- abd_freq$number_of_species
         abd_freq <- n_temp
         # Prepare a matrix with k+1 rows and 5 columns
         gene <- matrix(0, nrow = k + 1, ncol = 5)
@@ -283,15 +282,26 @@ div_richness.numeric <- function(
           gene[i + 1, 1] <- s_obs
           gene[i + 1, 4] <- s_obs
           for (j in seq_len(i)) {
-            gene[i + 1, 1] <- gene[i + 1, 1] + (-1)^(j + 1) *
-              2^i * stats::dbinom(j, i, 0.5) * abd_freq[j, 2]
-            gene[i + 1, 4] <- gene[i + 1, 4] + (-1)^(j + 1) *
-              2^i * stats::dbinom(j, i, 0.5) * abd_freq[j, 2] * prod(seq_len(j))
+            gene[i + 1, 1] <- gene[i + 1, 1] +
+              (-1)^(j + 1) *
+                2^i *
+                stats::dbinom(j, i, 0.5) *
+                abd_freq[j, 2]
+            gene[i + 1, 4] <- gene[i + 1, 4] +
+              (-1)^(j + 1) *
+                2^i *
+                stats::dbinom(j, i, 0.5) *
+                abd_freq[j, 2] *
+                prod(seq_len(j))
           }
           gene[i + 1, 2] <- -gene[i + 1, 1]
           for (j in seq_len(i)) {
-            gene[i + 1, 2] <- gene[i + 1, 2] + ((-1)^(j + 1) *
-              2^i * stats::dbinom(j, i, 0.5) + 1)^2 * abd_freq[j, 2]
+            gene[i + 1, 2] <- gene[i + 1, 2] +
+              ((-1)^(j + 1) *
+                2^i *
+                stats::dbinom(j, i, 0.5) +
+                1)^2 *
+                abd_freq[j, 2]
           }
           gene[i + 1, 2] <- gene[i + 1, 2] +
             sum(abd_freq[(i + 1):nrow(abd_freq), 2])
@@ -299,22 +309,24 @@ div_richness.numeric <- function(
         }
         if (k > 1) {
           for (i in 2:k) {
-            gene[i, 3] <- -(gene[i + 1, 1] - gene[i, 1])^2/(s_obs - 1)
+            gene[i, 3] <- -(gene[i + 1, 1] - gene[i, 1])^2 / (s_obs - 1)
             for (j in seq_len(i - 1)) {
               gene[i, 3] <- gene[i, 3] +
-                (
-                  (-1)^(j + 1) * 2^(i) * stats::dbinom(j, i, 0.5) -
-                  (-1)^(j + 1) * 2^(i - 1) * stats::dbinom(j, i - 1, 0.5)
-                )^2 *
-                abd_freq[j, 2] * s_obs/(s_obs - 1)
+                ((-1)^(j + 1) *
+                  2^(i) *
+                  stats::dbinom(j, i, 0.5) -
+                  (-1)^(j + 1) * 2^(i - 1) * stats::dbinom(j, i - 1, 0.5))^2 *
+                  abd_freq[j, 2] *
+                  s_obs /
+                  (s_obs - 1)
             }
-            gene[i, 3] <- gene[i, 3] + abd_freq[i, 2] * s_obs/(s_obs - 1)
+            gene[i, 3] <- gene[i, 3] + abd_freq[i, 2] * s_obs / (s_obs - 1)
             gene[i, 3] <- sqrt(gene[i, 3])
-            gene[i, 5] <- (gene[i + 1, 1] - gene[i, 1])/gene[i, 3]
+            gene[i, 5] <- (gene[i + 1, 1] - gene[i, 1]) / gene[i, 3]
           }
         }
         # Threshold for Burnham and Overton's test
-        coe <- stats::qnorm(1 - jack_alpha/2, 0, 1)
+        coe <- stats::qnorm(1 - jack_alpha / 2, 0, 1)
         # Which orders pass the test?
         orders <- (gene[2:(k + 1), 5] < coe)
         if (sum(orders, na.rm = TRUE) == 0) {
@@ -323,8 +335,7 @@ div_richness.numeric <- function(
           s_jack <- gene[k_smallest, 1]
           # Estimated standard error
           sej <- gene[k_smallest, 2]
-        }
-        else {
+        } else {
           # Else, keep the smallest value (+1 because jack1 is in line 2)
           k_smallest <- which(orders)[1] + 1
           # Estimated value
@@ -393,7 +404,7 @@ div_richness.numeric <- function(
     }
   } else {
     ## Extrapolation ----
-    s_1 <-  sum(x == 1)
+    s_1 <- sum(x == 1)
     if (s_1) {
       # Estimate the number of unobserved species
       if (probability_estimator == "naive") {
@@ -405,7 +416,8 @@ div_richness.numeric <- function(
           jack_max = jack_max,
           as_numeric = TRUE,
           check_arguments = FALSE
-        ) - s_obs
+        ) -
+          s_obs
       } else {
         # Unveil so that the estimation of richness is similar to that of non-integer entropy
         prob_s_0 <- probabilities(
@@ -413,7 +425,7 @@ div_richness.numeric <- function(
           estimator = probability_estimator,
           unveiling = unveiling,
           richness_estimator = estimator,
-          jack_alpha  = jack_alpha,
+          jack_alpha = jack_alpha,
           jack_max = jack_max,
           coverage_estimator = coverage_estimator,
           q = 0,
@@ -422,9 +434,8 @@ div_richness.numeric <- function(
         )
         s_0 <- length(prob_s_0) - s_obs
       }
-      the_richness <- s_obs + s_0 * (
-        1 - (1 - s_1 / (sample_size * s_0 + s_1))^(level - sample_size)
-      )
+      the_richness <- s_obs +
+        s_0 * (1 - (1 - s_1 / (sample_size * s_0 + s_1))^(level - sample_size))
     } else {
       # No singleton
       the_richness <- s_obs
@@ -449,19 +460,19 @@ div_richness.numeric <- function(
 #'
 #' @export
 div_richness.species_distribution <- function(
-    x,
-    estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -484,7 +495,7 @@ div_richness.species_distribution <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       as_numeric = as_numeric
@@ -494,9 +505,10 @@ div_richness.species_distribution <- function(
       the_diversity <- ent_0$entropy + 1
     } else {
       the_diversity <- dplyr::mutate(
-      ent_0,
-      diversity = .data$entropy + 1,
-      .keep = "unused")
+        ent_0,
+        diversity = .data$entropy + 1,
+        .keep = "unused"
+      )
     }
   } else {
     # Apply div_richness.numeric() to each site
@@ -508,7 +520,7 @@ div_richness.species_distribution <- function(
       FUN = div_richness,
       # Arguments
       estimator = estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       level = level,
       probability_estimator = probability_estimator,

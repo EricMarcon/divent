@@ -54,21 +54,36 @@ ent_shannon <- function(x, ...) {
 #'
 #' @export
 ent_shannon.numeric <- function(
-    x,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Grassberger2003", "Holste", "Miller", "Schurmann", "ZhangHz"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    as_numeric  = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Grassberger2003",
+    "Holste",
+    "Miller",
+    "Schurmann",
+    "ZhangHz"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -158,7 +173,9 @@ ent_shannon.numeric <- function(
 
     ## Naive estimator ----
     if (!is_integer_values(abd)) {
-      cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
+      cli::cli_alert_warning(
+        "The estimator can't be applied to non-integer values."
+      )
       cli::cli_alert("{.code estimator} forced to 'naive.'")
       estimator <- "naive"
     }
@@ -183,10 +200,10 @@ ent_shannon.numeric <- function(
     ## Other estimators ----
     if (estimator == "Miller") {
       the_entropy <- ent_shannon(
-          prob,
-          as_numeric = TRUE,
-          check_arguments = FALSE
-        ) +
+        prob,
+        as_numeric = TRUE,
+        check_arguments = FALSE
+      ) +
         (s_obs - 1) / 2 / sample_size
       if (as_numeric) {
         return(the_entropy)
@@ -223,15 +240,19 @@ ent_shannon.numeric <- function(
         estimator = probability_estimator,
         unveiling = "none",
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         as_numeric = TRUE,
         check_arguments = FALSE
       )
     }
-    if (estimator == "ChaoShen" || estimator == "Marcon" || estimator == "GenCov") {
-      ent_cov <- -sum(prob_cov * log(prob_cov) / (1 - (1 - prob_cov)^sample_size))
+    if (
+      estimator == "ChaoShen" || estimator == "Marcon" || estimator == "GenCov"
+    ) {
+      ent_cov <- -sum(
+        prob_cov * log(prob_cov) / (1 - (1 - prob_cov)^sample_size)
+      )
     }
     if (estimator == "ChaoShen" || estimator == "GenCov") {
       if (as_numeric) {
@@ -250,8 +271,11 @@ ent_shannon.numeric <- function(
       # (-1)^n is problematic for long vectors (returns NA for large values).
       # It is replaced by 1 - n %%2 * 2 (abd is rounded if is not an integer)
       ent_Grassberger <- sum(
-        abd / sample_size *
-        (log(sample_size) - digamma(abd) - (1 - round(abd) %% 2 * 2) / (abd + 1))
+        abd /
+          sample_size *
+          (log(sample_size) -
+            digamma(abd) -
+            (1 - round(abd) %% 2 * 2) / (abd + 1))
       )
     }
     if (estimator == "Grassberger") {
@@ -292,9 +316,9 @@ ent_shannon.numeric <- function(
         vapply(
           abd,
           integral,
-          FUN.VALUE = list(0.0, 0.0, 0, "", call("Integral", 0,0)),
+          FUN.VALUE = list(0.0, 0.0, 0, "", call("Integral", 0, 0)),
           upper = 1
-        )["value",]
+        )["value", ]
       )
     }
     if (estimator == "Schurmann") {
@@ -302,15 +326,18 @@ ent_shannon.numeric <- function(
         vapply(
           abd,
           integral,
-          FUN.VALUE = list(0, 0, 0, "", call("Integral", 0,0)),
-          upper = exp(-1/2)
-        )["value",]
+          FUN.VALUE = list(0, 0, 0, "", call("Integral", 0, 0)),
+          upper = exp(-1 / 2)
+        )["value", ]
       )
     }
     if (estimator == "Grassberger2003" || estimator == "Schurmann") {
       the_entropy <- sum(
-        abd / sample_size *
-        (digamma(sample_size) - digamma(abd) - (1 - abd %% 2 * 2) * integral_value)
+        abd /
+          sample_size *
+          (digamma(sample_size) -
+            digamma(abd) -
+            (1 - abd %% 2 * 2) * integral_value)
       )
       if (as_numeric) {
         return(the_entropy)
@@ -327,10 +354,14 @@ ent_shannon.numeric <- function(
     if (estimator == "Holste" || estimator == "Bonachela") {
       seq_l <- seq_len(length(abd) + sample_size)
       inv_l <- 1 / seq_l
-      cumul_l <- function(n) {sum(inv_l[n:length(inv_l)])}
+      cumul_l <- function(n) {
+        sum(inv_l[n:length(inv_l)])
+      }
       sum_inv_l <- vapply(seq_l, cumul_l, FUN.VALUE = 0)
       if (estimator == "Holste") {
-        ent_hb <- sum((abd + 1) / (length(abd) + sample_size) * sum_inv_l[abd + 2])
+        ent_hb <- sum(
+          (abd + 1) / (length(abd) + sample_size) * sum_inv_l[abd + 2]
+        )
       } else {
         ent_hb <- sum((abd + 1) / (2 + sample_size) * sum_inv_l[abd + 2])
       }
@@ -355,7 +386,7 @@ ent_shannon.numeric <- function(
       # Chao, Wang & Jost 2013, eq. 7. Equals EntropyEstimation::Entropy.z(abd).
       ent_ChaoJost <- sum(
         abd / sample_size * (digamma(sample_size) - digamma(abd))
-        )
+      )
       # Add Chao-Jost estimator to that of Zhang-Grabchak
       if (A != 1) {
         ent_part2 <- vapply(
@@ -363,8 +394,11 @@ ent_shannon.numeric <- function(
           function(r) 1 / r * (1 - A)^r,
           FUN.VALUE = 0
         )
-        ent_ChaoJost <- ent_ChaoJost + s_1 / sample_size *
-          (1 - A)^(1 - sample_size) * (-log(A) - sum(ent_part2))
+        ent_ChaoJost <- ent_ChaoJost +
+          s_1 /
+            sample_size *
+            (1 - A)^(1 - sample_size) *
+            (-log(A) - sum(ent_part2))
       }
       if (as_numeric) {
         return(ent_ChaoJost)
@@ -397,16 +431,23 @@ ent_shannon.numeric <- function(
       V <- seq_len(sample_size - 1)
       # Weight part. Taken in log or goes to Inf for v > 1000
       # gamma cannot be used for large n, lgamma is preferred.
-      lnw_v <- (V + 1) * log(sample_size) + lgamma(sample_size - V) -
-        lgamma(sample_size + 1) - log(V)
+      lnw_v <- (V + 1) *
+        log(sample_size) +
+        lgamma(sample_size - V) -
+        lgamma(sample_size + 1) -
+        log(V)
       # p_V_Ps is an array, containing (1 - p_s - j/n) for each species (lines)
       # and all j from 0 to n-2.
       # Because array indexation starts from 1 in R, j is replaced by j-1.
-      p_V_prob <- outer(prob, V, function(p, j) {1 - p - (j - 1) / sample_size})
+      p_V_prob <- outer(prob, V, function(p, j) {
+        1 - p - (j - 1) / sample_size
+      })
       # Useful values are products from j=0 to v, so prepare cumulative products
       p_V_prob <- t(apply(p_V_prob, 1, cumprod))
       # Sum of products, weighted by p_s
-      sum_prod <- function(v) {sum(prob * p_V_prob[seq_along(prob), v])}
+      sum_prod <- function(v) {
+        sum(prob * p_V_prob[seq_along(prob), v])
+      }
       # Apply sum_prod to all values of V. Use logs or w_v goes to Inf.
       the_entropy <- sum(exp(lnw_v + log(vapply(V, sum_prod, FUN.VALUE = 0))))
       if (as_numeric) {
@@ -422,7 +463,11 @@ ent_shannon.numeric <- function(
       }
     }
 
-    if (estimator == "UnveilC" || estimator == "UnveiliC" || estimator == "UnveilJ") {
+    if (
+      estimator == "UnveilC" ||
+        estimator == "UnveiliC" ||
+        estimator == "UnveilJ"
+    ) {
       # Unveil probabilities
       prob_unv <- probabilities(
         abd,
@@ -492,7 +537,7 @@ ent_shannon.numeric <- function(
   if (level <= sample_size) {
     ## Interpolation ----
     abd_freq <- abd_freq_count(abd, level = level, check_arguments = FALSE)
-    seq_l <- seq_len(level)/level
+    seq_l <- seq_len(level) / level
     the_entropy <- -(sum(seq_l * log(seq_l) * abd_freq$number_of_species))
     if (as_numeric) {
       return(the_entropy)
@@ -524,7 +569,7 @@ ent_shannon.numeric <- function(
         estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         q = 1,
@@ -536,7 +581,9 @@ ent_shannon.numeric <- function(
     # Estimate observed entropy
     ent_obs <- -sum(prob * log(prob))
     # Interpolation
-    the_entropy <- sample_size / level * ent_obs +
+    the_entropy <- sample_size /
+      level *
+      ent_obs +
       (level - sample_size) / level * ent_est
     if (as_numeric) {
       return(the_entropy)
@@ -558,22 +605,37 @@ ent_shannon.numeric <- function(
 #'
 #' @export
 ent_shannon.species_distribution <- function(
-    x,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Grassberger2003", "Holste", "Miller", "Schurmann", "ZhangHz"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Grassberger2003",
+    "Holste",
+    "Miller",
+    "Schurmann",
+    "ZhangHz"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -597,7 +659,7 @@ ent_shannon.species_distribution <- function(
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         as_numeric = as_numeric
@@ -617,7 +679,7 @@ ent_shannon.species_distribution <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       as_numeric = as_numeric,

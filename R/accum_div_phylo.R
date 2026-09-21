@@ -58,23 +58,23 @@ accum_ent_phylo <- function(x, ...) {
 #'
 #' @export
 accum_ent_phylo.numeric <- function(
-    x,
-    tree,
-    q = 0,
-    normalize = TRUE,
-    levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  q = 0,
+  normalize = TRUE,
+  levels = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -113,7 +113,7 @@ accum_ent_phylo.numeric <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     gamma = FALSE,
@@ -132,24 +132,24 @@ accum_ent_phylo.numeric <- function(
 #'
 #' @export
 accum_ent_phylo.abundances <- function(
-    x,
-    tree,
-    q = 0,
-    normalize = TRUE,
-    levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  q = 0,
+  normalize = TRUE,
+  levels = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -214,7 +214,8 @@ accum_ent_phylo.abundances <- function(
   if (show_progress && interactive()) {
     cli::cli_progress_bar(
       "Computing entropy",
-      total = (length(the_phylo_abd) * n_communities) * (1 + n_simulations))
+      total = (length(the_phylo_abd) * n_communities) * (1 + n_simulations)
+    )
   }
 
   # Calculate entropy along the tree
@@ -305,11 +306,16 @@ accum_ent_phylo.abundances <- function(
       if (n_simulations > 0) {
         for (z_level in seq_along(levels)) {
           # Quantiles, recentered
-          ent_phylo_envelope[x_interval, y_community, z_level, ] <- stats::quantile(
+          ent_phylo_envelope[
+            x_interval,
+            y_community,
+            z_level,
+          ] <- stats::quantile(
             ent_phylo_sim[x_interval, y_community, z_level, ],
             probs = c(alpha / 2, 1 - alpha / 2),
             na.rm = TRUE
-          ) - mean(ent_phylo_sim[x_interval, y_community, z_level, ]) +
+          ) -
+            mean(ent_phylo_sim[x_interval, y_community, z_level, ]) +
             ent_phylo_abd[x_interval, y_community, z_level]
         }
       }
@@ -318,7 +324,9 @@ accum_ent_phylo.abundances <- function(
       if (show_progress && interactive()) cli::cli_progress_update()
     }
   }
-  if (show_progress && interactive()) cli::cli_progress_done()
+  if (show_progress && interactive()) {
+    cli::cli_progress_done()
+  }
 
   # Average entropy
   # Actual data
@@ -361,12 +369,12 @@ accum_ent_phylo.abundances <- function(
   # Add simulation columns
   if (n_simulations > 0) {
     ent_inf <- ent.tibble(
-      ent.matrix = ent_quantiles[, , 1],
+      ent.matrix = ent_quantiles[,, 1],
       x = x,
       levels = levels
     )
     ent_sup <- ent.tibble(
-      ent.matrix = ent_quantiles[, , 2],
+      ent.matrix = ent_quantiles[,, 2],
       x = x,
       levels = levels
     )
@@ -394,23 +402,23 @@ accum_div_phylo <- function(x, ...) {
 #'
 #' @export
 accum_div_phylo.numeric <- function(
-    x,
-    tree,
-    q = 0,
-    normalize = TRUE,
-    levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  q = 0,
+  normalize = TRUE,
+  levels = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -449,7 +457,7 @@ accum_div_phylo.numeric <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     gamma = FALSE,
@@ -468,24 +476,24 @@ accum_div_phylo.numeric <- function(
 #'
 #' @export
 accum_div_phylo.abundances <- function(
-    x,
-    tree,
-    q = 0,
-    normalize = TRUE,
-    levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  q = 0,
+  normalize = TRUE,
+  levels = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -524,7 +532,7 @@ accum_div_phylo.abundances <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     gamma = gamma,
@@ -564,7 +572,6 @@ accum_div_phylo.abundances <- function(
 #' @noRd
 #'
 ent.tibble <- function(ent.matrix, x, levels) {
-
   if (!is.matrix(ent.matrix)) {
     # ent.matrix may be a numeric vector (single community / min and max)
     ent.matrix <- t(as.matrix(ent.matrix))

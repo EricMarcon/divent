@@ -55,11 +55,11 @@ exp_q <- function(x, q) {
   is_poorly_rounded <-
     # NA is not allowed in indexed affectations
     !is.na(x) & (q > 1) & (abs(1 - x * q + x) < .Machine$double.eps)
-  the_exp_q[is_poorly_rounded] <- (
-      1 - x[is_poorly_rounded] * q[is_poorly_rounded] +
-        x[is_poorly_rounded] + q[is_poorly_rounded] * .Machine$double.eps -
-        .Machine$double.eps
-      )^(1 / (1 - q[is_poorly_rounded]))
+  the_exp_q[is_poorly_rounded] <- (1 -
+    x[is_poorly_rounded] * q[is_poorly_rounded] +
+    x[is_poorly_rounded] +
+    q[is_poorly_rounded] * .Machine$double.eps -
+    .Machine$double.eps)^(1 / (1 - q[is_poorly_rounded]))
 
   return(the_exp_q)
 }

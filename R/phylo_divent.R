@@ -27,7 +27,9 @@ NULL
 #' @export
 as_phylo_divent <- function(tree) {
   # The tree may be NULL or already processed
-  if (is.null(tree) || inherits(tree, "phylo_divent")) return(tree)
+  if (is.null(tree) || inherits(tree, "phylo_divent")) {
+    return(tree)
+  }
 
   # Convert tree to phylo and hclust----
   # tree must be either a phylog, phylo or a hclust object
@@ -99,10 +101,10 @@ as_phylo_divent <- function(tree) {
 
   # Format and return
   the_tree <- list(
-    phylo     = tree.phylo,
-    hclust    = tree.hclust,
-    height    = cuts[length(cuts)],
-    cuts      = cuts,
+    phylo = tree.phylo,
+    hclust = tree.hclust,
+    height = cuts[length(cuts)],
+    cuts = cuts,
     intervals = intervals,
     phylo_groups = phylo_groups
   )

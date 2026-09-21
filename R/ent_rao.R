@@ -56,15 +56,15 @@ ent_rao <- function(x, ...) {
 #'
 #' @export
 ent_rao.numeric <- function(
-    x,
-    distances = NULL,
-    tree = NULL,
-    normalize = TRUE,
-    estimator = c("Lande", "naive"),
-    as_numeric  = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  distances = NULL,
+  tree = NULL,
+  normalize = TRUE,
+  estimator = c("Lande", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -203,16 +203,16 @@ ent_rao.numeric <- function(
 #'
 #' @export
 ent_rao.species_distribution <- function(
-    x,
-    distances = NULL,
-    tree = NULL,
-    normalize = TRUE,
-    estimator = c("Lande", "naive"),
-    gamma = FALSE,
-    as_numeric  = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  distances = NULL,
+  tree = NULL,
+  normalize = TRUE,
+  estimator = c("Lande", "naive"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -276,7 +276,7 @@ ent_rao.species_distribution <- function(
       )
     }
     return(the_entropy)
-   } else {
+  } else {
     # Apply ent_rao.numeric() to each site
     ent_rao_list <- apply(
       # Eliminate site and weight columns

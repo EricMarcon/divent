@@ -55,21 +55,21 @@ accum_tsallis <- function(x, ...) {
 #'
 #' @export
 accum_tsallis.numeric <- function(
-    x,
-    q = 0,
-    levels = seq_len(sum(x)),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 0,
+  levels = seq_len(sum(x)),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -150,7 +150,7 @@ accum_tsallis.numeric <- function(
       estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = 0.05,
+      jack_alpha = 0.05,
       jack_max = 10,
       coverage_estimator = coverage_estimator,
       q = q,
@@ -159,14 +159,18 @@ accum_tsallis.numeric <- function(
     )
     if (q == 0) {
       ## Richness ----
-      s_1 <-  sum(abd == 1)
+      s_1 <- sum(abd == 1)
       if (s_1) {
         # Estimate the number of unobserved species
         s_obs <- sum(abd > 0)
         s_0 <- length(prob_unv) - s_obs
         # Extrapolate richness (the vector is levels_extrap)
         ent_level[(i + 1):length(levels)] <- s_obs +
-          s_0 * (1 - (1 - s_1 / (sample_size * s_0 + s_1))^(levels_extrap - sample_size)) - 1
+          s_0 *
+            (1 -
+              (1 - s_1 / (sample_size * s_0 + s_1))^(levels_extrap -
+                sample_size)) -
+          1
       } else {
         # No singleton
         ent_level[(i + 1):length(levels)] <- s_obs - 1
@@ -183,7 +187,9 @@ accum_tsallis.numeric <- function(
         # Estimate observed entropy
         ent_obs <- -sum(prob * log(prob))
         # Interpolation (the vector is levels_extrap)
-        ent_level[(i + 1):length(levels)] <- sample_size / levels_extrap * ent_obs +
+        ent_level[(i + 1):length(levels)] <- sample_size /
+          levels_extrap *
+          ent_obs +
           (levels_extrap - sample_size) / levels_extrap * ent_est
         ent_estimator[(i + 1):length(levels)] <- richness_estimator
         if (show_progress && interactive()) {
@@ -201,8 +207,12 @@ accum_tsallis.numeric <- function(
             }
           } else {
             # Valid extrapolation (the vector is levels_extrap)
-            ent_level[(i + 1):length(levels)] <- 1 - 1 / levels_extrap -
-              (1 - 1 / levels_extrap) * sum(abd * (abd - 1)) / sample_size / (sample_size - 1)
+            ent_level[(i + 1):length(levels)] <- 1 -
+              1 / levels_extrap -
+              (1 - 1 / levels_extrap) *
+                sum(abd * (abd - 1)) /
+                sample_size /
+                (sample_size - 1)
           }
           ent_estimator[(i + 1):length(levels)] <- "Chao2014"
           if (show_progress && interactive()) {
@@ -217,7 +227,9 @@ accum_tsallis.numeric <- function(
               function(nu) {
                 sum(
                   exp(
-                    lchoose(level, nu) + nu * log(prob_unv) + (level - nu) * log(1 - prob_unv)
+                    lchoose(level, nu) +
+                      nu * log(prob_unv) +
+                      (level - nu) * log(1 - prob_unv)
                   )
                 )
               },
@@ -225,9 +237,12 @@ accum_tsallis.numeric <- function(
             )
             # Estimate entropy (Chao et al., 2014, eq. 6)
             i <- which(levels == level)
-            ent_level[i] <- (sum((seq_len(level) / level)^q * s_nu) - 1) / (1 - q)
+            ent_level[i] <- (sum((seq_len(level) / level)^q * s_nu) - 1) /
+              (1 - q)
             ent_estimator[i] <- richness_estimator
-            if (show_progress && interactive()) cli::cli_progress_update(set = i)
+            if (show_progress && interactive()) {
+              cli::cli_progress_update(set = i)
+            }
           }
         }
       }
@@ -236,7 +251,10 @@ accum_tsallis.numeric <- function(
 
   # Simulations ----
   # Generate distributions from the unveiled probabilities
-  if (n_simulations > 0 && (probability_estimator == "naive" || unveiling == "none")) {
+  if (
+    n_simulations > 0 &&
+      (probability_estimator == "naive" || unveiling == "none")
+  ) {
     cli::cli_alert_warning(
       paste(
         "Accumulation confidence interval can't be estimated without",
@@ -260,7 +278,7 @@ accum_tsallis.numeric <- function(
         estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = 0.05,
+        jack_alpha = 0.05,
         jack_max = 10,
         coverage_estimator = coverage_estimator,
         q = q,
@@ -270,7 +288,11 @@ accum_tsallis.numeric <- function(
     }
     for (level in levels) {
       # Generate simulated communities at each level
-      communities <- stats::rmultinom(n_simulations, size = level, prob = prob_unv)
+      communities <- stats::rmultinom(
+        n_simulations,
+        size = level,
+        prob = prob_unv
+      )
       # Probabilities
       communities <- communities / level
       # Calculate entropy
@@ -318,21 +340,21 @@ accum_tsallis.numeric <- function(
 #'
 #' @export
 accum_tsallis.abundances <- function(
-    x,
-    q = 0,
-    levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 0,
+  levels = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -367,7 +389,7 @@ accum_tsallis.abundances <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     n_simulations = n_simulations,
@@ -407,21 +429,21 @@ accum_hill <- function(x, ...) {
 #'
 #' @export
 accum_hill.numeric <- function(
-    x,
-    q = 0,
-    levels = seq_len(sum(x)),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 0,
+  levels = seq_len(sum(x)),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -442,7 +464,7 @@ accum_hill.numeric <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     n_simulations = n_simulations,
@@ -473,21 +495,21 @@ accum_hill.numeric <- function(
 #'
 #' @export
 accum_hill.abundances <- function(
-    x,
-    q = 0,
-    levels = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    n_simulations = 0,
-    alpha = 0.05,
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 0,
+  levels = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  n_simulations = 0,
+  alpha = 0.05,
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
@@ -522,7 +544,7 @@ accum_hill.abundances <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     n_simulations = n_simulations,

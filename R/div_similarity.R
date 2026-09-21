@@ -49,21 +49,28 @@ div_similarity <- function(x, similarities, q = 1, ...) {
 #'
 #' @export
 div_similarity.numeric <- function(
-    x,
-    similarities = diag(length(x)),
-    q = 1,
-    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang",
-                  "UnveilC", "UnveiliC", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    sample_coverage = NULL,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  similarities = diag(length(x)),
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "Max",
+    "ChaoShen",
+    "MarconZhang",
+    "UnveilC",
+    "UnveiliC",
+    "naive"
+  ),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  sample_coverage = NULL,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -84,7 +91,7 @@ div_similarity.numeric <- function(
     estimator = estimator,
     probability_estimator = probability_estimator,
     unveiling = unveiling,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     sample_coverage = sample_coverage,
@@ -110,21 +117,28 @@ div_similarity.numeric <- function(
 #'
 #' @export
 div_similarity.species_distribution <- function(
-    x,
-    similarities = diag(sum(!colnames(x) %in% non_species_columns)),
-    q = 1,
-    estimator = c("UnveilJ", "Max", "ChaoShen", "MarconZhang",
-                  "UnveilC", "UnveiliC", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  similarities = diag(sum(!colnames(x) %in% non_species_columns)),
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "Max",
+    "ChaoShen",
+    "MarconZhang",
+    "UnveilC",
+    "UnveiliC",
+    "naive"
+  ),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -145,7 +159,7 @@ div_similarity.species_distribution <- function(
     estimator = estimator,
     probability_estimator = probability_estimator,
     unveiling = unveiling,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     as_numeric = FALSE,
@@ -164,5 +178,4 @@ div_similarity.species_distribution <- function(
   } else {
     return(the_diversity)
   }
-
 }
