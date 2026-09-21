@@ -1,0 +1,17 @@
+bibentry(bibtype = "Article",
+  title        = " divent: An {R} Package for Diversity Measures Based on Entropy",
+  author       = c(person(given = "Eric",
+                          family = "Marcon"),
+                    person(given = "Florence",
+                          family = "Puech")
+                 ),
+  journal      = "Journal of Open Source Software",
+  year         = "under revision",
+
+  header       = "To cite dbmss in publications use:",
+  textVersion  =
+  paste("Marcon, E. & Puech, F. (under revision).",
+        "divent: An R Package for Diversity Measures Based on Entropy.",
+        "Journal of Open Source Software."
+  )
+)
