@@ -31,10 +31,11 @@ NULL
 #'
 #' @export
 profile_phylo <- function(
-    x,
-    tree,
-    orders = seq(from = 0, to = 2, by = 0.1),
-    ...) {
+  x,
+  tree,
+  orders = seq(from = 0, to = 2, by = 0.1),
+  ...
+) {
   UseMethod("profile_phylo")
 }
 
@@ -48,29 +49,39 @@ profile_phylo <- function(
 #'
 #' @export
 profile_phylo.numeric <- function(
-    x,
-    tree,
-    orders = seq(from = 0, to = 2, by = 0.1),
-    normalize = TRUE,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
-                  "naive"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    sample_coverage = NULL,
-    as_numeric = FALSE,
-    n_simulations = 0,
-    alpha = 0.05,
-    bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  orders = seq(from = 0, to = 2, by = 0.1),
+  normalize = TRUE,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Holste",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  sample_coverage = NULL,
+  as_numeric = FALSE,
+  n_simulations = 0,
+  alpha = 0.05,
+  bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -112,7 +123,7 @@ profile_phylo.numeric <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     gamma = FALSE,
@@ -135,28 +146,38 @@ profile_phylo.numeric <- function(
 #'
 #' @export
 profile_phylo.species_distribution <- function(
-    x,
-    tree,
-    orders = seq(from = 0, to = 2, by = 0.1),
-    normalize = TRUE,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
-                  "naive"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    n_simulations = 0,
-    alpha = 0.05,
-    bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  orders = seq(from = 0, to = 2, by = 0.1),
+  normalize = TRUE,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Holste",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  n_simulations = 0,
+  alpha = 0.05,
+  bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -234,7 +255,7 @@ profile_phylo.species_distribution <- function(
       # Prepare an array to store simulated abd. Rows are species, columns are
       # communities (same structure as groups of the_phylo_abd), z are simulations
       # Max number of species in simulated communities
-      sp_sim <- max(vapply(comm_sim.list, dim, c(0L,0L))[2,])
+      sp_sim <- max(vapply(comm_sim.list, dim, c(0L, 0L))[2, ])
       comm_sim <- array(
         data = 0,
         dim = c(sp_sim, length(comm_sim.list), n_simulations)
@@ -263,7 +284,7 @@ profile_phylo.species_distribution <- function(
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         gamma = gamma,
@@ -273,14 +294,14 @@ profile_phylo.species_distribution <- function(
       for (t_simulation in seq_len(n_simulations)) {
         # Entropy of simulated communities
         ent_phylo_sim[x_interval, , z_order, t_simulation] <- ent_tsallis(
-          x = as_abundances(t(comm_sim[, , t_simulation])),
+          x = as_abundances(t(comm_sim[,, t_simulation])),
           q = orders[z_order],
           estimator = estimator,
           level = level,
           probability_estimator = probability_estimator,
           unveiling = unveiling,
           richness_estimator = richness_estimator,
-          jack_alpha  = jack_alpha,
+          jack_alpha = jack_alpha,
           jack_max = jack_max,
           coverage_estimator = coverage_estimator,
           gamma = gamma,
@@ -290,11 +311,16 @@ profile_phylo.species_distribution <- function(
       if (n_simulations > 0) {
         for (y_community in seq_len(n_communities)) {
           # Quantiles, recentered
-          ent_phylo_envelope[x_interval, y_community, z_order, ] <- stats::quantile(
+          ent_phylo_envelope[
+            x_interval,
+            y_community,
+            z_order,
+          ] <- stats::quantile(
             ent_phylo_sim[x_interval, y_community, z_order, ],
             probs = c(alpha / 2, 1 - alpha / 2),
             na.rm = TRUE
-          ) - mean(ent_phylo_sim[x_interval, y_community, z_order, ]) +
+          ) -
+            mean(ent_phylo_sim[x_interval, y_community, z_order, ]) +
             ent_phylo_abd[x_interval, y_community, z_order]
         }
       }
@@ -303,7 +329,9 @@ profile_phylo.species_distribution <- function(
     }
   }
 
-  if (show_progress && interactive()) cli::cli_progress_done()
+  if (show_progress && interactive()) {
+    cli::cli_progress_done()
+  }
 
   # Average entropy
   # Actual data
@@ -333,12 +361,12 @@ profile_phylo.species_distribution <- function(
   )
   if (n_simulations > 0) {
     div_inf <- div.tibble(
-      ent.matrix = ent_quantiles[, , 1],
+      ent.matrix = ent_quantiles[,, 1],
       x = x,
       orders = orders
     )
     div_sup <- div.tibble(
-      ent.matrix = ent_quantiles[, , 2],
+      ent.matrix = ent_quantiles[,, 2],
       x = x,
       orders = orders
     )
@@ -367,7 +395,6 @@ profile_phylo.species_distribution <- function(
 #' @noRd
 #'
 div.tibble <- function(ent.matrix, x, orders) {
-
   if (!is.matrix(ent.matrix)) {
     # ent.matrix may be a numeric vector (single community / min and max)
     ent.matrix <- t(as.matrix(ent.matrix))

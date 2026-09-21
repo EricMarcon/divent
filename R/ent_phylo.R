@@ -52,24 +52,35 @@ ent_phylo <- function(x, tree, q = 1, ...) {
 #'
 #' @export
 ent_phylo.numeric <- function(
-    x,
-    tree,
-    q = 1,
-    normalize = TRUE,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  q = 1,
+  normalize = TRUE,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -104,11 +115,12 @@ ent_phylo.numeric <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     as_numeric = as_numeric,
-    check_arguments = FALSE)
+    check_arguments = FALSE
+  )
 
   # Return
   return(the_entropy)
@@ -118,25 +130,36 @@ ent_phylo.numeric <- function(
 #'
 #' @export
 ent_phylo.species_distribution <- function(
-    x,
-    tree,
-    q = 1,
-    normalize = TRUE,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  tree,
+  q = 1,
+  normalize = TRUE,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -173,7 +196,7 @@ ent_phylo.species_distribution <- function(
     probability_estimator = probability_estimator,
     unveiling = unveiling,
     richness_estimator = richness_estimator,
-    jack_alpha  = jack_alpha,
+    jack_alpha = jack_alpha,
     jack_max = jack_max,
     coverage_estimator = coverage_estimator,
     gamma = gamma
@@ -241,8 +264,8 @@ phylo_entropy.phylo_abd <- function(
   jack_alpha,
   jack_max,
   coverage_estimator,
-  gamma) {
-
+  gamma
+) {
   if (gamma) {
     # Calculate gamma entropy of each group.
     # simplify2array() makes a vector with the list of numbers.
@@ -260,7 +283,7 @@ phylo_entropy.phylo_abd <- function(
             probability_estimator = probability_estimator,
             unveiling = unveiling,
             richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha,
+            jack_alpha = jack_alpha,
             jack_max = jack_max,
             coverage_estimator = coverage_estimator,
             gamma = TRUE,
@@ -271,7 +294,6 @@ phylo_entropy.phylo_abd <- function(
         }
       )
     )
-
   } else {
     # Calculate entropy of each community in each group.
     # simplify2array() makes a matrix with the list of vectors.
@@ -293,7 +315,7 @@ phylo_entropy.phylo_abd <- function(
             probability_estimator = probability_estimator,
             unveiling = unveiling,
             richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha,
+            jack_alpha = jack_alpha,
             jack_max = jack_max,
             coverage_estimator = coverage_estimator,
             # Obtain a vector.
@@ -312,7 +334,9 @@ phylo_entropy.phylo_abd <- function(
 
   # Calculate the weighted mean of entropy and normalize
   the_entropy <- as.numeric(tree$intervals %*% t(phylo_entropies))
-  if (normalize) the_entropy <- the_entropy / sum(tree$intervals)
+  if (normalize) {
+    the_entropy <- the_entropy / sum(tree$intervals)
+  }
 
   return(the_entropy)
 }

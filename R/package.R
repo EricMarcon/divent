@@ -17,7 +17,6 @@
 #' @importFrom RcppParallel RcppParallelLibs
 #' @useDynLib divent, .registration = TRUE
 
-
 # Functions to reexport ----
 #' @export
 ggplot2::autoplot
@@ -61,22 +60,22 @@ base::as.matrix
 #'     labs(color = "Species", size = "Basal area")
 #'}
 autoplot.wmppp <- function(
-    object,
-    ...,
-    show.window = TRUE,
-    MaxPointTypes = 6,
-    Other = "Other",
-    main = NULL,
-    xlab = NULL,
-    ylab = NULL,
-    LegendLabels = NULL,
-    labelSize = "Weight",
-    labelColor = "Type",
-    palette="Set1",
-    windowColor = "black",
-    windowFill = "transparent",
-    alpha = 1) {
-
+  object,
+  ...,
+  show.window = TRUE,
+  MaxPointTypes = 6,
+  Other = "Other",
+  main = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  LegendLabels = NULL,
+  labelSize = "Weight",
+  labelColor = "Type",
+  palette = "Set1",
+  windowColor = "black",
+  windowFill = "transparent",
+  alpha = 1
+) {
   return(
     dbmss:::autoplot.wmppp(
       object = object,
@@ -187,7 +186,6 @@ utils::globalVariables("non_species_columns")
 "paracou_6_fundist"
 
 
-
 #' Mock data
 #'
 #' A simple dataset to test diversity functions.
@@ -213,7 +211,6 @@ utils::globalVariables("non_species_columns")
 "mock_3sp_tree"
 
 
-
 # Utilities ----
 
 # Names of variables inside functions:
@@ -229,7 +226,6 @@ utils::globalVariables("non_species_columns")
 # sample_coverage: coverage of order 1
 # coverage_deficit_2: coverage deficit of order 2 of the sample
 # species_names: char vector with the species names of the community
-
 
 #' check_divent_args
 #'
@@ -336,63 +332,65 @@ utils::globalVariables("non_species_columns")
 #' @keywords internal
 #'
 check_divent_args <- function(
-    abd = NULL,
-    abundances = NULL,
-    alpha = NULL,
-    as_numeric = NULL,
-    bootstrap = NULL,
-    check_arguments = NULL,
-    correction = NULL,
-    coverage_estimator = NULL,
-    distances = NULL,
-    distribution = NULL,
-    entropy_estimator = NULL,
-    estimator = NULL,
-    fisher_alpha = NULL,
-    gamma = NULL,
-    global = NULL,
-    jack_alpha = NULL,
-    jack_max = NULL,
-    k = NULL,
-    level = NULL,
-    n = NULL,
-    n_simulations = NULL,
-    normalize = NULL,
-    orders = NULL,
-    prob = NULL,
-    prob_geom = NULL,
-    probability_estimator = NULL,
-    q = NULL,
-    q_threshold = NULL,
-    r = NULL,
-    rate = NULL,
-    richness_estimator = NULL,
-    sample_coverage = NULL,
-    sd_lnorm = NULL,
-    show_progress = NULL,
-    similarities = NULL,
-    size = NULL,
-    species_number = NULL,
-    species_distribution = NULL,
-    thomas_mu = NULL,
-    thomas_scale = NULL,
-    tree = NULL,
-    use.names = NULL,
-    unveiling = NULL,
-    weights = NULL,
-    w_max = NULL,
-    w_mean = NULL,
-    w_min = NULL,
-    weibull_scale = NULL,
-    weibull_shape = NULL,
-    X = NULL,
-    win = NULL) {
-
+  abd = NULL,
+  abundances = NULL,
+  alpha = NULL,
+  as_numeric = NULL,
+  bootstrap = NULL,
+  check_arguments = NULL,
+  correction = NULL,
+  coverage_estimator = NULL,
+  distances = NULL,
+  distribution = NULL,
+  entropy_estimator = NULL,
+  estimator = NULL,
+  fisher_alpha = NULL,
+  gamma = NULL,
+  global = NULL,
+  jack_alpha = NULL,
+  jack_max = NULL,
+  k = NULL,
+  level = NULL,
+  n = NULL,
+  n_simulations = NULL,
+  normalize = NULL,
+  orders = NULL,
+  prob = NULL,
+  prob_geom = NULL,
+  probability_estimator = NULL,
+  q = NULL,
+  q_threshold = NULL,
+  r = NULL,
+  rate = NULL,
+  richness_estimator = NULL,
+  sample_coverage = NULL,
+  sd_lnorm = NULL,
+  show_progress = NULL,
+  similarities = NULL,
+  size = NULL,
+  species_number = NULL,
+  species_distribution = NULL,
+  thomas_mu = NULL,
+  thomas_scale = NULL,
+  tree = NULL,
+  use.names = NULL,
+  unveiling = NULL,
+  weights = NULL,
+  w_max = NULL,
+  w_mean = NULL,
+  w_min = NULL,
+  weibull_scale = NULL,
+  weibull_shape = NULL,
+  X = NULL,
+  win = NULL
+) {
   # Get the list of arguments of the parent function
   parent_function <- sys.call(-1)[[1]]
   # If apply() or similar was used, the function name is not in parent_function: sys.call(-1)[[1]] returns "FUN"
   if (parent_function == "FUN") {
-    warning("Function arguments cannot be checked, probably because you used apply(). Add check_arguments=FALSE to suppress this warning.")
+    warning(
+      "Function arguments cannot be checked, probably because you used apply(). Add check_arguments=FALSE to suppress this warning."
+    )
     return(TRUE)
   }
 
@@ -970,7 +968,10 @@ check_divent_args <- function(
   }
   # species_distribution
   if (!is.na(names(args["species_distribution"]))) {
-    species_distribution <- eval(expression(species_distribution), parent.frame())
+    species_distribution <- eval(
+      expression(species_distribution),
+      parent.frame()
+    )
     if (!is_species_distribution(species_distribution)) {
       error_message(
         "species_distribution must be an object of class 'species_distribution'",
@@ -1045,9 +1046,10 @@ check_divent_args <- function(
     if (!is.null(tree)) {
       if (
         !inherits(tree, "phylo_divent") &&
-        !inherits(tree, "phylo") &&
-        !inherits(tree, "phylog") &&
-        !inherits(tree, "hclust")) {
+          !inherits(tree, "phylo") &&
+          !inherits(tree, "phylog") &&
+          !inherits(tree, "hclust")
+      ) {
         error_message(
           "tree must be an object of class 'phylo_divent', 'phylo', 'phylog' or 'hclust'",
           tree,
@@ -1225,7 +1227,6 @@ check_divent_args <- function(
 #' @noRd
 #'
 chao_A <- function(abd) {
-
   # Calculate abundance distribution
   abd_distribution <- tapply(abd, INDEX = abd, FUN = length)
   s_1 <- as.numeric(abd_distribution["1"])
@@ -1263,9 +1264,9 @@ chao_A <- function(abd) {
 #' @noRd
 #'
 checked_matrix <- function(
-    sim_dist_matrix,
-    species_distribution) {
-
+  sim_dist_matrix,
+  species_distribution
+) {
   # Standardize the data to simplify the tests
   if (inherits(sim_dist_matrix, "dist")) {
     # dist objects are supported but the remainder assumes a matrix
@@ -1333,18 +1334,18 @@ checked_matrix <- function(
 #' @noRd
 #'
 ent_gamma_tsallis <- function(
-    species_distribution,
-    q,
-    estimator,
-    level,
-    probability_estimator,
-    unveiling,
-    richness_estimator,
-    jack_alpha,
-    jack_max,
-    coverage_estimator,
-    as_numeric) {
-
+  species_distribution,
+  q,
+  estimator,
+  level,
+  probability_estimator,
+  unveiling,
+  richness_estimator,
+  jack_alpha,
+  jack_max,
+  coverage_estimator,
+  as_numeric
+) {
   # Build the metacommunity
   abundances <- metacommunity(
     species_distribution,
@@ -1359,8 +1360,8 @@ ent_gamma_tsallis <- function(
     # Calculate the sample coverage and change the estimator.
     sample_coverage <- coverage(
       colSums(
-        species_distribution[
-          , !colnames(species_distribution) %in% non_species_columns
+        species_distribution[,
+          !colnames(species_distribution) %in% non_species_columns
         ]
       ),
       estimator = coverage_estimator,
@@ -1374,11 +1375,14 @@ ent_gamma_tsallis <- function(
 
   # Compute the entropy. Call the appropriate function for its estimators.
   # Richness estimators are specific
-  if (q == 0 && estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")) {
+  if (
+    q == 0 &&
+      estimator %in% c("jackknife", "iChao1", "Chao1", "rarefy", "naive")
+  ) {
     the_diversity <- div_richness(
       abundances,
       estimator = estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       level = level,
       probability_estimator = probability_estimator,
@@ -1406,7 +1410,7 @@ ent_gamma_tsallis <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       as_numeric = as_numeric,
@@ -1421,7 +1425,7 @@ ent_gamma_tsallis <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       as_numeric = as_numeric,
@@ -1436,7 +1440,7 @@ ent_gamma_tsallis <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       sample_coverage = sample_coverage,
       as_numeric = as_numeric,
@@ -1514,9 +1518,9 @@ is_integer_values <- function(x) {
 #' @noRd
 #'
 phylo_abd <- function(
-    abundances,
-    tree) {
-
+  abundances,
+  tree
+) {
   # Calculate abundances along the tree, that are a list of matrices
   sapply(
     # Each phylogenetic group yields an item of the list

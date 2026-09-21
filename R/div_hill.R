@@ -84,24 +84,35 @@ div_hill <- function(x, q = 1, ...) {
 #'
 #' @export
 div_hill.numeric <- function(
-    x,
-    q = 1,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    q_threshold = 10,
-    sample_coverage = NULL,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q_threshold = 10,
+  sample_coverage = NULL,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -119,7 +130,7 @@ div_hill.numeric <- function(
     # Apply the naive estimator of diversity because rounding errors
     # of exp_q(entropy) are greater than its bias
     prob <- x / sum(x)
-    the_diversity <- sum(prob^q)^(1/(1 - q))
+    the_diversity <- sum(prob^q)^(1 / (1 - q))
     # Possible rounding error again
     if (is.infinite(the_diversity)) {
       # Berger Parker index
@@ -145,7 +156,7 @@ div_hill.numeric <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       sample_coverage = sample_coverage,
@@ -172,24 +183,35 @@ div_hill.numeric <- function(
 #'
 #' @export
 div_hill.species_distribution <- function(
-    x,
-    q = 1,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    q_threshold = 10,
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q_threshold = 10,
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -213,7 +235,7 @@ div_hill.species_distribution <- function(
       MARGIN = 1,
       FUN = function(distribution) {
         prob <- distribution / sum(distribution)
-        the_diversity <- sum(prob^q)^(1/(1 - q))
+        the_diversity <- sum(prob^q)^(1 / (1 - q))
         if (is.infinite(the_diversity)) {
           # Berger Parker index if rounding errors
           the_diversity <- 1 / max(prob)
@@ -244,7 +266,7 @@ div_hill.species_distribution <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       gamma = gamma,

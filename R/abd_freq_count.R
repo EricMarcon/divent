@@ -30,22 +30,24 @@
 #' @examples
 #' abd_freq_count(as.numeric(paracou_6_abd[1, ]))
 abd_freq_count <- function(
-    abd,
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    check_arguments = TRUE) {
-
+  abd,
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  check_arguments = TRUE
+) {
   # Check arguments
   probability_estimator <- match.arg(probability_estimator)
   unveiling <- match.arg(unveiling)
   richness_estimator <- match.arg(richness_estimator)
   coverage_estimator <- match.arg(coverage_estimator)
-  if (check_arguments) check_divent_args()
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Convert to integer values
   if (length(abd) == 0) {
@@ -82,7 +84,7 @@ abd_freq_count <- function(
         abd,
         sample_coverage = level,
         estimator = coverage_estimator,
-        as_numeric  = TRUE,
+        as_numeric = TRUE,
         check_arguments = FALSE
       )
     }
@@ -95,8 +97,8 @@ abd_freq_count <- function(
           sum(
             exp(
               lchoose(abd_int, nu) +
-              lchoose(sample_size - abd_int, level - nu) -
-              lchoose(sample_size, level)
+                lchoose(sample_size - abd_int, level - nu) -
+                lchoose(sample_size, level)
             )
           )
         },
@@ -126,8 +128,8 @@ abd_freq_count <- function(
             sum(
               exp(
                 lchoose(level, nu) +
-                nu * log(prob_s_0) +
-                (level - nu) * log(1 - prob_s_0)
+                  nu * log(prob_s_0) +
+                  (level - nu) * log(1 - prob_s_0)
               )
             )
           },
@@ -139,7 +141,8 @@ abd_freq_count <- function(
     return(
       tibble::tibble(
         abundance = seq_len(level),
-        number_of_species = s_nu)
+        number_of_species = s_nu
+      )
     )
   }
 }

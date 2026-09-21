@@ -23,10 +23,12 @@ NULL
 #'
 #' @export
 abd_species <- function(
-    abundances,
-    check_arguments = TRUE) {
-
-  if (check_arguments) check_divent_args()
+  abundances,
+  check_arguments = TRUE
+) {
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Keep species columns only
   return(
@@ -39,11 +41,13 @@ abd_species <- function(
 #'
 #' @export
 abd_sum <- function(
-    abundances,
-    as_numeric = FALSE,
-    check_arguments = TRUE) {
-
-  if (check_arguments) check_divent_args()
+  abundances,
+  as_numeric = FALSE,
+  check_arguments = TRUE
+) {
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Keep species columns only
   the_abd_sum <- rowSums(
@@ -68,14 +72,15 @@ abd_sum <- function(
 #'
 #' @export
 prob_species <- function(
-    species_distribution,
-    check_arguments = TRUE) {
-
-  if (check_arguments) check_divent_args()
+  species_distribution,
+  check_arguments = TRUE
+) {
+  if (check_arguments) {
+    check_divent_args()
+  }
 
   # Keep species columns only
-  the_abundances <- species_distribution[
-    ,
+  the_abundances <- species_distribution[,
     !colnames(species_distribution) %in% non_species_columns
   ]
   sample_sizes <- rowSums(the_abundances)

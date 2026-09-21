@@ -55,13 +55,13 @@ ent_gen_simpson <- function(x, ...) {
 #'
 #' @export
 ent_gen_simpson.numeric <- function(
-    x,
-    k = 1,
-    estimator = c("Zhang", "naive"),
-    as_numeric  = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 1,
+  estimator = c("Zhang", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -114,14 +114,14 @@ ent_gen_simpson.numeric <- function(
 #'
 #' @export
 ent_gen_simpson.species_distribution <- function(
-    x,
-    k = 1,
-    estimator = c("Zhang", "naive"),
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 1,
+  estimator = c("Zhang", "naive"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {

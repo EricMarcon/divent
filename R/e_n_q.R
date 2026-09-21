@@ -35,7 +35,7 @@ e_n_q <- function(n, q) {
   } else {
     # beta cannot be computed for n - q + 1 < 0 (so warnings must be suppressed)
     # but the value is 0 then
-    beta_value  <- suppressWarnings(gamma(q) / beta(n - q + 1, q))
+    beta_value <- suppressWarnings(gamma(q) / beta(n - q + 1, q))
     beta_value[n - q + 1 < 0] <- 0
     # (-1)^n is problematic for long vectors (returns NA for large values).
     # It is replaced by 1 - n %% 2 * 2 (n is rounded if is not an integer)

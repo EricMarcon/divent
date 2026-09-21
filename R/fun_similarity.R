@@ -22,11 +22,11 @@
 #' hist(fun_similarity(paracou_6_fundist))
 #'
 fun_similarity <- function(
-    distances,
-    exponential = TRUE,
-    rate = 1,
-    check_arguments = TRUE) {
-
+  distances,
+  exponential = TRUE,
+  rate = 1,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     # Names

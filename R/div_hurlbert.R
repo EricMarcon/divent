@@ -47,13 +47,13 @@ div_hurlbert <- function(x, k = 1, ...) {
 #'
 #' @export
 div_hurlbert.numeric <- function(
-    x,
-    k = 2,
-    estimator = c("Hurlbert", "naive"),
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 2,
+  estimator = c("Hurlbert", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -90,13 +90,13 @@ div_hurlbert.numeric <- function(
 #'
 #' @export
 div_hurlbert.species_distribution <- function(
-    x,
-    k = 2,
-    estimator = c("Hurlbert", "naive"),
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 2,
+  estimator = c("Hurlbert", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -140,7 +140,9 @@ div_hurlbert.species_distribution <- function(
 hurlbert_ent2div <- function(hurlbert_entropy, k) {
   # Relation between diversity and entropy
   # (D for diversity, S for entropy, k is the parameter)
-  f <- function(D, S, k) {D * (1 - (1 - 1 / D)^k) - S}
+  f <- function(D, S, k) {
+    D * (1 - (1 - 1 / D)^k) - S
+  }
   # Minimize it
   return(
     vapply(

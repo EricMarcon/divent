@@ -40,11 +40,11 @@ fit_rac <- function(x, ...) {
 #'
 #' @export
 fit_rac.numeric <- function(
-    x,
-    distribution = c("lnorm", "lseries", "geom", "bstick"),
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  distribution = c("lnorm", "lseries", "geom", "bstick"),
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   distribution <- match.arg(distribution)
   if (check_arguments) {
@@ -86,7 +86,7 @@ fit_rac.numeric <- function(
     # Evaluate alpha
     alpha <- vegan::fisher.alpha(abd)
     # May (1975) Ecology and Evolution of Communities, Harvard University Press.
-    sei <- function(t) exp(-t)/t
+    sei <- function(t) exp(-t) / t
     rank <- vapply(
       nu,
       function(x) {
@@ -151,11 +151,11 @@ fit_rac.numeric <- function(
 #'
 #' @export
 fit_rac.species_distribution <- function(
-    x,
-    distribution = c("lnorm", "lseries", "geom", "bstick"),
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  distribution = c("lnorm", "lseries", "geom", "bstick"),
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   distribution <- match.arg(distribution)
   if (check_arguments) {

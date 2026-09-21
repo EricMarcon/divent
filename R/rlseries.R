@@ -30,11 +30,12 @@
 #' # rcommunity() may be a better choice here
 #' autoplot(rcommunity(1, size = 1E4, fisher_alpha = 40, distribution = "lseries"))
 rlseries <- function(
-    n,
-    size,
-    fisher_alpha,
-    show_progress = TRUE,
-    check_arguments = TRUE) {
+  n,
+  size,
+  fisher_alpha,
+  show_progress = TRUE,
+  check_arguments = TRUE
+) {
   # adapted from Dan Lunn, http://www.stats.ox.ac.uk/~dlunn/BS1_05/BS1_Rcode.pdf
   # Uncomment to limit to integer value
   # if (size + 1 == size || size - 1 == size) {
@@ -79,6 +80,8 @@ rlseries <- function(
       k <- k + 1
     }
   }
-  if (show_progress && interactive()) cli::cli_progress_done()
+  if (show_progress && interactive()) {
+    cli::cli_progress_done()
+  }
   return(abd)
 }

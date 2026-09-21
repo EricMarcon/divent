@@ -48,23 +48,34 @@ ent_tsallis <- function(x, q = 1, ...) {
 #'
 #' @export
 ent_tsallis.numeric <- function(
-    x,
-    q = 1,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    sample_coverage = NULL,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  sample_coverage = NULL,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -82,7 +93,9 @@ ent_tsallis.numeric <- function(
   # More than one value and their sum equal to 1
   if (sum(x > 0) > 1 && abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
     if (!is.null(level)) {
-      cli::cli_abort("Entropy can't be estimated at a level without the abundance of species.")
+      cli::cli_abort(
+        "Entropy can't be estimated at a level without the abundance of species."
+      )
     }
     # Probabilities sum to 1, allowing rounding error
     prob <- x[x > 0]
@@ -157,8 +170,8 @@ ent_tsallis.numeric <- function(
     # estimator may be ChaoShen or Marcon (max(ChaoShen, Grassberger))
     if (
       !is.null(sample_coverage) &&
-      is_integer_values(sample_size) &&
-      (estimator == "ChaoShen" || estimator == "Marcon")
+        is_integer_values(sample_size) &&
+        (estimator == "ChaoShen" || estimator == "Marcon")
     ) {
       cp <- sample_coverage * abd / sample_size
       chao_shen <- -sum(cp^q * ln_q(cp, q = q) / (1 - (1 - cp)^sample_size))
@@ -166,13 +179,19 @@ ent_tsallis.numeric <- function(
         # Calculate Grassberger's estimator
         if (q == 1) {
           grassberger <- sum(
-            abd / sample_size * (log(sample_size) - digamma(abd) -
-            (1 - round(abd) %% 2 * 2) / (abd + 1))
+            abd /
+              sample_size *
+              (log(sample_size) -
+                digamma(abd) -
+                (1 - round(abd) %% 2 * 2) / (abd + 1))
           )
         } else {
-          grassberger <- (1 - sample_size^(-q) * sum(e_n_q(abd, q = q))) / (q - 1)
+          grassberger <- (1 - sample_size^(-q) * sum(e_n_q(abd, q = q))) /
+            (q - 1)
         }
-      } else grassberger <- 0
+      } else {
+        grassberger <- 0
+      }
       # Take the max
       if (chao_shen > grassberger) {
         if (as_numeric) {
@@ -203,7 +222,9 @@ ent_tsallis.numeric <- function(
 
     ## Naive estimator ----
     if (!is_integer_values(abd)) {
-      cli::cli_alert_warning("The estimator can't be applied to non-integer values.")
+      cli::cli_alert_warning(
+        "The estimator can't be applied to non-integer values."
+      )
       estimator <- "naive"
     }
     if (estimator == "naive") {
@@ -246,7 +267,6 @@ ent_tsallis.numeric <- function(
     # w_v <- 1/V
     # the_entropy <- sum(prob * vapply(seq_along(abd), S_v, 0))
 
-
     ## Shannon ----
     if (q == 1) {
       return(
@@ -256,7 +276,7 @@ ent_tsallis.numeric <- function(
           probability_estimator = probability_estimator,
           unveiling = unveiling,
           richness_estimator = richness_estimator,
-          jack_alpha  = jack_alpha,
+          jack_alpha = jack_alpha,
           jack_max = jack_max,
           coverage_estimator = coverage_estimator,
           as_numeric = as_numeric,
@@ -320,10 +340,11 @@ ent_tsallis.numeric <- function(
         # eq7d_sum contains all terms of the sum except for r=0: the missing term equals 1.
         # The bias in Chao & Jost (2015) is that of the Hill number.
         # It must be divided by 1-q to be applied to entropy.
-        bias_chao_jost <- (
-          s_1 / sample_size *
-            (1 - A)^(1 - sample_size) * (A^(q - 1) - sum(eq7d_sum) - 1)
-          ) / (1 - q)
+        bias_chao_jost <- (s_1 /
+          sample_size *
+          (1 - A)^(1 - sample_size) *
+          (A^(q - 1) - sum(eq7d_sum) - 1)) /
+          (1 - q)
       }
       the_entropy <- ent_ZhangGrabchak + bias_chao_jost
       if (as_numeric) {
@@ -364,7 +385,7 @@ ent_tsallis.numeric <- function(
         estimator = probability_estimator,
         unveiling = "none",
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         q = q,
@@ -372,8 +393,12 @@ ent_tsallis.numeric <- function(
         check_arguments = FALSE
       )
     }
-    if (estimator == "ChaoShen" || estimator == "Marcon" || estimator == "GenCov") {
-      ent_cov <- -sum(prob_cov^q * ln_q(prob_cov, q) / (1 - (1 - prob_cov)^sample_size))
+    if (
+      estimator == "ChaoShen" || estimator == "Marcon" || estimator == "GenCov"
+    ) {
+      ent_cov <- -sum(
+        prob_cov^q * ln_q(prob_cov, q) / (1 - (1 - prob_cov)^sample_size)
+      )
     }
     if (estimator == "ChaoShen" || estimator == "GenCov") {
       if (as_numeric) {
@@ -419,7 +444,8 @@ ent_tsallis.numeric <- function(
       }
     }
     if (estimator == "Holste") {
-      the_entropy <- 1 / (1 - q) *
+      the_entropy <- 1 /
+        (1 - q) *
         (beta(s_obs + sample_size, q) * sum(1 / beta(abd + 1, q)) - 1)
       if (as_numeric) {
         return(the_entropy)
@@ -434,7 +460,8 @@ ent_tsallis.numeric <- function(
       }
     }
     if (estimator == "Bonachela") {
-      the_entropy <- 1 / (1 - q) *
+      the_entropy <- 1 /
+        (1 - q) *
         (beta(2 + sample_size, q) * sum(1 / beta(abd + 1, q)) - 1)
       if (as_numeric) {
         return(the_entropy)
@@ -448,7 +475,11 @@ ent_tsallis.numeric <- function(
         )
       }
     }
-    if (estimator == "UnveilC" || estimator == "UnveiliC" || estimator == "UnveilJ") {
+    if (
+      estimator == "UnveilC" ||
+        estimator == "UnveiliC" ||
+        estimator == "UnveilJ"
+    ) {
       # Unveil the probabilities
       prob_unv <- probabilities(
         abd,
@@ -540,7 +571,7 @@ ent_tsallis.numeric <- function(
       abd,
       # Unused
       estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       level = level,
       probability_estimator = probability_estimator,
@@ -570,10 +601,10 @@ ent_tsallis.numeric <- function(
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
-        as_numeric  = as_numeric,
+        as_numeric = as_numeric,
         check_arguments = FALSE
       )
     )
@@ -588,9 +619,9 @@ ent_tsallis.numeric <- function(
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
-        as_numeric  = as_numeric,
+        as_numeric = as_numeric,
         check_arguments = FALSE
       )
     )
@@ -602,10 +633,11 @@ ent_tsallis.numeric <- function(
     # Obtain Abundance Frequency Count
     abd_freq <- abd_freq_count(abd, level = level, check_arguments = FALSE)
     # Calculate entropy (Chao et al., 2014, eq. 6)
-    the_entropy <- (
-      sum(
-        ((seq_len(level)) / level)^q * abd_freq$number_of_species) - 1
-      ) / (1 - q)
+    the_entropy <- (sum(
+      ((seq_len(level)) / level)^q * abd_freq$number_of_species
+    ) -
+      1) /
+      (1 - q)
     if (as_numeric) {
       return(the_entropy)
     } else {
@@ -638,7 +670,8 @@ ent_tsallis.numeric <- function(
       function(nu) {
         sum(
           exp(
-            lchoose(level, nu) + nu * log(prob_unv) +
+            lchoose(level, nu) +
+              nu * log(prob_unv) +
               (level - nu) * log(1 - prob_unv)
           )
         )
@@ -667,23 +700,34 @@ ent_tsallis.numeric <- function(
 #'
 #' @export
 ent_tsallis.species_distribution <- function(
-    x,
-    q = 1,
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak", "naive",
-                  "Bonachela", "Holste"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    gamma = FALSE,
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  q = 1,
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  gamma = FALSE,
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -707,7 +751,7 @@ ent_tsallis.species_distribution <- function(
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         as_numeric = as_numeric
@@ -729,7 +773,7 @@ ent_tsallis.species_distribution <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       as_numeric = as_numeric,

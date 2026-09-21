@@ -33,17 +33,17 @@ NULL
 #'
 #' @export
 plot.species_distribution <- function(
-    x,
-    type = c("RAC", "Metacommunity"),
-    ...,
-    fit_rac = FALSE,
-    distribution = c("lnorm", "lseries", "geom", "bstick"),
-    ylog = "y",
-    main = NULL,
-    xlab = "Rank",
-    ylab = NULL,
-    palette = "Set1") {
-
+  x,
+  type = c("RAC", "Metacommunity"),
+  ...,
+  fit_rac = FALSE,
+  distribution = c("lnorm", "lseries", "geom", "bstick"),
+  ylog = "y",
+  main = NULL,
+  xlab = "Rank",
+  ylab = NULL,
+  palette = "Set1"
+) {
   # Check arguments
   type <- match.arg(type)
   distribution <- match.arg(distribution)
@@ -171,7 +171,6 @@ plot.species_distribution <- function(
       ...
     )
   }
-
 }
 
 
@@ -185,17 +184,17 @@ plot.species_distribution <- function(
 #' @importFrom rlang .data
 #' @export
 autoplot.species_distribution <- function(
-    object,
-    ...,
-    fit_rac = FALSE,
-    distribution = c("lnorm", "lseries", "geom", "bstick"),
-    ylog = TRUE,
-    main = NULL,
-    xlab = "Rank",
-    ylab = NULL,
-    pch = 19,
-    cex = 1.5) {
-
+  object,
+  ...,
+  fit_rac = FALSE,
+  distribution = c("lnorm", "lseries", "geom", "bstick"),
+  ylog = TRUE,
+  main = NULL,
+  xlab = "Rank",
+  ylab = NULL,
+  pch = 19,
+  cex = 1.5
+) {
   # Prepare ylab
   if (is.null(ylab)) {
     if (is_probabilities(object)) {
@@ -264,7 +263,11 @@ autoplot.species_distribution <- function(
   the_plot <- the_plot +
     ggplot2::geom_point(
       data = the_data,
-      mapping = ggplot2::aes(x = .data$rank, y = .data$abundance, col = .data$site),
+      mapping = ggplot2::aes(
+        x = .data$rank,
+        y = .data$abundance,
+        col = .data$site
+      ),
       shape = pch,
       size = cex
     )
@@ -274,12 +277,18 @@ autoplot.species_distribution <- function(
     the_plot <- the_plot +
       ggplot2::geom_line(
         data = the_model,
-        mapping = ggplot2::aes(x = .data$rank, y = .data$abundance, col = .data$site)
+        mapping = ggplot2::aes(
+          x = .data$rank,
+          y = .data$abundance,
+          col = .data$site
+        )
       )
   }
 
   # Log Y-axis
-  if (ylog) the_plot <- the_plot + ggplot2::scale_y_log10()
+  if (ylog) {
+    the_plot <- the_plot + ggplot2::scale_y_log10()
+  }
 
   # No legend if single community
   if (nrow(object) == 1) {
