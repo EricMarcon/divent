@@ -199,7 +199,9 @@ utils::globalVariables("non_species_columns")
 #' @examples
 #' mock_3sp_abd
 #' mock_3sp_dist
-#' plot(mock_3sp_tree)
+#' if (require("ape")) {
+#'   plot(mock_3sp_tree, direction = "downwards")
+#' }
 #' axis(2)
 #'
 "mock_3sp_abd"
