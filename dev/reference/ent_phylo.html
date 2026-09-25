@@ -17,7 +17,7 @@ Several estimators are available to deal with incomplete sampling."><meta proper
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9017</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -211,7 +211,7 @@ See <a href="accum_hill.html">accum_tsallis</a> for details.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Entropy of each community</span></span></span>
 <span class="r-in"><span><span class="fu">ent_phylo</span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, q <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator     q entropy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       2   0.943</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       2   0.953</span>
@@ -222,14 +222,14 @@ See <a href="accum_hill.html">accum_tsallis</a> for details.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site          estimator     q entropy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site          estimator order entropy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity UnveilJ       2   0.949</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># At 80% coverage</span></span></span>
 <span class="r-in"><span><span class="fu">ent_phylo</span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, q <span class="op">=</span> <span class="fl">2</span>, level <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator     q entropy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       2   0.931</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       2   0.944</span>

@@ -169,30 +169,30 @@ Monographs*, **84**(1), 45–67.
 
 ``` r
 div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
-#> # A tibble: 4 × 4
-#>   site      weight estimator diversity
-#>   <chr>      <dbl> <chr>         <dbl>
-#> 1 subplot_1   1.56 UnveilJ        17.7
-#> 2 subplot_2   1.56 UnveilJ        21.3
-#> 3 subplot_3   1.56 UnveilJ        20.5
-#> 4 subplot_4   1.56 UnveilJ        16.4
+#> # A tibble: 4 × 5
+#>   site      weight estimator order diversity
+#>   <chr>      <dbl> <chr>     <dbl>     <dbl>
+#> 1 subplot_1   1.56 UnveilJ       2      17.7
+#> 2 subplot_2   1.56 UnveilJ       2      21.3
+#> 3 subplot_3   1.56 UnveilJ       2      20.5
+#> 4 subplot_4   1.56 UnveilJ       2      16.4
 
 # At 80% coverage
 div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, level = 0.8)
-#> # A tibble: 4 × 4
-#>   site      weight estimator diversity
-#>   <chr>      <dbl> <chr>         <dbl>
-#> 1 subplot_1   1.56 UnveilJ        14.4
-#> 2 subplot_2   1.56 UnveilJ        17.7
-#> 3 subplot_3   1.56 UnveilJ        16.7
-#> 4 subplot_4   1.56 UnveilJ        14.0
+#> # A tibble: 4 × 5
+#>   site      weight estimator order diversity
+#>   <chr>      <dbl> <chr>     <dbl>     <dbl>
+#> 1 subplot_1   1.56 UnveilJ       2      14.4
+#> 2 subplot_2   1.56 UnveilJ       2      17.7
+#> 3 subplot_3   1.56 UnveilJ       2      16.7
+#> 4 subplot_4   1.56 UnveilJ       2      14.0
 
 # Gamma entropy
 div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, gamma = TRUE)
 #> ! The estimator can't be applied to non-integer values.
 #> ! The estimator can't be applied to non-integer values.
-#> # A tibble: 1 × 3
-#>   site          estimator diversity
-#>   <chr>         <chr>         <dbl>
-#> 1 Metacommunity UnveilJ        19.5
+#> # A tibble: 1 × 4
+#>   site          estimator order diversity
+#>   <chr>         <chr>     <dbl>     <dbl>
+#> 1 Metacommunity UnveilJ       2      19.5
 ```

@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9017</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -304,13 +304,13 @@ entropy and diversity <span class="citation">(Marcon and Hérault
 2015)</span> can be calculated:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/div_phylo.html">div_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
-<span><span class="co">##   site      weight estimator diversity</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ        41.0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ        52.9</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ        46.1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ        43.2</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 5</span></span></span>
+<span><span class="co">##   site      weight estimator order diversity</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> subplot_1   1.56 UnveilJ       1      41.0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> subplot_2   1.56 UnveilJ       1      52.9</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> subplot_3   1.56 UnveilJ       1      46.1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> subplot_4   1.56 UnveilJ       1      43.2</span></span></code></pre>
 <p>Recall that all those functions can be applied to a numeric vector
 containing abundances, without having to build an object of class
 <code>abundances</code>.</p>

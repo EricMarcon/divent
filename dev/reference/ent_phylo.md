@@ -171,7 +171,7 @@ Monographs*, **84**(1), 45–67.
 # Entropy of each community
 ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 #> # A tibble: 4 × 5
-#>   site      weight estimator     q entropy
+#>   site      weight estimator order entropy
 #>   <chr>      <dbl> <chr>     <dbl>   <dbl>
 #> 1 subplot_1   1.56 UnveilJ       2   0.943
 #> 2 subplot_2   1.56 UnveilJ       2   0.953
@@ -182,14 +182,14 @@ ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, gamma = TRUE)
 #> ! The estimator can't be applied to non-integer values.
 #> ! The estimator can't be applied to non-integer values.
 #> # A tibble: 1 × 4
-#>   site          estimator     q entropy
+#>   site          estimator order entropy
 #>   <chr>         <chr>     <dbl>   <dbl>
 #> 1 Metacommunity UnveilJ       2   0.949
 
 # At 80% coverage
 ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, level = 0.8)
 #> # A tibble: 4 × 5
-#>   site      weight estimator     q entropy
+#>   site      weight estimator order entropy
 #>   <chr>      <dbl> <chr>     <dbl>   <dbl>
 #> 1 subplot_1   1.56 UnveilJ       2   0.931
 #> 2 subplot_2   1.56 UnveilJ       2   0.944

@@ -301,13 +301,13 @@ entropy and diversity (Marcon and Hérault 2015) can be calculated:
 div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
 ```
 
-    ## # A tibble: 4 × 4
-    ##   site      weight estimator diversity
-    ##   <chr>      <dbl> <chr>         <dbl>
-    ## 1 subplot_1   1.56 UnveilJ        41.0
-    ## 2 subplot_2   1.56 UnveilJ        52.9
-    ## 3 subplot_3   1.56 UnveilJ        46.1
-    ## 4 subplot_4   1.56 UnveilJ        43.2
+    ## # A tibble: 4 × 5
+    ##   site      weight estimator order diversity
+    ##   <chr>      <dbl> <chr>     <dbl>     <dbl>
+    ## 1 subplot_1   1.56 UnveilJ       1      41.0
+    ## 2 subplot_2   1.56 UnveilJ       1      52.9
+    ## 3 subplot_3   1.56 UnveilJ       1      46.1
+    ## 4 subplot_4   1.56 UnveilJ       1      43.2
 
 Recall that all those functions can be applied to a numeric vector
 containing abundances, without having to build an object of class

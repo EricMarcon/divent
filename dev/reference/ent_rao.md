@@ -132,7 +132,7 @@ ent_rao(paracou_6_abd, tree = paracou_6_taxo)
 # Similar to (but estimators are not the same)
 ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 #> # A tibble: 4 × 5
-#>   site      weight estimator     q entropy
+#>   site      weight estimator order entropy
 #>   <chr>      <dbl> <chr>     <dbl>   <dbl>
 #> 1 subplot_1   1.56 UnveilJ       2   0.943
 #> 2 subplot_2   1.56 UnveilJ       2   0.953
