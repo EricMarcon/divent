@@ -213,7 +213,7 @@ ent_phylo.species_distribution <- function(
           site = "Metacommunity",
           # estimator and order
           estimator = estimator,
-          q = q,
+          order = q,
           # Entropy
           entropy = the_entropy
         )
@@ -226,7 +226,7 @@ ent_phylo.species_distribution <- function(
           x[colnames(x) %in% non_species_columns],
           # estimator and order
           estimator = estimator,
-          q = q,
+          order = q,
           # Entropy
           entropy = the_entropy
         )
