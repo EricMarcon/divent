@@ -1,4 +1,4 @@
-# divent 0.5-4.9018
+# divent 0.5-4.9019
 
 ## Bug correction
 
@@ -6,6 +6,7 @@
 - all arguments are available in `accum_sp_hill()`.
 - similarities and distances were not checked correctly (#6 by @Bisaloo).
 - unnamed distance matrices could not always be used to compute similarity-based diversity.
+- `ent_rao()` returned incorrect values.
 
 ## Improvement
 

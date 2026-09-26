@@ -115,7 +115,7 @@ ent_rao.numeric <- function(
   # More than one value and their sum equal to 1
   if (sum(x > 0) > 1 && abs(sum(x) - 1) < length(x) * .Machine$double.eps) {
     # Probabilities sum to 1, allowing rounding error
-    the_entropy <- mean(distances %*% x)
+    the_entropy <- x %*% distances %*% x
     if (as_numeric) {
       return(the_entropy)
     } else {
@@ -178,10 +178,10 @@ ent_rao.numeric <- function(
 
   if (estimator == "naive") {
     # Naive estimator ----
-    the_entropy <- mean(distances %*% prob)
+    the_entropy <- prob %*% distances %*% prob
   } else if (estimator == "Lande") {
     # Lande's estimator ----
-    the_entropy <- mean(distances %*% prob) * sample_size / (sample_size - 1)
+    the_entropy <- prob %*% distances %*% prob * sample_size / (sample_size - 1)
   }
 
   # Return
