@@ -123,12 +123,12 @@ Approach.” *Theoretical Population Biology*, **21**(1), 24–43.
 # Entropy of each community
 ent_rao(paracou_6_abd, tree = paracou_6_taxo)
 #> # A tibble: 4 × 5
-#>   site      weight estimator order entropy
-#>   <chr>      <dbl> <chr>     <dbl>   <dbl>
-#> 1 subplot_1   1.56 Lande         2   0.970
-#> 2 subplot_2   1.56 Lande         2   0.977
-#> 3 subplot_3   1.56 Lande         2   0.973
-#> 4 subplot_4   1.56 Lande         2   0.973
+#>   site      weight estimator order entropy[,1]
+#>   <chr>      <dbl> <chr>     <dbl>       <dbl>
+#> 1 subplot_1   1.56 Lande         2       0.943
+#> 2 subplot_2   1.56 Lande         2       0.953
+#> 3 subplot_3   1.56 Lande         2       0.951
+#> 4 subplot_4   1.56 Lande         2       0.939
 # Similar to (but estimators are not the same)
 ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 #> # A tibble: 4 × 5
@@ -142,17 +142,17 @@ ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 # Functional entropy
 ent_rao(paracou_6_abd, distances = paracou_6_fundist)
 #> # A tibble: 4 × 5
-#>   site      weight estimator order entropy
-#>   <chr>      <dbl> <chr>     <dbl>   <dbl>
-#> 1 subplot_1   1.56 Lande         2   0.365
-#> 2 subplot_2   1.56 Lande         2   0.393
-#> 3 subplot_3   1.56 Lande         2   0.383
-#> 4 subplot_4   1.56 Lande         2   0.365
+#>   site      weight estimator order entropy[,1]
+#>   <chr>      <dbl> <chr>     <dbl>       <dbl>
+#> 1 subplot_1   1.56 Lande         2       0.334
+#> 2 subplot_2   1.56 Lande         2       0.355
+#> 3 subplot_3   1.56 Lande         2       0.354
+#> 4 subplot_4   1.56 Lande         2       0.323
 
 # gamma entropy
 ent_rao(paracou_6_abd, tree = paracou_6_taxo, gamma = TRUE)
 #> # A tibble: 1 × 4
-#>   site          estimator order entropy
-#>   <chr>         <chr>     <dbl>   <dbl>
-#> 1 Metacommunity Lande         2   0.976
+#>   site          estimator order entropy[,1]
+#>   <chr>         <chr>     <dbl>       <dbl>
+#> 1 Metacommunity Lande         2       0.949
 ```

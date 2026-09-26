@@ -1,6 +1,6 @@
 # Changelog
 
-## divent 0.5-4.9018
+## divent 0.5-4.9019
 
 ### Bug correction
 
@@ -14,6 +14,8 @@
   [@Bisaloo](https://github.com/Bisaloo)).
 - unnamed distance matrices could not always be used to compute
   similarity-based diversity.
+- [`ent_rao()`](https://ericmarcon.github.io/divent/dev/reference/ent_rao.md)
+  returned incorrect values.
 
 ### Improvement
 

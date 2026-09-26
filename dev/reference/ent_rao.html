@@ -23,7 +23,7 @@ incomplete sampling."><meta property="og:image" content="https://ericmarcon.gith
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9018</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5-4.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,12 +172,12 @@ Then, the order of species is assumed to be the same as that of the
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Entropy of each community</span></span></span>
 <span class="r-in"><span><span class="fu">ent_rao</span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 Lande         2   0.970</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 Lande         2   0.977</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.56 Lande         2   0.973</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 Lande         2   0.973</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy[,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 Lande         2       0.943</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 Lande         2       0.953</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.56 Lande         2       0.951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 Lande         2       0.939</span>
 <span class="r-in"><span><span class="co"># Similar to (but estimators are not the same)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ent_phylo.html">ent_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, q <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
@@ -191,19 +191,19 @@ Then, the order of species is assumed to be the same as that of the
 <span class="r-in"><span><span class="co"># Functional entropy</span></span></span>
 <span class="r-in"><span><span class="fu">ent_rao</span><span class="op">(</span><span class="va">paracou_6_abd</span>, distances <span class="op">=</span> <span class="va">paracou_6_fundist</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 Lande         2   0.365</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 Lande         2   0.393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.56 Lande         2   0.383</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 Lande         2   0.365</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site      weight estimator order entropy[,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> subplot_1   1.56 Lande         2       0.334</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> subplot_2   1.56 Lande         2       0.355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> subplot_3   1.56 Lande         2       0.354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> subplot_4   1.56 Lande         2       0.323</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># gamma entropy</span></span></span>
 <span class="r-in"><span><span class="fu">ent_rao</span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, gamma <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site          estimator order entropy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity Lande         2   0.976</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site          estimator order entropy[,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Metacommunity Lande         2       0.949</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
