@@ -1,4 +1,4 @@
-# divent 0.5-4.9019
+# divent 0.5-4.9020
 
 ## Bug correction
 
@@ -7,6 +7,7 @@
 - similarities and distances were not checked correctly (#6 by @Bisaloo).
 - unnamed distance matrices could not always be used to compute similarity-based diversity.
 - `ent_rao()` returned incorrect values.
+- The `estimator` argument was ignored in `profile_similarity()`.
 
 ## Improvement
 
