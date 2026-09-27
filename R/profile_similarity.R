@@ -304,6 +304,7 @@ profile_similarity.species_distribution <- function(
       # Arguments
       similarities = similarities,
       orders = orders,
+      estimator = estimator,
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       jack_alpha = jack_alpha,
