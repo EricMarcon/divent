@@ -1,6 +1,6 @@
 # Changelog
 
-## divent 0.5-4.9019
+## divent 0.5-4.9020
 
 ### Bug correction
 
@@ -16,6 +16,8 @@
   similarity-based diversity.
 - [`ent_rao()`](https://ericmarcon.github.io/divent/dev/reference/ent_rao.md)
   returned incorrect values.
+- The `estimator` argument was ignored in
+  [`profile_similarity()`](https://ericmarcon.github.io/divent/dev/reference/profile_similarity.md).
 
 ### Improvement
 
