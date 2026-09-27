@@ -165,17 +165,20 @@ ent_similarity.numeric <- function(
   }
 
   ## Metacommunity estimation ----
-  if (!is.null(sample_coverage)) {
-    # Force estimator to ChaoShen
-    estimator <- "ChaoShen"
-  } else {
-    # Calculate sample coverage
-    sample_coverage <- coverage(
-      abd,
-      estimator = coverage_estimator,
-      as_numeric = TRUE,
-      check_arguments = FALSE
-    )
+  if (estimator!= "naive") {
+    # useless with naive estimator
+    if (!is.null(sample_coverage)) {
+      # Force estimator to ChaoShen
+      estimator <- "ChaoShen"
+    } else {
+      # Calculate sample coverage
+      sample_coverage <- coverage(
+        abd,
+        estimator = coverage_estimator,
+        as_numeric = TRUE,
+        check_arguments = FALSE
+      )
+    }
   }
 
   ## Naive estimator ----
