@@ -33,7 +33,8 @@ div_part <- function(
     "Marcon",
     "UnveilC",
     "UnveiliC",
-    "ZhangGrabchak"
+    "ZhangGrabchak",
+    "naive"
   ),
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
