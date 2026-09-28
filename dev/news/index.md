@@ -1,6 +1,6 @@
 # Changelog
 
-## divent 0.5-4.9020
+## divent 0.5-4.9021
 
 ### Bug correction
 
@@ -25,6 +25,7 @@
   functions.
 - arguments `names` and `weights` are supported in all functions that
   create `species_distribution` objects.
+- naive estimator is now allowed in `divpart()`.
 
 ## divent 0.5-4
 
