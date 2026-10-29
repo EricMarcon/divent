@@ -37,8 +37,7 @@ jobs:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
       - name: Test coverage
-        run: covr::codecov(type="all")
-        shell: Rscript {0}
+        uses: codecov/codecov-action@v5
       - name: Install package for pkgdown
         run: R CMD INSTALL .
       - name: Build pkgdown site
