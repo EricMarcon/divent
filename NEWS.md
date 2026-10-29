@@ -13,7 +13,7 @@
 
 - argument `richness_estimator` has the same default value across functions.
 - arguments `names` and `weights` are supported in all functions that create `species_distribution` objects.
-- naive estimator is now allowed in `divpart()`.
+- "naive" estimator is now allowed in `divpart()`.
 
 # divent 0.5-4
 
