@@ -17,8 +17,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg) ![R-CMD-check](https://github.com/EricMarcon/divent/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/github/EricMarcon/divent/branch/master/graphs/badge.svg)](https://app.codecov.io/github/EricMarcon/divent) [![CodeFactor](https://www.codefactor.io/repository/github/ericmarcon/divent/badge/master)](https://www.codefactor.io/repository/github/ericmarcon/divent/overview/master) [![CRAN version](https://www.r-pkg.org/badges/version/divent)](https://CRAN.r-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/grand-total/divent)](https://CRAN.R-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/divent)](https://CRAN.R-project.org/package=divent)
-
+![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg) ![R-CMD-check](https://github.com/EricMarcon/divent/workflows/R-CMD-check/badge.svg) [![Codecov test coverage](https://codecov.io/gh/EricMarcon/divent/graph/badge.svg)](https://app.codecov.io/gh/EricMarcon/divent)
+[![CodeFactor](https://www.codefactor.io/repository/github/ericmarcon/divent/badge/master)](https://www.codefactor.io/repository/github/ericmarcon/divent/overview/master) [![CRAN version](https://www.r-pkg.org/badges/version/divent)](https://CRAN.r-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/grand-total/divent)](https://CRAN.R-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/divent)](https://CRAN.R-project.org/package=divent)
 <!-- badges: end -->
 
 `divent` is an R package that provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.

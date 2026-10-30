@@ -36,8 +36,6 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-      - name: Test coverage
-        uses: codecov/codecov-action@v5
       - name: Install package for pkgdown
         run: R CMD INSTALL .
       - name: Build pkgdown site
