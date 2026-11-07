@@ -12,7 +12,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GH_PAT }}
     steps:
       - name: Check out
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install pandoc
         uses: r-lib/actions/setup-pandoc@v2
       - name: Install R
