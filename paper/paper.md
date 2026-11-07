@@ -24,7 +24,7 @@ affiliations:
   index: 2
 - name: Université Paris-Saclay, INRAE, AgroParisTech, Paris-Saclay Applied Economics, F-91120, Palaiseau, France
   index: 3
-date: "18 September 2026"
+date: "7 November 2026"
 bibliography: ../inst/REFERENCES.bib
 ---
 
@@ -100,7 +100,7 @@ Generic functions (e.g., `div_hill()`) are used to allow two data formats, addre
 Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
 Spatially-explicit diversity measures require counting the number of neighbors around each individual.
-This task is run by a short C++ code integrated and parallelized by the *RcppParallel* package [@Allaire2015].
+This task is run by a short C++ code integrated and parallelized by the `RcppParallel` package [@Allaire2015].
 
 # Research impact statement
 
