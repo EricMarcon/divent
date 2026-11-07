@@ -18,8 +18,8 @@
     }
   };
 </script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Phylogenies in divent">
 </head>
@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6-0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Phylogenies in divent</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Phylogenies in divent</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/EricMarcon/divent/blob/master/vignettes/articles/phylogenies.Rmd" class="external-link"><code>vignettes/articles/phylogenies.Rmd</code></a></small>
@@ -119,13 +119,14 @@ and the last one.</p>
 clustering.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span></span>
+<span><span class="va">tree.hclust</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">as.dist</a></span><span class="op">(</span><span class="va">species_dist</span><span class="op">)</span>, </span>
+<span>  method <span class="op">=</span> <span class="st">"average"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
-<span>  <span class="va">tree.hclust</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">as.dist</a></span><span class="op">(</span><span class="va">species_dist</span><span class="op">)</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"average"</span></span>
-<span>  <span class="op">)</span>, </span>
+<span>  <span class="va">tree.hclust</span>,</span>
 <span>  hang <span class="op">=</span> <span class="op">-</span><span class="fl">0.01</span>, </span>
-<span>  axes <span class="op">=</span> <span class="cn">F</span></span>
+<span>  axes <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="phylogenies_files/figure-html/hclust-1.png" class="r-plt" alt="" width="700"></p>
@@ -140,7 +141,8 @@ clustering.</p>
 <p>Conversion to a <code>phylo</code> object is straightforward.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/emmanuelparadis/ape" class="external-link">"ape"</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree.phylo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">tree.hclust</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">tree.phylo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">tree.hclust</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree.phylo</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="phylogenies_files/figure-html/phylo-1.png" class="r-plt" alt="" width="700"></p>
 <p>Edge lengths have been divided by 2 during the conversion, as
@@ -164,7 +166,8 @@ be identical to other phylogenies.</p>
 <code>phylog</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://adeverse.github.io/ade4/" class="external-link">"ade4"</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree.phylog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/newick2phylog.html" class="external-link">hclust2phylog</a></span><span class="op">(</span><span class="va">tree.hclust</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">tree.phylog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/newick2phylog.html" class="external-link">hclust2phylog</a></span><span class="op">(</span><span class="va">tree.hclust</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree.phylog</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="phylogenies_files/figure-html/phylog-1.png" class="r-plt" alt="" width="700"></p>
 <p>Edge lengths are not stored directly in <code>phylog</code> objects.
@@ -186,7 +189,7 @@ between species <span class="math inline">\(s\)</span> ant <span class="math inl
 converted to <code>hclust</code>:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tree2.hclust</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="va">tree.phylog</span><span class="op">$</span><span class="va">Wdist</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="fl">2</span>, <span class="st">"average"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree2.hclust</span>, hang <span class="op">=</span> <span class="op">-</span><span class="fl">0.01</span>, axes <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree2.hclust</span>, hang <span class="op">=</span> <span class="op">-</span><span class="fl">0.01</span>, axes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="phylogenies_files/figure-html/unnamed-chunk-1-1.png" class="r-plt" alt="" width="700"></p>
 </div>
@@ -199,7 +202,8 @@ of the previous types.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ericmarcon.github.io/divent/">"divent"</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required package: Rcpp</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree.phylo_divent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phylo_divent.html">as_phylo_divent</a></span><span class="op">(</span><span class="va">tree.phylo</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">tree.phylo_divent</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phylo_divent.html">as_phylo_divent</a></span><span class="op">(</span><span class="va">tree.phylo</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree.phylo_divent</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="phylogenies_files/figure-html/phylo_divent-1.png" class="r-plt" alt="" width="700"></p>
 <p>Its <code>plot</code> method is that of <code>dendrogram</code>
@@ -272,7 +276,8 @@ group in the interval starting at 1.</li>
 functions.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">NewickABC</span> <span class="op">&lt;-</span> <span class="st">"(C:2,(A:1,B:1):1);"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">phyloABC</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">NewickABC</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">phyloABC</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">NewickABC</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">phyloABC</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="phylogenies_files/figure-html/Newick-1.png" class="r-plt" alt="" width="700"></p>
 </div>
@@ -287,7 +292,7 @@ functions.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

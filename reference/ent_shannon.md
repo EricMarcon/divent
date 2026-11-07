@@ -18,7 +18,7 @@ ent_shannon(
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
@@ -36,7 +36,7 @@ ent_shannon(
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
@@ -161,7 +161,7 @@ Physics A: Mathematical and General*, **37**(27), L295–L301.
 .  
   
 Shannon CE (1948). “A Mathematical Theory of Communication.” *The Bell
-System Technical Journal*, **27**(3), 379–423, 623–656.
+System Technical Journal*, **27**(3), 379–423.
 [doi:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x)
 .  
   

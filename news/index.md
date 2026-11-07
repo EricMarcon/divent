@@ -1,6 +1,38 @@
 # Changelog
 
+## divent 0.6-0
+
+Version reviewed by
+[JOSS](https://github.com/openjournals/joss-reviews/issues/10860).
+
+### Bug correction
+
+- species distributions made of a single individual were not recognized
+  correctly as abundance vectors, preventing the estimation of their
+  diversity at a level.
+- all arguments are available in
+  [`accum_sp_hill()`](https://ericmarcon.github.io/divent/reference/accum_sp_hill.md).
+- similarities and distances were not checked correctly
+  ([\#6](https://github.com/EricMarcon/divent/issues/6) by
+  [@Bisaloo](https://github.com/Bisaloo)).
+- unnamed distance matrices could not always be used to compute
+  similarity-based diversity.
+- [`ent_rao()`](https://ericmarcon.github.io/divent/reference/ent_rao.md)
+  returned incorrect values.
+- The `estimator` argument was ignored in
+  [`profile_similarity()`](https://ericmarcon.github.io/divent/reference/profile_similarity.md).
+
+### Improvement
+
+- argument `richness_estimator` has the same default value across
+  functions.
+- arguments `names` and `weights` are supported in all functions that
+  create `species_distribution` objects.
+- “naive” estimator is now allowed in `divpart()`.
+
 ## divent 0.5-4
+
+CRAN release: 2026-05-06
 
 ### Bug correction
 

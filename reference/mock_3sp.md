@@ -33,7 +33,15 @@ mock_3sp_dist
 #>   A B
 #> B 1  
 #> C 2 2
-plot(mock_3sp_tree)
+if (require("ape")) {
+  plot(mock_3sp_tree, direction = "downwards")
+}
+#> Loading required package: ape
+#> 
+#> Attaching package: ‘ape’
+#> The following objects are masked from ‘package:spatstat.geom’:
+#> 
+#>     edges, rotate
 axis(2)
 
 ```

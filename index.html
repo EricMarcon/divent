@@ -18,13 +18,13 @@
     }
   };
 </script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Entropy Partitioning to Measure Diversity">
 <meta name="description" content="Measurement and partitioning of diversity, based on Tsallis entropy, following Marcon and Herault (2015) &lt;doi:10.18637/jss.v067.i08&gt;. divent provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.">
 <meta property="og:description" content="Measurement and partitioning of diversity, based on Tsallis entropy, following Marcon and Herault (2015) &lt;doi:10.18637/jss.v067.i08&gt;. divent provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.">
-<meta property="og:image" content="https://ericmarcon.github.io/divent/logo.png">
+<meta property="og:image" content="https://ericmarcon.github.io/divent/logo.svg">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="index.html">divent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6-0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,26 +70,33 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="diversity-measures-based-on-entropy">Diversity measures based on Entropy<a class="anchor" aria-label="anchor" href="#diversity-measures-based-on-entropy"></a>
+<img src="logo.svg" class="logo" alt=""><h1 id="diversity-measures-based-on-entropy">Diversity measures based on Entropy<a class="anchor" aria-label="anchor" href="#diversity-measures-based-on-entropy"></a>
 </h1>
 </div>
 <!-- badges: start -->
 
-<p><strong>divent</strong> is an R package that provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.</p>
-<p>It is a reboot of the package <strong>entropart</strong> to make it tidy, easier to use and optimize the code that has been added along years of research.</p>
+<!-- badges: end -->
+<p><code>divent</code> is an R package that provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.</p>
+<p>It is a reboot of the <code>entropart</code> package to make it tidy, easier to use and optimize the code that has been added along years of research.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of divent from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>Install the package from CRAN. The current version is in the CRAN badge above.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"divent"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version of divent from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"EricMarcon/divent"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"EricMarcon/divent"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
+<div class="section level3">
+<h3 id="data-organisation">Data organisation<a class="anchor" aria-label="anchor" href="#data-organisation"></a>
+</h3>
 <p>In the divent package, individuals of different <em>species</em> are counted in several <em>communities</em> which may (or not) be aggregated to define a <em>metacommunity</em>. In the metacommunity, the probability to find a species in the weighted average of probabilities in communities. This is a naming convention, which may correspond to plots in a forest inventory or any data organized the same way.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Abundances of three communities with four species</span></span>
 <span><span class="va">abd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -108,14 +115,24 @@
 <span>  <span class="fu"><a href="reference/species_distribution.html">as_abundances</a></span><span class="op">(</span>weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># Plot it</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"Metacommunity"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-MetaCommunitydf-1.png" width="100%"></p>
-<p>Basic functions allow computing diversity of a community. Example data is a 6.25ha plot of rainforest in Paracou, French Guiana, divided into 4 subplots.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p><img src="reference/figures/README-MetaCommunitydf-1.png" alt="" width="100%"></p>
+<p>Communities can be simulated and plotted.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rcommunity.html">rcommunity</a></span><span class="op">(</span><span class="fl">1</span>, size <span class="op">=</span> <span class="fl">10000</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">rc</span>, fit_rac <span class="op">=</span> <span class="cn">TRUE</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-rcommunity-1.png" alt="" width="100%"></p>
+<p>Example data is a 6.25-ha plot of rainforest in Paracou, French Guiana, divided into 4 subplots.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">paracou_6_abd</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
+<p><img src="reference/figures/README-paracou6-1.png" alt="" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="taxonomic-diversity">Taxonomic diversity<a class="anchor" aria-label="anchor" href="#taxonomic-diversity"></a>
+</h3>
+<p>Basic functions allow computing diversity of a community.</p>
 <p>Entropies such as Shannon’s, Simpson’s, or Hurlbert’s, and explicit diversity (i.e. effective number of species), aka Hill numbers, are estimated.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Diversity of a tropical rainforest</span></span>
 <span><span class="fu"><a href="reference/div_richness.html">div_richness</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 5</span></span>
@@ -142,16 +159,15 @@
 <span><span class="co">#&gt; 3 subplot_3   1.56 Lande         2   0.980</span></span>
 <span><span class="co">#&gt; 4 subplot_4   1.56 Lande         2   0.972</span></span></code></pre></div>
 <p>By default, the best available estimator of diversity is used, according to the data. Diversity profiles are estimated.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/profile_hill.html">profile_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">autoplot</span></span></code></pre></div>
-<p><img src="reference/figures/README-div_profile-1.png" width="100%"></p>
-<p>Communities can be simulated and plotted.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rcommunity.html">rcommunity</a></span><span class="op">(</span><span class="fl">1</span>, size <span class="op">=</span> <span class="fl">10000</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">rc</span>, fit_rac <span class="op">=</span> <span class="cn">TRUE</span>, distribution <span class="op">=</span> <span class="st">"lnorm"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-rcommunity-1.png" width="100%"></p>
-<p>Phylogenetic entropy and diversity can be calculated if a phylogenetic (or functional), ultrametric tree is provided, with the state-of-the-art estimation-bias correction.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/profile_hill.html">profile_hill</a></span><span class="op">(</span><span class="va">paracou_6_abd</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">autoplot</span></span></code></pre></div>
+<p><img src="reference/figures/README-div_profile-1.png" alt="" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="phylogenetic-diversity">Phylogenetic diversity<a class="anchor" aria-label="anchor" href="#phylogenetic-diversity"></a>
+</h3>
+<p>Phylogenetic entropy and diversity can be calculated if a phylogenetic (or functional), ultrametric tree is provided, with the state-of-the-art estimation-bias correction.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Phylogenetic diversity of order 1, based on the taxonomy</span></span>
 <span><span class="fu"><a href="reference/div_phylo.html">div_phylo</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, tree <span class="op">=</span> <span class="va">paracou_6_taxo</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 4</span></span>
@@ -161,8 +177,12 @@
 <span><span class="co">#&gt; 2 subplot_2   1.56 UnveilJ        52.9</span></span>
 <span><span class="co">#&gt; 3 subplot_3   1.56 UnveilJ        46.1</span></span>
 <span><span class="co">#&gt; 4 subplot_4   1.56 UnveilJ        43.2</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="functional-diversity">Functional diversity<a class="anchor" aria-label="anchor" href="#functional-diversity"></a>
+</h3>
 <p>Similarity-based diversity is calculated, based on a similarity matrix.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Similarity is computed from the functional distance matrix of Paracou species</span></span>
 <span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fun_similarity.html">fun_similarity</a></span><span class="op">(</span><span class="va">paracou_6_fundist</span><span class="op">)</span></span>
 <span><span class="co"># Calculate diversity of order 2</span></span>
@@ -174,8 +194,12 @@
 <span><span class="co">#&gt; 2 subplot_2   1.56 UnveilJ       2      1.33</span></span>
 <span><span class="co">#&gt; 3 subplot_3   1.56 UnveilJ       2      1.32</span></span>
 <span><span class="co">#&gt; 4 subplot_4   1.56 UnveilJ       2      1.30</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="diversity-partitioning">Diversity partitioning<a class="anchor" aria-label="anchor" href="#diversity-partitioning"></a>
+</h3>
 <p>The diversity of a metacommunity, i.e. <span class="math inline">\(\gamma\)</span> diversity, can be partitioned into <span class="math inline">\(\alpha\)</span> (that of communities) and <span class="math inline">\(\beta\)</span> diversities.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Partitioning of diversity of order 1 (Shannon)</span></span>
 <span><span class="fu"><a href="reference/div_part.html">div_part</a></span><span class="op">(</span><span class="va">paracou_6_abd</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 7 × 6</span></span>
@@ -189,17 +213,18 @@
 <span><span class="co">#&gt; 6 subplot_3     community "UnveilJ"     1    105.     1.56</span></span>
 <span><span class="co">#&gt; 7 subplot_4     community "UnveilJ"     1     94.6    1.56</span></span></code></pre></div>
 </div>
+</div>
 <div class="section level2">
-<h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <p>A quick <a href="https://ericmarcon.github.io/divent/articles/divent.html">introduction</a> is in <code><a href="articles/divent.html">vignette("divent")</a></code>.</p>
 <p>A full documentation is available online, in the “Articles” section of the web site of the vignette.</p>
 <p>The <a href="https://EricMarcon.github.io/divent/dev/" class="external-link">documentation of the development version</a> is also available.</p>
 </div>
 <div class="section level2">
-<h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Marcon, E. and Herault, B. (2015). entropart: An R Package to Measure and Partition Diversity. <em>Journal of Statistical Software</em>. 67(8): 1-26.</p>
+<p>Marcon, E. &amp; Puech, F. (under review). divent : An R Package for Diversity Measures Based on Entropy. <em>Journal of Open Source Software</em>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -219,6 +244,12 @@
 </ul>
 </div>
 
+<div class="community">
+<h2 data-toc-skip>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+</ul>
+</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
@@ -246,7 +277,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

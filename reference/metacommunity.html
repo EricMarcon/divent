@@ -5,9 +5,9 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Aggregate communities into a metacommunity — metacommunity"><meta name="description" content="Abundances of communities are summed according to their weights to obtain
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Aggregate communities into a metacommunity — metacommunity"><meta name="description" content="Abundances of communities are summed according to their weights to obtain
 the abundances of the metacommunity."><meta property="og:description" content="Abundances of communities are summed according to their weights to obtain
-the abundances of the metacommunity."><meta property="og:image" content="https://ericmarcon.github.io/divent/logo.png"></head><body>
+the abundances of the metacommunity."><meta property="og:image" content="https://ericmarcon.github.io/divent/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ the abundances of the metacommunity."><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6-0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ the abundances of the metacommunity."><meta property="og:image" content="https:/
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Aggregate communities into a metacommunity</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Aggregate communities into a metacommunity</h1>
       <small class="dont-index">Source: <a href="https://github.com/EricMarcon/divent/blob/master/R/metacommunity.R" class="external-link"><code>R/metacommunity.R</code></a></small>
       <div class="d-none name"><code>metacommunity.Rd</code></div>
     </div>
@@ -67,7 +67,7 @@ the abundances of the metacommunity.</p>
 <span>  check_arguments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'abundances'</span></span>
+<span><span class="co"># S3 method for class 'species_distribution'</span></span>
 <span><span class="fu">metacommunity</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"metacommunity"</span>,</span>
@@ -82,8 +82,9 @@ the abundances of the metacommunity.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>An object of class <a href="species_distribution.html">abundances</a> that contains several communities or
-a matrix of abundances with communities in rows and species in columns.</p></dd>
+<dd><p>An object of class <a href="species_distribution.html">species_distribution</a> that contains several
+communities or a matrix of abundances with communities in rows and species
+in columns.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
@@ -109,8 +110,8 @@ Should be set to <code>FALSE</code> to save time when the arguments have been ch
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <a href="species_distribution.html">abundances</a> with a single row or a named vector
-if <code>as_numeric = TRUE</code>.</p>
+    <p>An object of class <a href="species_distribution.html">abundances</a> or <a href="probabilities.html">probabilities</a> with a single
+row, or a named vector if <code>as_numeric = TRUE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -151,7 +152,7 @@ estimators.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

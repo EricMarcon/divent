@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Spatial Accumulation of Diversity — accum_sp"><meta name="description" content="A spatial accumulation is a measure of diversity with respect to the distance from individuals."><meta property="og:description" content="A spatial accumulation is a measure of diversity with respect to the distance from individuals."><meta property="og:image" content="https://ericmarcon.github.io/divent/logo.png"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Spatial Accumulation of Diversity — accum_sp"><meta name="description" content="A spatial accumulation is a measure of diversity with respect to the distance from individuals."><meta property="og:description" content="A spatial accumulation is a measure of diversity with respect to the distance from individuals."><meta property="og:image" content="https://ericmarcon.github.io/divent/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">divent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5-4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6-0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Spatial Accumulation of Diversity</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Spatial Accumulation of Diversity</h1>
       <small class="dont-index">Source: <a href="https://github.com/EricMarcon/divent/blob/master/R/accum_sp.R" class="external-link"><code>R/accum_sp.R</code></a></small>
       <div class="d-none name"><code>accum_sp.Rd</code></div>
     </div>
@@ -121,7 +121,7 @@ control the kernel smoothing and to <a href="https://rdrr.io/pkg/spatstat.geom/m
 
 
 <dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
-<dd><p>a number: the order of diversity.</p></dd>
+<dd><p>the order of diversity to plot; by default: the first available.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
@@ -255,7 +255,9 @@ mixing (<code>accum_sp_mixing</code> objects) at distances from the individuals.
 <p>These objects are lists:</p><ul><li><p><code>X</code> contains the <a href="https://ericmarcon.github.io/dbmss/reference/wmppp.html" class="external-link">dbmss::wmppp</a> point pattern,</p></li>
 <li><p><code>accumulation</code> is a 3-dimensional array, with orders of diversity in rows,
 neighborhood size (number of points or distance) in columns and a single slice
-for the observed entropy, diversity or mixing.</p></li>
+for the observed entropy, diversity or mixing. If simulations of a null
+hypothesis were run, slices 2 to 4 contain respectively the theoretical (i.e,
+mean simulated) value, the lower and upper bounds of the confidence interval.</p></li>
 <li><p><code>neighborhoods</code> is a similar 3-dimensional array with one slice per point
 of <code>X</code>.</p></li>
 </ul><p>They can be plotted or mapped.</p>
@@ -282,7 +284,7 @@ of <code>X</code>.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

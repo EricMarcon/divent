@@ -17,7 +17,7 @@ div_hill(
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
@@ -37,7 +37,7 @@ div_hill(
   level = NULL,
   probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
   unveiling = c("geometric", "uniform", "none"),
-  richness_estimator = c("jackknife", "iChao1", "Chao1", "naive"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
   jack_alpha = 0.05,
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
@@ -237,7 +237,9 @@ Consequences.” *Ecology*, **54**(2), 427–432.
   
 Holste D, Große I, Herzel H (1998). “Bayes' Estimators of Generalized
 Entropies.” *Journal of Physics A: Mathematical and General*,
-**31**(11), 2551–2566.  
+**31**(11), 2551–2566.
+[doi:10.1088/0305-4470/31/11/007](https://doi.org/10.1088/0305-4470/31/11/007)
+.  
   
 Marcon E (2015). “Practical Estimation of Diversity from Abundance
 Data.” *HAL*, **01212435**(version 2).  

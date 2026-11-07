@@ -319,9 +319,9 @@ estimateD(spider$Girdled, level = 300)
 ```
 
     ##   Assemblage   m        Method Order.q        SC        qD    qD.LCL    qD.UCL
-    ## 1       data 300 Extrapolation       0 0.9579518 33.317733 25.804082 40.831384
-    ## 2       data 300 Extrapolation       1 0.9579518 12.869603 10.314593 15.424612
-    ## 3       data 300 Extrapolation       2 0.9579518  7.983882  5.993923  9.973841
+    ## 1       data 300 Extrapolation       0 0.9579518 33.317733 24.478186 42.157280
+    ## 2       data 300 Extrapolation       1 0.9579518 12.869603 10.262654 15.476551
+    ## 3       data 300 Extrapolation       2 0.9579518  7.983882  6.498796  9.468968
 
 ``` r
 
