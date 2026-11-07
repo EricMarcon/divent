@@ -1,4 +1,6 @@
-# divent 0.5-4.9021
+# divent 0.6-0
+
+Version reviewed by [JOSS](https://github.com/openjournals/joss-reviews/issues/10860).
 
 ## Bug correction
 
