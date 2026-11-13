@@ -6,6 +6,10 @@
 
 ## Code
 
+### `profile_hill/.species_distribution()`
+
+Add `as_numeric` argument.
+
 ### `div_part()`
 
 1.  Support a vector of orders.
