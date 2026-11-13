@@ -36,7 +36,7 @@ It provides functions to estimate $\alpha$, $\beta$ and $\gamma$ diversity of co
 It is a reboot of the [`entropart`](https://cloud.r-project.org/package=entropart) R package to make it easier to use and computationally more efficient.
 It also extends its functionality.
 
-Data may be abundance vectors or matrices (the number of individual per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
+Data may be abundance vectors or matrices (the number of individuals per species, possibly per site), lists of individuals, or point patterns to address spatially-explicit diversity.
 Random communities can be simulated (function `rcommunity()`) and spatialized (function `rspcommunity()`).
 The main functions allow computing:
 
@@ -44,7 +44,7 @@ The main functions allow computing:
 - Phylogenetic (`ent_phylo()`) or functional (`ent_similarity()`) entropy when dissimilarities between species are taken into account in a dendrogram or a similarity matrix.
 - Effective numbers of species, aka Hill numbers, for all entropies (`div_hill()`, `div_phylo()`, `div_similarity()`).
 - Diversity partitioning (`div_part()`), i.e. $\alpha$, $\beta$ and $\gamma$ diversity of a set of communities.
-- Diversity profiles (`profile_hill()`, `profile_phylo()`, `profile_similarity()`), with respect to the order or diversity.
+- Diversity profiles (`profile_hill()`, `profile_phylo()`, `profile_similarity()`), with respect to the order of diversity.
 - Diversity accumulation curves (`accum_hill()`) with respect to the sample size or coverage.
 - Spatial accumulation of diversity (`accum_sp_hill()`) with respect to the distance from individuals, with maps (`plot_map()`).
 
@@ -60,13 +60,13 @@ Entropy is the expected amount of information brought by an individual.
 Generalized entropy [@Tsallis1988] allows choosing the balance between rare and abundant species.
 Classical indices of biodiversity such as Shannon's and Simpson's indices are just special cases of generalized entropy.
 Phylogenetic and functional entropy extend the definition taking into account the dissimilarity between species summarized respectively in a dendrogram [@Marcon2014b] or a distance matrix [@Leinster2012].
-Finally, Hill numbers [@Hill1973] are the number of species with equal abundance that would have the same entropy as the data, allowing measuring diversity as a effective number.
+Finally, Hill numbers [@Hill1973] are the number of species with equal abundance that would have the same entropy as the data, allowing measuring diversity as an effective number.
 
 Data are generally a sample of a community, requiring estimators of entropy [@Marcon2015a].
 Estimators of richness (i.e., the number of species), Shannon's entropy or generalized entropy rely on elaborate computing implemented in `divent` (converting estimated entropy into diversity is straightforward).
 When the sampling effort is not sufficient to allow estimating asymptotic diversity, standardized diversity for a chosen sampling level is necessary and diversity accumulation with respect to the sample size can be estimated [@Chao2014].
 
-Spatially-explicit diversity raises an increasing interest [@Wiegand2017] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
+Spatially-explicit diversity is attracting increasing interest [@Wiegand2017] to address the diversity of the neighborhood of individuals rather than the diversity of an arbitrary plot.
 The spatial accumulation of diversity with respect to the size of the neighborhood is an efficient tool to understand community assembly rules [@Shen2013b; @Wiegand2017].
 When individual location is not available, the partitioning of the diversity of a set of communities [@Whittaker1960], called $\gamma$ diversity, into the average diversity of communities ($\alpha$ diversity) and their divergence ($\beta$ diversity) is necessary, whatever the diversity considered, for the same purposes.
 
@@ -75,7 +75,7 @@ The `divent` R package enables all these diversity features to be computed.
 # State of the field
 
 The `entropart` R package [@Marcon2014c] was first published in 2015 and augmented following the literature and the research programs of the authors.
-It suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistence between the behavior of different functions.
+It suffers from its incremental development and some obsolete choices such as the organisation of the data, camel-case names of objects, and the insufficient consistency between the behavior of different functions.
 These issues justified a complete refactoring.
 Spatially-explicit diversity [@Shimatani2001; @Marcon2023] is completely new in `divent`.
 
@@ -92,11 +92,11 @@ Additionally, `iNEXT.3D` addresses temporal changes in diversity (`divent` does 
 
 # Software design
 
-`divent` is a written in S3, the object-oriented programming framework provided directly within base R.
-It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to packages `roxygen2` [@Wickham2025] for R objects, `Rdpack` [@Boshnakov2026] for references and `pkgdown` [@Wickham2025a] for online manual.
+`divent` is written in S3, the object-oriented programming framework provided directly within base R.
+It follows the state-of-the-art design of R packages [@Wickham2023], namely function naming with prefixes (e.g., `ent_*` functions compute entropy), extensive documentation thanks to the packages `roxygen2` [@Wickham2025] for R objects, `Rdpack` [@Boshnakov2026] for references and `pkgdown` [@Wickham2025a] for an online manual.
 Continuous integration including unit tests [@Wickham2011] and coverage [@Hester2025] is hosted by GitHub.
 
-Generic functions (e.g., `div_hill()`) are used to allow two data formats, addressed by their respective method: numeric vectors containing the number of individual per species (function `div_hill.numeric()`) or objects of class `species_distributions` (function `div_hill.species_distribution()`), which are `data.frame`s whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherits from `species_distributions`) or probabilities (class `probabilities`).
+Generic functions (e.g., `div_hill()`) are used to allow two data formats, addressed by their respective methods: numeric vectors containing the number of individuals per species (function `div_hill.numeric()`) or objects of class `species_distributions` (function `div_hill.species_distribution()`), which are `data.frame`s whose rows are communities, columns are species and values are abundances (objects of class `abundances`, that inherit from `species_distributions`) or probabilities (class `probabilities`).
 Functions to convert a classical abundance matrix, a list of individuals or a point pattern to an `abundances` object are provided.
 
 Spatially-explicit diversity measures require counting the number of neighbors around each individual.
