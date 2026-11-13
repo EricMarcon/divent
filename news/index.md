@@ -2,6 +2,8 @@
 
 ## divent 0.6-0
 
+CRAN release: 2026-11-07
+
 Version reviewed by
 [JOSS](https://github.com/openjournals/joss-reviews/issues/10860).
 
