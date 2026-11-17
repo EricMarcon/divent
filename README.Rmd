@@ -17,8 +17,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg) ![R-CMD-check](https://github.com/EricMarcon/divent/workflows/R-CMD-check/badge.svg) [![Codecov test coverage](https://codecov.io/gh/EricMarcon/divent/graph/badge.svg)](https://app.codecov.io/gh/EricMarcon/divent)
-[![CodeFactor](https://www.codefactor.io/repository/github/ericmarcon/divent/badge/master)](https://www.codefactor.io/repository/github/ericmarcon/divent/overview/master) [![CRAN version](https://www.r-pkg.org/badges/version/divent)](https://CRAN.r-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/grand-total/divent)](https://CRAN.R-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/divent)](https://CRAN.R-project.org/package=divent)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.10860/status.svg)](https://doi.org/10.21105/joss.10860) ![R-CMD-check](https://github.com/EricMarcon/divent/workflows/R-CMD-check/badge.svg) [![Codecov test coverage](https://codecov.io/gh/EricMarcon/divent/graph/badge.svg)](https://app.codecov.io/gh/EricMarcon/divent) [![CodeFactor](https://www.codefactor.io/repository/github/ericmarcon/divent/badge/master)](https://www.codefactor.io/repository/github/ericmarcon/divent/overview/master) [![CRAN version](https://www.r-pkg.org/badges/version/divent)](https://CRAN.r-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/grand-total/divent)](https://CRAN.R-project.org/package=divent) [![](https://cranlogs.r-pkg.org/badges/divent)](https://CRAN.R-project.org/package=divent)
+
 <!-- badges: end -->
 
 `divent` is an R package that provides functions to estimate alpha, beta and gamma diversity of communities, including phylogenetic and functional diversity.
@@ -101,7 +101,8 @@ By default, the best available estimator of diversity is used, according to the 
 Diversity profiles are estimated.
 
 ```{r div_profile}
-profile_hill(paracou_6_abd) %>% autoplot
+profile_hill(paracou_6_abd) |> 
+  autoplot()
 ```
 
 ### Phylogenetic diversity
@@ -143,8 +144,7 @@ The [documentation of the development version](https://EricMarcon.github.io/dive
 
 ## Citation
 
-Marcon, E.
-& Puech, F.
-(under review).
+Marcon, E., & Puech, F.
+(2026).
 divent : An R Package for Diversity Measures Based on Entropy.
-*Journal of Open Source Software*.
+*Journal of Open Source Software*, *11*(127), 10860. <https://doi.org/10.21105/joss.10860>
