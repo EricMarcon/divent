@@ -13,11 +13,16 @@ Source:
 [`inst/CITATION`](https://github.com/EricMarcon/divent/blob/master/inst/CITATION)
 
 Marcon, E. & Puech, F. (under revision). divent: An R Package for
-Diversity Measures Based on Entropy. Journal of Open Source Software.
+Diversity Measures Based on Entropy. Journal of Open Source Software,
+11(127), 10860. https://doi.org/10.21105/joss.10860
 
     @Article{,
       title = {divent: An {R} Package for Diversity Measures Based on Entropy},
       author = {Eric Marcon and Florence Puech},
       journal = {Journal of Open Source Software},
-      year = {under revision},
+      year = {2026},
+      volume = {11},
+      number = {127},
+      pages = {10860},
+      doi = {10.21105/joss.10860},
     }
