@@ -5,9 +5,10 @@
 
 <!-- badges: start -->
 
-![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.10860/status.svg)](https://doi.org/10.21105/joss.10860)
 ![R-CMD-check](https://github.com/EricMarcon/divent/workflows/R-CMD-check/badge.svg)
-[![codecov](https://codecov.io/github/EricMarcon/divent/branch/master/graphs/badge.svg)](https://app.codecov.io/github/EricMarcon/divent)
+[![Codecov test
+coverage](https://codecov.io/gh/EricMarcon/divent/graph/badge.svg)](https://app.codecov.io/gh/EricMarcon/divent)
 [![CodeFactor](https://www.codefactor.io/repository/github/ericmarcon/divent/badge/master)](https://www.codefactor.io/repository/github/ericmarcon/divent/overview/master)
 [![CRAN
 version](https://www.r-pkg.org/badges/version/divent)](https://CRAN.r-project.org/package=divent)
@@ -66,6 +67,7 @@ w <- c(1, 2, 1)
 
 # Organize the data
 library("divent")
+#> Le chargement a nécessité le package : Rcpp
 abd |>
   as_abundances(weights = w) |>
   # Plot it
@@ -133,7 +135,8 @@ By default, the best available estimator of diversity is used, according
 to the data. Diversity profiles are estimated.
 
 ``` r
-profile_hill(paracou_6_abd) %>% autoplot
+profile_hill(paracou_6_abd) |> 
+  autoplot()
 ```
 
 <img src="man/figures/README-div_profile-1.png" alt="" width="100%" />
@@ -147,13 +150,13 @@ estimation-bias correction.
 ``` r
 # Phylogenetic diversity of order 1, based on the taxonomy
 div_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 1)
-#> # A tibble: 4 × 4
-#>   site      weight estimator diversity
-#>   <chr>      <dbl> <chr>         <dbl>
-#> 1 subplot_1   1.56 UnveilJ        41.0
-#> 2 subplot_2   1.56 UnveilJ        52.9
-#> 3 subplot_3   1.56 UnveilJ        46.1
-#> 4 subplot_4   1.56 UnveilJ        43.2
+#> # A tibble: 4 × 5
+#>   site      weight estimator order diversity
+#>   <chr>      <dbl> <chr>     <dbl>     <dbl>
+#> 1 subplot_1   1.56 UnveilJ       1      41.0
+#> 2 subplot_2   1.56 UnveilJ       1      52.9
+#> 3 subplot_3   1.56 UnveilJ       1      46.1
+#> 4 subplot_4   1.56 UnveilJ       1      43.2
 ```
 
 ### Functional diversity
@@ -208,5 +211,6 @@ version](https://EricMarcon.github.io/divent/dev/) is also available.
 
 ## Citation
 
-Marcon, E. & Puech, F. (under review). divent : An R Package for
-Diversity Measures Based on Entropy. *Journal of Open Source Software*.
+Marcon, E., & Puech, F. (2026). divent : An R Package for Diversity
+Measures Based on Entropy. *Journal of Open Source Software*, *11*(127),
+10860. <https://doi.org/10.21105/joss.10860>
