@@ -406,7 +406,7 @@ check_divent_args <- function(
   if (!is.na(names(args["abd"]))) {
     abd <- eval(expression(abd), parent.frame())
     if (!is.null(abd)) {
-      if (!is.numeric(abd) && !is.vector(abd)) {
+      if (!is.numeric(abd) || !is.vector(abd)) {
         error_message(
           "abd must be a numeric vector",
           abd,
@@ -710,7 +710,7 @@ check_divent_args <- function(
   if (!is.na(names(args["orders"]))) {
     orders <- eval(expression(orders), parent.frame())
     if (!is.null(orders)) {
-      if (!is.numeric(orders) && !is.vector(orders)) {
+      if (!is.numeric(orders) || !is.vector(orders)) {
         error_message(
           "orders must be a numeric vector",
           orders,
@@ -723,7 +723,7 @@ check_divent_args <- function(
   if (!is.na(names(args["prob"]))) {
     prob <- eval(expression(prob), parent.frame())
     if (!is.null(prob)) {
-      if (!is.numeric(prob) && !is.vector(prob)) {
+      if (!is.numeric(prob) || !is.vector(prob)) {
         error_message(
           "prob must be a numeric vector",
           prob,
@@ -808,7 +808,7 @@ check_divent_args <- function(
   if (!is.na(names(args["r"]))) {
     r <- eval(expression(r), parent.frame())
     if (!is.null(r)) {
-      if (!is.numeric(r) && !is.vector(r)) {
+      if (!is.numeric(r) || !is.vector(r)) {
         error_message(
           "r must be a numeric vector",
           r,
@@ -1065,7 +1065,7 @@ check_divent_args <- function(
   if (!is.na(names(args["weights"]))) {
     weights <- eval(expression(weights), parent.frame())
     if (!is.null(weights)) {
-      if (!is.numeric(weights) && !is.vector(weights)) {
+      if (!is.numeric(weights) || !is.vector(weights)) {
         error_message(
           "weights must be a numeric vector",
           weights,
