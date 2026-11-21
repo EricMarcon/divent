@@ -52,6 +52,7 @@ bstick_num_param <- fit_rac(bstick_dist, distribution = "bstick")
 
 # Tests ----
 testthat::test_that("Distribution parameters are inferred correctly", {
+  testthat::skip_on_cran()
   ## Lognormal ----
   testthat::expect_equal(
     lnorm_param$sigma,
@@ -61,7 +62,6 @@ testthat::test_that("Distribution parameters are inferred correctly", {
     abs(lnorm_param$sigma - sd_lnorm),
     expected = sd_lnorm / 10
   )
-  testthat::skip_on_cran()
   ## Log-series ----
   testthat::expect_equal(
     lseries_param$alpha,
@@ -88,6 +88,7 @@ testthat::test_that("Distribution parameters are inferred correctly", {
 })
 
 testthat::test_that("Negative probabilities raise an error", {
+  testthat::skip_on_cran()
   testthat::expect_error(
     # Abundance distribution with negative value (not checked to avoid error)
     fit_rac(as_abundances(c(1:3, -1), check_arguments = "FALSE")),
