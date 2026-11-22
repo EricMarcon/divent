@@ -491,7 +491,7 @@ check_divent_args <- function(
     if (!is.null(distances) && !inherits(distances, "dist")) {
       if (!is.numeric(distances)) {
         error_message(
-          "distances must be a numeric",
+          "distances must be numeric",
           distances,
           parent_function
         )
@@ -586,7 +586,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(jack_alpha <= 0 | jack_alpha >= 1)) {
+    if (any(jack_alpha <= 0 || jack_alpha >= 1)) {
       error_message(
         "jack_alpha must be between 0 and 1",
         jack_alpha,
@@ -604,7 +604,7 @@ check_divent_args <- function(
         parent_function
       )
     }
-    if (any(jack_max < 1 | jack_max > 10)) {
+    if (any(jack_max < 1 || jack_max > 10)) {
       error_message(
         "jack_max must be between 1 and 10",
         jack_max,
@@ -767,7 +767,6 @@ check_divent_args <- function(
       }
     }
   }
-  # richness_estimator is checked by match.arg()
   # q
   if (!is.na(names(args["q"]))) {
     q <- eval(expression(q), parent.frame())
@@ -858,6 +857,7 @@ check_divent_args <- function(
       }
     }
   }
+  # richness_estimator is checked by match.arg()
   # sample_coverage
   if (!is.na(names(args["sample_coverage"]))) {
     sample_coverage <- eval(expression(sample_coverage), parent.frame())
