@@ -9,7 +9,7 @@ Hérault 2015) .
 
 ## References
 
-Marcon E, Hérault B (2015). “Entropart, an R Package to Measure and
+Marcon E, Hérault B (2015). “entropart, an R Package to Measure and
 Partition Diversity.” *Journal of Statistical Software*, **67**(8),
 1–26. [doi:10.18637/jss.v067.i08](https://doi.org/10.18637/jss.v067.i08)
 .
