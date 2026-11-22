@@ -1,4 +1,8 @@
-# divent 0.6-0
+# divent 0.9-9.9000
+
+Preparing v. 1.0.
+
+## divent 0.6-0
 
 Version reviewed by [JOSS](https://github.com/openjournals/joss-reviews/issues/10860).
 

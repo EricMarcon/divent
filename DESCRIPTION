@@ -1,7 +1,7 @@
 Package: divent
 Type: Package
 Title: Entropy Partitioning to Measure Diversity
-Version: 0.6-0
+Version: 0.9-9.9000
 Authors@R: 
   c(
     person(
