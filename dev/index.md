@@ -53,7 +53,6 @@ w <- c(1, 2, 1)
 
 # Organize the data
 library("divent")
-#> Le chargement a nécessité le package : Rcpp
 abd |>
   as_abundances(weights = w) |>
   # Plot it
@@ -202,10 +201,10 @@ A full documentation is available online, in the “Articles” section of
 the web site of the vignette.
 
 The [documentation of the development
-version](https://EricMarcon.github.io/divent/dev/) is also available.
+version](https://EricMarcon.github.io/divent/dev/) is on GitHub.
 
 ## Citation
 
-Marcon, E., & Puech, F. (2026). divent : An R Package for Diversity
+Marcon, E., & Puech, F. (2026). divent: An R Package for Diversity
 Measures Based on Entropy. *Journal of Open Source Software*, *11*(127),
 10860. <https://doi.org/10.21105/joss.10860>

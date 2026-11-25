@@ -242,6 +242,9 @@ is_species_distribution(paracou_6_abd)
 # Whittaker plot fitted by a log-normal distribution
 autoplot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
 
+# Equivalent base plot
+plot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
+
 # Character vectors
 as_abundances(c("A", "C", "B", "C"))
 #> # A tibble: 1 × 5
