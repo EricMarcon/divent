@@ -1,59 +1,59 @@
 # Preparation ----
-# Error message returned by function error_message()
+# Error message returned by the error_message() function
 error_message_text <- "Check the function arguments."
 # Function to simulate all argument checks.
-# Must have the same arguments as check_divent_args
-dummy_fun <- function(
+# Must have the same arguments as check_divent_args, with a valid value
+test_fun <- function(
   abd = NULL,
-  abundances = NULL,
-  alpha = NULL,
-  as_numeric = NULL,
+  abundances = paracou_6_abd,
+  alpha = 0.05,
+  as_numeric = TRUE,
   bootstrap = NULL,
-  check_arguments = NULL,
+  check_arguments = TRUE,
   correction = NULL,
   coverage_estimator = NULL,
-  distances = NULL,
+  distances = diag(0, nrow = 2, ncol = 2),
   distribution = NULL,
   entropy_estimator = NULL,
   estimator = NULL,
-  fisher_alpha = NULL,
-  gamma = NULL,
-  global = NULL,
-  jack_alpha = NULL,
-  jack_max = NULL,
-  k = NULL,
-  level = NULL,
-  n = NULL,
-  n_simulations = NULL,
-  normalize = NULL,
-  orders = NULL,
-  prob = NULL,
-  prob_geom = NULL,
+  fisher_alpha = 40,
+  gamma = TRUE,
+  global = TRUE,
+  jack_alpha = 0.05,
+  jack_max = 10,
+  k = 2,
+  level = 1,
+  n = 1,
+  n_simulations = 2,
+  normalize = TRUE,
+  orders = 0,
+  prob = rep(0.5, 2),
+  prob_geom = 0.1,
   probability_estimator = NULL,
-  q = NULL,
-  q_threshold = NULL,
-  r = NULL,
-  rate = NULL,
+  q = 1,
+  q_threshold = 10,
+  r = 0:1,
+  rate = 1,
   richness_estimator = NULL,
   sample_coverage = NULL,
   sd_lnorm = NULL,
-  show_progress = NULL,
-  similarities = NULL,
+  show_progress = TRUE,
+  similarities = diag(nrow = 2, ncol = 2),
   size = NULL,
+  species_distribution = paracou_6_abd,
   species_number = NULL,
-  species_distribution = NULL,
   thomas_mu = NULL,
   thomas_scale = NULL,
   tree = NULL,
   use.names = NULL,
   unveiling = NULL,
   weights = NULL,
-  w_max = NULL,
-  w_mean = NULL,
-  w_min = NULL,
-  weibull_scale = NULL,
-  weibull_shape = NULL,
-  X = NULL,
+  w_max = 1,
+  w_mean = 1,
+  w_min = 1,
+  weibull_scale = 30,
+  weibull_shape = 2,
+  X = paracou_6_wmppp,
   win = NULL
   ) {
   check_divent_args()
@@ -64,380 +64,380 @@ test_that("Arguments are checked", {
   testthat::skip_on_cran()
   # abd
   testthat::expect_error(
-    dummy_fun(abd = "a"),
+    test_fun(abd = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(abd = -1),
+    test_fun(abd = -1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(abd = 1/2),
+    test_fun(abd = 1/2),
     error_message_text
   )
   # abundances
   testthat::expect_error(
-    dummy_fun(abundances = 0),
+    test_fun(abundances = 0),
     error_message_text
   )
   # alpha
   testthat::expect_error(
-    dummy_fun(alpha = "a"),
+    test_fun(alpha = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(alpha = -1),
+    test_fun(alpha = -1),
     error_message_text
   )
   # as_numeric
   testthat::expect_error(
-    dummy_fun(as_numeric = "a"),
+    test_fun(as_numeric = "a"),
     error_message_text
   )
   # check_arguments
   testthat::expect_error(
-    dummy_fun(check_arguments = "a"),
+    test_fun(check_arguments = "a"),
     error_message_text
   )
   # distances
   testthat::expect_error(
-    dummy_fun(distances = "a"),
+    test_fun(distances = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(distances = 1),
+    test_fun(distances = 1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(distances = matrix(0, ncol = 2, nrow = 3)),
+    test_fun(distances = matrix(0, ncol = 2, nrow = 3)),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(distances = matrix(c(0, 1, 1, 1), ncol = 2, nrow = 2)),
+    test_fun(distances = matrix(c(0, 1, 1, 1), ncol = 2, nrow = 2)),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(distances = matrix(c(0, -1, -1, 0), ncol = 2, nrow = 2)),
+    test_fun(distances = matrix(c(0, -1, -1, 0), ncol = 2, nrow = 2)),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(distances = matrix(1, ncol = 2, nrow = 2)),
+    test_fun(distances = matrix(1, ncol = 2, nrow = 2)),
     error_message_text
   )
   # fisher_alpha
   testthat::expect_error(
-    dummy_fun(fisher_alpha = "a"),
+    test_fun(fisher_alpha = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(fisher_alpha = -1),
+    test_fun(fisher_alpha = -1),
     error_message_text
   )
   # gamma
   testthat::expect_error(
-    dummy_fun(gamma = "a"),
+    test_fun(gamma = "a"),
     error_message_text
   )
   # global
   testthat::expect_error(
-    dummy_fun(global = "a"),
+    test_fun(global = "a"),
     error_message_text
   )
   # jack_alpha
   testthat::expect_error(
-    dummy_fun(jack_alpha = "a"),
+    test_fun(jack_alpha = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(jack_alpha = 2),
+    test_fun(jack_alpha = 2),
     error_message_text
   )
   # jack_max
   testthat::expect_error(
-    dummy_fun(jack_max = "a"),
+    test_fun(jack_max = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(jack_max = 20),
+    test_fun(jack_max = 20),
     error_message_text
   )
   # k
   testthat::expect_error(
-    dummy_fun(k = "a"),
+    test_fun(k = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(k = -1),
+    test_fun(k = -1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(k = 1/2),
+    test_fun(k = 1/2),
     error_message_text
   )
   # level
   testthat::expect_error(
-    dummy_fun(level = "a"),
+    test_fun(level = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(level = -1),
+    test_fun(level = -1),
     error_message_text
   )
   # n
   testthat::expect_error(
-    dummy_fun(n = "a"),
+    test_fun(n = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(n = 0),
-    error_message_text
-  )
-  # n_simulations
-  testthat::expect_error(
-    dummy_fun(n_simulations = "a"),
+    test_fun(n = 0),
     error_message_text
   )
   # n_simulations
   testthat::expect_error(
-    dummy_fun(n_simulations = 1),
+    test_fun(n_simulations = "a"),
+    error_message_text
+  )
+  # n_simulations
+  testthat::expect_error(
+    test_fun(n_simulations = 1),
     error_message_text
   )
   # normalize
   testthat::expect_error(
-    dummy_fun(normalize = "a"),
+    test_fun(normalize = "a"),
     error_message_text
   )
   # orders
   testthat::expect_error(
-    dummy_fun(orders = "a"),
+    test_fun(orders = "a"),
     error_message_text
   )
   # prob
   testthat::expect_error(
-    dummy_fun(prob = "a"),
+    test_fun(prob = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(prob = -1),
+    test_fun(prob = -1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(prob = 1:2),
+    test_fun(prob = 1:2),
     error_message_text
   )
   # prob_geom
   testthat::expect_error(
-    dummy_fun(prob_geom = "a"),
+    test_fun(prob_geom = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(prob_geom = -1),
+    test_fun(prob_geom = -1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(prob_geom = 1:2),
+    test_fun(prob_geom = 1:2),
     error_message_text
   )
   # q
   testthat::expect_error(
-    dummy_fun(q = "a"),
+    test_fun(q = "a"),
     error_message_text
   )
   # q_threshold
   testthat::expect_error(
-    dummy_fun(q_threshold = "a"),
+    test_fun(q_threshold = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(q_threshold = -1),
+    test_fun(q_threshold = -1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(q_threshold = 1/2),
+    test_fun(q_threshold = 1/2),
     error_message_text
   )
   # r
   testthat::expect_error(
-    dummy_fun(r = "a"),
+    test_fun(r = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(r = 1),
+    test_fun(r = 1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(r = 1:2),
+    test_fun(r = 1:2),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(r = 0:-1),
+    test_fun(r = 0:-1),
     error_message_text
   )
   # rate
   testthat::expect_error(
-    dummy_fun(rate = "a"),
+    test_fun(rate = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(rate = -1),
+    test_fun(rate = -1),
     error_message_text
   )
   # sample_coverage
   testthat::expect_error(
-    dummy_fun(sample_coverage = "a"),
+    test_fun(sample_coverage = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(sample_coverage = 2),
+    test_fun(sample_coverage = 2),
     error_message_text
   )
   # sd_lnorm
   testthat::expect_error(
-    dummy_fun(sd_lnorm = "a"),
+    test_fun(sd_lnorm = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(sd_lnorm = -1),
+    test_fun(sd_lnorm = -1),
     error_message_text
   )
   # show_progress
   testthat::expect_error(
-    dummy_fun(show_progress = "a"),
+    test_fun(show_progress = "a"),
     error_message_text
   )
   # similarities
   testthat::expect_error(
-    dummy_fun(similarities = "a"),
+    test_fun(similarities = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(similarities = 1),
+    test_fun(similarities = 1),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(similarities = matrix(0, ncol = 2, nrow = 3)),
+    test_fun(similarities = matrix(0, ncol = 2, nrow = 3)),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(similarities = matrix(c(0, 1, 1, 1), ncol = 2, nrow = 2)),
+    test_fun(similarities = matrix(c(0, 1, 1, 1), ncol = 2, nrow = 2)),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(similarities = matrix(c(0, -1, -1, 0), ncol = 2, nrow = 2)),
+    test_fun(similarities = matrix(c(0, -1, -1, 0), ncol = 2, nrow = 2)),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(similarities = matrix(0, ncol = 2, nrow = 2)),
+    test_fun(similarities = matrix(0, ncol = 2, nrow = 2)),
     error_message_text
   )
   # size
   testthat::expect_error(
-    dummy_fun(size = "a"),
+    test_fun(size = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(size = -1),
+    test_fun(size = -1),
     error_message_text
   )
   # species_distribution
   testthat::expect_error(
-    dummy_fun(species_distribution = "a"),
+    test_fun(species_distribution = "a"),
     error_message_text
   )
   # species_number
   testthat::expect_error(
-    dummy_fun(species_number = "a"),
+    test_fun(species_number = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(species_number = -1),
+    test_fun(species_number = -1),
     error_message_text
   )
   # thomas_mu
   testthat::expect_error(
-    dummy_fun(thomas_mu = "a"),
+    test_fun(thomas_mu = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(thomas_mu = -1),
+    test_fun(thomas_mu = -1),
     error_message_text
   )
   # thomas_scale
   testthat::expect_error(
-    dummy_fun(thomas_scale = "a"),
+    test_fun(thomas_scale = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(thomas_scale = -1),
+    test_fun(thomas_scale = -1),
     error_message_text
   )
   # tree
   testthat::expect_error(
-    dummy_fun(tree = "a"),
+    test_fun(tree = "a"),
     error_message_text
   )
   # weights
   testthat::expect_error(
-    dummy_fun(weights = "a"),
+    test_fun(weights = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(weights = -1),
+    test_fun(weights = -1),
     error_message_text
   )
   # w_max
   testthat::expect_error(
-    dummy_fun(w_max = "a"),
+    test_fun(w_max = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(w_max = -1),
+    test_fun(w_max = -1),
     error_message_text
   )
   # w_mean
   testthat::expect_error(
-    dummy_fun(w_mean = "a"),
+    test_fun(w_mean = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(w_mean = -1),
+    test_fun(w_mean = -1),
     error_message_text
   )
   # w_min
   testthat::expect_error(
-    dummy_fun(w_min = "a"),
+    test_fun(w_min = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(w_min = -1),
+    test_fun(w_min = -1),
     error_message_text
   )
   # weibull_scale
   testthat::expect_error(
-    dummy_fun(weibull_scale = "a"),
+    test_fun(weibull_scale = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(weibull_scale = -1),
+    test_fun(weibull_scale = -1),
     error_message_text
   )
   # weibull_shape
   testthat::expect_error(
-    dummy_fun(weibull_shape = "a"),
+    test_fun(weibull_shape = "a"),
     error_message_text
   )
   testthat::expect_error(
-    dummy_fun(weibull_shape = -1),
+    test_fun(weibull_shape = -1),
     error_message_text
   )
   # X
   testthat::expect_error(
-    dummy_fun(X = "a"),
+    test_fun(X = "a"),
     error_message_text
   )
   # win
   testthat::expect_error(
-    dummy_fun(win = "a"),
+    test_fun(win = "a"),
     error_message_text
   )
 })

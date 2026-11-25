@@ -370,8 +370,8 @@ check_divent_args <- function(
   show_progress = NULL,
   similarities = NULL,
   size = NULL,
-  species_number = NULL,
   species_distribution = NULL,
+  species_number = NULL,
   thomas_mu = NULL,
   thomas_scale = NULL,
   tree = NULL,
@@ -483,8 +483,6 @@ check_divent_args <- function(
   }
   # correction is checked by match.arg()
   # coverage_estimator is checked by match.arg()
-  # entropy_estimator is checked by match.arg()
-  # estimator is checked by match.arg()
   # distances
   if (!is.na(names(args["distances"]))) {
     distances <- eval(expression(distances), parent.frame())
@@ -534,6 +532,8 @@ check_divent_args <- function(
     }
   }
   # distribution is checked by match.arg()
+  # entropy_estimator is checked by match.arg()
+  # estimator is checked by match.arg()
   # fisher_alpha
   if (!is.na(names(args["fisher_alpha"]))) {
     fisher_alpha <- eval(expression(fisher_alpha), parent.frame())
@@ -1084,101 +1084,91 @@ check_divent_args <- function(
   # w_max
   if (!is.na(names(args["w_max"]))) {
     w_max <- eval(expression(w_max), parent.frame())
-    if (!is.null(w_max)) {
-      if (!is.numeric(w_max) || length(w_max) != 1) {
-        error_message(
-          "w_max must be a number.",
-          w_max,
-          parent_function
-        )
-      }
-      if (any(w_max <= 0)) {
-        error_message(
-          "w_max must be positive.",
-          w_max,
-          parent_function
-        )
-      }
+    if (!is.numeric(w_max) || length(w_max) != 1) {
+      error_message(
+        "w_max must be a number.",
+        w_max,
+        parent_function
+      )
+    }
+    if (any(w_max <= 0)) {
+      error_message(
+        "w_max must be positive.",
+        w_max,
+        parent_function
+      )
     }
   }
   # w_mean
   if (!is.na(names(args["w_mean"]))) {
     w_mean <- eval(expression(w_mean), parent.frame())
-    if (!is.null(w_mean)) {
-      if (!is.numeric(w_mean) || length(w_mean) != 1) {
-        error_message(
-          "w_mean must be a number.",
-          w_mean,
-          parent_function
-        )
-      }
-      if (any(w_mean <= 0)) {
-        error_message(
-          "w_mean must be positive.",
-          w_mean,
-          parent_function
-        )
-      }
+    if (!is.numeric(w_mean) || length(w_mean) != 1) {
+      error_message(
+        "w_mean must be a number.",
+        w_mean,
+        parent_function
+      )
+    }
+    if (any(w_mean <= 0)) {
+      error_message(
+        "w_mean must be positive.",
+        w_mean,
+        parent_function
+      )
     }
   }
   # w_min
   if (!is.na(names(args["w_min"]))) {
     w_min <- eval(expression(w_min), parent.frame())
-    if (!is.null(w_min)) {
-      if (!is.numeric(w_min) || length(w_min) != 1) {
-        error_message(
-          "w_min must be a number.",
-          w_min,
-          parent_function
-        )
-      }
-      if (any(w_min <= 0)) {
-        error_message(
-          "w_min must be positive.",
-          w_min,
-          parent_function
-        )
-      }
+    if (!is.numeric(w_min) || length(w_min) != 1) {
+      error_message(
+        "w_min must be a number.",
+        w_min,
+        parent_function
+      )
+    }
+    if (any(w_min <= 0)) {
+      error_message(
+        "w_min must be positive.",
+        w_min,
+        parent_function
+      )
     }
   }
   # weibull_scale
   if (!is.na(names(args["weibull_scale"]))) {
     weibull_scale <- eval(expression(weibull_scale), parent.frame())
-    if (!is.null(weibull_scale)) {
-      if (!is.numeric(weibull_scale) || length(weibull_scale) != 1) {
-        error_message(
-          "weibull_scale must be a number.",
-          weibull_scale,
-          parent_function
-        )
-      }
-      if (any(weibull_scale < 0)) {
-        error_message(
-          "weibull_scale must be positive.",
-          weibull_scale,
-          parent_function
-        )
-      }
+    if (!is.numeric(weibull_scale) || length(weibull_scale) != 1) {
+      error_message(
+        "weibull_scale must be a number.",
+        weibull_scale,
+        parent_function
+      )
+    }
+    if (any(weibull_scale < 0)) {
+      error_message(
+        "weibull_scale must be positive.",
+        weibull_scale,
+        parent_function
+      )
     }
   }
   # weibull_shape
   if (!is.na(names(args["weibull_shape"]))) {
     weibull_shape <- eval(expression(weibull_shape), parent.frame())
-    if (!is.null(weibull_shape)) {
-      if (!is.numeric(weibull_shape) || length(weibull_shape) != 1) {
-        error_message(
-          "weibull_shape must be a number.",
-          weibull_shape,
-          parent_function
-        )
-      }
-      if (any(weibull_shape <= 0)) {
-        error_message(
-          "weibull_shape must be strictly positive.",
-          weibull_shape,
-          parent_function
-        )
-      }
+    if (!is.numeric(weibull_shape) || length(weibull_shape) != 1) {
+      error_message(
+        "weibull_shape must be a number.",
+        weibull_shape,
+        parent_function
+      )
+    }
+    if (any(weibull_shape <= 0)) {
+      error_message(
+        "weibull_shape must be strictly positive.",
+        weibull_shape,
+        parent_function
+      )
     }
   }
   # X
