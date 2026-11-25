@@ -41,8 +41,8 @@ check_divent_args(
   show_progress = NULL,
   similarities = NULL,
   size = NULL,
-  species_number = NULL,
   species_distribution = NULL,
+  species_number = NULL,
   thomas_mu = NULL,
   thomas_scale = NULL,
   tree = NULL,
@@ -156,9 +156,9 @@ Its default value is the identity matrix.}
 
 \item{size}{the number of individuals to draw in each community.}
 
-\item{species_number}{the number of species.}
-
 \item{species_distribution}{an object of class \link{species_distribution}.}
+
+\item{species_number}{the number of species.}
 
 \item{thomas_mu}{in Thomas point patterns, the mean number of points per cluster.
 The intensity of the Poisson process of cluster centers is calculated as
