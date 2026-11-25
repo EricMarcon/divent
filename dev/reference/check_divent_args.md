@@ -42,8 +42,8 @@ check_divent_args(
   show_progress = NULL,
   similarities = NULL,
   size = NULL,
-  species_number = NULL,
   species_distribution = NULL,
+  species_number = NULL,
   thomas_mu = NULL,
   thomas_scale = NULL,
   tree = NULL,
@@ -238,14 +238,14 @@ check_divent_args(
 
   the number of individuals to draw in each community.
 
-- species_number:
-
-  the number of species.
-
 - species_distribution:
 
   an object of class
   [species_distribution](https://ericmarcon.github.io/divent/dev/reference/species_distribution.md).
+
+- species_number:
+
+  the number of species.
 
 - thomas_mu:
 

@@ -57,7 +57,7 @@ if (require(spatstat.random)) {
 #> Loading required package: spatstat.random
 #> Loading required package: spatstat.data
 #> Loading required package: spatstat.univar
-#> spatstat.univar 3.2-0
+#> spatstat.univar 3.2-1
 #> Loading required package: spatstat.geom
 #> spatstat.geom 3.8-3
 #> spatstat.random 3.5-2
