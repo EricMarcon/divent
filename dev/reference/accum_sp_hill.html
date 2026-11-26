@@ -225,6 +225,21 @@ in the window (a binomial point process is a Poisson point process conditionally
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>accum_sp_hill()</code> or <code>accum_sp_tsallis()</code> estimate the diversity or entropy
 accumulation curve of a distribution.</p>
+<p>These functions can compute the entropy of the neighborhood of points in parallel
+thanks to package <a href="https://doFuture.futureverse.org/reference/doFuture.html" class="external-link">doFuture</a>.
+A parallel plan must be chosen with function <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code>.
+To use all cores but one on a personal computer, run:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"doFuture"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="fu">availableCores</span>(<span class="at">omit =</span> <span class="dv">1</span>))</span></code></pre><p></p></div>
+<p>If argument <code>show_progress</code> is <code>TRUE</code>, a progress bar can be displayed
+by package <a href="https://progressr.futureverse.org/reference/progressr.html" class="external-link">progressr</a>.
+Since all progress bars rely on package <a href="https://cli.r-lib.org/reference/cli.html" class="external-link">cli</a> in <em>divent</em>, the "cli" handler
+is a good choice.</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"progressr"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">handlers</span>(<span class="at">global =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">handlers</span>(<span class="st">"cli"</span>)</span></code></pre><p></p></div>
+<p>Those code chunks must be run before <code>accum_sp_hill()</code> or <code>accum_sp_tsallis()</code>
+with large point patterns such as <a href="paracou_6.html">paracou_6_wmppp</a>.</p>
 <p>Argument <code>entropy_estimator</code> is used to estimate asymptotic entropy or diversity
 when argument <code>correction</code> is "extrapolation".
 Then, <code>richness_estimator</code> is used if needed to estimate entropy.
