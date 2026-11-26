@@ -9,6 +9,28 @@
 #' rare species of the actual community may have abundance zero in simulated communities.
 #' Simulated diversity values are recentered so that their mean is that of the actual community.
 #'
+#'
+#' Simulations can be run in parallel thanks to package [doFuture].
+#' A parallel plan must be chosen with function [future::plan()].
+#' To use all cores but one on a personal computer, run:
+#'
+#' ```
+#' library("doFuture")
+#' plan(multisession, workers = availableCores(omit = 1))
+#' ```
+#' If argument `show_progress` is `TRUE`, a progress bar can be displayed
+#' by package [progressr].
+#' Since all progress bars rely on package [cli] in *divent*, the "cli" handler
+#' is a good choice.
+#'
+#' ```
+#' library("progressr")
+#' handlers(global = TRUE)
+#' handlers("cli")
+#' ```
+#' Those code chunks must be run before `profile_similarity()`
+#' with large datasets.
+#'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
@@ -18,7 +40,7 @@
 #' # Similarity matrix
 #' Z <- fun_similarity(paracou_6_fundist)
 #' # Profile
-#' profile_similarity(paracou_6_abd, similarities = Z, q = 2)
+#' autoplot(profile_similarity(paracou_6_abd, similarities = Z))
 #'
 #' @returns A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
@@ -91,41 +113,16 @@ profile_similarity.numeric <- function(
     }
     similarities <- checked_matrix(similarities, x)
   }
-
-  # Numeric vector, no simulation ----
-  if (as_numeric) {
-    if (n_simulations > 0) {
-      cli::cli_abort(
-        c(
-          "No simulations are allowed if a numeric vector is expected",
-          "i" = "Change argument for {.code as_numeric = FALSE}"
-        )
+  if (as_numeric && n_simulations > 0) {
+    cli::cli_abort(
+      c(
+        "No simulations are allowed if a numeric vector is expected",
+        "i" = "Change argument for {.code as_numeric = FALSE}"
       )
-    }
-    the_profile_similarity <- vapply(
-      orders,
-      FUN = function(q) {
-        div_similarity(
-          x,
-          similarities = similarities,
-          q = q,
-          estimator = estimator,
-          probability_estimator = probability_estimator,
-          unveiling = unveiling,
-          jack_alpha = jack_alpha,
-          jack_max = jack_max,
-          coverage_estimator = coverage_estimator,
-          sample_coverage = sample_coverage,
-          as_numeric = TRUE,
-          check_arguments = FALSE
-        )
-      },
-      FUN.VALUE = 0
     )
-    return(the_profile_similarity)
   }
 
-  # Regular output, simulations are allowed ----
+  # Compute the profile ----
   the_profile_similarity <- lapply(
     orders,
     FUN = function(q) {
@@ -163,45 +160,47 @@ profile_similarity.numeric <- function(
     communities <- rcommunity(
       n_simulations,
       abd = abd_int,
-      bootstrap = bootstrap,
+      bootstrap = "Marcon2012",
       check_arguments = FALSE
     )
-    # Prepare the progress bar
+    # Define the progressor
     if (show_progress && interactive()) {
-      cli::cli_progress_bar("Running simulations", total = n_simulations)
+      progress <- progressr::progressor(steps = n_simulations)
     }
-    # Prepare the result matrix
-    profile_similarities <- matrix(
-      0,
-      nrow = n_simulations,
-      ncol = length(orders)
-    )
-    # Loops are required for the progress bar
-    for (i in seq_len(n_simulations)) {
-      # Parallelize. Do not allow more forks.
-      profiles_list <- parallel::mclapply(
-        orders,
-        FUN = function(q) {
-          div_similarity(
-            communities[i, !colnames(communities) %in% non_species_columns],
-            similarities = similarities,
-            q = q,
-            estimator = estimator,
-            probability_estimator = probability_estimator,
-            unveiling = unveiling,
-            jack_alpha = jack_alpha,
-            jack_max = jack_max,
-            coverage_estimator = coverage_estimator,
-            sample_coverage = sample_coverage,
-            as_numeric = TRUE,
-            check_arguments = FALSE
-          )
-        },
-        mc.allow.recursive = FALSE
-      )
-      profile_similarities[i, ] <- simplify2array(profiles_list)
-      if (show_progress && interactive()) cli::cli_progress_update()
-    }
+
+    # Run simulations in parallel
+    profile_similarities <- foreach::foreach(
+      i = seq_len(n_simulations),
+      .combine = rbind
+    ) %dofuture%
+      {
+        # Calculate diversity at all orders
+        profiles_list <- lapply(
+          orders,
+          FUN = function(q) {
+            div_similarity(
+              communities[i, ],
+              similarities = similarities,
+              q = q,
+              estimator = estimator,
+              probability_estimator = probability_estimator,
+              unveiling = unveiling,
+              jack_alpha = jack_alpha,
+              jack_max = jack_max,
+              coverage_estimator = coverage_estimator,
+              sample_coverage = sample_coverage,
+              as_numeric = TRUE,
+              check_arguments = FALSE
+            )
+          }
+        )
+        # Progressor
+        if (show_progress && interactive()) {
+          progress()
+        }
+        # Return a vector
+        simplify2array(profiles_list)
+      }
     # Recenter simulated values
     div_means <- colMeans(profile_similarities)
     profile_similarities <- t(
@@ -221,9 +220,13 @@ profile_similarity.numeric <- function(
       sup = div_quantiles[2, ]
     )
   }
-  class(the_profile_similarity) <- c("profile", class(the_profile_similarity))
 
-  return(the_profile_similarity)
+  if (as_numeric) {
+    return(the_profile_similarity$diversity)
+  } else {
+    class(the_profile_similarity) <- c("profile", class(the_profile_similarity))
+    return(the_profile_similarity)
+  }
 }
 
 
@@ -249,6 +252,7 @@ profile_similarity.species_distribution <- function(
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
+  as_numeric = FALSE,
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
@@ -268,6 +272,14 @@ profile_similarity.species_distribution <- function(
       cli::cli_abort("Species probabilities or abundances must be positive.")
     }
     similarities <- checked_matrix(similarities, x)
+  }
+  if (as_numeric && n_simulations > 0) {
+    cli::cli_abort(
+      c(
+        "No simulations are allowed if a numeric vector is expected",
+        "i" = "Change argument for {.code as_numeric = FALSE}"
+      )
+    )
   }
 
   if (gamma) {
@@ -324,7 +336,15 @@ profile_similarity.species_distribution <- function(
       dplyr::bind_rows(profile_similarity_list)
     )
   }
-  class(the_profile_similarity) <- c("profile", class(the_profile_similarity))
-
-  return(the_profile_similarity)
+  if (as_numeric) {
+    # Make a matrix: first col is order, other cols are diversity of sites
+    return(as.matrix(pivot_wider(
+      the_profile_similarity,
+      names_from = site,
+      values_from = diversity
+    )[, -1]))
+  } else {
+    class(the_profile_similarity) <- c("profile", class(the_profile_similarity))
+    return(the_profile_similarity)
+  }
 }

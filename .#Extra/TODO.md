@@ -6,6 +6,11 @@
 
 ## Code
 
+### `profile_similarity`
+
+boostrap argument is ignored, forced to Marcon2012.
+Allow Chao's bootstrap, i.e. expand the similarity matrix.
+
 ### `div_part()`
 
 1.  Support a vector of orders.

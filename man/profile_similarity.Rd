@@ -46,6 +46,7 @@ profile_similarity(
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
+  as_numeric = FALSE,
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
@@ -119,12 +120,33 @@ A bootstrap confidence interval can be produced by simulating communities
 Simulating communities implies a downward bias in the estimation:
 rare species of the actual community may have abundance zero in simulated communities.
 Simulated diversity values are recentered so that their mean is that of the actual community.
+
+Simulations can be run in parallel thanks to package \link[doFuture:doFuture]{doFuture}.
+A parallel plan must be chosen with function \code{\link[future:plan]{future::plan()}}.
+To use all cores but one on a personal computer, run:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library("doFuture")
+plan(multisession, workers = availableCores(omit = 1))
+}\if{html}{\out{</div>}}
+
+If argument \code{show_progress} is \code{TRUE}, a progress bar can be displayed
+by package \link[progressr:progressr]{progressr}.
+Since all progress bars rely on package \link[cli:cli]{cli} in \emph{divent}, the "cli" handler
+is a good choice.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library("progressr")
+handlers(global = TRUE)
+handlers("cli")
+}\if{html}{\out{</div>}}
+
+Those code chunks must be run before \code{profile_similarity()}
+with large datasets.
 }
 \examples{
 # Similarity matrix
 Z <- fun_similarity(paracou_6_fundist)
 # Profile
-profile_similarity(paracou_6_abd, similarities = Z, q = 2)
+autoplot(profile_similarity(paracou_6_abd, similarities = Z))
 
 }
 \references{

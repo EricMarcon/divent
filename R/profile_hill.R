@@ -9,6 +9,27 @@
 #' rare species of the actual community may have abundance zero in simulated communities.
 #' Simulated diversity values are recentered so that their mean is that of the actual community.
 #'
+#' Simulations can be run in parallel thanks to package [doFuture].
+#' A parallel plan must be chosen with function [future::plan()].
+#' To use all cores but one on a personal computer, run:
+#'
+#' ```
+#' library("doFuture")
+#' plan(multisession, workers = availableCores(omit = 1))
+#' ```
+#' If argument `show_progress` is `TRUE`, a progress bar can be displayed
+#' by package [progressr].
+#' Since all progress bars rely on package [cli] in *divent*, the "cli" handler
+#' is a good choice.
+#'
+#' ```
+#' library("progressr")
+#' handlers(global = TRUE)
+#' handlers("cli")
+#' ```
+#' Those code chunks must be run before `profile_hill()`
+#' with large datasets.
+#'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
 #' or an object of class [abundances] or [probabilities].
@@ -148,39 +169,46 @@ profile_hill.numeric <- function(
       bootstrap = bootstrap,
       check_arguments = FALSE
     )
-    # Prepare the progress bar
+
+    # Define the progressor
     if (show_progress && interactive()) {
-      cli::cli_progress_bar("Running simulations", total = n_simulations)
+      progress <- progressr::progressor(steps = n_simulations)
     }
-    # Prepare the result matrix
-    profile_hills <- matrix(0, nrow = n_simulations, ncol = length(orders))
-    # Loops are required for the progress bar
-    for (i in seq_len(n_simulations)) {
-      # Parallelize. Do not allow more forks.
-      profiles_list <- parallel::mclapply(
-        orders,
-        FUN = function(q) {
-          div_hill(
-            communities[i, !colnames(communities) %in% non_species_columns],
-            q = q,
-            estimator = estimator,
-            level = level,
-            probability_estimator = probability_estimator,
-            unveiling = unveiling,
-            richness_estimator = richness_estimator,
-            jack_alpha = jack_alpha,
-            jack_max = jack_max,
-            coverage_estimator = coverage_estimator,
-            q_threshold = q_threshold,
-            as_numeric = TRUE,
-            check_arguments = FALSE
-          )
-        },
-        mc.allow.recursive = FALSE
-      )
-      profile_hills[i, ] <- simplify2array(profiles_list)
-      if (show_progress && interactive()) cli::cli_progress_update()
-    }
+
+    # Run simulations in parallel
+    profile_hills <- foreach::foreach(
+      i = seq_len(n_simulations),
+      .combine = rbind
+    ) %dofuture%
+      {
+        # Calculate diversity at all orders
+        profiles_list <- lapply(
+          orders,
+          FUN = function(q) {
+            div_hill(
+              communities[i, ],
+              q = q,
+              estimator = estimator,
+              level = level,
+              probability_estimator = probability_estimator,
+              unveiling = unveiling,
+              richness_estimator = richness_estimator,
+              jack_alpha = jack_alpha,
+              jack_max = jack_max,
+              coverage_estimator = coverage_estimator,
+              q_threshold = q_threshold,
+              as_numeric = TRUE,
+              check_arguments = FALSE
+            )
+          }
+        )
+        # Progressor
+        if (show_progress && interactive()) {
+          progress()
+        }
+        # Return a vector
+        simplify2array(profiles_list)
+      }
     # Recenter simulated values
     div_means <- colMeans(profile_hills)
     profile_hills <- t(
@@ -325,17 +353,16 @@ profile_hill.species_distribution <- function(
       # Coerce the list returned
       dplyr::bind_rows(profile_hill_list)
     )
-
-    if (as_numeric) {
-      # Make a matrix: first col is order, other cols are diversity of sites
-      return(as.matrix(pivot_wider(
-        the_profile_hill,
-        names_from = site,
-        values_from = diversity
-      )[, -1]))
-    } else {
-      class(the_profile_hill) <- c("profile", class(the_profile_hill))
-      return(the_profile_hill)
-    }
+  }
+  if (as_numeric) {
+    # Make a matrix: first col is order, other cols are diversity of sites
+    return(as.matrix(pivot_wider(
+      the_profile_hill,
+      names_from = site,
+      values_from = diversity
+    )[, -1]))
+  } else {
+    class(the_profile_hill) <- c("profile", class(the_profile_hill))
+    return(the_profile_hill)
   }
 }
