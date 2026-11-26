@@ -12,9 +12,9 @@
 Source:
 [`inst/CITATION`](https://github.com/EricMarcon/divent/blob/master/inst/CITATION)
 
-Marcon, E. & Puech, F. (under revision). divent: An R Package for
-Diversity Measures Based on Entropy. Journal of Open Source Software,
-11(127), 10860. https://doi.org/10.21105/joss.10860
+Marcon, E. & Puech, F. (2026). divent: An R Package for Diversity
+Measures Based on Entropy. Journal of Open Source Software, 11(127),
+10860. https://doi.org/10.21105/joss.10860
 
     @Article{,
       title = {divent: An {R} Package for Diversity Measures Based on Entropy},
