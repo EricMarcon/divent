@@ -45,6 +45,7 @@ profile_hill(x, orders = seq(from = 0, to = 2, by = 0.1), ...)
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   q_threshold = 10,
   gamma = FALSE,
+  as_numeric = FALSE,
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
@@ -119,6 +120,9 @@ Should be set to \code{FALSE} to save time when the arguments have been checked 
 \value{
 A tibble with the site names, the estimators used and the estimated diversity at each order.
 This is an object of class "profile" that can be plotted.
+
+If \code{as_numeric} is \code{TRUE}, then the value is a matrix whose first column is the order
+and other columns are the diversity of sites.
 }
 \description{
 Calculate the diversity profile of a community, i.e. diversity (Hill numbers)

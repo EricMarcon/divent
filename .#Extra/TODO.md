@@ -1,14 +1,10 @@
-# Todo list for divent as of version 0.5.4
+# Todo list for divent as of version 0.9.9000
 
 ## Documentation
 
 - Detail the estimators in `div_similarity()` and `ent_similarity()`.
 
 ## Code
-
-### `profile_hill/.species_distribution()`
-
-Add `as_numeric` argument.
 
 ### `div_part()`
 
@@ -43,11 +39,3 @@ Add `as_numeric` argument.
 ### Neighborhood entropy
 
 Complete `ent_sp_simpson()` with `ent_sp_rao()` and link to package ads for the standardized versions.
-
-## Tests
-
-Add tests:
-
-- `abd_freq_count()`
-
-Increase coverage.

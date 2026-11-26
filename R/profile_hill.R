@@ -20,6 +20,9 @@
 #' @returns A tibble with the site names, the estimators used and the estimated diversity at each order.
 #' This is an object of class "profile" that can be plotted.
 #'
+#' If `as_numeric` is `TRUE`, then the value is a matrix whose first column is the order
+#' and other columns are the diversity of sites.
+#'
 #' @references
 #' \insertAllCited{}
 #'
@@ -235,6 +238,7 @@ profile_hill.species_distribution <- function(
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   q_threshold = 10,
   gamma = FALSE,
+  as_numeric = FALSE,
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
@@ -254,6 +258,14 @@ profile_hill.species_distribution <- function(
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")
     }
+  }
+  if (as_numeric && n_simulations > 0) {
+    cli::cli_abort(
+      c(
+        "No simulations are allowed if a numeric vector is expected",
+        "i" = "Change argument for {.code as_numeric = FALSE}"
+      )
+    )
   }
 
   if (gamma) {
@@ -313,8 +325,17 @@ profile_hill.species_distribution <- function(
       # Coerce the list returned
       dplyr::bind_rows(profile_hill_list)
     )
-  }
-  class(the_profile_hill) <- c("profile", class(the_profile_hill))
 
-  return(the_profile_hill)
+    if (as_numeric) {
+      # Make a matrix: first col is order, other cols are diversity of sites
+      return(as.matrix(pivot_wider(
+        the_profile_hill,
+        names_from = site,
+        values_from = diversity
+      )[, -1]))
+    } else {
+      class(the_profile_hill) <- c("profile", class(the_profile_hill))
+      return(the_profile_hill)
+    }
+  }
 }
