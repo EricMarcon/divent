@@ -6,6 +6,28 @@
 #' `accum_sp_hill()` or `accum_sp_tsallis()` estimate the diversity or entropy
 #' accumulation curve of a distribution.
 #'
+#' These functions can compute the entropy of the neighborhood of points in parallel
+#' thanks to package [doFuture].
+#' A parallel plan must be chosen with function [future::plan()].
+#' To use all cores but one on a personal computer, run:
+#'
+#' ```
+#' library("doFuture")
+#' plan(multisession, workers = availableCores(omit = 1))
+#' ```
+#' If argument `show_progress` is `TRUE`, a progress bar can be displayed
+#' by package [progressr].
+#' Since all progress bars rely on package [cli] in *divent*, the "cli" handler
+#' is a good choice.
+#'
+#' ```
+#' library("progressr")
+#' handlers(global = TRUE)
+#' handlers("cli")
+#' ```
+#' Those code chunks must be run before `accum_sp_hill()` or `accum_sp_tsallis()`
+#' with large point patterns such as [paracou_6_wmppp].
+#'
 #' Argument `entropy_estimator` is used to estimate asymptotic entropy or diversity
 #' when argument `correction` is "extrapolation".
 #' Then, `richness_estimator` is used if needed to estimate entropy.
@@ -103,10 +125,6 @@ accum_sp_tsallis <- function(
     # including the point itself in the first column
     neighbors.matrix <- cbind(Reference = 1:X$n, neighbors.matrix)
 
-    # Prepare a progress bar and the result arrays
-    if (show_progress && interactive()) {
-      cli::cli_progress_bar("Computing entropy", total = length(neighbors))
-    }
     # 3D array: q, n, observed entropy in a single slice
     ent_q_nr_observed <- array(
       0,
@@ -128,9 +146,17 @@ accum_sp_tsallis <- function(
       ent_q_nr_individuals <- NA
     }
 
+    # Define the progressor
+    if (show_progress && interactive()) {
+      progress <- progressr::progressor(steps = length(neighbors))
+    }
+
     # At each number of neighbors, calculate the entropy of
     # all points' neighborhood for each q
-    for (k in seq_along(neighbors)) {
+    ent_nbhood_q_n <- foreach::foreach(
+      k = seq_along(neighbors),
+      .options.future = list(seed = TRUE)
+    ) %dofuture% {
       # Neighbor communities: 1 community per column
       neighbor_communities <- apply(
         neighbors.matrix[, 1:(k + 1)],
@@ -157,26 +183,37 @@ accum_sp_tsallis <- function(
           )
         }
       )
+      # Progressor
+      if (show_progress && interactive()) {
+        progress()
+      }
+      # Save the results in a list
+      ent_nbhood_q
+    }
+
+    # Deal with the list of results
+    for (k in seq_along(neighbors)) {
+      # Extract the neighborhood diversity
+      the_ent_nbhood_q <- ent_nbhood_q_n[[k]]
+
       # Keep individual neighborhood values
       if (individual) {
-        ent_q_nr_individuals[, k + 1, ] <- ent_nbhood_q
+        ent_q_nr_individuals[, k + 1, ] <- the_ent_nbhood_q
       }
 
       # Mean entropy.
-      # If ent_nbhood_q is a vector (i.e. a single value of q is provided),
+      # If the_ent_nbhood_q is a vector (i.e. a single value of q is provided),
       # transpose it to get a 1-row matrix.
-      if (is.null(dim(ent_nbhood_q))) {
-        ent_nbhood_q <- t(ent_nbhood_q)
+      if (is.null(dim(the_ent_nbhood_q))) {
+        the_ent_nbhood_q <- t(the_ent_nbhood_q)
       }
-      ent_q_nr_observed[, k + 1, 1] <- rowMeans(ent_nbhood_q, na.rm = TRUE)
-      if (show_progress && interactive()) cli::cli_progress_update()
-    }
-    if (show_progress && interactive()) cli::cli_progress_done()
+      ent_q_nr_observed[, k + 1, 1] <- rowMeans(the_ent_nbhood_q, na.rm = TRUE)
 
-    # Entropy of a single individual is 0.
-    # This is the default value of the arrays so don't run.
-    #  ent_q_nr_observed[, 1, 1] <- 0
-    #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
+      # Entropy of a single individual is 0.
+      # This is the default value of the arrays so don't run.
+      #  ent_q_nr_observed[, 1, 1] <- 0
+      #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
+    }
   } else {
     # A vector of distances ----
     # neighbors up to distance r. Distances are in r.
@@ -199,10 +236,6 @@ accum_sp_tsallis <- function(
     # The array of neighbor communities is built from the vector returned.
     dim(neighbors.array) <- c(X$n, length(r), species_number)
 
-    # Prepare a progress bar and the result arrays
-    if (show_progress && interactive()) {
-      cli::cli_progress_bar("Computing entropy", total = length(r))
-    }
     # 3D array: q, r, observed entropy in a single slice
     ent_q_nr_observed <- array(
       0,
@@ -224,9 +257,17 @@ accum_sp_tsallis <- function(
       ent_q_nr_individuals <- NA
     }
 
+    # Define the progressor
+    if (show_progress && interactive()) {
+      progress <- progressr::progressor(steps = length(r) - 1)
+    }
+
     # At each distance, calculate the entropy of
     # all points' neighborhood for each q
-    for (d in 2:length(r)) {
+    ent_nbhood_q_r <- foreach::foreach(
+      d = 2:length(r),
+      .options.future = list(seed = TRUE)
+    ) %dofuture% {
       # Neighbor communities of each point at distance r:
       # 1 point per row, 1 species per column:
       # sum neighborhoods at distances 1 to d
@@ -234,7 +275,7 @@ accum_sp_tsallis <- function(
         aperm(neighbors.array[, 1:d, , drop = FALSE], perm = c(1, 3, 2)),
         dims = 2
       )
-      # Calculate entropy of each community and all q values
+      # Calculate entropy of each community (columns) and all q values (rows)
       if (correction == "none") {
         # No edge-effect correction
         ent_nbhood_q <- apply(
@@ -308,20 +349,30 @@ accum_sp_tsallis <- function(
           )
         }
       }
+      # Progressor
+      if (show_progress && interactive()) {
+        progress()
+      }
+      # Save the results in a list
+      ent_nbhood_q
+    }
+
+    # Deal with the list of results
+    for (d in 2:length(r)) {
+      # Extract the neighborhood diversity
+      the_ent_nbhood_q <- ent_nbhood_q_r[[d - 1]]
       # Keep individual neighborhood values
       if (individual) {
-        ent_q_nr_individuals[, d, ] <- ent_nbhood_q
+        ent_q_nr_individuals[, d, ] <- the_ent_nbhood_q
       }
       # Mean entropy.
-      # If ent_nbhood_q is a vector (i.e. a single value of q is provided),
+      # If the_ent_nbhood_q is a vector (i.e. a single value of q is provided),
       # transpose it to get a 1-row matrix.
-      if (is.null(dim(ent_nbhood_q))) {
-        ent_nbhood_q <- t(ent_nbhood_q)
+      if (is.null(dim(the_ent_nbhood_q))) {
+        the_ent_nbhood_q <- t(the_ent_nbhood_q)
       }
-      ent_q_nr_observed[, d, 1] <- rowMeans(ent_nbhood_q, na.rm = TRUE)
-      if (show_progress && interactive()) cli::cli_progress_update()
+      ent_q_nr_observed[, d, 1] <- rowMeans(the_ent_nbhood_q, na.rm = TRUE)
     }
-    if (show_progress && interactive()) cli::cli_progress_done()
     # Entropy at r=0 is 0. This is the default value of the arrays so don't run.
     #  ent_q_nr_observed[, 1, 1] <- 0
     #  if (individual) ent_q_nr_individuals[, 1, ] <- 0
