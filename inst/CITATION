@@ -14,7 +14,7 @@ bibentry(bibtype = "Article",
 
   header       = "To cite divent in publications use:",
   textVersion  =
-  paste("Marcon, E. & Puech, F. (under revision).",
+  paste("Marcon, E. & Puech, F. (2026).",
         "divent: An R Package for Diversity Measures Based on Entropy.",
         "Journal of Open Source Software, 11(127), 10860.",
         "https://doi.org/10.21105/joss.10860"
