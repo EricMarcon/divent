@@ -55,12 +55,12 @@ test_fun <- function(
   weibull_shape = 2,
   X = paracou_6_wmppp,
   win = NULL
-  ) {
+) {
   check_divent_args()
 }
 
 # check_divent_args() ----
-test_that("Arguments are checked", {
+testthat::test_that("Arguments are checked", {
   testthat::skip_on_cran()
   # abd
   testthat::expect_error(
@@ -72,7 +72,7 @@ test_that("Arguments are checked", {
     error_message_text
   )
   testthat::expect_error(
-    test_fun(abd = 1/2),
+    test_fun(abd = 1 / 2),
     error_message_text
   )
   # abundances
@@ -171,7 +171,7 @@ test_that("Arguments are checked", {
     error_message_text
   )
   testthat::expect_error(
-    test_fun(k = 1/2),
+    test_fun(k = 1 / 2),
     error_message_text
   )
   # level
@@ -253,7 +253,7 @@ test_that("Arguments are checked", {
     error_message_text
   )
   testthat::expect_error(
-    test_fun(q_threshold = 1/2),
+    test_fun(q_threshold = 1 / 2),
     error_message_text
   )
   # r
@@ -443,13 +443,14 @@ test_that("Arguments are checked", {
 })
 
 # error_message() ----
-test_that("error_message() works", {
+testthat::test_that("error_message() works", {
   testthat::skip_on_cran()
   testthat::expect_error(
     error_message(
       message = "",
       argument = "",
-      parent_function = "FUN"),
+      parent_function = "FUN"
+    ),
     error_message_text
   )
 })
