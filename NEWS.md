@@ -1,6 +1,11 @@
-# divent 0.9-9.9001
+# divent 0.9-9.9002
 
 Preparing v. 1.0.
+
+## Bug correction
+
+- `as_probabilities()` applied to characters, factors or point patterns returned abundances instead of probabilities.
+
 
 ## divent 0.6-0
 

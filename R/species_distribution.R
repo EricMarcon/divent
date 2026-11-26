@@ -387,7 +387,6 @@ as_probabilities.numeric <- function(
     prob,
     names = names,
     weights = weights,
-    ...,
     check_arguments = check_arguments
   )
 
@@ -476,7 +475,7 @@ as_probabilities.wmppp <- function(
   check_arguments = TRUE
 ) {
   the_probabilities <- as_species_distribution(
-    as_named_vector.wmppp(x),
+    as_named_vector.wmppp(x) / x$n,
     names = names,
     weights = weights,
     check_arguments = check_arguments
@@ -498,7 +497,7 @@ as_probabilities.character <- function(
   check_arguments = TRUE
 ) {
   the_probabilities <- as_species_distribution(
-    as_named_vector.character(x),
+    as_named_vector.character(x) / length(x),
     names = names,
     weights = weights,
     check_arguments = check_arguments
@@ -521,7 +520,7 @@ as_probabilities.factor <- function(
 ) {
   the_probabilities <- as_species_distribution(
     # tapply keeps factors' names
-    tapply(x, INDEX = x, FUN = length, default = 0),
+    tapply(x, INDEX = x, FUN = length, default = 0) / length(x),
     names = names,
     weights = weights,
     check_arguments = check_arguments
