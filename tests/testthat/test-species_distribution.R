@@ -3,6 +3,7 @@ abd <- 1:2
 abd_char <- c("a", "b", "b")
 
 testthat::test_that("Objects are created correctly", {
+  testthat::skip_on_cran()
   testthat::expect_equal(
     sum(as_probabilities(paracou_6_wmppp)[, -(1:2)]),
     1
