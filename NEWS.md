@@ -1,4 +1,14 @@
-# divent 0.5-4.9012
+# divent 0.9-9.9003
+
+Preparing v. 1.0.
+
+## Bug correction
+
+- `as_probabilities()` applied to characters, factors or point patterns returned abundances instead of probabilities.
+
+## divent 0.6-0
+
+Version reviewed by [JOSS](https://github.com/openjournals/joss-reviews/issues/10860).
 
 ## Bug correction
 
@@ -6,11 +16,14 @@
 - all arguments are available in `accum_sp_hill()`.
 - similarities and distances were not checked correctly (#6 by @Bisaloo).
 - unnamed distance matrices could not always be used to compute similarity-based diversity.
+- `ent_rao()` returned incorrect values.
+- The `estimator` argument was ignored in `profile_similarity()`.
 
 ## Improvement
 
 - argument `richness_estimator` has the same default value across functions.
 - arguments `names` and `weights` are supported in all functions that create `species_distribution` objects.
+- "naive" estimator is now allowed in `divpart()`.
 
 # divent 0.5-4
 

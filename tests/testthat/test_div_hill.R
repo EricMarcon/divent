@@ -3,163 +3,160 @@ the_abundances <- paracou_6_abd[1, ]
 # integer and non-integer q's
 orders <- (0:6) / 2
 
-testthat::test_that(
-  "No estimator fails", {
-    testthat::skip_on_cran()
-    # Estimate diversity systematically
-    div_hill.list <- lapply(
-      # All estimators
-      eval(formals(divent:::div_hill.numeric)$estimator),
-      function(estimator) {
-        the_list <- lapply(
-          # All probability estimators
-          eval(formals(divent:::div_hill.numeric)$probability_estimator),
-          function(probability_estimator) {
-            the_list <- lapply(
-              # All richness estimators
-              eval(formals(divent:::div_hill.numeric)$richness_estimator),
-              function(richness_estimator) {
-                the_list <- lapply(
-                  # All q's
-                  orders,
-                  function(q) {
-                    the_list <- lapply(
-                      # All unveilings
-                      eval(formals(divent:::div_hill.numeric)$unveiling),
-                      function(unveiling) {
-                        # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
-                        suppressWarnings(
-                          # Do not run incompatible argument combinations
-                          if (
-                            !(
-                              (richness_estimator == "rarefy" && unveiling == "none") ||
-                              (richness_estimator == "rarefy" && estimator == "GenCov")
-                            )
-                          ) {
-                            div_hill(
-                              the_abundances,
-                              q = q,
-                              estimator = estimator,
-                              level = NULL,
-                              probability_estimator = probability_estimator,
-                              unveiling = unveiling,
-                              richness_estimator = richness_estimator,
-                              as_numeric = FALSE,
-                              check_arguments = TRUE
-                            )
-                          }
-                        )
-                      }
-                    )
-                    # Make a dataframe with the list to avoid nested lists
-                    the_df <- dplyr::bind_rows(the_list)
-                  }
-                )
-                # Make a dataframe with the list to avoid nested lists
-                the_df <- dplyr::bind_rows(the_list)
-              }
-            )
-            # Make a dataframe with the list to avoid nested lists
-            the_df <- dplyr::bind_rows(the_list)
-          }
-        )
-        # Make a dataframe with the list to avoid nested lists
-        the_df <- dplyr::bind_rows(the_list)
-      }
-    )
-    # Coerce to a dataframe
-    div_hill.dataframe <- dplyr::bind_rows(div_hill.list)
+testthat::test_that("No estimator fails", {
+  testthat::skip_on_cran()
+  # Estimate diversity systematically
+  div_hill.list <- lapply(
+    # All estimators
+    eval(formals(divent:::div_hill.numeric)$estimator),
+    function(estimator) {
+      the_list <- lapply(
+        # All probability estimators
+        eval(formals(divent:::div_hill.numeric)$probability_estimator),
+        function(probability_estimator) {
+          the_list <- lapply(
+            # All richness estimators
+            eval(formals(divent:::div_hill.numeric)$richness_estimator),
+            function(richness_estimator) {
+              the_list <- lapply(
+                # All q's
+                orders,
+                function(q) {
+                  the_list <- lapply(
+                    # All unveilings
+                    eval(formals(divent:::div_hill.numeric)$unveiling),
+                    function(unveiling) {
+                      # print(paste(estimator, probability_estimator, unveiling, richness_estimator, q))
+                      suppressWarnings(
+                        # Do not run incompatible argument combinations
+                        if (
+                          !((richness_estimator == "rarefy" &&
+                            unveiling == "none") ||
+                            (richness_estimator == "rarefy" &&
+                              estimator == "GenCov"))
+                        ) {
+                          div_hill(
+                            the_abundances,
+                            q = q,
+                            estimator = estimator,
+                            level = NULL,
+                            probability_estimator = probability_estimator,
+                            unveiling = unveiling,
+                            richness_estimator = richness_estimator,
+                            as_numeric = FALSE,
+                            check_arguments = TRUE
+                          )
+                        }
+                      )
+                    }
+                  )
+                  # Make a dataframe with the list to avoid nested lists
+                  the_df <- dplyr::bind_rows(the_list)
+                }
+              )
+              # Make a dataframe with the list to avoid nested lists
+              the_df <- dplyr::bind_rows(the_list)
+            }
+          )
+          # Make a dataframe with the list to avoid nested lists
+          the_df <- dplyr::bind_rows(the_list)
+        }
+      )
+      # Make a dataframe with the list to avoid nested lists
+      the_df <- dplyr::bind_rows(the_list)
+    }
+  )
+  # Coerce to a dataframe
+  div_hill.dataframe <- dplyr::bind_rows(div_hill.list)
 
-    # The min value must be UnveilJ / Chao2013 without unveiling
-    testthat::expect_equal(
-      min(div_hill.dataframe$diversity, na.rm = TRUE),
-      div_hill(
-        the_abundances,
-        q = max(orders),
-        probability_estimator = "Chao2013",
-        unveiling = "none"
-      )$diversity
-    )
-  }
-)
+  # The min value must be UnveilJ / Chao2013 without unveiling
+  testthat::expect_equal(
+    min(div_hill.dataframe$diversity, na.rm = TRUE),
+    div_hill(
+      the_abundances,
+      q = max(orders),
+      probability_estimator = "Chao2013",
+      unveiling = "none"
+    )$diversity
+  )
+})
 
 # Interpolation and extrapolation
 sample_size <- abd_sum(the_abundances, as_numeric = TRUE)
 levels <- c(0.7, round(sample_size * 1.5))
 
-testthat::test_that(
-  "No estimator fails during interpolation and extrapolation", {
-    testthat::skip_on_cran()
-    # Estimate diversity systematically
-    div_hill.list <- lapply(
-      # All probability estimators
-      eval(formals(divent:::div_hill.numeric)$probability_estimator),
-      function(probability_estimator) {
-        the_list <- lapply(
-          # All richness estimators
-          eval(formals(divent:::div_hill.numeric)$richness_estimator),
-          function(richness_estimator) {
-            the_list <- lapply(
-              # All levels
-              levels,
-              function(level) {
-                the_list <- lapply(
-                  # All q's
-                  orders,
-                  function(q) {
-                    the_list <- lapply(
-                      # All unveilings
-                      eval(formals(divent:::div_hill.numeric)$unveiling),
-                      function(unveiling) {
-                        # print(paste(probability_estimator, unveiling, richness_estimator, q, level))
-                        suppressWarnings(
-                          # Do not run incompatible argument combinations
-                          if (
-                            !(richness_estimator == "rarefy" && unveiling == "none")
-                          ) {
-                            div_hill(
-                              the_abundances,
-                              q = q,
-                              # Estimator is not used
-                              estimator = "naive",
-                              level = level,
-                              probability_estimator = probability_estimator,
-                              unveiling = unveiling,
-                              richness_estimator = richness_estimator,
-                              as_numeric = FALSE,
-                              check_arguments = TRUE
-                            )
-                          }
-                        )
-                      }
-                    )
-                    # Make a dataframe with the list to avoid nested lists
-                    the_df <- dplyr::bind_rows(the_list)
-                  }
-                )
-                # Make a dataframe with the list to avoid nested lists
-                the_df <- dplyr::bind_rows(the_list)
-              }
-            )
-            # Make a dataframe with the list to avoid nested lists
-            the_df <- dplyr::bind_rows(the_list)
-          }
-        )
-        # Make a dataframe with the list to avoid nested lists
-        the_df <- dplyr::bind_rows(the_list)
-      }
-    )
-    # Coerce to a dataframe
-    div_hill.dataframe <- dplyr::bind_rows(div_hill.list)
+testthat::test_that("No estimator fails during interpolation and extrapolation", {
+  testthat::skip_on_cran()
+  # Estimate diversity systematically
+  div_hill.list <- lapply(
+    # All probability estimators
+    eval(formals(divent:::div_hill.numeric)$probability_estimator),
+    function(probability_estimator) {
+      the_list <- lapply(
+        # All richness estimators
+        eval(formals(divent:::div_hill.numeric)$richness_estimator),
+        function(richness_estimator) {
+          the_list <- lapply(
+            # All levels
+            levels,
+            function(level) {
+              the_list <- lapply(
+                # All q's
+                orders,
+                function(q) {
+                  the_list <- lapply(
+                    # All unveilings
+                    eval(formals(divent:::div_hill.numeric)$unveiling),
+                    function(unveiling) {
+                      # print(paste(probability_estimator, unveiling, richness_estimator, q, level))
+                      suppressWarnings(
+                        # Do not run incompatible argument combinations
+                        if (
+                          !(richness_estimator == "rarefy" &&
+                            unveiling == "none")
+                        ) {
+                          div_hill(
+                            the_abundances,
+                            q = q,
+                            # Estimator is not used
+                            estimator = "naive",
+                            level = level,
+                            probability_estimator = probability_estimator,
+                            unveiling = unveiling,
+                            richness_estimator = richness_estimator,
+                            as_numeric = FALSE,
+                            check_arguments = TRUE
+                          )
+                        }
+                      )
+                    }
+                  )
+                  # Make a dataframe with the list to avoid nested lists
+                  the_df <- dplyr::bind_rows(the_list)
+                }
+              )
+              # Make a dataframe with the list to avoid nested lists
+              the_df <- dplyr::bind_rows(the_list)
+            }
+          )
+          # Make a dataframe with the list to avoid nested lists
+          the_df <- dplyr::bind_rows(the_list)
+        }
+      )
+      # Make a dataframe with the list to avoid nested lists
+      the_df <- dplyr::bind_rows(the_list)
+    }
+  )
+  # Coerce to a dataframe
+  div_hill.dataframe <- dplyr::bind_rows(div_hill.list)
 
-    # The min value must be UnveilJ / Chao2013 without unveiling
-    testthat::expect_equal(
-      min(div_hill.dataframe$diversity, na.rm = TRUE),
-      div_hill(
-        the_abundances,
-        q = max(orders),
-        level = min(levels)
-      )$diversity
-    )
-  }
-)
+  # The min value must be UnveilJ / Chao2013 without unveiling
+  testthat::expect_equal(
+    min(div_hill.dataframe$diversity, na.rm = TRUE),
+    div_hill(
+      the_abundances,
+      q = max(orders),
+      level = min(levels)
+    )$diversity
+  )
+})

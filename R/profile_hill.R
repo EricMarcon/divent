@@ -31,9 +31,10 @@ NULL
 #'
 #' @export
 profile_hill <- function(
-    x,
-    orders = seq(from = 0, to = 2, by = 0.1),
-    ...) {
+  x,
+  orders = seq(from = 0, to = 2, by = 0.1),
+  ...
+) {
   UseMethod("profile_hill")
 }
 
@@ -47,28 +48,38 @@ profile_hill <- function(
 #'
 #' @export
 profile_hill.numeric <- function(
-    x,
-    orders = seq(from = 0, to = 2, by = 0.1),
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
-                  "naive"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    q_threshold = 10,
-    sample_coverage = NULL,
-    as_numeric = FALSE,
-    n_simulations = 0,
-    alpha = 0.05,
-    bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  orders = seq(from = 0, to = 2, by = 0.1),
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Holste",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q_threshold = 10,
+  sample_coverage = NULL,
+  as_numeric = FALSE,
+  n_simulations = 0,
+  alpha = 0.05,
+  bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -82,46 +93,20 @@ profile_hill.numeric <- function(
       cli::cli_abort("Species probabilities or abundances must be positive.")
     }
   }
-
-  # Numeric vector, no simulation ----
-  if (as_numeric) {
-    if (n_simulations > 0) {
-      cli::cli_abort(
-        c(
-          "No simulations are allowed if a numeric vector is expected",
-          "i" = "Change argument for {.code as_numeric = FALSE}"
-        )
+  if (as_numeric && n_simulations > 0) {
+    cli::cli_abort(
+      c(
+        "No simulations are allowed if a numeric vector is expected",
+        "i" = "Change argument for {.code as_numeric = FALSE}"
       )
-    }
-    the_profile_hill <- vapply(
-      orders,
-      FUN = function(q) {
-        div_hill.numeric(
-          x,
-          q = q,
-          estimator = estimator,
-          level = level,
-          probability_estimator = probability_estimator,
-          unveiling = unveiling,
-          richness_estimator = richness_estimator,
-          jack_alpha  = jack_alpha,
-          jack_max = jack_max,
-          coverage_estimator = coverage_estimator,
-          q_threshold = q_threshold,
-          as_numeric = TRUE,
-          check_arguments = FALSE
-        )
-      },
-      FUN.VALUE = 0
     )
-    return(the_profile_hill)
   }
 
-  # Regular output, simulations are allowed ----
+  # Compute the profile ----
   the_profile_hill <- lapply(
     orders,
     FUN = function(q) {
-      div_hill.numeric(
+      div_hill(
         x,
         q = q,
         estimator = estimator,
@@ -129,7 +114,7 @@ profile_hill.numeric <- function(
         probability_estimator = probability_estimator,
         unveiling = unveiling,
         richness_estimator = richness_estimator,
-        jack_alpha  = jack_alpha,
+        jack_alpha = jack_alpha,
         jack_max = jack_max,
         coverage_estimator = coverage_estimator,
         q_threshold = q_threshold,
@@ -172,7 +157,7 @@ profile_hill.numeric <- function(
       profiles_list <- parallel::mclapply(
         orders,
         FUN = function(q) {
-          div_hill.numeric(
+          div_hill(
             communities[i, !colnames(communities) %in% non_species_columns],
             q = q,
             estimator = estimator,
@@ -180,7 +165,7 @@ profile_hill.numeric <- function(
             probability_estimator = probability_estimator,
             unveiling = unveiling,
             richness_estimator = richness_estimator,
-            jack_alpha  = jack_alpha,
+            jack_alpha = jack_alpha,
             jack_max = jack_max,
             coverage_estimator = coverage_estimator,
             q_threshold = q_threshold,
@@ -206,15 +191,19 @@ profile_hill.numeric <- function(
       probs = c(alpha / 2, 1 - alpha / 2)
     )
     # Format the result
-      the_profile_hill <- tibble::tibble(
-        the_profile_hill,
-        inf = div_quantiles[1, ],
-        sup = div_quantiles[2, ]
-      )
+    the_profile_hill <- tibble::tibble(
+      the_profile_hill,
+      inf = div_quantiles[1, ],
+      sup = div_quantiles[2, ]
+    )
   }
-  class(the_profile_hill) <- c("profile", class(the_profile_hill))
 
-  return(the_profile_hill)
+  if (as_numeric) {
+    return(the_profile_hill$diversity)
+  } else {
+    class(the_profile_hill) <- c("profile", class(the_profile_hill))
+    return(the_profile_hill)
+  }
 }
 
 
@@ -222,27 +211,37 @@ profile_hill.numeric <- function(
 #'
 #' @export
 profile_hill.species_distribution <- function(
-    x,
-    orders = seq(from = 0, to = 2, by = 0.1),
-    estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov", "Grassberger",
-                  "Holste", "Marcon", "UnveilC", "UnveiliC", "ZhangGrabchak",
-                  "naive"),
-    level = NULL,
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    q_threshold = 10,
-    gamma = FALSE,
-    n_simulations = 0,
-    alpha = 0.05,
-    bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-    show_progress = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  orders = seq(from = 0, to = 2, by = 0.1),
+  estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Holste",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive"
+  ),
+  level = NULL,
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  q_threshold = 10,
+  gamma = FALSE,
+  n_simulations = 0,
+  alpha = 0.05,
+  bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
+  show_progress = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   probability_estimator <- match.arg(probability_estimator)
@@ -258,8 +257,8 @@ profile_hill.species_distribution <- function(
   }
 
   if (gamma) {
-    the_profile_hill <- profile_hill.numeric(
-      metacommunity.abundances(
+    the_profile_hill <- profile_hill(
+      metacommunity(
         x = x,
         as_numeric = TRUE,
         check_arguments = FALSE
@@ -271,7 +270,7 @@ profile_hill.species_distribution <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       q_threshold = q_threshold,
@@ -289,7 +288,7 @@ profile_hill.species_distribution <- function(
       x[, !colnames(x) %in% non_species_columns],
       # Apply to each row
       MARGIN = 1,
-      FUN = profile_hill.numeric,
+      FUN = profile_hill,
       # Arguments
       orders = orders,
       estimator = estimator,
@@ -297,7 +296,7 @@ profile_hill.species_distribution <- function(
       probability_estimator = probability_estimator,
       unveiling = unveiling,
       richness_estimator = richness_estimator,
-      jack_alpha  = jack_alpha,
+      jack_alpha = jack_alpha,
       jack_max = jack_max,
       coverage_estimator = coverage_estimator,
       q_threshold = q_threshold,

@@ -46,19 +46,19 @@ NULL
 #' @export
 #'
 plot.accum_sp <- function(
-    x,
-    ...,
-    q = dimnames(x$accumulation)$q[1],
-    type = "l",
-    main = "accumulation of ...",
-    xlab = "Sample size...",
-    ylab = "Diversity...",
-    ylim = NULL,
-    show_h0 = TRUE,
-    line_width = 2,
-    col_shade = "grey75",
-    col_border = "red")  {
-
+  x,
+  ...,
+  q = dimnames(x$accumulation)$q[1],
+  type = "l",
+  main = "accumulation of ...",
+  xlab = "Sample size...",
+  ylab = "Diversity...",
+  ylim = NULL,
+  show_h0 = TRUE,
+  line_width = 2,
+  col_shade = "grey75",
+  col_border = "red"
+) {
   # Prepare the parameters
   h <- accum_sp_plot_helper(x, q, main, xlab, ylab, ylim)
 
@@ -124,17 +124,17 @@ plot.accum_sp <- function(
 #' @export
 #'
 autoplot.accum_sp <- function(
-    object,
-    ...,
-    q = dimnames(object$accumulation)$q[1],
-    main = "Accumulation of ...",
-    xlab = "Sample size...",
-    ylab = "Diversity...",
-    ylim = NULL,
-    show_h0 = TRUE,
-    col_shade = "grey75",
-    col_border = "red")   {
-
+  object,
+  ...,
+  q = dimnames(object$accumulation)$q[1],
+  main = "Accumulation of ...",
+  xlab = "Sample size...",
+  ylab = "Diversity...",
+  ylim = NULL,
+  show_h0 = TRUE,
+  col_shade = "grey75",
+  col_border = "red"
+) {
   # Prepare the parameters
   h <- accum_sp_plot_helper(object, q, main, xlab, ylab, ylim)
 
@@ -166,7 +166,8 @@ autoplot.accum_sp <- function(
           ymax = .data$high
         ),
         fill = col_shade,
-        alpha = 0.5) +
+        alpha = 0.5
+      ) +
       # Add red lines on borders of polygon
       ggplot2::geom_line(
         ggplot2::aes(y = .data$low),
@@ -229,27 +230,27 @@ autoplot.accum_sp <- function(
 #' plot_map(accum, q = 0, neighborhood = 0.2)
 #'
 plot_map <- function(
-    accum,
-    q = as.numeric(dimnames(accum$accumulation)$q[1]),
-    neighborhood = as.numeric(dplyr::last(colnames(accum$neighborhoods))),
-    sigma = spatstat.explore::bw.scott(accum$X, isotropic = TRUE),
-    allow_jitter = TRUE,
-    weighted = FALSE,
-    adjust = 1,
-    dim_x = 128,
-    dim_y = 128,
-    main = "",
-    col = grDevices::terrain.colors(256),
-    contour = TRUE,
-    contour_levels = 10,
-    contour_col = "dark red",
-    points = FALSE,
-    pch = 20,
-    point_col = "black",
-    suppress_margins = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  accum,
+  q = as.numeric(dimnames(accum$accumulation)$q[1]),
+  neighborhood = as.numeric(dplyr::last(colnames(accum$neighborhoods))),
+  sigma = spatstat.explore::bw.scott(accum$X, isotropic = TRUE),
+  allow_jitter = TRUE,
+  weighted = FALSE,
+  adjust = 1,
+  dim_x = 128,
+  dim_y = 128,
+  main = "",
+  col = grDevices::terrain.colors(256),
+  contour = TRUE,
+  contour_levels = 10,
+  contour_col = "dark red",
+  points = FALSE,
+  pch = 20,
+  point_col = "black",
+  suppress_margins = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
   }
@@ -351,11 +352,12 @@ plot_map <- function(
 #' @noRd
 #'
 accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
-
   # Find the row in the accumulation table
   q_row <- which(dimnames(x$accumulation)$q == q)
   if (length(q_row) != 1) {
-    cli::cli_abort("The value of q does not correspond to any accumulation curve.")
+    cli::cli_abort(
+      "The value of q does not correspond to any accumulation curve."
+    )
   }
 
   if (is.null(ylim)) {
@@ -379,7 +381,9 @@ accum_sp_plot_helper <- function(x, q, main, xlab, ylab, ylim) {
         main <- paste("Accumulation of Diversity of order", q)
       }
     }
-    if (inherits(x, "accum_sp_mixing")) main <- paste("Mixing index of order", q)
+    if (inherits(x, "accum_sp_mixing")) {
+      main <- paste("Mixing index of order", q)
+    }
   }
 
   if (xlab == "Sample size...") {

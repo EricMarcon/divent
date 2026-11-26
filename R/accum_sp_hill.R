@@ -80,24 +80,35 @@ NULL
 #' autoplot(accum_r, q = 1)
 #'
 accum_sp_tsallis <- function(
-    X,
-    orders = 0,
-    neighbors = 1:ceiling(X$n / 2),
-    r = NULL,
-    correction = c("none", "extrapolation"),
-    entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov",
-                          "Grassberger", "Marcon", "UnveilC", "UnveiliC",
-                          "ZhangGrabchak", "naive", "Bonachela", "Holste"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    individual = FALSE,
-    show_progress = TRUE,
-    check_arguments = TRUE) {
-
+  X,
+  orders = 0,
+  neighbors = 1:ceiling(X$n / 2),
+  r = NULL,
+  correction = c("none", "extrapolation"),
+  entropy_estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  individual = FALSE,
+  show_progress = TRUE,
+  check_arguments = TRUE
+) {
   # Check arguments
   entropy_estimator <- match.arg(entropy_estimator)
   richness_estimator <- match.arg(richness_estimator)
@@ -160,8 +171,8 @@ accum_sp_tsallis <- function(
           vapply(
             orders,
             FUN = function(q) {
-              ent_tsallis.species_distribution(
-                as_abundances.character(community),
+              ent_tsallis(
+                as_abundances(community),
                 q = q,
                 estimator = "naive",
                 as_numeric = TRUE,
@@ -388,27 +399,38 @@ accum_sp_tsallis <- function(
 #' @export
 #'
 accum_sp_hill <- function(
-    X,
-    orders = 0,
-    neighbors = 1:ceiling(X$n / 2),
-    r = NULL,
-    correction = c("none", "extrapolation"),
-    entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov",
-                          "Grassberger", "Marcon", "UnveilC", "UnveiliC",
-                          "ZhangGrabchak", "naive", "Bonachela", "Holste"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    h0 = c("none", "multinomial", "random location", "binomial"),
-    alpha = 0.05,
-    n_simulations = 100,
-    individual = FALSE,
-    show_progress = TRUE,
-    check_arguments = TRUE) {
-
+  X,
+  orders = 0,
+  neighbors = 1:ceiling(X$n / 2),
+  r = NULL,
+  correction = c("none", "extrapolation"),
+  entropy_estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  h0 = c("none", "multinomial", "random location", "binomial"),
+  alpha = 0.05,
+  n_simulations = 100,
+  individual = FALSE,
+  show_progress = TRUE,
+  check_arguments = TRUE
+) {
   # Check arguments
   entropy_estimator <- match.arg(entropy_estimator)
   richness_estimator <- match.arg(richness_estimator)
@@ -504,10 +526,10 @@ accum_sp_hill <- function(
     }
 
     # Prepare the distribution of the abundances of species.
-    abd <- as_abundances.wmppp(X)
+    abd <- as_abundances(X)
     for (order in seq_along(orders)) {
       # Rarefy the community to the sizes of neighborhoods
-      h0_values <- accum_hill.numeric(
+      h0_values <- accum_hill(
         abd,
         q = as.numeric(orders[order]),
         levels = the_seq,
@@ -545,12 +567,14 @@ accum_sp_hill <- function(
     # Simulate communities according to H0
     for (i in (1:n_simulations)) {
       # Random community
-      if (h0 == "random location")
+      if (h0 == "random location") {
         h0_X <- dbmss::rRandomLocation(X, CheckArguments = FALSE)
-      if (h0 == "binomial")
+      }
+      if (h0 == "binomial") {
         h0_X <- dbmss::rRandomPositionK(X, CheckArguments = FALSE)
+      }
       # Calculate its accumulated diversity
-      h0_diversity[, , i] <- accum_sp_hill(
+      h0_diversity[,, i] <- accum_sp_hill(
         h0_X,
         orders = orders,
         neighbors = neighbors,
@@ -569,18 +593,23 @@ accum_sp_hill <- function(
         individual = FALSE,
         show_progress = FALSE,
         check_arguments = FALSE
-      )$accumulation[, , 1]
+      )$accumulation[,, 1]
       if (show_progress && interactive()) cli::cli_progress_update()
     }
-    if (show_progress && interactive()) cli::cli_progress_done()
+    if (show_progress && interactive()) {
+      cli::cli_progress_done()
+    }
     # Calculate quantiles
     for (q in seq_along(orders)) {
       for (r_i in seq_along(r)) {
         the_diversity$accumulation[q, r_i, 3:4] <- stats::quantile(
-          h0_diversity[q, r_i, ], c(alpha, 1 - alpha), na.rm = TRUE
+          h0_diversity[q, r_i, ],
+          c(alpha, 1 - alpha),
+          na.rm = TRUE
         )
         the_diversity$accumulation[q, r_i, 2] <- mean(
-          h0_diversity[q, r_i, ], na.rm = TRUE
+          h0_diversity[q, r_i, ],
+          na.rm = TRUE
         )
       }
     }
@@ -592,7 +621,11 @@ accum_sp_hill <- function(
     )
   }
 
-  class(the_diversity) <- c("accum_sp_diversity", "accum_sp", class(the_diversity))
+  class(the_diversity) <- c(
+    "accum_sp_diversity",
+    "accum_sp",
+    class(the_diversity)
+  )
   return(the_diversity)
 }
 
@@ -602,27 +635,38 @@ accum_sp_hill <- function(
 #' @export
 #'
 accum_mixing <- function(
-    X,
-    orders = 0,
-    neighbors = 1:ceiling(X$n / 2),
-    r = NULL,
-    correction = c("none", "extrapolation"),
-    entropy_estimator = c("UnveilJ", "ChaoJost", "ChaoShen", "GenCov",
-                          "Grassberger", "Marcon", "UnveilC", "UnveiliC",
-                          "ZhangGrabchak", "naive", "Bonachela", "Holste"),
-    richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
-    probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
-    unveiling = c("geometric", "uniform", "none"),
-    jack_alpha  = 0.05,
-    jack_max = 10,
-    coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
-    h0 = c("none", "multinomial", "random location", "binomial"),
-    alpha = 0.05,
-    n_simulations = 100,
-    individual = FALSE,
-    show_progress = TRUE,
-    check_arguments = TRUE) {
-
+  X,
+  orders = 0,
+  neighbors = 1:ceiling(X$n / 2),
+  r = NULL,
+  correction = c("none", "extrapolation"),
+  entropy_estimator = c(
+    "UnveilJ",
+    "ChaoJost",
+    "ChaoShen",
+    "GenCov",
+    "Grassberger",
+    "Marcon",
+    "UnveilC",
+    "UnveiliC",
+    "ZhangGrabchak",
+    "naive",
+    "Bonachela",
+    "Holste"
+  ),
+  richness_estimator = c("jackknife", "iChao1", "Chao1", "rarefy", "naive"),
+  probability_estimator = c("Chao2015", "Chao2013", "ChaoShen", "naive"),
+  unveiling = c("geometric", "uniform", "none"),
+  jack_alpha = 0.05,
+  jack_max = 10,
+  coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
+  h0 = c("none", "multinomial", "random location", "binomial"),
+  alpha = 0.05,
+  n_simulations = 100,
+  individual = FALSE,
+  show_progress = TRUE,
+  check_arguments = TRUE
+) {
   # Check arguments
   entropy_estimator <- match.arg(entropy_estimator)
   richness_estimator <- match.arg(richness_estimator)
@@ -655,20 +699,20 @@ accum_mixing <- function(
   )
 
   # Normalize it
-  the_mixing$accumulation[, , 1] <- the_mixing$accumulation[, , 1] /
-    the_mixing$accumulation[, , 2]
-  the_mixing$accumulation[, , 3] <- the_mixing$accumulation[, , 3] /
-    the_mixing$accumulation[, , 2]
-  the_mixing$accumulation[, , 4] <- the_mixing$accumulation[, , 4] /
-    the_mixing$accumulation[, , 2]
+  the_mixing$accumulation[,, 1] <- the_mixing$accumulation[,, 1] /
+    the_mixing$accumulation[,, 2]
+  the_mixing$accumulation[,, 3] <- the_mixing$accumulation[,, 3] /
+    the_mixing$accumulation[,, 2]
+  the_mixing$accumulation[,, 4] <- the_mixing$accumulation[,, 4] /
+    the_mixing$accumulation[,, 2]
   # Normalize individual values
   if (individual) {
     for (i in seq_len(X$n)) {
-      the_mixing$neighborhoods[, , i] <- the_mixing$neighborhoods[, , i] /
-        the_mixing$accumulation[, , 2]
+      the_mixing$neighborhoods[,, i] <- the_mixing$neighborhoods[,, i] /
+        the_mixing$accumulation[,, 2]
     }
   }
-  the_mixing$accumulation[, , 2] <- 1
+  the_mixing$accumulation[,, 2] <- 1
 
   class(the_mixing) <- c("accum_sp_mixing", "accum_sp", class(the_mixing))
   return(the_mixing)

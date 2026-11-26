@@ -52,6 +52,8 @@
 #' is_species_distribution(paracou_6_abd)
 #' # Whittaker plot fitted by a log-normal distribution
 #' autoplot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
+#' # Equivalent base plot
+#' plot(paracou_6_abd[1,], fit_rac = TRUE, distribution = "lnorm")
 #' # Character vectors
 #' as_abundances(c("A", "C", "B", "C"))
 #'
@@ -67,11 +69,11 @@ NULL
 #'
 #' @export
 species_distribution <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  check_arguments = TRUE
+) {
   # Check the data ----
   if (check_arguments) {
     check_divent_args()
@@ -138,7 +140,11 @@ species_distribution <- function(
         # ...and no row names: set default names such as site_1
         the_distribution$site <- paste(
           "site",
-          formatC(seq_len(nrow(x)), width = ceiling(log10(nrow(x))), flag = "0"),
+          formatC(
+            seq_len(nrow(x)),
+            width = ceiling(log10(nrow(x))),
+            flag = "0"
+          ),
           sep = "_"
         )
       }
@@ -188,12 +194,12 @@ as_species_distribution <- function(x, ...) {
 #'
 #' @export
 as_species_distribution.numeric <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   return(
     species_distribution(
       x,
@@ -209,12 +215,12 @@ as_species_distribution.numeric <- function(
 #'
 #' @export
 as_species_distribution.matrix <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   return(
     species_distribution(
       x,
@@ -230,11 +236,13 @@ as_species_distribution.matrix <- function(
 #'
 #' @export
 as_species_distribution.data.frame <- function(
-    x,
-    ...,
-    check_arguments = TRUE) {
-
-  if (check_arguments) check_divent_args()
+  x,
+  ...,
+  check_arguments = TRUE
+) {
+  if (check_arguments) {
+    check_divent_args()
+  }
   # Check the data
   if (any(x < 0)) {
     cli::cli_abort("All numeric values of the dataframe must be positive.")
@@ -279,12 +287,12 @@ as_species_distribution.data.frame <- function(
 #'
 #' @export
 as_species_distribution.wmppp <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   return(
     species_distribution(
       as_named_vector.wmppp(x),
@@ -300,12 +308,12 @@ as_species_distribution.wmppp <- function(
 #'
 #' @export
 as_species_distribution.character <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   # Count the number of items by type
   return(
     species_distribution(
@@ -322,12 +330,12 @@ as_species_distribution.character <- function(
 #'
 #' @export
 as_species_distribution.factor <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   # Count the number of items by type
   return(
     species_distribution(
@@ -349,7 +357,6 @@ is_species_distribution <- function(x) {
 }
 
 
-
 #  Probabilities ----
 
 #' @rdname species_distribution
@@ -364,12 +371,12 @@ as_probabilities <- function(x, ...) {
 #'
 #' @export
 as_probabilities.numeric <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   if (any(x < 0)) {
     cli::cli_abort("Species probabilities must be positive.")
   }
@@ -380,7 +387,6 @@ as_probabilities.numeric <- function(
     prob,
     names = names,
     weights = weights,
-    ...,
     check_arguments = check_arguments
   )
 
@@ -393,17 +399,17 @@ as_probabilities.numeric <- function(
 #'
 #' @export
 as_probabilities.matrix <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   # Calculate probabilities by row
   prob <- x / rowSums(x)
 
   # Build the species distribution
-  the_probabilities <- as_species_distribution.matrix(
+  the_probabilities <- as_species_distribution(
     prob,
     names = names,
     weights = weights,
@@ -420,12 +426,12 @@ as_probabilities.matrix <- function(
 #'
 #' @export
 as_probabilities.data.frame <- function(
-    x,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  ...,
+  check_arguments = TRUE
+) {
   # Build the species distribution to add site and weight columns if needed
-  abundances <- as_species_distribution.data.frame(
+  abundances <- as_species_distribution(
     x,
     check_arguments = check_arguments
   )
@@ -442,10 +448,12 @@ as_probabilities.data.frame <- function(
     as.data.frame(prob)
   )
   # Restore exact species names (spaces may have been transformed into "_")
-  colnames(the_probabilities[, species_columns]) <- colnames(abundances[, species_columns])
+  colnames(the_probabilities[, species_columns]) <- colnames(abundances[,
+    species_columns
+  ])
 
   # Build the species distribution again for the classes
-  the_probabilities <- as_species_distribution.data.frame(
+  the_probabilities <- as_species_distribution(
     the_probabilities,
     check_arguments = FALSE
   )
@@ -460,14 +468,14 @@ as_probabilities.data.frame <- function(
 #'
 #' @export
 as_probabilities.wmppp <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   the_probabilities <- as_species_distribution(
-    as_named_vector.wmppp(x),
+    as_named_vector.wmppp(x) / x$n,
     names = names,
     weights = weights,
     check_arguments = check_arguments
@@ -482,14 +490,14 @@ as_probabilities.wmppp <- function(
 #'
 #' @export
 as_probabilities.character <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   the_probabilities <- as_species_distribution(
-    as_named_vector.character(x),
+    as_named_vector.character(x) / length(x),
     names = names,
     weights = weights,
     check_arguments = check_arguments
@@ -504,15 +512,15 @@ as_probabilities.character <- function(
 #'
 #' @export
 as_probabilities.factor <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   the_probabilities <- as_species_distribution(
     # tapply keeps factors' names
-    tapply(x, INDEX = x, FUN = length, default = 0),
+    tapply(x, INDEX = x, FUN = length, default = 0) / length(x),
     names = names,
     weights = weights,
     check_arguments = check_arguments
@@ -539,12 +547,12 @@ is_probabilities <- function(x) {
 #'
 #' @export
 abundances <- function(
-    x,
-    round = TRUE,
-    names = NULL,
-    weights = NULL,
-    check_arguments = TRUE) {
-
+  x,
+  round = TRUE,
+  names = NULL,
+  weights = NULL,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     if (!is.numeric(x)) {
@@ -582,13 +590,13 @@ as_abundances <- function(x, ...) {
 #'
 #' @export
 as_abundances.numeric <- function(
-    x,
-    round = TRUE,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  round = TRUE,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
@@ -618,18 +626,18 @@ as_abundances.numeric <- function(
 #'
 #' @export
 as_abundances.matrix <- function(
-    x,
-    round = TRUE,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  round = TRUE,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   if (round) {
     x <- round(x)
   }
 
-  the_abundances <- as_species_distribution.matrix(
+  the_abundances <- as_species_distribution(
     x,
     names = names,
     weights = weights,
@@ -645,11 +653,11 @@ as_abundances.matrix <- function(
 #'
 #' @export
 as_abundances.data.frame <- function(
-    x,
-    ...,
-    check_arguments = TRUE) {
-
-  the_abundances <- as_species_distribution.data.frame(
+  x,
+  ...,
+  check_arguments = TRUE
+) {
+  the_abundances <- as_species_distribution(
     x,
     check_arguments = check_arguments
   )
@@ -663,12 +671,12 @@ as_abundances.data.frame <- function(
 #'
 #' @export
 as_abundances.wmppp <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   the_abundances <- as_species_distribution(
     as_named_vector.wmppp(x),
     names = names,
@@ -685,12 +693,12 @@ as_abundances.wmppp <- function(
 #'
 #' @export
 as_abundances.character <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   the_abundances <- as_species_distribution(
     as_named_vector.character(x),
     names = names,
@@ -707,12 +715,12 @@ as_abundances.character <- function(
 #'
 #' @export
 as_abundances.factor <- function(
-    x,
-    names = NULL,
-    weights = NULL,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  names = NULL,
+  weights = NULL,
+  ...,
+  check_arguments = TRUE
+) {
   the_abundances <- as_species_distribution(
     # tapply keeps factors' names
     tapply(x, INDEX = x, FUN = length, default = 0),
@@ -775,7 +783,7 @@ as.double.species_distribution <- function(x, use.names = TRUE, ...) {
 #'
 #' @export
 as.numeric.species_distribution <- function(x, use.names = TRUE, ...) {
-  return(as.double.species_distribution(x, use.names, ...))
+  return(as.double(x, use.names, ...))
 }
 
 
@@ -793,7 +801,7 @@ as.numeric.species_distribution <- function(x, use.names = TRUE, ...) {
 #' @returns A named vector with the number of items by name.
 #' @noRd
 #'
-as_named_vector.character <- function(x){
+as_named_vector.character <- function(x) {
   # Count the number of items. Returns a 1D array, not a vector.
   the_array <- tapply(x, INDEX = x, FUN = length, default = 0)
   the_vector <- as.vector(the_array)
@@ -815,7 +823,7 @@ as_named_vector.character <- function(x){
 #' @returns A named vector with the number of points by type.
 #' @noRd
 #'
-as_named_vector.wmppp <- function(X){
+as_named_vector.wmppp <- function(X) {
   # Count the number of points by type
   the_vector <- as_named_vector.character(spatstat.geom::marks(X)$PointType)
   # Eliminate NAs due to factor levels with no item

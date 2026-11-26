@@ -15,13 +15,14 @@
 #' estimators.
 #'
 #' @inheritParams check_divent_args
-#' @param x An object of class [abundances] that contains several communities or
-#' a matrix of abundances with communities in rows and species in columns.
+#' @param x An object of class [species_distribution] that contains several
+#' communities or a matrix of abundances with communities in rows and species
+#' in columns.
 #' @param name The name of the metacommunity
 #' @param ... Unused.
 #'
-#' @returns An object of class [abundances] with a single row or a named vector
-#' if `as_numeric = TRUE`.
+#' @returns An object of class [abundances] or [probabilities] with a single
+#' row, or a named vector if `as_numeric = TRUE`.
 #'
 #' @examples
 #' metacommunity(paracou_6_abd)
@@ -34,9 +35,10 @@ NULL
 #'
 #' @export
 metacommunity <- function(
-    x,
-    name = "metacommunity",
-    ...) {
+  x,
+  name = "metacommunity",
+  ...
+) {
   UseMethod("metacommunity")
 }
 
@@ -46,17 +48,19 @@ metacommunity <- function(
 #'
 #'
 metacommunity.matrix <- function(
-    x,
-    name = "metacommunity",
-    weights = rep(1, nrow(x)),
-    as_numeric = TRUE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  name = "metacommunity",
+  weights = rep(1, nrow(x)),
+  as_numeric = TRUE,
+  ...,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     if (length(weights) != nrow(x)) {
-      cli::cli_abort("The length of 'weights' must be the number of communities")
+      cli::cli_abort(
+        "The length of 'weights' must be the number of communities"
+      )
     }
     if (any(x < 0)) {
       cli::cli_abort("Species probabilities or abundances must be positive.")
@@ -94,7 +98,11 @@ metacommunity.matrix <- function(
       )
     )
     # Classes
-    class(the_metacommunity) <- c("abundances", "species_distribution", class(the_metacommunity))
+    class(the_metacommunity) <- c(
+      "abundances",
+      "species_distribution",
+      class(the_metacommunity)
+    )
     return(the_metacommunity)
   }
 }
@@ -103,33 +111,52 @@ metacommunity.matrix <- function(
 #' @rdname metacommunity
 #' @export
 #'
-metacommunity.abundances <- function(
-    x,
-    name = "metacommunity",
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+metacommunity.species_distribution <- function(
+  x,
+  name = "metacommunity",
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     if (any(x < 0)) {
-      cli::cli_abort("Species probabilities or abundances must be positive.")
+      cli::cli_abort("Species abundances must be positive.")
     }
   }
 
   # Select species columns
   species_columns <- !colnames(x) %in% non_species_columns
   # Extract abundances
-  species_abd <- as.matrix(x[, species_columns])
+  species_abd_prob <- as.matrix(x[, species_columns])
+  # Sample size
+  if (is_abundances(x)) {
+    sample_size <- sum(species_abd_prob)
+  } else {
+    # Probabilities
+    sample_size <- 1
+  }
+  # Aggregate abundances:
+  # Multiply abundances by weights and normalize so that
+  # sample_size is the sum of sample sizes
+  abd_prob <- x$weight %*%
+    species_abd_prob *
+    sample_size /
+    as.numeric(x$weight %*% rowSums(species_abd_prob))
 
-  # Call .matrix method
-  return(
-    metacommunity.matrix(
-      x = species_abd,
-      name = name,
-      weights = x$weight,
-      as_numeric = as_numeric,
-      check_arguments = FALSE
+  if (as_numeric) {
+    # Return a named vector (abd_prob is a 1-row matrix)
+    return(abd_prob[1, ])
+  } else {
+    # Build the tibble
+    the_metacommunity <- tibble::as_tibble(
+      cbind(
+        data.frame(site = name, weight = sum(x$weight)),
+        as.data.frame(abd_prob)
+      )
     )
-  )
+    # Classes
+    class(the_metacommunity) <- class(x)
+    return(the_metacommunity)
+  }
 }

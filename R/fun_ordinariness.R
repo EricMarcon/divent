@@ -27,13 +27,13 @@
 #' fun_ordinariness(paracou_6_abd, fun_similarity(paracou_6_fundist, rate = 100))
 #'
 fun_ordinariness <- function(
-    species_distribution,
-    similarities = diag(
-      sum(!colnames(species_distribution) %in% non_species_columns)
-    ),
-    as_numeric = FALSE,
-    check_arguments = TRUE) {
-
+  species_distribution,
+  similarities = diag(
+    sum(!colnames(species_distribution) %in% non_species_columns)
+  ),
+  as_numeric = FALSE,
+  check_arguments = TRUE
+) {
   if (check_arguments) {
     check_divent_args()
     # Check species names
@@ -42,10 +42,16 @@ fun_ordinariness <- function(
 
   # Calculate species probabilities
   is_species_column <- !colnames(species_distribution) %in% non_species_columns
-  prob <- probabilities.abundances(species_distribution)[, is_species_column]
+  if (is_abundances(species_distribution)) {
+    # Calculate probabilities
+    probabilities <- probabilities(species_distribution)[, is_species_column]
+  } else {
+    # Just keep species columns
+    probabilities <- species_distribution[, is_species_column]
+  }
 
   # Calculate ordinariness
-  the_ordinariness <- tcrossprod(as.matrix(prob), similarities)
+  the_ordinariness <- tcrossprod(as.matrix(probabilities), similarities)
 
   if (as_numeric) {
     return(the_ordinariness)

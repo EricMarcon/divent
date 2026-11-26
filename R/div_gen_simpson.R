@@ -46,13 +46,13 @@ div_gen_simpson <- function(x, k = 1, ...) {
 #'
 #' @export
 div_gen_simpson.numeric <- function(
-    x,
-    k = 1,
-    estimator = c("Zhang", "naive"),
-    as_numeric  = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 1,
+  estimator = c("Zhang", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -62,7 +62,7 @@ div_gen_simpson.numeric <- function(
     }
   }
 
-  the_entropy <- ent_gen_simpson.numeric(
+  the_entropy <- ent_gen_simpson(
     x,
     k = k,
     estimator = estimator,
@@ -89,13 +89,13 @@ div_gen_simpson.numeric <- function(
 #'
 #' @export
 div_gen_simpson.species_distribution <- function(
-    x,
-    k = 1,
-    estimator = c("Zhang", "naive"),
-    as_numeric = FALSE,
-    ...,
-    check_arguments = TRUE) {
-
+  x,
+  k = 1,
+  estimator = c("Zhang", "naive"),
+  as_numeric = FALSE,
+  ...,
+  check_arguments = TRUE
+) {
   # Check arguments
   estimator <- match.arg(estimator)
   if (check_arguments) {
@@ -105,7 +105,7 @@ div_gen_simpson.species_distribution <- function(
     }
   }
 
-  the_entropy <- ent_gen_simpson.species_distribution(
+  the_entropy <- ent_gen_simpson(
     x,
     k = k,
     estimator = estimator,

@@ -30,7 +30,6 @@
 #'   plot(X)
 #' }
 alphahull <- function(X, alpha = NULL) {
-
   if (!inherits(X, "ppp")) {
     cli::cli_abort("X must be a planar point pattern (ppp object)")
   }
@@ -46,11 +45,13 @@ alphahull <- function(X, alpha = NULL) {
     }
   }
   # At least 3 points are needed
-  if (X$n < 3)
+  if (X$n < 3) {
     return(X$window)
-  if (X$n == 3)
+  }
+  if (X$n == 3) {
     # Window is a convex hull
     return(spatstat.geom::convexhull.xy(X$x, X$y))
+  }
 
   # Prepare
   is_validated_alpha <- FALSE
@@ -83,9 +84,9 @@ alphahull <- function(X, alpha = NULL) {
       the_error <- "No edges in alpha shape."
     } else if (!igraph::is_connected(graph_alpha_shape)) {
       the_error <- "Graph not connected."
-    # Ignore circularity
-    # } else if (any(igraph::degree(graph_alpha_shape) != 2)) {
-    #  the_error <- "Graph not circular."
+      # Ignore circularity
+      # } else if (any(igraph::degree(graph_alpha_shape) != 2)) {
+      #  the_error <- "Graph not circular."
     } else if (igraph::components(graph_alpha_shape)$no > 1) {
       the_error <- "Graph composed of more than one circle."
     }
@@ -100,9 +101,10 @@ alphahull <- function(X, alpha = NULL) {
             the_error
           )
         )
-      }
-      else # Try to double alpha
+      } else {
+        # Try to double alpha
         alpha <- 2 * alpha
+      }
     }
   }
 
