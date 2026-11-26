@@ -93,42 +93,16 @@ profile_hill.numeric <- function(
       cli::cli_abort("Species probabilities or abundances must be positive.")
     }
   }
-
-  # Numeric vector, no simulation ----
-  if (as_numeric) {
-    if (n_simulations > 0) {
-      cli::cli_abort(
-        c(
-          "No simulations are allowed if a numeric vector is expected",
-          "i" = "Change argument for {.code as_numeric = FALSE}"
-        )
+  if (as_numeric && n_simulations > 0) {
+    cli::cli_abort(
+      c(
+        "No simulations are allowed if a numeric vector is expected",
+        "i" = "Change argument for {.code as_numeric = FALSE}"
       )
-    }
-    the_profile_hill <- vapply(
-      orders,
-      FUN = function(q) {
-        div_hill(
-          x,
-          q = q,
-          estimator = estimator,
-          level = level,
-          probability_estimator = probability_estimator,
-          unveiling = unveiling,
-          richness_estimator = richness_estimator,
-          jack_alpha = jack_alpha,
-          jack_max = jack_max,
-          coverage_estimator = coverage_estimator,
-          q_threshold = q_threshold,
-          as_numeric = TRUE,
-          check_arguments = FALSE
-        )
-      },
-      FUN.VALUE = 0
     )
-    return(the_profile_hill)
   }
 
-  # Regular output, simulations are allowed ----
+  # Compute the profile ----
   the_profile_hill <- lapply(
     orders,
     FUN = function(q) {
@@ -223,9 +197,13 @@ profile_hill.numeric <- function(
       sup = div_quantiles[2, ]
     )
   }
-  class(the_profile_hill) <- c("profile", class(the_profile_hill))
 
-  return(the_profile_hill)
+  if (as_numeric) {
+    return(the_profile_hill$diversity)
+  } else {
+    class(the_profile_hill) <- c("profile", class(the_profile_hill))
+    return(the_profile_hill)
+  }
 }
 
 
