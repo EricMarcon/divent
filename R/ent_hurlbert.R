@@ -176,7 +176,7 @@ ent_hurlbert.species_distribution <- function(
       tibble::tibble(
         # Restore non-species columns
         x[colnames(x) %in% non_species_columns],
-        # Coerce the list returned by apply into a dataframe
+        # Coerce the list returned
         dplyr::bind_rows(ent_hurlbert_sites)
       )
     )

@@ -408,7 +408,7 @@ accum_tsallis.abundances <- function(
   # Make a tibble with site, level and entropy
   the_accum_tsallis <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
-    # Coerce the list returned by apply into a dataframe
+    # Coerce the list returned
     dplyr::bind_rows(accum_tsallis_list)
   )
   class(the_accum_tsallis) <- c("accumulation", class(the_accum_tsallis))
@@ -563,7 +563,7 @@ accum_hill.abundances <- function(
   # Make a tibble with site, level and diversity
   the_accum_hill <- tibble::tibble(
     site = rep(site_names, each = length(levels)),
-    # Coerce the list returned by apply into a dataframe
+    # Coerce the list returned
     dplyr::bind_rows(accum_hill_list)
   )
   class(the_accum_hill) <- c("accumulation", class(the_accum_hill))

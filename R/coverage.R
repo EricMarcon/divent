@@ -295,7 +295,7 @@ coverage.abundances <- function(
     check_arguments = FALSE
   )
 
-  # Coerce the list returned by apply into a dataframe
+  # Coerce the list returned
   the_coverages <- dplyr::bind_rows(coverage_list)
 
   return(
@@ -434,7 +434,7 @@ coverage_to_size.abundances <- function(
     tibble::tibble(
       # Restore non-species columns
       x[colnames(x) %in% non_species_columns],
-      # Coerce the list returned by apply into a dataframe
+      # Coerce the list returned
       dplyr::bind_rows(size_list)
     )
   )

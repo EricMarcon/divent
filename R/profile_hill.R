@@ -310,7 +310,7 @@ profile_hill.species_distribution <- function(
     # Make a tibble with sites and profiles
     the_profile_hill <- tibble::tibble(
       site = rep(x$site, each = length(orders)),
-      # Coerce the list returned by apply into a dataframe
+      # Coerce the list returned
       dplyr::bind_rows(profile_hill_list)
     )
   }
