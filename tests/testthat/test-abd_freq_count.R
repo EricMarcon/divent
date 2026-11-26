@@ -1,7 +1,7 @@
 # Abundance vector
 the_abd <- as.numeric(paracou_6_abd[1, ])
 
-test_that::test_that("Interpolation to sample size and coverage are equal", {
+testthat::test_that("Interpolation to sample size and coverage are equal", {
   testthat::skip_on_cran()
   # Coverage
   the_coverage <- 0.5
