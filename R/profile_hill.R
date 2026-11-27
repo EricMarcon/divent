@@ -81,7 +81,6 @@ profile_hill.numeric <- function(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 ) {
@@ -152,45 +151,43 @@ profile_hill.numeric <- function(
     )
 
     # Define the progressor
-    if (show_progress && interactive()) {
-      progress <- progressr::progressor(steps = n_simulations)
-    }
-
-    # Run simulations in parallel. Declare i for R CMD check
+    progress <- progressr::progressor(steps = n_simulations)
+    # Declare i for R CMD check
     i <- NULL
-    profile_hills <- foreach::foreach(
-      i = seq_len(n_simulations),
-      .combine = rbind
-    ) %dofuture%
-      {
-        # Calculate diversity at all orders
-        profiles_list <- lapply(
-          orders,
-          FUN = function(q) {
-            div_hill(
-              communities[i, ],
-              q = q,
-              estimator = estimator,
-              level = level,
-              probability_estimator = probability_estimator,
-              unveiling = unveiling,
-              richness_estimator = richness_estimator,
-              jack_alpha = jack_alpha,
-              jack_max = jack_max,
-              coverage_estimator = coverage_estimator,
-              q_threshold = q_threshold,
-              as_numeric = TRUE,
-              check_arguments = FALSE
-            )
-          }
-        )
-        # Progressor
-        if (show_progress && interactive()) {
+    # Run simulations in parallel
+    profile_hills <- futurize::futurize(
+      foreach::foreach(
+        i = seq_len(n_simulations),
+        .combine = rbind
+      ) %do%
+        {
+          # Calculate diversity at all orders
+          profiles_list <- lapply(
+            orders,
+            FUN = function(q) {
+              div_hill(
+                communities[i, ],
+                q = q,
+                estimator = estimator,
+                level = level,
+                probability_estimator = probability_estimator,
+                unveiling = unveiling,
+                richness_estimator = richness_estimator,
+                jack_alpha = jack_alpha,
+                jack_max = jack_max,
+                coverage_estimator = coverage_estimator,
+                q_threshold = q_threshold,
+                as_numeric = TRUE,
+                check_arguments = FALSE
+              )
+            }
+          )
+          # Progressor
           progress()
+          # Return a vector
+          simplify2array(profiles_list)
         }
-        # Return a vector
-        simplify2array(profiles_list)
-      }
+    )
     # Recenter simulated values
     div_means <- colMeans(profile_hills)
     profile_hills <- t(
@@ -252,7 +249,6 @@ profile_hill.species_distribution <- function(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 ) {
@@ -300,7 +296,6 @@ profile_hill.species_distribution <- function(
       n_simulations = n_simulations,
       alpha = alpha,
       bootstrap = bootstrap,
-      show_progress = show_progress,
       check_arguments = FALSE
     )
   } else {
@@ -326,7 +321,6 @@ profile_hill.species_distribution <- function(
       n_simulations = n_simulations,
       alpha = alpha,
       bootstrap = bootstrap,
-      show_progress = show_progress,
       check_arguments = FALSE
     )
     # Make a tibble with sites and profiles

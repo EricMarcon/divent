@@ -29,7 +29,6 @@ profile_similarity(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 )
@@ -50,7 +49,6 @@ profile_similarity(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 )
@@ -98,8 +96,6 @@ number of individuals \insertCite{Marcon2012a}{divent}.
 If "Chao2013" or "Chao2015" (by default), a more sophisticated approach is used
 (see \link{as_probabilities}) following \insertCite{Chao2013;textual}{divent} or
 \insertCite{Chao2015;textual}{divent}.}
-
-\item{show_progress}{if TRUE, a progress bar is shown during long computations.}
 
 \item{check_arguments}{if \code{TRUE}, the function arguments are verified.
 Should be set to \code{FALSE} to save time when the arguments have been checked elsewhere.}

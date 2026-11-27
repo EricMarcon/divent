@@ -76,7 +76,6 @@ profile_similarity.numeric <- function(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 ) {
@@ -144,44 +143,42 @@ profile_similarity.numeric <- function(
       check_arguments = FALSE
     )
     # Define the progressor
-    if (show_progress && interactive()) {
-      progress <- progressr::progressor(steps = n_simulations)
-    }
-
-    # Run simulations in parallel. Declare i for R CMD check
+    progress <- progressr::progressor(steps = n_simulations)
+    # Declare i for R CMD check
     i <- NULL
-    profile_similarities <- foreach::foreach(
-      i = seq_len(n_simulations),
-      .combine = rbind
-    ) %dofuture%
-      {
-        # Calculate diversity at all orders
-        profiles_list <- lapply(
-          orders,
-          FUN = function(q) {
-            div_similarity(
-              communities[i, ],
-              similarities = similarities,
-              q = q,
-              estimator = estimator,
-              probability_estimator = probability_estimator,
-              unveiling = unveiling,
-              jack_alpha = jack_alpha,
-              jack_max = jack_max,
-              coverage_estimator = coverage_estimator,
-              sample_coverage = sample_coverage,
-              as_numeric = TRUE,
-              check_arguments = FALSE
-            )
-          }
-        )
-        # Progressor
-        if (show_progress && interactive()) {
+    # Run simulations in parallel
+    profile_similarities <- futurize::futurize(
+      foreach::foreach(
+        i = seq_len(n_simulations),
+        .combine = rbind
+      ) %do%
+        {
+          # Calculate diversity at all orders
+          profiles_list <- lapply(
+            orders,
+            FUN = function(q) {
+              div_similarity(
+                communities[i, ],
+                similarities = similarities,
+                q = q,
+                estimator = estimator,
+                probability_estimator = probability_estimator,
+                unveiling = unveiling,
+                jack_alpha = jack_alpha,
+                jack_max = jack_max,
+                coverage_estimator = coverage_estimator,
+                sample_coverage = sample_coverage,
+                as_numeric = TRUE,
+                check_arguments = FALSE
+              )
+            }
+          )
+          # Progressor
           progress()
+          # Return a vector
+          simplify2array(profiles_list)
         }
-        # Return a vector
-        simplify2array(profiles_list)
-      }
+    )
     # Recenter simulated values
     div_means <- colMeans(profile_similarities)
     profile_similarities <- t(
@@ -237,7 +234,6 @@ profile_similarity.species_distribution <- function(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 ) {
@@ -307,7 +303,6 @@ profile_similarity.species_distribution <- function(
       n_simulations = n_simulations,
       alpha = alpha,
       bootstrap = bootstrap,
-      show_progress = show_progress,
       check_arguments = FALSE
     )
     # Make a tibble with sites and profiles

@@ -1,4 +1,4 @@
-# divent 0.9-9.9004
+# divent 0.9-9.9005
 
 Preparing v. 1.0.
 
@@ -6,7 +6,11 @@ Preparing v. 1.0.
 
 - `as_probabilities()` applied to characters, factors or point patterns returned abundances instead of probabilities.
 
-## divent 0.6-0
+## Improvements
+
+- parallel tasks rely on package `futurize` in `profile_hill()` and `profile_similarity()`. `accum_sp_xxx()` still rely on `doFuture`.
+
+# divent 0.6-0
 
 Version reviewed by [JOSS](https://github.com/openjournals/joss-reviews/issues/10860).
 

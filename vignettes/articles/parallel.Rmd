@@ -13,7 +13,7 @@ vignette: >
 
 ```{r global_options, include=FALSE}
 # Necessary packages
-packages_required <- c("dplyr", "divent", "doFuture", "progressr")
+packages_required <- c("dplyr", "divent", "future", "progressr")
 
 # Already installed?
 packages_installed <- vapply(
@@ -78,7 +78,7 @@ The following example launches several simultaneous copies of R on the local com
 The number of parallel processes here is the number of logical CPUs.
 
 ```{r}
-library("doFuture")
+library("future")
 plan(multisession, workers = availableCores())
 ```
 
