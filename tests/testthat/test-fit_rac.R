@@ -1,5 +1,6 @@
 # Draw random distribution ----
 ## Lognormal ----
+set.seed(973)
 sd_lnorm <- 2
 lnorm_dist <- rcommunity(
   n = 1,
