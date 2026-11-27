@@ -4,7 +4,6 @@ output:
   rmarkdown::html_document:
     toc: yes
     toc_float: yes
-bibliography: ../../inst/REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{Common Arguments of divent Functions}
   %\VignetteEngine{knitr::rmarkdown}
@@ -85,8 +84,7 @@ When applied to a single community, they can return a number instead of a one-li
 
 ## `check_arguments`
 
-Most functions of the package check their arguments, e.g. that `alpha`, the risk level, is between 0 and 1.
-To save time, `check_arguments = FALSE` skips the checks.
+Most functions of the package check their arguments, e.g. that `alpha`, the risk level, is between 0 and 1. To save time, `check_arguments = FALSE` skips the checks.
 
 ## `n_simulations`
 
