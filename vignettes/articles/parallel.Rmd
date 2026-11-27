@@ -1,0 +1,111 @@
+---
+title: "Parallel computing"
+output: 
+  rmarkdown::html_document:
+    toc: yes
+    toc_float: yes
+bibliography: ../../inst/REFERENCES.bib
+vignette: >
+  %\VignetteIndexEntry{Parallel computing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+# Necessary packages
+packages_required <- c("dplyr", "divent", "doFuture", "progressr")
+
+# Already installed?
+packages_installed <- vapply(
+  packages_required, 
+  FUN = requireNamespace, 
+  FUN.VALUE = TRUE, 
+  quietly = TRUE
+) 
+# Install missing packages
+install.packages(names(packages_installed)[!packages_installed])
+
+# knitr options
+knitr::opts_chunk$set(
+  cache = TRUE, 
+  message = FALSE, 
+  warning = FALSE
+)
+
+# Random seed
+set.seed(97310)
+```
+
+
+Computer-intensive tasks can be run in parallel thanks to the **future** and **doFuture** [@Bengtsson2021] packages.
+
+The following functions are concerned:
+
+- `profile_hill()`
+- `profile_similarity()`
+- `accum_sp_hill()`
+
+
+# Example
+
+The diversity profile of example data is computed sequentially.
+The computing time is measured.
+
+```{r}
+library("divent")
+system.time(
+  the_profile <- profile_hill(paracou_6_abd, n_simulations = 20)
+)
+autoplot(the_profile)
+```
+
+It can be parallelized by setting a hardware strategy.
+The following example launches several simultaneous copies of R on the local computer: it works on all operating systems.
+The number of parallel processes here is the number of logical CPUs.
+
+```{r}
+library("doFuture")
+plan(multisession, workers = availableCores())
+```
+
+The same computation is now run faster.
+
+```{r}
+system.time(
+  the_profile <- profile_hill(paracou_6_abd, n_simulations = 20)
+)
+```
+
+The default strategy is `sequential`.
+It should be restored.
+
+```{r}
+plan(sequential)
+```
+
+Other possible strategies are forking (`multicore`), unavailable on Windows, and `cluster`, on several computers.
+
+See the documentation of the *future* package, namely `future::plan()`.
+
+
+# Progress bar
+
+Parallel simulations can report their progress thanks to the **progressr** package.
+
+The progress bar must be activated and its interface chosen.
+Since all progress bars rely on package *cli* in divent, the "cli" handler is a good choice.
+
+```{r}
+#| eval: false
+library("progressr")
+handlers("cli", global = TRUE)
+```
+
+Note that the choice of the progress bar is free: see `?progressr`.
+
+# Limits
+
+Setting up the parallel code and gathering the results takes time so the performance of sequential simulations may be better if they are fast.
+
+  
+# References

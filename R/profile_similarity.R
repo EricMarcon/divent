@@ -9,27 +9,7 @@
 #' rare species of the actual community may have abundance zero in simulated communities.
 #' Simulated diversity values are recentered so that their mean is that of the actual community.
 #'
-#'
-#' Simulations can be run in parallel thanks to package [doFuture].
-#' A parallel plan must be chosen with function [future::plan()].
-#' To use all cores but one on a personal computer, run:
-#'
-#' ```
-#' library("doFuture")
-#' plan(multisession, workers = availableCores(omit = 1))
-#' ```
-#' If argument `show_progress` is `TRUE`, a progress bar can be displayed
-#' by package [progressr].
-#' Since all progress bars rely on package [cli] in *divent*, the "cli" handler
-#' is a good choice.
-#'
-#' ```
-#' library("progressr")
-#' handlers(global = TRUE)
-#' handlers("cli")
-#' ```
-#' Those code chunks must be run before `profile_similarity()`
-#' with large datasets.
+#' [Parallel computing](https://ericmarcon.github.io/divent/articles/parallel.html) is possible.
 #'
 #' @inheritParams check_divent_args
 #' @param x An object, that may be a numeric vector containing abundances or probabilities,
@@ -168,7 +148,8 @@ profile_similarity.numeric <- function(
       progress <- progressr::progressor(steps = n_simulations)
     }
 
-    # Run simulations in parallel
+    # Run simulations in parallel. Declare i for R CMD check
+    i <- NULL
     profile_similarities <- foreach::foreach(
       i = seq_len(n_simulations),
       .combine = rbind
@@ -338,10 +319,10 @@ profile_similarity.species_distribution <- function(
   }
   if (as_numeric) {
     # Make a matrix: first col is order, other cols are diversity of sites
-    return(as.matrix(pivot_wider(
+    return(as.matrix(tidyr::pivot_wider(
       the_profile_similarity,
-      names_from = site,
-      values_from = diversity
+      names_from = "site",
+      values_from = "diversity"
     )[, -1]))
   } else {
     class(the_profile_similarity) <- c("profile", class(the_profile_similarity))
