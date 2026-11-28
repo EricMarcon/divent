@@ -279,7 +279,6 @@ profile_similarity.species_distribution <- function(
       n_simulations = n_simulations,
       alpha = alpha,
       bootstrap = bootstrap,
-      show_progress = show_progress,
       check_arguments = FALSE
     )
   } else {
