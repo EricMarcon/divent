@@ -187,30 +187,9 @@ object.
 `accum_sp_hill()` or `accum_sp_tsallis()` estimate the diversity or
 entropy accumulation curve of a distribution.
 
-These functions can compute the entropy of the neighborhood of points in
-parallel thanks to package
-[doFuture](https://doFuture.futureverse.org/reference/doFuture.html). A
-parallel plan must be chosen with function
-[`future::plan()`](https://future.futureverse.org/reference/plan.html).
-To use all cores but one on a personal computer, run:
-
-    library("doFuture")
-    plan(multisession, workers = availableCores(omit = 1))
-
-If argument `show_progress` is `TRUE`, a progress bar can be displayed
-by package
-[progressr](https://progressr.futureverse.org/reference/progressr.html).
-Since all progress bars rely on package
-[cli](https://cli.r-lib.org/reference/cli.html) in *divent*, the "cli"
-handler is a good choice.
-
-    library("progressr")
-    handlers(global = TRUE)
-    handlers("cli")
-
-Those code chunks must be run before `accum_sp_hill()` or
-`accum_sp_tsallis()` with large point patterns such as
-[paracou_6_wmppp](https://ericmarcon.github.io/divent/dev/reference/paracou_6.md).
+[Parallel
+computing](https://ericmarcon.github.io/divent/articles/parallel.html)
+is possible.
 
 Argument `entropy_estimator` is used to estimate asymptotic entropy or
 diversity when argument `correction` is "extrapolation". Then,

@@ -220,7 +220,7 @@ profile_phylo(paracou_6_abd, tree = paracou_6_taxo)
 #> # A tibble: 84 × 3
 #>    site      order diversity
 #>    <chr>     <dbl>     <dbl>
-#>  1 subplot_1   0       180. 
+#>  1 subplot_1   0       180  
 #>  2 subplot_1   0.1     156. 
 #>  3 subplot_1   0.2     135. 
 #>  4 subplot_1   0.3     116. 

@@ -179,8 +179,6 @@ ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2)
 #> 4 subplot_4   1.56 UnveilJ       2   0.939
 # Gamma entropy
 ent_phylo(paracou_6_abd, tree = paracou_6_taxo, q = 2, gamma = TRUE)
-#> ! The estimator can't be applied to non-integer values.
-#> ! The estimator can't be applied to non-integer values.
 #> # A tibble: 1 × 4
 #>   site          estimator order entropy
 #>   <chr>         <chr>     <dbl>   <dbl>

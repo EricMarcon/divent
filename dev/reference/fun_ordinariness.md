@@ -79,10 +79,10 @@ probabilities(paracou_6_abd)
 #> # A tibble: 4 × 337
 #>   site      weight Abarema_jupunba Abarema_mataybifolia Amaioua_guianensis
 #>   <chr>      <dbl>           <dbl>                <dbl>              <dbl>
-#> 1 subplot_1  1             0.00212              0.00212            0.00106
-#> 2 subplot_2  1.000         0.00229              0                  0.00115
-#> 3 subplot_3  1.00          0.00215              0.00215            0      
-#> 4 subplot_4  1.000         0.00501              0                  0      
+#> 1 subplot_1      1         0.00212              0.00212            0.00106
+#> 2 subplot_2      1         0.00229              0                  0.00115
+#> 3 subplot_3      1         0.00215              0.00215            0      
+#> 4 subplot_4      1         0.00501              0                  0      
 #> # ℹ 332 more variables: Amanoa_congesta <dbl>, Amanoa_guianensis <dbl>,
 #> #   Ambelania_acida <dbl>, Amphirrhox_longifolia <dbl>, Andira_coriacea <dbl>,
 #> #   Apeiba_glabra <dbl>, Aspidosperma_album <dbl>, Aspidosperma_cruentum <dbl>,

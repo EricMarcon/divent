@@ -9,6 +9,8 @@
 - [Asymptotic Estimation, Interpolation and
   Extrapolation](https://ericmarcon.github.io/divent/dev/articles/extrapolation.md)
   :
+- [Parallel
+  computing](https://ericmarcon.github.io/divent/dev/articles/parallel.md):
 - [Phylogenies in
   divent](https://ericmarcon.github.io/divent/dev/articles/phylogenies.md):
 - [Random

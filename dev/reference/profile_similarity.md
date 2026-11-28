@@ -30,7 +30,6 @@ profile_similarity(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 )
@@ -48,10 +47,10 @@ profile_similarity(
   jack_max = 10,
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   gamma = FALSE,
+  as_numeric = FALSE,
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 )
@@ -142,10 +141,6 @@ profile_similarity(
   [as_probabilities](https://ericmarcon.github.io/divent/dev/reference/species_distribution.md))
   following Chao et al. (2013) or Chao and Jost (2015) .
 
-- show_progress:
-
-  if TRUE, a progress bar is shown during long computations.
-
 - check_arguments:
 
   if `TRUE`, the function arguments are verified. Should be set to
@@ -173,6 +168,10 @@ may have abundance zero in simulated communities. Simulated diversity
 values are recentered so that their mean is that of the actual
 community.
 
+[Parallel
+computing](https://ericmarcon.github.io/divent/articles/parallel.html)
+is possible.
+
 ## References
 
 Chao A, Jost L (2015). “Estimating Diversity and Entropy Profiles via
@@ -199,19 +198,6 @@ Shannon's Entropy and a Confidence Interval for *Beta* Diversity.”
 # Similarity matrix
 Z <- fun_similarity(paracou_6_fundist)
 # Profile
-profile_similarity(paracou_6_abd, similarities = Z, q = 2)
-#> # A tibble: 84 × 4
-#>    site      estimator order diversity
-#>    <chr>     <chr>     <dbl>     <dbl>
-#>  1 subplot_1 UnveilJ     0        1.31
-#>  2 subplot_1 UnveilJ     0.1      1.31
-#>  3 subplot_1 UnveilJ     0.2      1.31
-#>  4 subplot_1 UnveilJ     0.3      1.31
-#>  5 subplot_1 UnveilJ     0.4      1.31
-#>  6 subplot_1 UnveilJ     0.5      1.31
-#>  7 subplot_1 UnveilJ     0.6      1.31
-#>  8 subplot_1 UnveilJ     0.7      1.31
-#>  9 subplot_1 UnveilJ     0.8      1.31
-#> 10 subplot_1 UnveilJ     0.9      1.31
-#> # ℹ 74 more rows
+autoplot(profile_similarity(paracou_6_abd, similarities = Z))
+
 ```

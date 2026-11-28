@@ -27,7 +27,6 @@ profile_hill(
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 )
@@ -47,10 +46,10 @@ profile_hill(
   coverage_estimator = c("ZhangHuang", "Chao", "Turing", "Good"),
   q_threshold = 10,
   gamma = FALSE,
+  as_numeric = FALSE,
   n_simulations = 0,
   alpha = 0.05,
   bootstrap = c("Chao2015", "Marcon2012", "Chao2013"),
-  show_progress = TRUE,
   ...,
   check_arguments = TRUE
 )
@@ -155,10 +154,6 @@ profile_hill(
   [as_probabilities](https://ericmarcon.github.io/divent/dev/reference/species_distribution.md))
   following Chao et al. (2013) or Chao and Jost (2015) .
 
-- show_progress:
-
-  if TRUE, a progress bar is shown during long computations.
-
 - check_arguments:
 
   if `TRUE`, the function arguments are verified. Should be set to
@@ -175,6 +170,9 @@ A tibble with the site names, the estimators used and the estimated
 diversity at each order. This is an object of class "profile" that can
 be plotted.
 
+If `as_numeric` is `TRUE`, then the value is a matrix whose first column
+is the order and other columns are the diversity of sites.
+
 ## Details
 
 A bootstrap confidence interval can be produced by simulating
@@ -185,6 +183,10 @@ downward bias in the estimation: rare species of the actual community
 may have abundance zero in simulated communities. Simulated diversity
 values are recentered so that their mean is that of the actual
 community.
+
+[Parallel
+computing](https://ericmarcon.github.io/divent/articles/parallel.html)
+is possible.
 
 ## References
 
