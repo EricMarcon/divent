@@ -12,7 +12,6 @@
 "_PACKAGE"
 
 # Imported functions
-#' @importFrom doFuture %dofuture%
 #' @importFrom foreach %do%
 
 # C code ----

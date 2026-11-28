@@ -127,50 +127,51 @@ accum_sp_tsallis <- function(
     }
 
     # Define the progressor
-    if (show_progress && interactive()) {
-      progress <- progressr::progressor(steps = length(neighbors))
-    }
-
+    progress <- progressr::progressor(steps = length(neighbors))
+    # Declare k for R CMD check
+    k <- NULL
     # At each number of neighbors, calculate the entropy of
     # all points' neighborhood for each q
-    ent_nbhood_q_n <- foreach::foreach(
-      k = seq_along(neighbors),
-      .options.future = list(seed = TRUE)
-    ) %dofuture%
-      {
-        # Neighbor communities: 1 community per column
-        neighbor_communities <- apply(
-          neighbors.matrix[, 1:(k + 1)],
-          MARGIN = 1,
-          FUN = function(neighbors) spatstat.geom::marks(X)$PointType[neighbors]
-        )
-        # Calculate entropy of each neighborhood and all q values
-        ent_nbhood_q <- apply(
-          neighbor_communities,
-          MARGIN = 2,
-          FUN = function(community) {
-            vapply(
-              orders,
-              FUN = function(q) {
-                ent_tsallis(
-                  as_abundances(community),
-                  q = q,
-                  estimator = "naive",
-                  as_numeric = TRUE,
-                  check_arguments = FALSE
-                )
-              },
-              FUN.VALUE = 0
-            )
-          }
-        )
-        # Progressor
-        if (show_progress && interactive()) {
+    ent_nbhood_q_n <- futurize::futurize(
+      foreach::foreach(
+        k = seq_along(neighbors),
+        .options.future = list(seed = TRUE)
+      ) %do%
+        {
+          # Neighbor communities: 1 community per colum  n
+          neighbor_communities <- apply(
+            neighbors.matrix[, 1:(k + 1)],
+            MARGIN = 1,
+            FUN = function(neighbors) {
+              spatstat.geom::marks(X)$PointType[neighbors]
+            }
+          )
+          # Calculate entropy of each neighborhood and all q values
+          ent_nbhood_q <- apply(
+            neighbor_communities,
+            MARGIN = 2,
+            FUN = function(community) {
+              vapply(
+                orders,
+                FUN = function(q) {
+                  ent_tsallis(
+                    as_abundances(community),
+                    q = q,
+                    estimator = "naive",
+                    as_numeric = TRUE,
+                    check_arguments = FALSE
+                  )
+                },
+                FUN.VALUE = 0
+              )
+            }
+          )
+          # Progressor
           progress()
+          # Save the results in a list
+          ent_nbhood_q
         }
-        # Save the results in a list
-        ent_nbhood_q
-      }
+    )
 
     # Deal with the list of results
     for (k in seq_along(neighbors)) {
@@ -239,106 +240,108 @@ accum_sp_tsallis <- function(
     }
 
     # Define the progressor
-    if (show_progress && interactive()) {
-      progress <- progressr::progressor(steps = length(r) - 1)
-    }
-
+    progress <- progressr::progressor(steps = length(r) - 1)
+    # Declare k for R CMD check
+    k <- NULL
     # At each distance, calculate the entropy of
     # all points' neighborhood for each q
-    ent_nbhood_q_r <- foreach::foreach(
-      d = 2:length(r),
-      .options.future = list(seed = TRUE)
-    ) %dofuture%
-      {
-        # Neighbor communities of each point at distance r:
-        # 1 point per row, 1 species per column:
-        # sum neighborhoods at distances 1 to d
-        neighbor_communities <- rowSums(
-          aperm(neighbors.array[, 1:d, , drop = FALSE], perm = c(1, 3, 2)),
-          dims = 2
-        )
-        # Calculate entropy of each community (columns) and all q values (rows)
-        if (correction == "none") {
-          # No edge-effect correction
-          ent_nbhood_q <- apply(
-            neighbor_communities,
-            MARGIN = 1,
-            FUN = function(community) {
-              vapply(
-                orders,
-                FUN = function(q) {
-                  ent_tsallis(
-                    as_abundances(community),
-                    q = q,
-                    estimator = "naive",
-                    as_numeric = TRUE,
-                    check_arguments = FALSE
-                  )
-                },
-                FUN.VALUE = 0
-              )
-            }
+    ent_nbhood_q_r <- futurize::futurize(
+      foreach::foreach(
+        d = 2:length(r),
+        .options.future = list(seed = TRUE)
+      ) %do%
+        {
+          # Neighbor communities of each point at distance r:
+          # 1 point per row, 1 species per column:
+          # sum neighborhoods at distances 1 to d
+          neighbor_communities <- rowSums(
+            aperm(neighbors.array[, 1:d, , drop = FALSE], perm = c(1, 3, 2)),
+            dims = 2
           )
-        } else {
-          if (correction == "extrapolation") {
-            # Number of neighbors of each point
-            neighbors.matrix <- rowSums(neighbor_communities)
-            # Edge effects
-            the_extrapolation <- integer(X$n)
-            for (i in 1:X$n) {
-              # Intersection between the point's neighborhood and the window
-              the_intersection <- spatstat.geom::area(
-                spatstat.geom::intersect.owin(
-                  X$window,
-                  spatstat.geom::disc(radius = r[d], centre = c(X$x[i], X$y[i]))
-                )
-              )
-              # the_extrapolation ratio is that of the whole disc
-              # to the part of the disc inside the window
-              the_extrapolation[i] <- as.integer(
-                neighbors.matrix[i] * pi * r[d]^2 / the_intersection
-              )
-            }
-            # Prepare an array to store the results
-            ent_nbhood_q <- array(
-              0,
-              dim = c(length(orders), nrow(neighbor_communities))
-            )
-            for (community in seq_len(nrow(neighbor_communities))) {
-              for (order in seq_along(orders)) {
-                # Suppress the warnings for Coverage=0 every time neighbors are singletons only.
-                suppressWarnings(
-                  ent_nbhood_q[order, community] <- ent_tsallis(
-                    neighbor_communities[community, ],
-                    q = orders[order],
-                    estimator = entropy_estimator,
-                    level = the_extrapolation[community],
-                    probability_estimator = probability_estimator,
-                    unveiling = unveiling,
-                    richness_estimator = richness_estimator,
-                    jack_alpha = jack_alpha,
-                    jack_max = jack_max,
-                    coverage_estimator = coverage_estimator,
-                    as_numeric = TRUE,
-                    check_arguments = FALSE
-                  )
+          # Calculate entropy of each community (columns) and all q values (rows)
+          if (correction == "none") {
+            # No edge-effect correction
+            ent_nbhood_q <- apply(
+              neighbor_communities,
+              MARGIN = 1,
+              FUN = function(community) {
+                vapply(
+                  orders,
+                  FUN = function(q) {
+                    ent_tsallis(
+                      as_abundances(community),
+                      q = q,
+                      estimator = "naive",
+                      as_numeric = TRUE,
+                      check_arguments = FALSE
+                    )
+                  },
+                  FUN.VALUE = 0
                 )
               }
-            }
-          } else {
-            cli::cli_abort(
-              "The edge-effect correction (argument: correction) has not been recognized."
             )
+          } else {
+            if (correction == "extrapolation") {
+              # Number of neighbors of each point
+              neighbors.matrix <- rowSums(neighbor_communities)
+              # Edge effects
+              the_extrapolation <- integer(X$n)
+              for (i in 1:X$n) {
+                # Intersection between the point's neighborhood and the window
+                the_intersection <- spatstat.geom::area(
+                  spatstat.geom::intersect.owin(
+                    X$window,
+                    spatstat.geom::disc(
+                      radius = r[d],
+                      centre = c(X$x[i], X$y[i])
+                    )
+                  )
+                )
+                # the_extrapolation ratio is that of the whole disc
+                # to the part of the disc inside the window
+                the_extrapolation[i] <- as.integer(
+                  neighbors.matrix[i] * pi * r[d]^2 / the_intersection
+                )
+              }
+              # Prepare an array to store the results
+              ent_nbhood_q <- array(
+                0,
+                dim = c(length(orders), nrow(neighbor_communities))
+              )
+              for (community in seq_len(nrow(neighbor_communities))) {
+                for (order in seq_along(orders)) {
+                  # Suppress the warnings for coverage == 0
+                  # every time neighbors are singletons only.
+                  suppressWarnings(
+                    ent_nbhood_q[order, community] <- ent_tsallis(
+                      neighbor_communities[community, ],
+                      q = orders[order],
+                      estimator = entropy_estimator,
+                      level = the_extrapolation[community],
+                      probability_estimator = probability_estimator,
+                      unveiling = unveiling,
+                      richness_estimator = richness_estimator,
+                      jack_alpha = jack_alpha,
+                      jack_max = jack_max,
+                      coverage_estimator = coverage_estimator,
+                      as_numeric = TRUE,
+                      check_arguments = FALSE
+                    )
+                  )
+                }
+              }
+            } else {
+              cli::cli_abort(
+                "The edge-effect correction (argument: correction) has not been recognized."
+              )
+            }
           }
-        }
-        # Progressor
-        if (show_progress && interactive()) {
+          # Progressor
           progress()
+          # Save the results in a list
+          ent_nbhood_q
         }
-        # Save the results in a list
-        ent_nbhood_q
-      }
-
+    )
     # Deal with the list of results
     for (d in 2:length(r)) {
       # Extract the neighborhood diversity

@@ -1,4 +1,4 @@
-# divent 0.9-9.9005
+# divent 0.9-9.9006
 
 Preparing v. 1.0.
 
@@ -8,7 +8,7 @@ Preparing v. 1.0.
 
 ## Improvements
 
-- parallel tasks rely on package `futurize` in `profile_hill()` and `profile_similarity()`. `accum_sp_xxx()` still rely on `doFuture`.
+- parallel tasks rely on package `futurize`.
 
 # divent 0.6-0
 
