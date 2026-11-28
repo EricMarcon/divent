@@ -4,7 +4,7 @@ output:
   rmarkdown::html_document:
     toc: yes
     toc_float: yes
-bibliography: ../../inst/REFERENCES.bib
+bibliography: ../REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{Parallel computing}
   %\VignetteEngine{knitr::rmarkdown}

@@ -4,7 +4,7 @@ output:
   rmarkdown::html_document:
     toc: yes
     toc_float: yes
-bibliography: ../../inst/REFERENCES.bib
+bibliography: '`r system.file("REFERENCES.bib", package="divent")`'
 vignette: >
   %\VignetteIndexEntry{Phylogenies in divent}
   %\VignetteEngine{knitr::rmarkdown}

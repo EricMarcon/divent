@@ -4,7 +4,7 @@ output:
   rmarkdown::html_document:
     toc: yes
     toc_float: yes
-bibliography: ../../inst/REFERENCES.bib
+bibliography: '`r system.file("REFERENCES.bib", package="divent")`'
 vignette: >
   %\VignetteIndexEntry{Random communities}
   %\VignetteEngine{knitr::rmarkdown}
@@ -122,8 +122,7 @@ To simulate communities more accurately, species can be drawn one by one.
 This way, spatial structures and size distributions can be chosen for each species.
 
 The following example shows how to do it: a 1-ha forest made of an aggregated species of interest and undifferentiated other ones.
-`rspcommunity()` is called with arguments `n = 1` and `species_number = 1`.
-A list is of point patterns is obtained and superimposed to make a single `wmppp` object.
+`rspcommunity()` is called with arguments `n = 1` and `species_number = 1`. A list is of point patterns is obtained and superimposed to make a single `wmppp` object.
 
 ```{r}
 library("spatstat") # for `square()`

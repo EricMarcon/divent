@@ -1,7 +1,7 @@
 ---
 title: "Introduction to divent"
 subtitle: "Measures of Diversity Based on Entropy"
-bibliography: ../inst/REFERENCES.bib
+bibliography: '`r system.file("REFERENCES.bib", package="divent")`'
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to divent}
